@@ -1,0 +1,3 @@
+// Research Questions Ideas
+
+How can traditional anomaly detection techniques be applied to the detection of fake news in social media
