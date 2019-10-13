@@ -1,8 +1,5 @@
 from twitter import *
-from config import consumer_key, consumer_secret, access_key, access_secret
-import sys
-import config
-sys.path.append(".")
+from Code.TwitterCrawler.config import consumer_key, consumer_secret, access_key, access_secret
 api = Api(consumer_key, consumer_secret, access_token_key=access_key, access_token_secret=access_secret)
 
 
