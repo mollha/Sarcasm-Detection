@@ -2,6 +2,7 @@
 \usepackage{times}
 \usepackage{durhampaper}
 \usepackage{harvard}
+\usepackage{cite}
 
 \citationmode{abbr}
 \bibliographystyle{agsm}
@@ -54,10 +55,21 @@ In order to extract meaningful data from large bodies of text, it must first und
 \newpage
 
 \subsection{References}
+\cite{pennington2014glove}
+The list of cited references should appear at the end of the report,
+ordered alphabetically by the surnames of the first authors.
+The default style for references cited in the main text is the  Harvard (author, date) format.
+When citing a section in a book, please give the relevant page numbers, as in \cite[p293]{budgen}.
+When citing, where there are either one or two authors, use the names,
+but if there are more than two, give the first one and use ``et al.''
+as in  , except where this would be ambiguous, in which case use all author names.
 
-The list of cited references should appear at the end of the report, ordered alphabetically by the surnames of the first authors.  The default style for references cited in the main text is the  Harvard (author, date) format.  When citing a section in a book, please give the relevant page numbers, as in \cite[p293]{budgen}.  When citing, where there are either one or two authors, use the names, but if there are more than two, give the first one and use ``et al.'' as in  , except where this would be ambiguous, in which case use all author names.
-
-You need to give all authors' names in each reference.  Do not use ``et al.'' unless there are more than five authors.  Papers that have not been published should be cited as ``unpublished'' \cite{euther}.  Papers that have been submitted or accepted for publication should be cited as ``submitted for publication'' as in \cite{futher} .  You can also cite using just the year when the author's name appears in the text, as in ``but according to Futher \citeyear{futher}, we \dots''.  Where an authors has more than one publication in a year, add `a', `b' etc. after the year.
+You need to give all authors' names in each reference. Do not use ``et al.'' unless there are more than five authors.
+Papers that have not been published should be cited as ``unpublished'' \cite{euther}.
+Papers that have been submitted or accepted for publication should be cited as ``submitted for publication'' as in \cite{futher}
+You can also cite using just the year when the author's name appears in the text, as in ``but according to Futher
+\citeyear{futher},
+we \dots''.  Where an authors has more than one publication in a year, add `a', `b' etc. after the year.
 
 
 

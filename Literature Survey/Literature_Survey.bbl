@@ -12,4 +12,11 @@ Euther, K.  \harvardyearleft 2006\harvardyearright , Title of paper.
 Futher, R.  \harvardyearleft 2006\harvardyearright , Title of paper 2.
 \newblock submitted for publication.
 
+\harvarditem[Pennington et~al.]{Pennington, Socher \harvardand\
+  Manning}{2014}{pennington2014glove}
+Pennington, J., Socher, R. \harvardand\ Manning, C.  \harvardyearleft
+  2014\harvardyearright , Glove: Global vectors for word representation, {\em
+  in} `Proceedings of the 2014 conference on empirical methods in natural
+  language processing (EMNLP)', pp.~1532--1543.
+
 \end{thebibliography}

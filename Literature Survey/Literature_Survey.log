@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  12 OCT 2019 11:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  13 OCT 2019 18:39
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -37,61 +37,85 @@ Package: harvard
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\i
 fthen.sty"
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)) (Literature_Survey.aux)
+))
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cite\c
+ite.sty"
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 332.
+Package: cite 2015/02/27  v 5.5
+) (Literature_Survey.aux)
 \openout1 = `Literature_Survey.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-7.
+8.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 22.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 21.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 22.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 28.
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--42
+Underfull \hbox (badness 10000) in paragraph at lines 40--43
 
  []
 
 [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
- [2] (Literature_Survey.bbl) [3] (Literature_Survey.aux) ) 
+ [2]
+
+LaTeX Warning: Citation `pennington2014glove' on page 3 undefined on input line
+ 58.
+
+
+LaTeX Warning: Citation `budgen' on page 3 undefined on input line 62.
+
+
+LaTeX Warning: Citation `euther' on page 3 undefined on input line 68.
+
+
+LaTeX Warning: Citation `futher' on page 3 undefined on input line 69.
+
+(Literature_Survey.bbl) [3] (Literature_Survey.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 480 strings out of 492452
- 6583 string characters out of 3114457
- 67454 words of memory out of 3000000
- 4891 multiletter control sequences out of 15000+200000
+ 577 strings out of 492452
+ 7974 string characters out of 3114457
+ 68498 words of memory out of 3000000
+ 4985 multiletter control sequences out of 15000+200000
  16887 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 24i,4n,24p,619b,132s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is
- house/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/
-Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8
-a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
-/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Loca
-l/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Literature_Survey.pdf (3 pages, 56835 bytes).
+ 24i,4n,24p,597b,132s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips
+/base/8r.enc}<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+
+Output written on Literature_Survey.pdf (3 pages, 59147 bytes).
 PDF statistics:
  29 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
