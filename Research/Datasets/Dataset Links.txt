@@ -1,0 +1,2 @@
+Datasets for fake news detection
+https://raw.githubusercontent.com/KaiDMML/FakeNewsNet/master/dataset/politifact_fake.csv
