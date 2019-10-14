@@ -1,2 +1,17 @@
 Datasets for fake news detection
 https://raw.githubusercontent.com/KaiDMML/FakeNewsNet/master/dataset/politifact_fake.csv
+
+The "Liar Dataset"
+https://arxiv.org/abs/1705.00648 		//paper
+https://github.com/nishitpatel01/Fake_News_Detection/tree/master/liar_dataset
+Explains that the data is manually labelled - suggests high quality
+
+Buzzfeed News Dataset
+https://github.com/BuzzFeedNews/everything#standalone-datasets
+
+Noura's Links
+http://alt.qcri.org/semeval2016/task6/
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/83KYJY
+https://www.kaggle.com/c/fake-news/data
+
+ 
