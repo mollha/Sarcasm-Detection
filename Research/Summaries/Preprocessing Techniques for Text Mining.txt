@@ -1,6 +1,6 @@
 Aim is to extract the useful information from a large amount of data
 
-STOP WORD REMOVAL
+STOP WORD REMOVAL - data pre-processing stage
 - stop words are words such as in, an, the, with, etc that don't provide any additional context or meaning to text
 - we don't want to consider them as keywords or tokens for this reason
 Hassan Saif [1] investigated whether or not removing stop words helps or hampers twitter sentiment classification methods
@@ -8,6 +8,16 @@ Hassan Saif [1] investigated whether or not removing stop words helps or hampers
 - However, dynamic generation of stop words lists can be quite effective, removing those words that are infrequently
 appearing (once appearance) in the corpus appears to be the optimal method for maintaining a high classification
  performance while reducing the data sparsity and substantially shrinking the feature space.
+
+STEMMING
+- identifying the root / stem of a word can help us to reduce the number of words
+- usually considered as a recall enhancing mechanism (i.e. increasing the proportion of true positives to false negatives)
+- there are generally 3 categories of stemming algorithms
+1. truncating (removing the suffixes or prefixes of words - i.e. affixes)
+2. statistical (based on statistical techniques, most remove affixes after implementing some statistical procedure)
+3. mixed (requires a very large corpus)
+
+For example, the words connect, connected, connecting and connections can all be stemmed to the same word - connect
 
 
 [1] Hassan Saif, Miriam Fernandez,Yulan He,
