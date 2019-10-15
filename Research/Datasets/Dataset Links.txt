@@ -15,3 +15,6 @@ https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/83KYJY
 https://www.kaggle.com/c/fake-news/data
 
  
+- Sentiment analysis practice dataset
+// More useful for the practice of cleaning tweets
+https://datahack.analyticsvidhya.com/contest/practice-problem-twitter-sentiment-analysis/
