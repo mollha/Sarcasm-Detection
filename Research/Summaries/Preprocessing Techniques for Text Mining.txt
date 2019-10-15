@@ -1,0 +1,15 @@
+Aim is to extract the useful information from a large amount of data
+
+STOP WORD REMOVAL
+- stop words are words such as in, an, the, with, etc that don't provide any additional context or meaning to text
+- we don't want to consider them as keywords or tokens for this reason
+Hassan Saif [1] investigated whether or not removing stop words helps or hampers twitter sentiment classification methods
+- Results are such that using pre-compiled lists of stop words negatively impacts the performance
+- However, dynamic generation of stop words lists can be quite effective, removing those words that are infrequently
+appearing (once appearance) in the corpus appears to be the optimal method for maintaining a high classification
+ performance while reducing the data sparsity and substantially shrinking the feature space.
+
+
+[1] Hassan Saif, Miriam Fernandez,Yulan He,
+Harith Alani , On Stopwords, Filtering and Data
+Sparsity for Sentiment Analysis of Twitter.
