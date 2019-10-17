@@ -2,4 +2,5 @@
 How can traditional anomaly detection techniques be applied to the detection of fake news in social media
 How do machine learning approaches compare to deep learning techniques for fake news detection
 What features of a dataset make it suitable / effective for these purposes?
-Can this model adapt / perform well on other data sets
+Can this model adapt / perform well on other data sets?
+How can we evaluate the performance of a model?
