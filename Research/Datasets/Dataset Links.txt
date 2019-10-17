@@ -1,14 +1,6 @@
-Datasets for fake news detection
-https://raw.githubusercontent.com/KaiDMML/FakeNewsNet/master/dataset/politifact_fake.csv
+Sarcasm Detection dataset
+https://arxiv.org/abs/1704.05579
 
-The "Liar Dataset"
-https://arxiv.org/abs/1705.00648 		//paper
-https://github.com/nishitpatel01/Fake_News_Detection/tree/master/liar_dataset
-Explains that the data is manually labelled by an editor of Politifact.com - suggests high quality
-Provides lots of meta data 
-
-Buzzfeed News Dataset
-https://github.com/BuzzFeedNews/everything#standalone-datasets
 
 Noura's Links
 http://alt.qcri.org/semeval2016/task6/
