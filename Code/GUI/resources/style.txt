@@ -1,0 +1,39 @@
+QPushButton, QLabel {
+    border: none;
+    background-color: none;
+    color:#ffffff;
+    min-height:100px;
+    max-height: 200px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-family: Bahnschrift;
+    font-size: 22px
+}
+
+QLabel {
+    font-size: 24px;
+}
+
+QPushButton[Test=true] {
+    color: #ff14a5;
+}
+
+QPushButton:hover{
+    color:#00ff04;
+}
+
+QPushButton[question=true] {
+    font-size: 30px;
+}
+
+QLineEdit {
+    font-size: 18px;
+    max-height: 40px;
+    text-align: center;
+}
+
+QLabel#r {
+    color:#ffffff;
+    height: 20px;
+    font-family: west_england;
+}
