@@ -26,14 +26,14 @@ class Main(QMainWindow):
 
         # --- Configure main window
     def configure_menu(self):
-        menu = self.menuBar()
-        # options = menu.add        new_game = QAction("New", self)
+        # menu = self.menuBar()
+        # options = menu.addMenu("Options")
+        # new_game = QAction("New", self)
         # new_game.setShortcut("Ctrl+N")
         # options.addAction(new_game)
         # quit_game = QAction("Exit", self)
         # options.addAction(quit_game)
-        # self.setWindowIcon(QIcon("resources/favicon.png"))Menu("Options")
-
+        self.setWindowIcon(QIcon("resources/favicon.png"))
 
     def quit(self):
         """
