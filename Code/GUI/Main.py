@@ -16,7 +16,7 @@ class Main(QMainWindow):
         self.central_widget.setCurrentWidget(self.menu_widget)
 
         self.configure_menu()
-        self.setWindowTitle('Cyberfirst Quest')
+        self.setWindowTitle('GUI Name')
         self.showMaximized()
 
         # --- Sets background to black ---
@@ -27,13 +27,13 @@ class Main(QMainWindow):
         # --- Configure main window
     def configure_menu(self):
         menu = self.menuBar()
-        options = menu.addMenu("Options")
-        new_game = QAction("New", self)
-        new_game.setShortcut("Ctrl+N")
-        options.addAction(new_game)
-        quit_game = QAction("Exit", self)
-        options.addAction(quit_game)
-        self.setWindowIcon(QIcon("resources/images/icon.png"))
+        # options = menu.add        new_game = QAction("New", self)
+        # new_game.setShortcut("Ctrl+N")
+        # options.addAction(new_game)
+        # quit_game = QAction("Exit", self)
+        # options.addAction(quit_game)
+        # self.setWindowIcon(QIcon("resources/favicon.png"))Menu("Options")
+
 
     def quit(self):
         """

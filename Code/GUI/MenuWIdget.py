@@ -63,8 +63,5 @@ class MenuWidget(QWidget):
         # self.title_label.show()
 
     def add_to_label(self, text):
-        print('his')
-        print(text)
         self.name_box.clear()
         self.blank_label.setText(text)
-        return
