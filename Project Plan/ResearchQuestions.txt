@@ -1,6 +1,15 @@
 // Research Questions Ideas
-How can traditional anomaly detection techniques be applied to the detection of fake news in social media
-How do machine learning approaches compare to deep learning techniques for fake news detection
+
+// May not be relevant anymore?
+How can traditional anomaly detection techniques be applied to the detection of sarcasm in social media
+How do machine learning approaches compare to deep learning techniques for sarcasm detection
 What features of a dataset make it suitable / effective for these purposes?
 Can this model adapt / perform well on other data sets?
 How can we evaluate the performance of a model?
+
+
+Can this model be applied to large corpora as a pre-processing step in order to improve the accuracy of sentiment analysers?
+
+// Explained
+Sentiment analysers tend to fail when it comes to classifying sarcastic statements. If they could be pre-classified as a sarcastic (hence, negative?)
+statement and removed before they are "put through" the sentiment analyser, this may produce more accurate results
