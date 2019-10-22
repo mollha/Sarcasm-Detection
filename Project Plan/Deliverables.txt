@@ -1,0 +1,8 @@
+Create a model that improves upon the performance of a trivial sentiment analyzer
+
+
+Analyse the effectiveness of the model when applied to various other domains (e.g. twitter data, online reviews - not JUST Reddit posts)
+
+Advanced Deliverables
+Create a GUI that enables the user to interact with the model
+Create my own high-quality dataset that can be used to train a model
