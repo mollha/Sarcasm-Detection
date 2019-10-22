@@ -9,6 +9,8 @@ How can we evaluate the performance of a model?
 
 
 Can this model be applied to large corpora as a pre-processing step in order to improve the accuracy of sentiment analysers?
+Can the identification of sarcastic statements support the sentiment analysis task
+
 
 // Explained
 Sentiment analysers tend to fail when it comes to classifying sarcastic statements. If they could be pre-classified as a sarcastic (hence, negative?)
