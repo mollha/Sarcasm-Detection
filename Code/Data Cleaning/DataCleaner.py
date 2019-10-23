@@ -1,5 +1,28 @@
 from re import sub
+import numpy as np
 from Code.TwitterCrawler import TwitterCrawler  # Use to pull in a few tweets
+import nltk
+
+wpt = nltk.WordPunctTokenizer()
+stop_words = nltk.corpus.stopwords.words('english')
+print(stop_words)
+
+# def normalize_document(doc):
+#     # lower case and remove special characters\whitespaces
+#     doc = re.sub(r'[^a-zA-Z\s]', '', doc, re.I|re.A)
+#     doc = doc.lower()
+#     doc = doc.strip()
+#     # tokenize document
+#     tokens = wpt.tokenize(doc)
+#     # filter stopwords out of document
+#     filtered_tokens = [token for token in tokens if token not in stop_words]
+#     # re-create document from filtered tokens
+#     doc = ' '.join(filtered_tokens)
+#     return doc
+
+# normalize_corpus = np.vectorize(normalize_document)
+
+
 
 # Cleans data by removing URLs
 # Using re (regular expression library)
@@ -13,6 +36,7 @@ tweet_list = TwitterCrawler.get_some_tweets()
 
 
 def clean_data(text):
+    text.strip()    # remove whitespaces on the ends
     # Replaces any http links with an empty string
     text = sub(r'http\S+', '', text)
 
