@@ -4,6 +4,11 @@
 import spacy
 from spacy.lang.en import English
 
+nlp1 = spacy.load('en_core_web_md')
+
+
+
+
 # created by processing a string of text with the nlp object
 nlp = English()
 
