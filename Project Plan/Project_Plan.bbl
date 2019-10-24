@@ -1,0 +1,22 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Budgen}{2003}{budgen}
+Budgen, D.  \harvardyearleft 2003\harvardyearright , {\em Software Design}, 2nd
+  edn, Addison Wesley.
+
+\harvarditem{Euther}{2006}{euther}
+Euther, K.  \harvardyearleft 2006\harvardyearright , Title of paper.
+\newblock unpublished.
+
+\harvarditem{Futher}{2006}{futher}
+Futher, R.  \harvardyearleft 2006\harvardyearright , Title of paper 2.
+\newblock submitted for publication.
+
+\harvarditem[Pennington et~al.]{Pennington, Socher \harvardand\
+  Manning}{2014}{pennington2014glove}
+Pennington, J., Socher, R. \harvardand\ Manning, C.  \harvardyearleft
+  2014\harvardyearright , Glove: Global vectors for word representation, {\em
+  in} `Proceedings of the 2014 conference on empirical methods in natural
+  language processing (EMNLP)', pp.~1532--1543.
+
+\end{thebibliography}

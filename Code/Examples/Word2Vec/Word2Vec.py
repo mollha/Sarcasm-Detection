@@ -1,5 +1,6 @@
 from gensim.models import Word2Vec, KeyedVectors
 
+# this bit don't werrrkk
 model = KeyedVectors.load_word2vec_format('data/GoogleGoogleNews-vectors-negative300.bin', binary=True)
 
 sentences = [
