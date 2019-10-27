@@ -25,13 +25,7 @@
 \section{Introduction}
 
 \subsection{Problem Background}
-Lastly, evaluating the successes and failures of the trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
-
-\begin{align*}
-\mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}  \\
-\end{align*}
-
-In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. $F_{1}$ ,score has faced some criticism, particularly for assigning equal importance to precision and recall \cite{hand2018note}, therefore I will consider both precision and recall separately, as well as in combination.
+sytcytugkjlk
 
 
 \subsection{Terms}
@@ -53,7 +47,20 @@ First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec
 
 \newpage
 
-\bibliography{projectpaper}
+\subsection{Model Evaluation}
+Lastly, evaluating the successes and failures of the trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
+
+\begin{align*}
+\mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}  \\
+\end{align*}
+
+In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives.
+
+
+\newpage
+
+
+\bibliography{Literature_Survey}
 
 
 \end{document}
