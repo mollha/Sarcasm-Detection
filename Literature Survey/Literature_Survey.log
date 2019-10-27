@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 OCT 2019 18:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 OCT 2019 18:25
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -182,7 +182,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-) [2] [3] (Literature_Survey.bbl) [4] (Literature_Survey.aux) ) 
+) [2]
+Underfull \hbox (badness 10000) in paragraph at lines 57--58
+
+ []
+
+(Literature_Survey.bbl) [3] (Literature_Survey.aux) ) 
 Here is how much of TeX's memory you used:
  2107 strings out of 492452
  27585 string characters out of 3114457
@@ -191,22 +196,21 @@ Here is how much of TeX's memory you used:
  15159 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,9n,25p,1810b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Passwo
-rd is house/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/U
-sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmmi12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Pa
-ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-
-Output written on Literature_Survey.pdf (4 pages, 91975 bytes).
+{C:/Users/Password is hous
+e/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Passw
+ord is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mmi12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
+w/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Literature_Survey.pdf (3 pages, 91531 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
+ 45 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
