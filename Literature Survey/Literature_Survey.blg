@@ -1,7 +1,8 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Literature_Survey.aux
-The style file: plain.bst
-Database file #1: projectpaper.bib
-Warning--I didn't find a database entry for "budgen"
-Warning--I didn't find a database entry for "euther"
-Warning--I didn't find a database entry for "futher"
-(There were 3 warnings)
+I couldn't open style file harvard.bst
+---line 2 of file Literature_Survey.aux
+ : \bibstyle{harvard
+ :                  }
+I'm skipping whatever remains of this command
+I found no style file---while reading file Literature_Survey.aux
+(There were 2 error messages)
