@@ -3,9 +3,10 @@
 \usepackage{durhampaper}
 \usepackage{harvard}
 \usepackage{cite}
+\usepackage[utf8x]{inputenc}
 
 \citationmode{abbr}
-\bibliographystyle{agsm}
+\bibliographystyle{harvard}
 
 \title{Literature Survey: Identifying anomalies within social media textual data}
 \author{Molly Hayward}
@@ -47,7 +48,12 @@ Text corpus: Large and structured set of texts [2]\newline
 \section{Themes}
 
 \subsection{Text Data Vectorization}
-In order to extract meaningful data from large bodies of text, it must first undergo a pre-processing stage whereby the data is converted from its textual form into numerical data, known as vectorization. 
+Extracting meaningful data from large corpora is undoubtedly a complex task, and in order to do this successfully, we must first construct word embeddings that capture the semantic and syntactic relationships among words. In this section, we examine the process of encoding textual data in numeric vector form - known as vectorization, and so we are motivated to answer the question: how can we best vectorize text so as to encompass the important features of language?\newline
+
+Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set. \newline
+
+First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked.To mitigate against this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window). Despite the ability to preserve semantic relationships between words, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set. Hence, we may need to use a more robust approach.
+
 
 \subsection{Anomaly Detection Techniques}
 In order to extract meaningful data from large bodies of text, it must first undergo a pre-processing stage whereby the data is converted from its textual form into numerical data, known as vectorization. 
@@ -55,7 +61,9 @@ In order to extract meaningful data from large bodies of text, it must first und
 \newpage
 
 \subsection{References}
+\cite{robertson1976relevance}
 \cite{pennington2014glove}
+\cite{mikolov2013efficient}
 The list of cited references should appear at the end of the report,
 ordered alphabetically by the surnames of the first authors.
 The default style for references cited in the main text is the  Harvard (author, date) format.
