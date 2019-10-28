@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 OCT 2019 18:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  28 OCT 2019 20:19
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -133,20 +133,20 @@ LaTeX Info: Redefining \] on input line 2856.
 ) (Literature_Survey.aux)
 \openout1 = `Literature_Survey.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
-1.
+2.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
@@ -159,9 +159,14 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 25.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 32.
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--35
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
@@ -169,33 +174,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--35
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 44--45
-
+Overfull \hbox (2.388pt too wide) in paragraph at lines 51--52
+ \OT1/ptm/b/n/12 Tra-di-tional Ap-proaches --[] \OT1/ptm/m/n/12 Per-haps the si
+m-plest vec-tor-iza-tion ap-proach is \OT1/ptm/m/it/12 Bag of Words (BOW)\OT1/p
+tm/m/n/12 ,
  []
 
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-) [2]
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
+) [2] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
-(Literature_Survey.bbl) [3] (Literature_Survey.aux) ) 
+(Literature_Survey.bbl) [4] (Literature_Survey.aux) ) 
 Here is how much of TeX's memory you used:
- 2107 strings out of 492452
- 27585 string characters out of 3114457
- 94889 words of memory out of 3000000
- 6474 multiletter control sequences out of 15000+200000
+ 2108 strings out of 492452
+ 27609 string characters out of 3114457
+ 93889 words of memory out of 3000000
+ 6475 multiletter control sequences out of 15000+200000
  15159 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,9n,25p,1810b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,9n,25p,1820b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is hous
 e/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Passw
 ord is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
@@ -208,9 +210,9 @@ w/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/P
 rograms/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Literature_Survey.pdf (3 pages, 91531 bytes).
+Output written on Literature_Survey.pdf (4 pages, 99119 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
+ 48 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

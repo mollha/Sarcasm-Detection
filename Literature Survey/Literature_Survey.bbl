@@ -1,5 +1,13 @@
 \begin{thebibliography}{1}
 
+\bibitem{abercrombie2016putting}
+Gavin Abercrombie and Dirk Hovy.
+\newblock Putting sarcasm detection into context: The effects of class
+  imbalance and manual labelling on supervised machine classification of
+  twitter conversations.
+\newblock In {\em Proceedings of the ACL 2016 Student Research Workshop}, pages
+  107--113, 2016.
+
 \bibitem{hand2018note}
 David Hand and Peter Christen.
 \newblock A note on using the f-measure for evaluating record linkage
