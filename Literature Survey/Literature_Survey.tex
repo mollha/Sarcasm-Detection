@@ -85,6 +85,15 @@ Riloff et al. (2013) presents a bootstrapping algorithm for detecting a specific
 One such naive approach is rule-based, where texts is grouped based on a set of linguistic rules. These rules may be refined for a specific domain, or simply generalised to any kind of text. Generating these rules can be time consuming and requires in-depth knowledge of the domain. 
 
 \paragraph{Machine-Learning Classifiers --}
+Using labelled training data, a machine-learning algorithm can learn the hallmarks associated with each category. This allows it to classify text without the need for a static linguistic rule set. First, we need to perform feature extraction on the input text to produce a set of features. We then combine these features with tags (e.g. positive or negative in sentiment analysis) to produce a classification model. If the data is high-quality and plentiful, the model can begin to make accurate predictions.
+- Naive Bayes | A family of statistical algorithms, based on bayes theorem. MNB (Multinomial naive bayes allows us to make accurate predictions even with a small amount of training data)
+Quick description of Naive Bayes and the results of a few papers that have used it
+
+
+- Support Vector Machines (SVM), doesn't need a lot of training data but needs more computational resources than naive bayes - can achieve more accurate results. It draws a line / hyperplane diving a space into two subspaces (one containing vectors that belong to a group, the other containing the rest)
+Quick description of SVM and the results of a few papers that have used it
+
+
 
 
 \paragraph{Deep-Learning Classifiers --}
