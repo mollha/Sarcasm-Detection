@@ -8,6 +8,17 @@ Gavin Abercrombie and Dirk Hovy.
 \newblock In {\em Proceedings of the ACL 2016 Student Research Workshop}, pages
   107--113, 2016.
 
+\bibitem{bojanowski2016enriching}
+Piotr Bojanowski, Edouard Grave, Armand Joulin, and Tomas Mikolov.
+\newblock Enriching word vectors with subword information.
+\newblock {\em arXiv preprint arXiv:1607.04606}, 2016.
+
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
+
 \bibitem{hand2018note}
 David Hand and Peter Christen.
 \newblock A note on using the f-measure for evaluating record linkage
@@ -24,6 +35,19 @@ Jeffrey Pennington, Richard Socher, and Christopher Manning.
 \newblock Glove: Global vectors for word representation.
 \newblock In {\em Proceedings of the 2014 conference on empirical methods in
   natural language processing (EMNLP)}, pages 1532--1543, 2014.
+
+\bibitem{peters2018deep}
+Matthew~E Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark,
+  Kenton Lee, and Luke Zettlemoyer.
+\newblock Deep contextualized word representations.
+\newblock {\em arXiv preprint arXiv:1802.05365}, 2018.
+
+\bibitem{cambridge2019}
+Cambridge~University Press.
+\newblock Sarcasm: meaning in the cambridge english dictionary.
+\newblock \url{https://dictionary.cambridge.org/dictionary/english/sarcasm},
+  2019.
+\newblock Last accessed: 23 Oct 2019.
 
 \bibitem{robertson1976relevance}
 Stephen~E Robertson and K~Sparck Jones.

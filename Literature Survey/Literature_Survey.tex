@@ -9,7 +9,7 @@
 
 
 \citationmode{abbr}
-\bibliographystyle{harvard}
+\bibliographystyle{plain}
 
 \title{Literature Survey}
 
@@ -29,15 +29,16 @@
 
 \section{Introduction}
 \subsection{Problem Background}
-\noindent A form of irony, sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way []. This presents a fatal problem for classic sentiment analyzers, as text that appears to be positive at surface-level can instead convey an alternate negative meaning. Furthermore, failure to recognize sarcasm can be a human issue too, owing to the fact that its presence (or lack thereof) is considered rather subjective. Abercrombie et al. (2016) \cite{abercrombie2016putting} showed that different humans do not classify statements as either sarcastic or non-sarcastic in the same way - truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm. \\
+\noindent A form of irony, sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridge2019}. This presents a fatal problem for classic sentiment analyzers, as text that appears to be positive at surface-level can instead convey an alternate negative meaning. Furthermore, failure to recognize sarcasm can be a human issue too, owing to the fact that its presence (or lack thereof) is considered rather subjective. Abercrombie et al. (2016) \cite{abercrombie2016putting} showed that different humans do not classify statements as either sarcastic or non-sarcastic in the same way - truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm. \\
 
 \noindent There exists an extensive body of literature covering machine learning and deep learning approaches to natural language processing problems, however in the application domain of sarcasm detection, they mostly display low accuracy. This could be due, in part, to the absence of a concrete, all-encompassing definition of sarcasm. N.B. this may also contribute to poor human accuracy in detecting a fundamentally human construct. \\
 
-\noindent Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy. In my endeavour to realise this aim, I will apply state-of-the-art word embedding and classification techniques, using machine learning and deep learning.
+\noindent Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy. In my endeavour to realise this aim, I will implement state-of-the-art word embedding and classification techniques, using machine learning and deep learning.
 
 
 \subsection{Terms}
-
+NLP
+LSTM
 
 \newpage
 
@@ -49,9 +50,22 @@
 \noindent Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set.
 
 \paragraph{Word Embedding --}
-\noindent First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window). Despite the ability to preserve semantic relationships between words, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set. Hence, it may be neccessary to use a more robust approach.
+\noindent First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
+
+Despite their ability to preserve semantic relationships, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set. \textit{Bojanowski et al. (2017)} \cite{bojanowski2016enriching} describes a different vectorization technique used in Facebook's open-source fastText library. In the fastText approach, each word is represented as a bag of character n-grams which enables it to capture meaning for substrings such as prefixes and suffixes. In order to produce word embeddings for out-of-vocabulary tokens i.e.\ words not included in the training set, fastText composes vectors for the substrings that form the word. However, like Word2Vec and GloVe, FastText produces a single embedding for each word - hence, it cannot disambiguate polysemous words.
 
 \paragraph{Contextualized Word Embedding --}
+In pursuit of a more robust approach, we look to deep neural language models. Peters et al. (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilizes a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. Like fastText, they are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. 
+
+
+
+Transfer learning is a technique whereby instead of training a model from scratch, we use pre-trained models and finetune them for specific NLP tasks.
+BERT uses a bi-directional transformer
+BERT representations are 
+
+ \textit{BERT} \cite{devlin2018bert}
+ employs masked language modeling
+ 15\% of the words were hidden and inferred by their position
 
 \newpage
 
@@ -68,6 +82,14 @@ Riloff et al. (2013) presents a bootstrapping algorithm for detecting a specific
 \newpage
 
 \subsection{Data collection and pre-processing}
+As sarcasm is used in social, informal conversation. Social networks as a huge database of informal language. 
+
+Conversations on social media tend to be informal, however this will introduce noise into the dataset in the form of erroneous spelling, 
+
+I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context.
+
+In terms of data quality, it may not be adequate just to analyze the text independently. Some contextual information about the author of the tweet may be useful to add more meaning.
+
 \noindent The previous sections have highlighted the ambiguities within sarcasm. 
 This method is not without its flaws. Some people may incorrectly label their tweets as sarcastic, leading to noise in the dataset. Similarly, the non-sarcastic tweets are a subset of all other tweets that are not labelled with sarcasm and it goes without saying that a small percentage of these tweets will in fact be sarcastic - another source of noise.
 Likewise, numerous studies have shown that humans disagree over labelling statements as sarcastic.
