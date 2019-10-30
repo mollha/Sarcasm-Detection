@@ -4,7 +4,9 @@ Clean and segment data appropriately
 Discuss the different forms of sarcasm and the difficulty of detecting them
 Create a model that improves upon the performance of a trivial sentiment analyzer
 
-See if the chosen technique can improve the performance of a sentiment analyzer
+
+More often than not, sarcasm is negative disguised as positive. By introducing a third category, sarcastic, into sentiment analysis, can we improve the results of the state of the art
+i.e. See if the chosen technique can improve the performance of a sentiment analyzer
 
 Intermediate
 
@@ -19,3 +21,6 @@ Incorporate contextual embeddings (i.e. ELMo and BERT)
 Identify the indicator of sarcasm
 Create my own high-quality dataset, encoporating features of other successful datasets
 Create a GUI that enables the user to interact with the finished tool
+
+
+Evalute the performance of a deep-learning model from another domain on sarcasm detection

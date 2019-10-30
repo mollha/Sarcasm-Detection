@@ -33,7 +33,7 @@
 
 \noindent There exists an extensive body of literature covering machine learning and deep learning approaches to natural language processing problems, however in the application domain of sarcasm detection, they mostly display low accuracy. This could be due, in part, to the absence of a concrete, all-encompassing definition of sarcasm. N.B. this may also contribute to poor human accuracy in detecting a fundamentally human construct. \\
 
-\noindent Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy. In my endeavour to realise this aim, I will implement state-of-the-art word embedding and classification techniques, using machine learning and deep learning.
+\noindent Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy. In my endeavour to realise this aim, I will implement state-of-the-art word embedding and text classification techniques.
 
 
 \subsection{Terms}
@@ -69,7 +69,9 @@ BERT representations are
 
 \newpage
 
-\subsection{Feature extraction from word embeddings}
+\subsection{Classification}
+Text classification is the process of categorising text based on its content. This is useful for sorting unstructured data in order to provide the most relevant content
+
 have seen success in other NLP classification tasks, such as ... In the domain of sarcasm detection, 
 
 A growing trend appears to be extraction 
@@ -79,8 +81,16 @@ Joshi et al. (2016) explores the usefulness of word-embedding based features in 
 
 Riloff et al. (2013) presents a bootstrapping algorithm for detecting a specific style of sarcasm - contrasting a negative situation with a positive sentiment. This is an oversimplification of sarcasm, hence it is unlikely to capture less explicit formulations.
 
-\newpage
+\paragraph{Traditional Classifiers --}
+One such naive approach is rule-based, where texts is grouped based on a set of linguistic rules. These rules may be refined for a specific domain, or simply generalised to any kind of text. Generating these rules can be time consuming and requires in-depth knowledge of the domain. 
 
+\paragraph{Machine-Learning Classifiers --}
+
+
+\paragraph{Deep-Learning Classifiers --}
+
+
+\newpage
 \subsection{Data collection and pre-processing}
 As sarcasm is used in social, informal conversation. Social networks as a huge database of informal language. 
 
@@ -95,7 +105,7 @@ This method is not without its flaws. Some people may incorrectly label their tw
 Likewise, numerous studies have shown that humans disagree over labelling statements as sarcastic.
 
 \subsection{Model Performance Evaluation}
-\noindent Lastly, evaluating the successes and failures of the trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
+\noindent Lastly, evaluating the successes and failures of a trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
 
 \begin{align*}
 \mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}
