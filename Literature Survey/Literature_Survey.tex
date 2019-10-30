@@ -29,7 +29,7 @@
 
 \section{Introduction}
 \subsection{Problem Background}
-\noindent A form of irony, sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridge2019}. This presents a fatal problem for classic sentiment analyzers, as text that appears to be positive at surface-level can instead convey an alternate negative meaning. Furthermore, failure to recognize sarcasm can be a human issue too, owing to the fact that its presence (or lack thereof) is considered rather subjective. Abercrombie et al. (2016) \cite{abercrombie2016putting} showed that different humans do not classify statements as either sarcastic or non-sarcastic in the same way - truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm. \\
+\noindent A form of irony, sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridge2019}. This presents a fatal problem for classic sentiment analyzers, as text that appears to be positive at surface-level can instead convey an alternate negative meaning. Furthermore, failure to recognize sarcasm can be a human issue too, owing to the fact that its presence (or lack thereof) is considered rather subjective. Gonz{\'a}lez-Ib{\'a}nez et al. (2011) \cite{gonzalez2011identifying} showed that different humans do not classify statements as either sarcastic or non-sarcastic in the same way - for example, in their second study all three human judges agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm. \\
 
 \noindent There exists an extensive body of literature covering machine learning and deep learning approaches to natural language processing problems, however in the application domain of sarcasm detection, they mostly display low accuracy. This could be due, in part, to the absence of a concrete, all-encompassing definition of sarcasm. N.B. this may also contribute to poor human accuracy in detecting a fundamentally human construct. \\
 
@@ -43,12 +43,77 @@ LSTM
 \newpage
 
 \section{Themes}
+\subsection{Data pre-processing}
+
+In reality, sarcasm occurs infrequently, it doesn't crop up often. 
+
+
+A number of datasets have compiled statements from Reddit \cite{wallace2014humans,khodak2017large}
+
+Removing stopwords and other aspect
+Some techniques word rem
+
+Some applications advocate for the use of stemming, such as search applications, e.g. searching for 'deep learn' should prodce similar results to 'deep learning'. 
+
+We could perform topic modelling on a general social media dataset
+Based on this, we could see which sorts of topics are more likely to indicate sarcasm?
+
+As sarcasm is used in social, informal conversation. 
+
+Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, Riloff et al. (2003) 
+
+Social networks are a huge database of informal language. 
+
+The be
+
+
+Sarcasm is 
+
+On the one hand, collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. 
+
+Most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, therefore the set of non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements.
+
+In this dataset, characters are restricted to ASCII, therefore 
+
+One potential option is to include a fixed word dictionary containing positive and negative emoticons and include this as an additional feature.
+
+
+
+
+Similarly, the Reddit dataset \cite{khodak2017large} 
+This is an unbalanced, self-annotated dataset
+
+Reddit users terminate a sarcastic statement with the "/s" marker. 
+
+They collected 
+
+
+
+Riloff et al. (2013) \cite{riloff2013sarcasm} collected 
+
+
+
+Conversations on social media tend to be informal, however this will introduce noise into the dataset in the form of erroneous spelling, 
+
+I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context.
+
+In terms of data quality, it may not be adequate just to analyze the text independently. Some contextual information about the author of the tweet may be useful to add more meaning.
+
+\noindent The previous sections have highlighted the ambiguities within sarcasm. 
+Riloff et al. (), 
+
+
+This method is not without its flaws. Some people may incorrectly label their tweets as sarcastic, leading to noise in the dataset. Similarly, the non-sarcastic tweets are a subset of all other tweets that are not labelled with sarcasm and it goes without saying that a small percentage of these tweets will in fact be sarcastic - another source of noise.
+Likewise, numerous studies have shown that humans disagree over labelling statements as sarcastic.
+
+\vfill
+
 \subsection{Vectorization of textual data}
-\noindent Extracting meaningful data from large corpora is undoubtedly a complex task, however in order to do this successfully, we must first construct word vectors that capture semantic and syntactic relationships in a process known as vectorization. In this section, we examine this process with the aim of answering the question: how can we \textit{best} vectorize text so as to encode the important features of language?
+\noindent Extracting meaningful data from large corpora is undoubtedly a complex task, however in order to do this successfully, we must first construct word vectors that capture semantic and syntactic relationships in a process known as vectorization. In this section, we examine this process with the aim of answering the question: how can we \textit{best} vectorize text so as to encapsulate the important features of language?
 
 \paragraph{Traditional Approaches --}
 \noindent Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set.
-
+\vfill
 \paragraph{Word Embedding --}
 \noindent First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
 
@@ -67,10 +132,25 @@ BERT representations are
  employs masked language modeling
  15\% of the words were hidden and inferred by their position
 
-\newpage
+\vfill
 
 \subsection{Classification}
-Text classification is the process of categorising text based on its content. This is useful for sorting unstructured data in order to provide the most relevant content
+\noindent Most approaches treat sarcasm detection as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. In the following text, I will compare methods used specifically in sarcasm detection research, as well as techniques that have seen success in other NLP classification tasks as they may have potential to perform well in this specific domain. \\
+
+Tsur et al. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews.  They used a dataset containing 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They begin with a small set of seed sentences, 
+
+
+First, they extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
+
+
+
+
+\paragraph{Traditional Classifiers --}
+Standard linguistic approaches
+One such naive approach is rule-based, where texts is grouped based on a set of linguistic rules. These rules may be refined for a specific domain, or simply generalised to any kind of text. Generating these rules can be time consuming and requires in-depth knowledge of the domain. 
+
+
+Wallace et al.(2014) showed that humans require access to context in order to judge sarcastic tone, hence it may be naive to assume that machines can perform well on this task without it. 
 
 have seen success in other NLP classification tasks, such as ... In the domain of sarcasm detection, 
 
@@ -81,39 +161,53 @@ Joshi et al. (2016) explores the usefulness of word-embedding based features in 
 
 Riloff et al. (2013) presents a bootstrapping algorithm for detecting a specific style of sarcasm - contrasting a negative situation with a positive sentiment. This is an oversimplification of sarcasm, hence it is unlikely to capture less explicit formulations.
 
-\paragraph{Traditional Classifiers --}
-One such naive approach is rule-based, where texts is grouped based on a set of linguistic rules. These rules may be refined for a specific domain, or simply generalised to any kind of text. Generating these rules can be time consuming and requires in-depth knowledge of the domain. 
+
 
 \paragraph{Machine-Learning Classifiers --}
 Using labelled training data, a machine-learning algorithm can learn the hallmarks associated with each category. This allows it to classify text without the need for a static linguistic rule set. First, we need to perform feature extraction on the input text to produce a set of features. We then combine these features with tags (e.g. positive or negative in sentiment analysis) to produce a classification model. If the data is high-quality and plentiful, the model can begin to make accurate predictions.
 - Naive Bayes | A family of statistical algorithms, based on bayes theorem. MNB (Multinomial naive bayes allows us to make accurate predictions even with a small amount of training data)
 Quick description of Naive Bayes and the results of a few papers that have used it
-
-
 - Support Vector Machines (SVM), doesn't need a lot of training data but needs more computational resources than naive bayes - can achieve more accurate results. It draws a line / hyperplane diving a space into two subspaces (one containing vectors that belong to a group, the other containing the rest)
-Quick description of SVM and the results of a few papers that have used it
 
+\cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression
+
+\cite{ptavcek2014sarcasm} also used support vector machine classifiers
+ 
+- Logistic Regression
+Quick description of SVM and the results of a few papers that have used it
+Machine learning algorithms reach a certain threshold where adding more training data doesn't improve their accuracy.
+
+
+Ptacek et al. () also form their english dataset using the same approach.
+
+
+Some studies have instead used amazon product reviews, for example Tsur et al. (2010) analyzed sentences from a dataset of 5.9 million tweets and 66000 product reviews from Amazon. They used crowdsourcing to annotate the corpus
 
 
 
 \paragraph{Deep-Learning Classifiers --}
+Two common architectures used in text classification are Convolutional Neural Networks and Recurrent Neural Networks. They typically require a lot more training data than machine learning algorithms, however unlike machine learning algorithms, they get more accurate the more data they are fed without being capped at a certain threshold.
+
+CNN allows us to extract higher-level features, has applications in sentiment analysis. Collobert and Weston were among the first to apply CNN-based frameworks to NLP tasks
+RNNs are probably better
+
+RNNs are specialized neural-based approaches, good at processing sequential / time-series information (i.e. text)
+However, they suffer from the vanishing gradient problem
+
+LTSMs and GRUs introduced to overcome this
+
+An LSTM consists of three gates, 
+
+
 
 
 \newpage
-\subsection{Data collection and pre-processing}
-As sarcasm is used in social, informal conversation. Social networks as a huge database of informal language. 
 
-Conversations on social media tend to be informal, however this will introduce noise into the dataset in the form of erroneous spelling, 
-
-I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context.
-
-In terms of data quality, it may not be adequate just to analyze the text independently. Some contextual information about the author of the tweet may be useful to add more meaning.
-
-\noindent The previous sections have highlighted the ambiguities within sarcasm. 
-This method is not without its flaws. Some people may incorrectly label their tweets as sarcastic, leading to noise in the dataset. Similarly, the non-sarcastic tweets are a subset of all other tweets that are not labelled with sarcasm and it goes without saying that a small percentage of these tweets will in fact be sarcastic - another source of noise.
-Likewise, numerous studies have shown that humans disagree over labelling statements as sarcastic.
 
 \subsection{Model Performance Evaluation}
+We can use cross-validation in order to evaluate the performance of our classifier. It may be possible to visualise the attention words over a selection of the test set, showing which words the neural network is paying specific attention to. Computing the attention weights
+
+
 \noindent Lastly, evaluating the successes and failures of a trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
 
 \begin{align*}

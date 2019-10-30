@@ -14,6 +14,8 @@ Can this model be applied to large corpora as a pre-processing step in order to 
 Can the identification of sarcastic statements support the sentiment analysis task
 
 
+Can data-enrichment be performed by adding additional features?
+
 // Explained
 Sentiment analysers tend to fail when it comes to classifying sarcastic statements. If they could be pre-classified as a sarcastic (hence, negative?)
 statement and removed before they are "put through" the sentiment analyser, this may produce more accurate results

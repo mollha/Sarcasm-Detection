@@ -21,7 +21,7 @@ How can combining a model with different features affect the performance of a mo
 
 Advanced Deliverables
 Incorporate contextual embeddings (i.e. ELMo and BERT)
-Identify the indicator of sarcasm
+Identify the indicator of sarcasm (not just sarcastic or not sarcastic), could use topic modelling on the dataset
 Create my own high-quality dataset, encoporating features of other successful datasets
 Create a GUI that enables the user to interact with the finished tool
 
