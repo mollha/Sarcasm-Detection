@@ -64,6 +64,11 @@ Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
 \newblock Efficient estimation of word representations in vector space.
 \newblock {\em arXiv preprint arXiv:1301.3781}, 2013.
 
+\bibitem{misra2019sarcasm}
+Rishabh Misra and Prahal Arora.
+\newblock Sarcasm detection using hybrid neural network.
+\newblock {\em arXiv preprint arXiv:1908.07414}, 2019.
+
 \bibitem{pennington2014glove}
 Jeffrey Pennington, Richard Socher, and Christopher Manning.
 \newblock Glove: Global vectors for word representation.
@@ -114,12 +119,5 @@ Oren Tsur, Dmitry Davidov, and Ari Rappoport.
   sentences in online product reviews.
 \newblock In {\em Fourth International AAAI Conference on Weblogs and Social
   Media}, 2010.
-
-\bibitem{wallace2014humans}
-Byron~C Wallace, Laura Kertz, Eugene Charniak, et~al.
-\newblock Humans require context to infer ironic intent (so computers probably
-  do, too).
-\newblock In {\em Proceedings of the 52nd Annual Meeting of the Association for
-  Computational Linguistics (Volume 2: Short Papers)}, pages 512--516, 2014.
 
 \end{thebibliography}

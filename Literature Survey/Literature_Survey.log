@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  31 OCT 2019 18:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  31 OCT 2019 20:47
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -184,41 +184,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
 
  []
 
 [2]
-Overfull \hbox (2.388pt too wide) in paragraph at lines 164--165
+Overfull \hbox (2.388pt too wide) in paragraph at lines 60--61
  \OT1/ptm/b/n/12 Tra-di-tional Ap-proaches --[] \OT1/ptm/m/n/12 Per-haps the si
 m-plest vec-tor-iza-tion ap-proach is \OT1/ptm/m/it/12 Bag of Words (BOW)\OT1/p
 tm/m/n/12 ,
  []
 
-[3]
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-) [4] [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 243--244
+) [3] [4] [5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 139--140
 
  []
 
-(Literature_Survey.bbl [8]
+(Literature_Survey.bbl [7]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-2.
+7.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 2150) in paragraph at lines 80--85
+Underfull \hbox (badness 2150) in paragraph at lines 85--90
 []\OT1/ptm/m/n/12 Cambridge Uni-ver-sity Press.  Sar-casm: mean-ing in the cam-
 bridge en-glish dic-
  []
 
 
-Underfull \hbox (badness 4391) in paragraph at lines 80--85
+Underfull \hbox (badness 4391) in paragraph at lines 85--90
 \OT1/ptm/m/n/12 tio-nary.  $\OT1/pcr/m/n/12 https : / / dictionary . cambridge 
 . org / dictionary / english /
  []
@@ -227,35 +227,31 @@ Underfull \hbox (badness 4391) in paragraph at lines 80--85
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [9] (Literature_Survey.aux) )
-(\end occurred inside a group at level 1)
-
-### simple group (level 1) entered at line 102 ({)
-### bottom level 
+)) [8] (Literature_Survey.aux) ) 
 Here is how much of TeX's memory you used:
  2491 strings out of 492452
- 32432 string characters out of 3114457
- 97974 words of memory out of 3000000
+ 32431 string characters out of 3114457
+ 96974 words of memory out of 3000000
  6846 multiletter control sequences out of 15000+200000
  15674 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,9n,24p,1475b,504s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/f
-onts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is house
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
-/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/AppDat
-a/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Passwo
-rd is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb>
+ 30i,9n,24p,1475b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Password is house/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/
+Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/P
+assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password
+ is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb>
 <C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/t
-imes/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Literature_Survey.pdf (9 pages, 130080 bytes).
+imes/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Literature_Survey.pdf (8 pages, 128442 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
+ 66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

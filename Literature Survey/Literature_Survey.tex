@@ -40,125 +40,21 @@ LSTM
 \newpage
 
 \section{Themes}
+\subsection{Data collection}
+\noindent Sarcasm is typically used in informal discussions in person and online. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2016)} \cite{joshi2016automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. Much of the data is self-labelled by the author, either with markers such as \#sarcasm in twitter data \cite{reyes2013multidimensional, davidov2010semi, ptavcek2014sarcasm}, or '/s' in reddit \cite{khodak2017large}. Collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. Due to the fact that most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, the set containing non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements. Furthermore, the character limit of tweets is fixed at 140 - hence, essential context is often missing. It may be inadequate to analyze the text independently. Some contextual information, such as the number of followers author of the tweet, may be useful in providing more context and meaning.\\
+
+\noindent There are also publicly available datasets containing manually labelled data. The \textit{News Headlines for Sarcasm Detection} dataset \cite{misra2019sarcasm} consists of data originating from two news websites - one posting legitimate news and the other posting sarcastic synopses of current events. These headlines are written in a professional manner therefore spelling errors are less frequent. Furthermore, each headline is independent, unlike tweets which may be in reference to earlier posts. On the contrary, News headlines cover a smaller range of topics than twitter posts - hence, training a model in the narrow domain of news headlines will restrict the types of data that the model can generalise to. In addition, many datasets assume a balance between sarcastic and non-sarcastic samples, although this can lead to problems such as the \textit{class inbalance problem}. Sarcasm occurs infrequently in conversation i.e. it is a minority class, and oversampling the minority class can lead to model overfitting.
+\vfill
+
 \subsection{Data pre-processing}
-\noindent Data pre-processing is the first stage in most NLP tasks, and has the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. Under some circumstances, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.\\
+\noindent Data pre-processing is an important stage in most NLP tasks, with the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. For some datasets, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.\\
 
-\noindent Sarcasm is typically used in informal discussions in person and online. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2016)} \cite{joshi2016automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. Much of the data is self-labelled by the author, either with markers such as \#sarcasm in twitter data \cite{reyes2013multidimensional, davidov2010semi}, or '/s' in reddit \cite{khodak2017large}. Collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. Due to the fact that most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, the set containing non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements.\\
-
-
-
-Liebrecht et al. (2013) \cite{liebrecht2013perfect} demonstrated how the use of \#not can be an indicator of sarcasm.
-
-
-In Riloff et al. (2013), tweets 
-
-
-
-
-
-
-Oftentimes, these datasets are balanced, despite the fact that sarcasm occurs infrequently.
-
-
-
-\noindent Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing this may make the presence of sarcasm less obvious.
-
-
-\textit{Kreuz and Caucci (2007)} analyzed the effect of lexical influences, such as interjections and punctuation, on the perception of sarcasm.  
-
-
-
-
-
-Reyes et al. (2013) \cite{reyes2013multidimensional}  explored the use of various lexical signatures as indicators of sarcasm, using features such as emoticons, punctuation and capitalization. 
-
-
-
-However, Reyes et al. (2013) \cite{reyes2013multidimensional}  explored the use of various lexical signatures as indicators of sarcasm, using features such as emoticons, punctuation and capitalization. 
-
-However, Reyes et al. (2013) \cite{reyes2013multidimensional} showed that lexical signatures as indicators of sarcasm can be leveraged, using features such as emoticons, punctuation and capitalization. 
-
-
-
-
-
-
-Spelling correction
-
-Data cleaning, annotation, normalization, are all forms of data pre-processing. 
-
-
-
-Tokenization, data cleaning and normalization are all data pre-processing steps 
-
-For example, stemming and lemmatization can both be used in normalization, as well as case transformation.
-
-There are numerous data pre-processing techniques used in a variety of NLP tasks.
-
-
-In reality, sarcasm occurs infrequently, it doesn't crop up often. 
-
-
-In Pt{\'a}{\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm}, they used a twitter dataset that they stripped of references to users, URLS and hashtags. 
-	
-	
-The character limit of tweets is fixed at 140 - hence, essential context is often missing. 
-
-Sarcasm is typically used in informal conversations
-
-
-
-
-
-
-A number of datasets have compiled statements from Reddit \cite{wallace2014humans,khodak2017large}
-
-Removing stopwords and other aspect
-Some techniques word rem
-
-Some applications advocate for the use of stemming, such as search applications, e.g. searching for 'deep learn' should prodce similar results to 'deep learning'. 
-
-We could perform topic modelling on a general social media dataset
-Based on this, we could see which sorts of topics are more likely to indicate sarcasm?
-
-
-Wallace et al\.(2014) showed that humans require access to context in order to judge sarcastic tone, hence it may be naive to assume that machines can perform well on this task without it. 
-
-
-In this dataset, characters are restricted to ASCII, therefore 
-
-One potential option is to include a fixed word dictionary containing positive and negative emoticons and include this as an additional feature.
-
-
-
-
-Similarly, the Reddit dataset \cite{khodak2017large} 
-This is an unbalanced, self-annotated dataset
-
-Reddit users terminate a sarcastic statement with the "/s" marker. 
-
-
-
-
-Riloff et al\ (2013) \cite{riloff2013sarcasm} collected 
-
-
-
-Conversations on social media tend to be informal, however this will introduce noise into the dataset in the form of erroneous spelling, 
-
-I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context. Hence, it may inadequate just to analyze the text independently. Some contextual information, such as the number of followers author of the tweet, may be useful to add more meaning.
-
-\noindent The previous sections have highlighted the ambiguities within sarcasm. 
-Riloff et al\ (), 
-
-
-This method is not without its flaws. Some people may incorrectly label their tweets as sarcastic, leading to noise in the dataset. Similarly, the non-sarcastic tweets are a subset of all other tweets that are not labelled with sarcasm and it goes without saying that a small percentage of these tweets will in fact be sarcastic - another source of noise.
-Likewise, numerous studies have shown that humans disagree over labelling statements as sarcastic.
-
+\noindent On twitter, users can include hyperlinks to other websites in their tweets which can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, data contained in these hashtags can be key indicators of sarcasm. Liebrecht et al. (2013) \cite{liebrecht2013perfect} demonstrated how the \#not can be used to explicity imply sarcasm. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 \vfill
 
 \subsection{Vectorization of textual data}
 \noindent Extracting meaningful data from large corpora is undoubtedly a complex task, however in order to do this successfully, we must first construct word vectors that capture semantic and syntactic relationships in a process known as vectorization. In this section, we examine this process with the aim of answering the question: how can we \textit{best} vectorize text so as to encapsulate the important features of language?
+
 
 \paragraph{Traditional Approaches --}
 \noindent Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set.
