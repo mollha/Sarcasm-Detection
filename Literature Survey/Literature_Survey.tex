@@ -11,8 +11,9 @@
 \citationmode{abbr}
 \bibliographystyle{plain}
 
-\title{Literature Survey}
-
+\title{
+	Applying machine learning and deep learning techniques to sarcasm detection \\
+	\large Literature Survey}
 \author{Molly Hayward}
 \student{Molly Hayward}
 \supervisor{Dr Noura Al-Moubayed}
@@ -44,8 +45,49 @@ LSTM
 
 \section{Themes}
 \subsection{Data pre-processing}
+\noindent Data pre-processing is the first stage in most NLP tasks, and has the potential to hinder or boost model performance. Cleaning and normalizing data in this way can improve the quality of a dataset - reducing noise and the complexity of the feature space. However, the suitability of certain techniques is highly dependent on the domain.\\
+
+\noindent Sarcasm is typically used in informal discussions both online and in person. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2017)} \cite{joshi2017automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. \\
+
+
+
+For example, punctuation removal is a common form of data cleaning. 
+
+
+Given that punctuation such as "!" can indicate emphasis, 
+
+Some data cleaning techniques consider removal of punctuation, however 
+
+\textit{Kreuz and Caucci (2007)} analyzed the effect of lexical influences, such as interjections and punctuation, on the perception of sarcasm.  
+
+Oftentimes, these datasets are balanced, despite the fact that sarcasm occurs infrequently.
+
+
+
+Spelling correction
+
+Data cleaning, annotation, normalization, are all forms of data pre-processing. 
+
+
+
+Tokenization, data cleaning and normalization are all data pre-processing steps 
+
+For example, stemming and lemmatization can both be used in normalization, as well as case transformation.
+
+There are numerous data pre-processing techniques used in a variety of NLP tasks.
+
 
 In reality, sarcasm occurs infrequently, it doesn't crop up often. 
+
+
+Riloff et al. (2013) interprets sarcasm as a contrast between positive sentiment and negative situation.
+
+
+Sarcasm is typically used in informal conversations
+
+
+
+The character limit of tweets is fixed at 140 - hence, essential context is often missing. 
 
 
 A number of datasets have compiled statements from Reddit \cite{wallace2014humans,khodak2017large}
@@ -58,16 +100,10 @@ Some applications advocate for the use of stemming, such as search applications,
 We could perform topic modelling on a general social media dataset
 Based on this, we could see which sorts of topics are more likely to indicate sarcasm?
 
-As sarcasm is used in social, informal conversation. 
 
-Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, Riloff et al. (2003) 
 
 Social networks are a huge database of informal language. 
 
-The be
-
-
-Sarcasm is 
 
 On the one hand, collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. 
 
@@ -95,9 +131,7 @@ Riloff et al. (2013) \cite{riloff2013sarcasm} collected
 
 Conversations on social media tend to be informal, however this will introduce noise into the dataset in the form of erroneous spelling, 
 
-I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context.
-
-In terms of data quality, it may not be adequate just to analyze the text independently. Some contextual information about the author of the tweet may be useful to add more meaning.
+I expect to encounter some difficuties when it comes to processing informal and erroneous spelling. Additionally, in a dataset of tweets, text is fairly short and could be lacking essential context. Hence, it may inadequate just to analyze the text independently. Some contextual information, such as the number of followers author of the tweet, may be useful to add more meaning.
 
 \noindent The previous sections have highlighted the ambiguities within sarcasm. 
 Riloff et al. (), 
@@ -115,7 +149,7 @@ Likewise, numerous studies have shown that humans disagree over labelling statem
 \noindent Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set.
 \vfill
 \paragraph{Word Embedding --}
-\noindent First introduced in Mikolov et al. \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
+\noindent First introduced in Mikolov et al. (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
 
 Despite their ability to preserve semantic relationships, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set. \textit{Bojanowski et al. (2017)} \cite{bojanowski2016enriching} describes a different vectorization technique used in Facebook's open-source fastText library. In the fastText approach, each word is represented as a bag of character n-grams which enables it to capture meaning for substrings such as prefixes and suffixes. In order to produce word embeddings for out-of-vocabulary tokens i.e.\ words not included in the training set, fastText composes vectors for the substrings that form the word. However, like Word2Vec and GloVe, FastText produces a single embedding for each word - hence, it cannot disambiguate polysemous words.
 
@@ -180,6 +214,8 @@ Machine learning algorithms reach a certain threshold where adding more training
 
 Ptacek et al. () also form their english dataset using the same approach.
 
+Ghosh et al. 2015 used SVMs
+
 
 Some studies have instead used amazon product reviews, for example Tsur et al. (2010) analyzed sentences from a dataset of 5.9 million tweets and 66000 product reviews from Amazon. They used crowdsourcing to annotate the corpus
 
@@ -205,9 +241,6 @@ An LSTM consists of three gates,
 
 
 \subsection{Model Performance Evaluation}
-We can use cross-validation in order to evaluate the performance of our classifier. It may be possible to visualise the attention words over a selection of the test set, showing which words the neural network is paying specific attention to. Computing the attention weights
-
-
 \noindent Lastly, evaluating the successes and failures of a trained model is a critical step. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
 
 \begin{align*}

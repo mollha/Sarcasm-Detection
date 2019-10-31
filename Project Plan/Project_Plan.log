@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  24 OCT 2019 20:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  31 OCT 2019 08:09
 entering extended mode
 **./Project_Plan.tex
 (Project_Plan.tex
@@ -66,30 +66,51 @@ LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 26.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 32.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 31.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 3
+6.
+
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
+\omsptm.fd"
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
  [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
- [2] (Project_Plan.aux) ) 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 54.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 54.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 54.
+
+Overfull \hbox (7.28427pt too wide) in paragraph at lines 54--74
+[][] 
+ []
+
+[2] (Project_Plan.aux) ) 
 Here is how much of TeX's memory you used:
- 543 strings out of 492452
- 7323 string characters out of 3114457
- 66498 words of memory out of 3000000
- 4958 multiletter control sequences out of 15000+200000
- 11948 words of font info for 25 fonts, out of 3000000 for 9000
+ 581 strings out of 492452
+ 7897 string characters out of 3114457
+ 67498 words of memory out of 3000000
+ 4985 multiletter control sequences out of 15000+200000
+ 14934 words of font info for 34 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 24i,4n,24p,164b,133s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/MiK
-TeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/P
-rograms/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/
-Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8
-a.pfb>
-Output written on Project_Plan.pdf (2 pages, 35155 bytes).
+ 24i,8n,24p,164b,159s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Password is house/AppData/Local/Programs/MiKT
+eX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password 
+is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:
+/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/time
+s/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/urw/times/utmr8a.pfb>
+Output written on Project_Plan.pdf (2 pages, 48453 bytes).
 PDF statistics:
- 22 PDF objects out of 1000 (max. 8388607)
+ 26 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -4,6 +4,7 @@ Clean and segment data appropriately
 Discuss the different forms of sarcasm and the difficulty of detecting them
 
 
+It may be possible to visualise the attention words over a selection of the test set, showing which words the neural network is paying specific attention to. Computing the attention weights
 
 
 
