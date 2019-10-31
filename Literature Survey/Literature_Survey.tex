@@ -41,7 +41,23 @@ LSTM
 
 \section{Themes}
 \subsection{Data pre-processing}
-\noindent Data pre-processing is the first stage in most NLP tasks, and has the potential to hinder or boost model performance. Cleaning and normalizing data in this way can improve the quality of a dataset - reducing noise and the complexity of the feature space. However, the suitability of certain techniques is highly dependent on the domain.\\
+\noindent Data pre-processing is the first stage in most NLP tasks, and has the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. Under some circumstances, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.\\
+
+
+Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. 
+
+
+
+
+
+For example, by transforming text into lowercase and removing hyphens, caN't, Can't, CANt (and other variations) are all mapped to the same word - cant. 
+
+\paragraph{Lowercasing --}
+Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. Cat, cAt, and CAt all become the same word - cat.
+
+
+
+
 
 \noindent Sarcasm is typically used in informal discussions both online and in person. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2017)} \cite{joshi2017automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. \\
 
