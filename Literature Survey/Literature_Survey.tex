@@ -5,7 +5,7 @@
 \usepackage{cite}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
-
+\usepackage{url}
 
 
 \citationmode{abbr}
@@ -153,18 +153,7 @@ Despite their ability to preserve semantic relationships, Word2Vec and GloVe do 
 
 \paragraph{Contextualized Word Embedding --}
 In pursuit of a more robust approach, we look to deep neural language models. Peters et al\. (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilizes a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. Like fastText, they are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found.
-Devlin et al\. (2018) \cite{devlin2018bert} introduced the \textit{BERT} framework, a multi-layer bidirectional transformer model consisting of two main steps - \textit{pre-training} and \textit{fine-tuning}. During pre-training, unlabeled data is used to train the model on different tasks, providing some initial parameters that are tweaked in the fine-tuning stage. BERT uses a \textit{masked language model} which randomly masks some tokens with the aim of predicting them based on context. This allows BERT to leverage both left and right contexts simultaneously, unlike ELMO which uses shallow concatenation of separately trained left-to-right and right-to-left language models. 
-
-
-
-Transfer learning is a technique whereby instead of training a model from scratch, we use pre-trained models and finetune them for specific NLP tasks.
-BERT uses a bi-directional transformer
-BERT representations are 
-
- \textit{BERT} \cite{devlin2018bert}
- employs masked language modeling
- 15\% of the words were hidden and inferred by their position
-
+Devlin et al\. (2018) \cite{devlin2018bert} introduced the \textit{BERT} framework, a multi-layer bidirectional transformer model consisting of two main steps - \textit{pre-training} and \textit{fine-tuning}. It uses a  procedure as \textit{transfer learning}, whereby pre-trained models are used and fine-tuned for specific tasks, rather than training a model from scratch. During pre-training, unlabeled data is used to train the model on different tasks, providing some initial parameters that are tweaked in the fine-tuning stage. BERT uses a \textit{masked language model} which randomly masks some tokens with the aim of predicting them based on context. This allows BERT to leverage both left and right contexts simultaneously, unlike ELMO which uses shallow concatenation of separately trained left-to-right and right-to-left language models. 
 \vfill
 
 \subsection{Classification}
