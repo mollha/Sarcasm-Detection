@@ -43,36 +43,43 @@ LSTM
 \subsection{Data pre-processing}
 \noindent Data pre-processing is the first stage in most NLP tasks, and has the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. Under some circumstances, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.\\
 
-
-Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. 
-
+\noindent Sarcasm is typically used in informal discussions in person and online. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2016)} \cite{joshi2016automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. Much of the data is self-labelled by the author, either with markers such as \#sarcasm in twitter data \cite{reyes2013multidimensional, davidov2010semi}, or '/s' in reddit \cite{khodak2017large}. Collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. Due to the fact that most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, the set containing non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements.\\
 
 
 
+Liebrecht et al. (2013) \cite{liebrecht2013perfect} demonstrated how the use of \#not can be an indicator of sarcasm.
 
-For example, by transforming text into lowercase and removing hyphens, caN't, Can't, CANt (and other variations) are all mapped to the same word - cant. 
 
-\paragraph{Lowercasing --}
-Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. Cat, cAt, and CAt all become the same word - cat.
+In Riloff et al. (2013), tweets 
 
 
 
 
 
-\noindent Sarcasm is typically used in informal discussions both online and in person. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2017)} \cite{joshi2017automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. \\
+
+Oftentimes, these datasets are balanced, despite the fact that sarcasm occurs infrequently.
 
 
 
-For example, punctuation removal is a common form of data cleaning. 
+\noindent Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing this may make the presence of sarcasm less obvious.
 
-
-Given that punctuation such as "!" can indicate emphasis, 
-
-Some data cleaning techniques consider removal of punctuation, however 
 
 \textit{Kreuz and Caucci (2007)} analyzed the effect of lexical influences, such as interjections and punctuation, on the perception of sarcasm.  
 
-Oftentimes, these datasets are balanced, despite the fact that sarcasm occurs infrequently.
+
+
+
+
+Reyes et al. (2013) \cite{reyes2013multidimensional}  explored the use of various lexical signatures as indicators of sarcasm, using features such as emoticons, punctuation and capitalization. 
+
+
+
+However, Reyes et al. (2013) \cite{reyes2013multidimensional}  explored the use of various lexical signatures as indicators of sarcasm, using features such as emoticons, punctuation and capitalization. 
+
+However, Reyes et al. (2013) \cite{reyes2013multidimensional} showed that lexical signatures as indicators of sarcasm can be leveraged, using features such as emoticons, punctuation and capitalization. 
+
+
+
 
 
 
@@ -92,14 +99,16 @@ There are numerous data pre-processing techniques used in a variety of NLP tasks
 In reality, sarcasm occurs infrequently, it doesn't crop up often. 
 
 
-Riloff et al\ (2013) interprets sarcasm as a contrast between positive sentiment and negative situation.
-
+In Pt{\'a}{\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm}, they used a twitter dataset that they stripped of references to users, URLS and hashtags. 
+	
+	
+The character limit of tweets is fixed at 140 - hence, essential context is often missing. 
 
 Sarcasm is typically used in informal conversations
 
 
 
-The character limit of tweets is fixed at 140 - hence, essential context is often missing. 
+
 
 
 A number of datasets have compiled statements from Reddit \cite{wallace2014humans,khodak2017large}
@@ -113,13 +122,8 @@ We could perform topic modelling on a general social media dataset
 Based on this, we could see which sorts of topics are more likely to indicate sarcasm?
 
 
+Wallace et al\.(2014) showed that humans require access to context in order to judge sarcastic tone, hence it may be naive to assume that machines can perform well on this task without it. 
 
-Social networks are a huge database of informal language. 
-
-
-On the one hand, collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. 
-
-Most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, therefore the set of non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements.
 
 In this dataset, characters are restricted to ASCII, therefore 
 
@@ -133,7 +137,6 @@ This is an unbalanced, self-annotated dataset
 
 Reddit users terminate a sarcastic statement with the "/s" marker. 
 
-They collected 
 
 
 
@@ -170,33 +173,12 @@ In pursuit of a more robust approach, we look to deep neural language models. Pe
 Devlin et al. (2018) \cite{devlin2018bert} introduced the \textit{BERT} framework, a multi-layer bidirectional transformer model consisting of two main steps - \textit{pre-training} and \textit{fine-tuning}. During pre-training, unlabeled data is used to train the model on different tasks, providing some initial parameters that are tweaked in the fine-tuning stage (a procedure known as \textit{transfer learning}). BERT uses a \textit{masked language model} which "masks" 15\% of the input tokens with the aim of predicting them based on their context. This allows BERT to leverage both left and right contexts simultaneously, unlike ELMO which uses shallow concatenation of separately trained left-to-right and right-to-left language models. 
 \vfill
 
+
 \subsection{Classification}
-\noindent Most approaches treat sarcasm detection as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. In the following text, I will compare methods used specifically in sarcasm detection research, as well as techniques that have seen success in other NLP classification tasks as they may have potential to perform well in this specific domain. \\
-
-Tsur et al\. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews.  They used a dataset containing 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They begin with a small set of seed sentences, 
-
-
-First, they extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
-
-
-
+\noindent Most approaches treat sarcasm detection as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. In the following text, I will compare methods used specifically in sarcasm detection research, as well as techniques that have seen success in other NLP classification tasks as they may have potential to perform well in this specific domain.
 
 \paragraph{Traditional Classifiers --}
-Standard linguistic approaches
-One such naive approach is rule-based, where texts is grouped based on a set of linguistic rules. These rules may be refined for a specific domain, or simply generalised to any kind of text. Generating these rules can be time consuming and requires in-depth knowledge of the domain. 
-
-
-Wallace et al\.(2014) showed that humans require access to context in order to judge sarcastic tone, hence it may be naive to assume that machines can perform well on this task without it. 
-
-have seen success in other NLP classification tasks, such as ... In the domain of sarcasm detection, 
-
-A growing trend appears to be extraction 
-
-
-Joshi et al\. (2016) explores the usefulness of word-embedding based features in sarcasm detection. 
-
-Riloff et al\. (2013) presents a bootstrapping algorithm for detecting a specific style of sarcasm - contrasting a negative situation with a positive sentiment. This is an oversimplification of sarcasm, hence it is unlikely to capture less explicit formulations.
-
+A number of simple linguistic approaches have been used in previous research into sarcasm detection. One such class of naive approaches is \textit{rule-based}, where text is classified based on a set of linguistic rules. Maynard and Greenwood (2014) \cite{maynard2014cares} proposed that the sentiment contained in hashtags can indicate the prescence of sarcasm in tweets, such as \#notreally in the example "I love doing the washing-up \#notreally". They used a rule-based approach to determine that if the sentiment of a tweet contradicts that of the hashtag, then this tweet is an example of sarcasm. In Riloff et al. (2013) \cite{riloff2013sarcasm}, sarcasm is described as a contrast between positive sentiment and negative situation. This description is leveraged by Bharti et al (2015) \cite{bharti2015parsing}, which presents two rule-based approaches to sarcasm detection. The first approach identifies sentiment bearing situation phrases, classifying the phrase as sarcastic if the negative situation is juxtaposed with a positive sentence. Rule-based techniques are fairly primitive when compared to their modern, deep learning counterparts. Especially when you consider that each ruleset must be generated manually and for each dataset and domain.
 
 
 \paragraph{Machine-Learning Classifiers --}
@@ -204,6 +186,15 @@ Using labelled training data, a machine-learning algorithm can learn the hallmar
 - Naive Bayes | A family of statistical algorithms, based on bayes theorem. MNB (Multinomial naive bayes allows us to make accurate predictions even with a small amount of training data)
 Quick description of Naive Bayes and the results of a few papers that have used it
 - Support Vector Machines (SVM), doesn't need a lot of training data but needs more computational resources than naive bayes - can achieve more accurate results. It draws a line / hyperplane diving a space into two subspaces (one containing vectors that belong to a group, the other containing the rest)
+
+
+Tsur et al\. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews. Their dataset containing 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
+
+Riloff et al\. (2013) presents a bootstrapping algorithm for detecting a specific style of sarcasm - contrasting a negative situation with a positive sentiment. This is an oversimplification of sarcasm, hence it is unlikely to capture less explicit formulations.
+
+Joshi et al\. (2016) explores the usefulness of word-embedding based features in sarcasm detection. 
+
+
 
 \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression
 
