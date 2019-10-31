@@ -24,6 +24,11 @@ David Hand and Peter Christen.
   algorithms.
 \newblock {\em Statistics and Computing}, 28(3):539--547, 2018.
 
+\bibitem{joshi2017automatic}
+Aditya Joshi, Pushpak Bhattacharyya, and Mark~J Carman.
+\newblock Automatic sarcasm detection: A survey.
+\newblock {\em ACM Computing Surveys (CSUR)}, 50(5):73, 2017.
+
 \bibitem{khodak2017large}
 Mikhail Khodak, Nikunj Saunshi, and Kiran Vodrahalli.
 \newblock A large self-annotated corpus for sarcasm.

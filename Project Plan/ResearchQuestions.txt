@@ -1,8 +1,7 @@
 // Research Questions Ideas
 
-// May not be relevant anymore?
-How can traditional anomaly detection techniques be applied to the detection of sarcasm in social media
-How do machine learning approaches compare to deep learning techniques for sarcasm detection
+How can traditional text classification techniques be applied to the detection of sarcasm in social media
+How do machine learning approaches compare to deep learning techniques for sarcasm detection?
 What features of a dataset make it suitable / effective for these purposes?
 Can this model adapt / perform well on other data sets?
 How can we evaluate the performance of a model?
