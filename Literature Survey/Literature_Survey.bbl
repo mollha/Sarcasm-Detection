@@ -150,6 +150,12 @@ Zichao Yang, Diyi Yang, Chris Dyer, Xiaodong He, Alex Smola, and Eduard Hovy.
   chapter of the association for computational linguistics: human language
   technologies}, pages 1480--1489, 2016.
 
+\bibitem{zhang2016tweet}
+Meishan Zhang, Yue Zhang, and Guohong Fu.
+\newblock Tweet sarcasm detection using deep neural network.
+\newblock In {\em Proceedings of COLING 2016, The 26th International Conference
+  on Computational Linguistics: Technical Papers}, pages 2449--2460, 2016.
+
 \bibitem{zhang2015character}
 Xiang Zhang, Junbo Zhao, and Yann LeCun.
 \newblock Character-level convolutional networks for text classification.

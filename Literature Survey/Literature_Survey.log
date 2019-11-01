@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 NOV 2019 10:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 NOV 2019 10:27
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -190,7 +190,12 @@ tm/m/n/12 ,
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 ) [3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 130--131
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
 
  []
 
@@ -224,10 +229,10 @@ i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )) [8] (Literature_Survey.aux) ) 
 Here is how much of TeX's memory you used:
- 2496 strings out of 492452
- 32543 string characters out of 3114457
+ 2497 strings out of 492452
+ 32559 string characters out of 3114457
  97974 words of memory out of 3000000
- 6851 multiletter control sequences out of 15000+200000
+ 6852 multiletter control sequences out of 15000+200000
  15674 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,9n,24p,1475b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -244,7 +249,7 @@ imes/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/Ap
 pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Literature_Survey.pdf (8 pages, 131191 bytes).
+Output written on Literature_Survey.pdf (8 pages, 131472 bytes).
 PDF statistics:
  66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
