@@ -88,28 +88,36 @@ Naive Bayes classifiers are supervised algorithms that use bayes theorem to make
 Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than naive bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimization and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
 \paragraph{Deep-Learning Classifiers --}
-Deep neural networkss are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper, }. Two common architectures used in text classification are Convolutional Neural Networks and Recurrent Neural Networks.
+Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Two common DNN architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). They typically require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
-Poria et al. (2017) describes a convolutional neural network (CNN) for sarcasm detection. Convolutional neural networks are 
+
+
+Recurrent Neural Networks are good at processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
+
+\textit{Zhang et al. (2015)}  \cite{zhang2015character} explored the used of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. It performed better on raw texts such as Amazon reviews than
+
+Poria et al. (2017) describes a convolutional neural network (CNN) for sarcasm detection. 
+
 
  They typically require a lot more training data than machine learning algorithms, however unlike machine learning algorithms, they get more accurate the more data they are fed without being capped at a certain threshold.
  
- Recurrent neural networks are used on time-series data
 
 CNN allows us to extract higher-level features, has applications in sentiment analysis. Collobert and Weston were among the first to apply CNN-based frameworks to NLP tasks
 RNNs are probably better
 
-RNNs are specialized neural-based approaches, good at processing sequential / time-series information (i.e. text)
-However, they suffer from the vanishing gradient problem
+
+
+
+
+Gated Recurrent Units (GRUs) 
 
 LTSMs and GRUs introduced to overcome this
 
-An LSTM consists of three gates, 
+An LSTM consists of three gates that update and control cell states - the forget gate, inp
 
+One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences.
 
-
-
-\newpage
+\vfill
 
 
 \subsection{Model Performance Evaluation}

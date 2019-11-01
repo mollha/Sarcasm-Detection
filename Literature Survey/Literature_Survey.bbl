@@ -33,6 +33,11 @@ Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
   understanding.
 \newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
 
+\bibitem{ghosh2018sarcasm}
+Debanjan Ghosh, Alexander~R Fabbri, and Smaranda Muresan.
+\newblock Sarcasm analysis using conversation context.
+\newblock {\em Computational Linguistics}, 44(4):755--792, 2018.
+
 \bibitem{gonzalez2011identifying}
 Roberto Gonz{\'a}lez-Ib{\'a}nez, Smaranda Muresan, and Nina Wacholder.
 \newblock Identifying sarcasm in twitter: a closer look.
@@ -45,6 +50,11 @@ David Hand and Peter Christen.
 \newblock A note on using the f-measure for evaluating record linkage
   algorithms.
 \newblock {\em Statistics and Computing}, 28(3):539--547, 2018.
+
+\bibitem{hochreiter1997long}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock Long short-term memory.
+\newblock {\em Neural computation}, 9(8):1735--1780, 1997.
 
 \bibitem{joshi2016automatic}
 Aditya Joshi, Pushpak Bhattacharyya, and Mark~James Carman.
@@ -132,6 +142,13 @@ Oren Tsur, Dmitry Davidov, and Ari Rappoport.
   sentences in online product reviews.
 \newblock In {\em Fourth International AAAI Conference on Weblogs and Social
   Media}, 2010.
+
+\bibitem{yang2016hierarchical}
+Zichao Yang, Diyi Yang, Chris Dyer, Xiaodong He, Alex Smola, and Eduard Hovy.
+\newblock Hierarchical attention networks for document classification.
+\newblock In {\em Proceedings of the 2016 conference of the North American
+  chapter of the association for computational linguistics: human language
+  technologies}, pages 1480--1489, 2016.
 
 \bibitem{zhang2015character}
 Xiang Zhang, Junbo Zhao, and Yann LeCun.
