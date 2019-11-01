@@ -5,8 +5,7 @@ What features of a dataset make it suitable / effective for these purposes?
 Can this model adapt / perform well on other data sets?
 How can we evaluate the performance of a model?
 
-How can you detect the words that correlate more to certain labels (i.e. are there any words in particular that strongly suggest a comment is sarcastic)?
-Investigation of contextual embeddings and how to visualise them
+
 
 Can this model be applied to large corpora as a pre-processing step in order to improve the accuracy of sentiment analysers?
 Can the identification of sarcastic statements support the sentiment analysis task
