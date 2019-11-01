@@ -36,20 +36,22 @@
 \subsection{Terms}
 NLP
 LSTM
+Irony []:
+Sarcasm []:
 
 \newpage
 
 \section{Themes}
 \subsection{Data collection}
-\noindent Sarcasm is typically used in informal discussions in person and online. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2016)} \cite{joshi2016automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. Much of the data is self-labelled by the author, either with markers such as \#sarcasm in twitter data \cite{reyes2013multidimensional, davidov2010semi, ptavcek2014sarcasm}, or '/s' in reddit \cite{khodak2017large}. Collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. Due to the fact that most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, the set containing non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements. Furthermore, the character limit of tweets is fixed at 140 - hence, essential context is often missing. It may be inadequate to analyze the text independently. Some contextual information, such as the number of followers author of the tweet, may be useful in providing more context and meaning.\\
+\noindent Sarcasm is typically used in informal discussions in person and online. Such data can be harvested from social networks in vast quantities, and many datasets are created in this way. For example, \textit{Joshi et al. (2016)} \cite{joshi2016automatic} provides a succint comparison of many relevant datasets, of which the overwhelming majority consist of data extracted from social networks such as Reddit and Twitter. Much of the data is self-labelled by the author, either with markers such as \#sarcasm in twitter data \cite{reyes2013multidimensional, davidov2010semi, ptavcek2014sarcasm}, or '/s' in reddit \cite{khodak2017large}. Collecting self-labelled data in this way means that the tweet's author has validated their intention of encorporating sarcasm. However, if they mislabel their tweet then this may introduce noise into the dataset. Due to the fact that most instances of sarcasm on twitter will not be indicated by the sarcasm hashtag, the set containing non-sarcastic tweets may also contain noise in the form of un-marked sarcastic statements. Furthermore, the character limit of tweets is fixed at 140 - hence, essential context is often missing. It may be inadequate to analyze the text independently. Some contextual information, such as the number of users following an account, may be useful in providing more context and meaning.
 
-\noindent There are also publicly available datasets containing manually labelled data. The \textit{News Headlines for Sarcasm Detection} dataset \cite{misra2019sarcasm} consists of data originating from two news websites - one posting legitimate news and the other posting sarcastic synopses of current events. These headlines are written in a professional manner therefore spelling errors are less frequent. Furthermore, each headline is independent, unlike tweets which may be in reference to earlier posts. On the contrary, News headlines cover a smaller range of topics than twitter posts - hence, training a model in the narrow domain of news headlines will restrict the types of data that the model can generalise to. In addition, many datasets assume a balance between sarcastic and non-sarcastic samples, although this can lead to problems such as the \textit{class inbalance problem}. Sarcasm occurs infrequently in conversation i.e. it is a minority class, and oversampling the minority class can lead to model overfitting.
+There are also publicly available datasets containing manually labelled data. The \textit{News Headlines for Sarcasm Detection} dataset \cite{misra2019sarcasm} consists of data originating from two news websites - one posting legitimate news and the other posting sarcastic synopses of current events. These headlines are written in a professional manner therefore spelling errors are less frequent. Furthermore, each headline is independent, unlike tweets which may be in reference to earlier posts. On the contrary, News headlines cover a smaller range of topics than twitter posts - hence, training a model in the narrow domain of news headlines will restrict the types of data that the model can generalise to. In addition, many datasets assume a balance between sarcastic and non-sarcastic samples, although this can lead to problems such as the \textit{class inbalance problem}. Sarcasm occurs infrequently in conversation i.e. it is a minority class, and oversampling the minority class can lead to model overfitting.
 \vfill
 
 \subsection{Data pre-processing}
-\noindent Data pre-processing is an important stage in most NLP tasks, with the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. For some datasets, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.\\
+\noindent Data pre-processing is an important stage in most NLP tasks, with the potential to hinder or boost model performance. Often, data pre-processing is used to reduce noise and sparsity in the feature space, caused by factors such as inconsistent letter capitalization, varying use of punctuation and erroneous spelling. However, the suitability of each technique is highly dependent on the domain. For some datasets, certain types of pre-processing may be limiting, resulting in the removal of useful features. In this section, we consider the domain of sarcasm detection when discussing these pre-processing techniques.
 
-\noindent On twitter, users can include hyperlinks to other websites in their tweets which can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, data contained in these hashtags can be key indicators of sarcasm. Liebrecht et al. (2013) \cite{liebrecht2013perfect} demonstrated how the \#not can be used to explicity imply sarcasm. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
+On twitter, users can include hyperlinks to other websites in their tweets which can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, data contained in these hashtags can be key indicators of sarcasm. \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} demonstrated how the \#not can be used to explicity imply sarcasm. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 \vfill
 
 \subsection{Vectorization of textual data}
@@ -78,40 +80,22 @@ A number of simple linguistic approaches have been used in previous research int
 
 
 \paragraph{Machine-Learning Classifiers --}
-Using labelled training data, a machine-learning algorithm can learn the hallmarks associated with each category. This allows it to classify text without the need for a static linguistic rule set. First, we need to perform feature extraction on the input text to produce a set of features. We then combine these features with tags (e.g\. positive or negative in sentiment analysis) to produce a classification model. If the data is high-quality and plentiful, the model can begin to make accurate predictions.
-- Naive Bayes | A family of statistical algorithms, based on bayes theorem. MNB (Multinomial naive bayes allows us to make accurate predictions even with a small amount of training data)
-Quick description of Naive Bayes and the results of a few papers that have used it
-- Support Vector Machines (SVM), doesn't need a lot of training data but needs more computational resources than naive bayes - can achieve more accurate results. It draws a line / hyperplane diving a space into two subspaces (one containing vectors that belong to a group, the other containing the rest)
+Using labelled training data, a machine-learning algorithm can learn patterns that are associated with each category of data. This allows it to classify unseen text into these categories without the need for a static linguistic rule set. If the training data is high-quality and plentiful, the model can begin to make accurate predictions. There are a few general categories of machine-learning classifiers, including Naive Bayes, Support Vector machines (SVMs) and logistic regression based classifiers. Although, not all approaches fit neatly into these categories.
 
+For example, Tsur et al. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews. Their dataset contained 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
 
-Tsur et al\. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews. Their dataset containing 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
+Naive Bayes classifiers are supervised algorithms that use bayes theorem to make predictions. Reyes et al. (2013) \cite{reyes2013multidimensional} used naive bayes and decision trees algorithm in order to detect irony which is closely related to sarcasm. They experimented with balanced and unbalanced distributions (25\% ironic tweets and 75\% other), achieving an F-score of 0.72 on the balanced distribution, dropping to 0.53 for the inbalanced distribution. In a similar vein, Barbieri et al. (2014) \cite{barbieri2014modelling} used random forest and decision tree classifiers, also for the detection of irony. They used six types of features in order to represent tweets, and recorded results over three categories of training data - education, humor and politics.
 
-Riloff et al\. (2013) presents a bootstrapping algorithm for detecting a specific style of sarcasm - contrasting a negative situation with a positive sentiment. This is an oversimplification of sarcasm, hence it is unlikely to capture less explicit formulations.
-
-Joshi et al\. (2016) explores the usefulness of word-embedding based features in sarcasm detection. 
-
-
-
-\cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression
-
-\cite{ptavcek2014sarcasm} also used support vector machine classifiers
- 
-- Logistic Regression
-Quick description of SVM and the results of a few papers that have used it
-Machine learning algorithms reach a certain threshold where adding more training data doesn't improve their accuracy.
-
-
-Ptacek et al\. () also form their english dataset using the same approach.
-
-Ghosh et al\. 2015 used SVMs
-
-
-Some studies have instead used amazon product reviews, for example Tsur et al\. (2010) analyzed sentences from a dataset of 5.9 million tweets and 66000 product reviews from Amazon. They used crowdsourcing to annotate the corpus
-
-
+Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than naive bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimization and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
 \paragraph{Deep-Learning Classifiers --}
-Two common architectures used in text classification are Convolutional Neural Networks and Recurrent Neural Networks. They typically require a lot more training data than machine learning algorithms, however unlike machine learning algorithms, they get more accurate the more data they are fed without being capped at a certain threshold.
+Deep neural networkss are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper, }. Two common architectures used in text classification are Convolutional Neural Networks and Recurrent Neural Networks.
+
+Poria et al. (2017) describes a convolutional neural network (CNN) for sarcasm detection. Convolutional neural networks are 
+
+ They typically require a lot more training data than machine learning algorithms, however unlike machine learning algorithms, they get more accurate the more data they are fed without being capped at a certain threshold.
+ 
+ Recurrent neural networks are used on time-series data
 
 CNN allows us to extract higher-level features, has applications in sentiment analysis. Collobert and Weston were among the first to apply CNN-based frameworks to NLP tasks
 RNNs are probably better

@@ -1,5 +1,12 @@
 \begin{thebibliography}{10}
 
+\bibitem{barbieri2014modelling}
+Francesco Barbieri and Horacio Saggion.
+\newblock Modelling irony in twitter.
+\newblock In {\em Proceedings of the Student Research Workshop at the 14th
+  Conference of the European Chapter of the Association for Computational
+  Linguistics}, pages 56--64, 2014.
+
 \bibitem{bharti2015parsing}
 Santosh~Kumar Bharti, Korra~Sathya Babu, and Sanjay~Kumar Jena.
 \newblock Parsing-based sarcasm sentiment recognition in twitter data.
@@ -81,6 +88,12 @@ Matthew~E Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark,
 \newblock Deep contextualized word representations.
 \newblock {\em arXiv preprint arXiv:1802.05365}, 2018.
 
+\bibitem{poria2016deeper}
+Soujanya Poria, Erik Cambria, Devamanyu Hazarika, and Prateek Vij.
+\newblock A deeper look into sarcastic tweets using deep convolutional neural
+  networks.
+\newblock {\em arXiv preprint arXiv:1610.08815}, 2016.
+
 \bibitem{cambridge2019}
 Cambridge~University Press.
 \newblock Sarcasm: meaning in the cambridge english dictionary.
@@ -119,5 +132,11 @@ Oren Tsur, Dmitry Davidov, and Ari Rappoport.
   sentences in online product reviews.
 \newblock In {\em Fourth International AAAI Conference on Weblogs and Social
   Media}, 2010.
+
+\bibitem{zhang2015character}
+Xiang Zhang, Junbo Zhao, and Yann LeCun.
+\newblock Character-level convolutional networks for text classification.
+\newblock In {\em Advances in neural information processing systems}, pages
+  649--657, 2015.
 
 \end{thebibliography}
