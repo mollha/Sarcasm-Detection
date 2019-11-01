@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Project Plan" company="" webLink="http://" view-date="2019-11-01" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.10" locale="en_GB">
+<?xml version="1.0" encoding="UTF-8"?><project name="Project Plan" company="" webLink="http://" view-date="2019-10-28" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.10" locale="en_GB">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Name" width="167" order="0"/>
@@ -33,16 +33,18 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Select a high-quality dataset" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="1" name="Implement a program to clean and segment data appropriately" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="2" name="Experiment with machine-learning archictectures" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="3" name="Evaluate the machine-learning based classifier on the chosen dataset" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="4" name="Experiment with deep-learning archictectures" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="5" name="Evaluate the deep-learning based classifier on the chosen dataset" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="6" name="Produce a solution" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="7" name="Experiment with alternative datasets" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="8" name="Implement a model to detect attention words" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
-        <task id="9" name="Produce a visualization of attention words" meeting="false" start="2019-11-01" duration="1" complete="0" expand="true"/>
+        <task id="0" name="Select a high-quality dataset" color="#8cb6ce" meeting="false" start="2019-11-01" duration="4" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="1" name="Implement a program to clean and segment data appropriately" color="#8cb6ce" meeting="false" start="2019-11-07" duration="5" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="2" name="Experiment with machine-learning archictectures" color="#8cb6ce" meeting="false" start="2019-11-13" duration="14" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="3" name="Evaluate the machine-learning based classifier on the chosen dataset" color="#8cb6ce" meeting="false" start="2019-12-02" duration="7" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="50" name="Write Up" color="#8cb6ce" meeting="false" start="2019-12-10" duration="7" complete="0" thirdDate="2019-10-23" thirdDate-constraint="0" expand="true"/>
+        <task id="4" name="Experiment with deep-learning archictectures" color="#8cb6ce" meeting="false" start="2019-12-18" duration="18" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="5" name="Evaluate the deep-learning based classifier on the chosen dataset" color="#8cb6ce" meeting="false" start="2020-01-10" duration="10" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="6" name="Produce a solution" color="#8cb6ce" meeting="false" start="2020-01-23" duration="14" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="7" name="Experiment with alternative datasets" color="#8cb6ce" meeting="false" start="2020-02-11" duration="7" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="8" name="Implement a model to detect attention words" color="#8cb6ce" meeting="false" start="2020-02-19" duration="10" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="9" name="Produce a visualization of attention words" color="#8cb6ce" meeting="false" start="2020-03-06" duration="7" complete="0" thirdDate="2019-11-01" thirdDate-constraint="0" expand="true"/>
+        <task id="48" name="Write Up" color="#8cb6ce" meeting="false" start="2020-03-16" duration="7" complete="0" thirdDate="2019-10-23" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
