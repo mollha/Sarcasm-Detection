@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 NOV 2019 08:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 NOV 2019 09:10
 entering extended mode
 **./Literature_Survey.tex
 (Literature_Survey.tex
@@ -179,7 +179,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--32
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
  [2]
-Overfull \hbox (2.388pt too wide) in paragraph at lines 62--63
+Overfull \hbox (2.388pt too wide) in paragraph at lines 61--62
  \OT1/ptm/b/n/12 Tra-di-tional Ap-proaches --[] \OT1/ptm/m/n/12 Per-haps the si
 m-plest vec-tor-iza-tion ap-proach is \OT1/ptm/m/it/12 Bag of Words (BOW)\OT1/p
 tm/m/n/12 ,
@@ -189,12 +189,12 @@ tm/m/n/12 ,
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-) [3] [4] [5]
+) [3] [4]
 
-LaTeX Warning: Citation `' on page 6 undefined on input line 92.
+LaTeX Warning: Citation `' on page 5 undefined on input line 91.
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
@@ -234,7 +234,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  2493 strings out of 492452
  32477 string characters out of 3114457
- 96974 words of memory out of 3000000
+ 97974 words of memory out of 3000000
  6848 multiletter control sequences out of 15000+200000
  15674 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -252,7 +252,7 @@ word is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.p
 fb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Literature_Survey.pdf (9 pages, 130679 bytes).
+Output written on Literature_Survey.pdf (9 pages, 130350 bytes).
 PDF statistics:
  69 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
