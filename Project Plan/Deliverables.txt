@@ -2,20 +2,12 @@ Basic
 Discuss the different forms of sarcasm and the difficulty of detecting them
 
 
-It may be possible to visualise the attention words over a selection of the test set, showing which words the neural network is paying specific attention to. Computing the attention weights
-
-
-
 Intermediate
 
 Implement a model that is currently deemed to be state-of-the-art
-Produce a final model using the best approach as determined by the results of former tasks
 Analyse the effectiveness of the model when applied to various other forms of social media data (e.g. twitter data, online reviews - not JUST Reddit posts)
 
 How can combining a model with different features affect the performance of a model (e.g. how many followers does the author of a sarcastic tweet have on twitter)
-
-
-
 
 
 Advanced Deliverables
@@ -27,7 +19,6 @@ Create a GUI that enables the user to interact with the finished tool
 Create a model that improves upon the performance of a trivial sentiment analyzer
 More often than not, sarcasm is negative disguised as positive. By introducing a third category, sarcastic, into sentiment analysis, can we improve the results of the state of the art
 i.e. See if the chosen technique can improve the performance of a sentiment analyzer
-
 
 
 Evalute the performance of a deep-learning model from another domain on sarcasm detection
