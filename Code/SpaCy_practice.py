@@ -1,17 +1,12 @@
-# Examples from course.spacy.io/chapter1
-# finished part 6, model packages
+import spacy
+from spacy.lang.en.stop_words import STOP_WORDS
+from spacy.lang.en import English
+
 
 import spacy
 from spacy.lang.en import English
 
-nlp1 = spacy.load('en_core_web_md')
-
-
-
-
-# created by processing a string of text with the nlp object
-nlp = English()
-
+nlp = spacy.load('en_core_web_md')
 
 # includes language-specific rules for tokenization
 # calling nlp on a string causes spacy to tokenize the text and creates a doc object
