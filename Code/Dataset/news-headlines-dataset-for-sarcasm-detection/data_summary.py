@@ -1,10 +1,15 @@
 import pandas as pd
+from wordcloud import WordCloud
 import spacy
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+
+from spacy import displacy
+import string
+
 from spacy.lang.en.stop_words import STOP_WORDS
 from spacy.lang.en import English
 from spacy.lang.en import English
-
-# nlp = spacy.load('en_core_web_md')
 
 dataset_path = 'Sarcasm_Headlines_Dataset.json'
 comment_column = 'headline'         # which column contains the main data e.g. comment
@@ -17,8 +22,33 @@ for column in drop_columns:
 # Add the word count for each column
 data_frame['len'] = data_frame[comment_column].apply(lambda x: len(x.split(" ")))
 
+# nlp = spacy.load('en_core_web_md')
+# doc = nlp(data_frame[comment_column][3])
+# spacy.displacy.render(doc, style='ent', jupyter=True)
 
-print(data_frame.head())
+
+# vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True, token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
+# data_vectorized = vectorizer.fit_transform(data_frame[comment_column])
+# NUM_TOPICS = 10
+# lda = LatentDirichletAllocation(n_components=NUM_TOPICS, max_iter=10, learning_method='online',verbose=True)
+# data_lda = lda.fit_transform(data_vectorized)
+#
+# # Functions for printing keywords for each topic
+# def selected_topics(model, vectorizer, top_n=10):
+#     for idx, topic in enumerate(model.components_):
+#         print("Topic %d:" % idx)
+#         print([(vectorizer.get_feature_names()[i], topic[i])
+#                         for i in topic.argsort()[:-top_n - 1:-1]])
+#
+#
+# print("LDA Model:")
+# selected_topics(lda, vectorizer)
+
+# print(data_frame.head())
+text = ' '.join(data_frame[comment_column])
+wordcloud = WordCloud().generate(text)
+dataset_name = dataset_path[:dataset_path.rfind('.')]
+wordcloud.to_file(dataset_name + ".png")
 
 print('\n---------------------- Dataset Summary ----------------------')
 print('Average length: ', round(data_frame.loc[:, "len"].mean(), 2))
