@@ -1,5 +1,5 @@
 import pandas as pd
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS
 import spacy
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
@@ -46,7 +46,7 @@ data_frame['len'] = data_frame[comment_column].apply(lambda x: len(x.split(" "))
 
 # print(data_frame.head())
 text = ' '.join(data_frame[comment_column])
-wordcloud = WordCloud().generate(text)
+wordcloud = WordCloud(stopwords=STOPWORDS).generate(text)
 dataset_name = dataset_path[:dataset_path.rfind('.')]
 wordcloud.to_file(dataset_name + ".png")
 
