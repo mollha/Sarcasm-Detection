@@ -1,9 +1,11 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{times}
 \usepackage{durhampaper}
+\usepackage{url}
 \usepackage{harvard}
+\usepackage{cite}
 \citationmode{abbr}
-\bibliographystyle{agsm}
+\bibliographystyle{plain}
 
 \title{An Analysis of Machine Learning and Deep Learning techniques for the Detection of Sarcasm in Text}
 \author{} % leave; your name goes into \student{}
@@ -38,6 +40,20 @@ Machine learning, Deep learning, Sarcasm detection
 \section{Introduction}
 This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.  Do not change the font sizes or line spacing in order to put in more text.
 
+\begin{center}
+	Table 1: Definition of subjective terms
+\end{center}
+\begin{tabular}{p{3cm}p{8cm}p{5cm}}
+	\hline
+	\textbf{Term} & \textbf{Definition} & \textbf{Example}\\
+	\hline\hline
+	Irony & The use of words that are the opposite of what you mean, as a way of being funny. \cite{cambridgeirony2019} &  Example of irony\\
+	\hline
+	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way. \cite{cambridgesarcasm2019} &  Example of sarcasm\\
+	\hline
+\end{tabular}\\
+
+
 Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
 
 \section{Related Work}
@@ -51,6 +67,8 @@ This section presents a survey of existing work on the problems that this projec
 	News Headlines Dataset For Sarcasm Detection & \begin{tabular}{@{}c@{}@{}} \\26709 instances \\ +ve: 43.9\% \\ -ve: 56.1\% \end{tabular} &  9.85 words\\
 	\hline
 	SARC & \begin{tabular}{@{}c@{}@{}} \\1010826 instances \\ +ve: 50\% \\ -ve: 50\% \end{tabular} &  10.46 words\\
+	\hline
+	Sarcasm Amazon Reviews Corpus & \begin{tabular}{@{}c@{}@{}} \\1010826 instances \\ +ve: 50\% \\ -ve: 50\% \end{tabular} &  10.46 words\\
 	\hline
 \end{tabular}\\
 
