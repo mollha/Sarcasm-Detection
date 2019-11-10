@@ -1,0 +1,20 @@
+---------------------- SARC Summary ----------------------
+
+
+Average length:  10.46
+Number of comments:  1010826
+Number of sarcastic comments: 505413 - 50.0%
+Number of non-sarcastic comments: 505413 - 50.0%
+
+------- News Headlines Dataset for Sarcasm Detection -----
+WordCloud: https://github.com/mollha/Dissertation/blob/master/Code/Dataset/news-headlines-dataset-for-sarcasm-detection/Sarcasm_Headlines_Dataset.png
+
+
+Average length:  9.85
+Number of comments:  26709
+Number of sarcastic comments: 11724 - 43.9%
+Number of non-sarcastic comments: 14985 - 56.1%
+
+
+-------------- Sarcasm Amazon Reviews Corpus --------------
+- Contains pairs of

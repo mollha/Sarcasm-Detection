@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  9 NOV 2019 21:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  10 NOV 2019 11:53
 entering extended mode
 **./projectpaper.tex
 (projectpaper.tex
@@ -40,51 +40,81 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )) (projectpaper.aux)
 \openout1 = `projectpaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-7.
+6.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 21.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 20.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 35.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 35.
- [1
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 34.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 47.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 47.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 47.
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--50
+[]\OT1/ptm/b/n/12 Mean
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
+[]\OT1/ptm/m/n/12 News Head-lines
+ []
+
+
+Underfull \hbox (badness 6775) in paragraph at lines 51--51
+\OT1/ptm/m/n/12 Dataset For Sar-casm
+ []
+
+
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 53--53
+[][]| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
+[]\OT1/ptm/m/n/12 10.46
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--56
+
+ []
+
+[1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 60.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 60.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 60.
  [2] (projectpaper.bbl) [3] (projectpaper.aux) ) 
 Here is how much of TeX's memory you used:
- 500 strings out of 492452
- 6718 string characters out of 3114457
- 68441 words of memory out of 3000000
- 4904 multiletter control sequences out of 15000+200000
- 19325 words of font info for 39 fonts, out of 3000000 for 9000
+ 502 strings out of 492452
+ 6743 string characters out of 3114457
+ 69441 words of memory out of 3000000
+ 4905 multiletter control sequences out of 15000+200000
+ 21009 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 24i,8n,24p,614b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 24i,14n,24p,614b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is house/App
 Data/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password i
 s house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/
@@ -92,7 +122,7 @@ Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times
 /utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs
 /MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on projectpaper.pdf (3 pages, 59864 bytes).
+Output written on projectpaper.pdf (3 pages, 61274 bytes).
 PDF statistics:
  29 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

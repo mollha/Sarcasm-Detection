@@ -55,6 +55,7 @@ print('Average length: ', round(data_frame.loc[:, "len"].mean(), 2))
 sarcastic_comments = len(data_frame[data_frame[indicator_column] == 1].index)
 non_sarcastic_comments = len(data_frame[data_frame[indicator_column] == 0].index)
 total_comments = sarcastic_comments + non_sarcastic_comments
+print('Number of comments: ', total_comments)
 print('Number of sarcastic comments: ' + str(sarcastic_comments) + ' - ' +
       str(round((sarcastic_comments*100)/total_comments, 2)) + '%')
 print('Number of non-sarcastic comments: ' + str(non_sarcastic_comments) + ' - ' +

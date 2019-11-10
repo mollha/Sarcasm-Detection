@@ -2,11 +2,10 @@
 \usepackage{times}
 \usepackage{durhampaper}
 \usepackage{harvard}
-
 \citationmode{abbr}
 \bibliographystyle{agsm}
 
-\title{An analysis of machine learning and deep learning techniques for the detection of sarcasm in text}
+\title{An Analysis of Machine Learning and Deep Learning techniques for the Detection of Sarcasm in Text}
 \author{} % leave; your name goes into \student{}
 \student{Molly Hayward}
 \supervisor{Dr Noura Al-Moubayed}
@@ -19,21 +18,21 @@
 \maketitle
 
 \begin{abstract}
-\\ \indent \textbf{Context / Background --} this is bold
+\\ \indent \textbf{Context / Background --} Sarcasm presents a fatal problem for classic sentiment analysers, as text that appears to be positive at surface-level can instead convey an alternate negative meaning. There exists an extensive body of literature covering machine learning and deep learning approaches to natural language processing problems, however in the application domain of sarcasm detection, they mostly display low accuracy.
 
-\indent \textbf{Aims --} this is bold
+\indent \textbf{Aims --} Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy.
 
-\indent \textbf{Method --} this is bold
+\indent \textbf{Method --} In my endeavour to realise this aim, I will implement state-of-the-art word embedding and text classification techniques.
 
-\indent \textbf{Results --} this is bold
+\indent \textbf{Results --} Through extensive experimentation, I found that
 
-\indent \textbf{Conclusions --} this is bold
+\indent \textbf{Conclusions --} Following this experimentation, I conclude that
 
-This section should not be longer than half of a page, and having no more than one or two sentences under each heading is advised. These instructions give you guidelines for preparing the final paper.  DO NOT change any settings, such as margins and font sizes.  Just use this as a template and modify the contents into your final paper.  Do not cite references in the abstract.
+This section should not be longer than half of a page, and having no more than one or two sentences under each heading is advised. Do not cite references in the abstract.
 \end{abstract}
 
 \begin{keywords}
-Put a few keywords here.
+Machine learning, Deep learning, Sarcasm detection
 \end{keywords}
 
 \section{Introduction}
@@ -45,6 +44,16 @@ Note that the whole report, including the references, should not be longer than 
 This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations.
 
 \subsection{Main Text}
+\begin{tabular}{p{4cm}p{3cm}p{2cm}}
+	\hline
+	\textbf{Title} & \textbf{Size} & \textbf{Mean Length}\\
+	\hline\hline
+	News Headlines Dataset For Sarcasm Detection & \begin{tabular}{@{}c@{}@{}} \\26709 instances \\ +ve: 43.9\% \\ -ve: 56.1\% \end{tabular} &  9.85 words\\
+	\hline
+	SARC & \begin{tabular}{@{}c@{}@{}} \\1010826 instances \\ +ve: 50\% \\ -ve: 50\% \end{tabular} &  10.46 words\\
+	\hline
+\end{tabular}\\
+
 
 The font used for the main text should be Times New Roman (Times) and the font size should be 12.  The first line of all paragraphs should be indented by 0.25in, except for the first paragraph of each section, subsection, subsubsection etc. (the paragraph immediately after the header) where no indentation is needed.
 

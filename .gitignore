@@ -3,3 +3,4 @@ venv
 *.pyc
 *.aux
 *.bbl
+Code/Dataset/SARC/*
