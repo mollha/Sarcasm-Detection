@@ -4,3 +4,4 @@ venv
 *.aux
 *.bbl
 Code/Dataset/SARC/*
+!Code/Dataset/SARC/train-balanced-sarcasm.png
