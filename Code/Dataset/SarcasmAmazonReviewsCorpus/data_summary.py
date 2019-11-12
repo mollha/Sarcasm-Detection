@@ -11,40 +11,42 @@ from spacy.lang.en.stop_words import STOP_WORDS
 from spacy.lang.en import English
 from spacy.lang.en import English
 
-dataset_path = 'Sarcasm_Headlines_Dataset.json'
-comment_column = 'headline'         # which column contains the main data e.g. comment
-drop_columns = ['article_link']     # columns to remove
-indicator_column = 'is_sarcastic'   # column which indicates sarcastic or non-sarcastic
+dataset_path = 'train-balanced-sarcasm.csv'
+comment_column = 'comment'         # which column contains the main data e.g. comment
+drop_columns = ['author', 'subreddit', 'score', 'ups','downs','date','created_utc','parent_comment']     # columns to remove
+indicator_column = 'label'   # column which indicates sarcastic or non-sarcastic
 
-data_frame = pd.read_json(dataset_path, lines=True)
+data_frame = pd.read_csv(dataset_path)
+
 for column in drop_columns:
     data_frame = data_frame.drop([column], axis=1)
 # Add the word count for each column
+data_frame[comment_column] = data_frame[comment_column].astype(str)
 data_frame['len'] = data_frame[comment_column].apply(lambda x: len(x.split(" ")))
 
-nlp = spacy.load('en_core_web_md')
-doc = nlp(data_frame[comment_column][3])
+# nlp = spacy.load('en_core_web_md')
+# doc = nlp(data_frame[comment_column][3])
 # spacy.displacy.render(doc, style='ent', jupyter=True)
 
 
-vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True, token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
-data_vectorized = vectorizer.fit_transform(data_frame[comment_column])
-NUM_TOPICS = 10
-lda = LatentDirichletAllocation(n_components=NUM_TOPICS, max_iter=10, learning_method='online',verbose=True)
-data_lda = lda.fit_transform(data_vectorized)
+# vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True, token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
+# data_vectorized = vectorizer.fit_transform(data_frame[comment_column])
+# NUM_TOPICS = 10
+# lda = LatentDirichletAllocation(n_components=NUM_TOPICS, max_iter=10, learning_method='online',verbose=True)
+# data_lda = lda.fit_transform(data_vectorized)
+#
+# # Functions for printing keywords for each topic
+# def selected_topics(model, vectorizer, top_n=10):
+#     for idx, topic in enumerate(model.components_):
+#         print("Topic %d:" % idx)
+#         print([(vectorizer.get_feature_names()[i], topic[i])
+#                         for i in topic.argsort()[:-top_n - 1:-1]])
+#
+#
+# print("LDA Model:")
+# selected_topics(lda, vectorizer)
 
-# Functions for printing keywords for each topic
-def selected_topics(model, vectorizer, top_n=10):
-    for idx, topic in enumerate(model.components_):
-        print("Topic %d:" % idx)
-        print([(vectorizer.get_feature_names()[i], topic[i])
-                        for i in topic.argsort()[:-top_n - 1:-1]])
-
-
-print("LDA Model:")
-selected_topics(lda, vectorizer)
-
-print(data_frame.head())
+# print(data_frame.head())
 text = ' '.join(data_frame[comment_column])
 wordcloud = WordCloud(stopwords=STOPWORDS).generate(text)
 dataset_name = dataset_path[:dataset_path.rfind('.')]

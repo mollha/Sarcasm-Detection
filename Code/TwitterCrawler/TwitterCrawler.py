@@ -3,7 +3,9 @@ from Code.TwitterCrawler.config import consumer_key, consumer_secret, access_key
 api = Api(consumer_key, consumer_secret, access_token_key=access_key, access_token_secret=access_secret)
 
 
-
-def get_some_tweets():
-    statuses = api.GetUserTimeline(screen_name="realDonaldTrump", count=5)
-    return [s.text for s in statuses]
+def get_tweets_by_id(id_string):
+    try:
+        tweet = api.GetStatus(id_string)
+        return tweet.AsDict()['text']
+    except TwitterError as e:
+        return None

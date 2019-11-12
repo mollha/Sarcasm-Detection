@@ -4,4 +4,10 @@ venv
 *.aux
 *.bbl
 Code/Dataset/SARC/*
+*.csv
+*.json
+*.html
+Code/Dataset/SarcasmAmazonReviewsCorpus/Ironic
+Code/Dataset/SarcasmAmazonReviewsCorpus/Regular
+
 !Code/Dataset/SARC/train-balanced-sarcasm.png

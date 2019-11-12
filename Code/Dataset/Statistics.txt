@@ -17,4 +17,15 @@ Number of non-sarcastic comments: 14985 - 56.1%
 
 
 -------------- Sarcasm Amazon Reviews Corpus --------------
-- Contains pairs of
+Sarcastic and non-sarcastic reviews
+- Contains pairs of ironic and normal reviews written for the same product
+- Unpaired ironic reviews
+- Crowd-sourced by MTurkers i.e. humans
+- Labels are ironic, sarcastic, or both
+- Quality control step: 5 new MTurkers annotate each review to improve quality by inter-annotator agreement
+- No spelling corrections were made
+
+
+
+Source: https://github.com/ef2020/SarcasmAmazonReviewsCorpus
+Paper: http://www.lrec-conf.org/proceedings/lrec2012/pdf/661_Paper.pdf
