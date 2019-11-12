@@ -9,5 +9,5 @@ Code/Dataset/SARC/*
 *.html
 Code/Dataset/SarcasmAmazonReviewsCorpus/Ironic
 Code/Dataset/SarcasmAmazonReviewsCorpus/Regular
-
+Code/WordEmbedding/Practice_Dataset/*
 !Code/Dataset/SARC/train-balanced-sarcasm.png

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  10 NOV 2019 18:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  12 NOV 2019 11:13
 entering extended mode
 **./projectpaper.tex
 (projectpaper.tex
@@ -88,78 +88,87 @@ Underfull \hbox (badness 10000) in paragraph at lines 58--60
 
  []
 
+
+LaTeX Warning: Citation `gonzalez2011identifying' on page 1 undefined on input 
+line 61.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+
+ []
+
 [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 67.
+(Font)              <12> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 67.
+(Font)              <8> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 67.
+(Font)              <6> on input line 69.
 
-Overfull \hbox (30.1122pt too wide) in paragraph at lines 67--76
+Overfull \hbox (30.1122pt too wide) in paragraph at lines 69--78
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--76
+Underfull \hbox (badness 10000) in paragraph at lines 69--78
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--82
+Underfull \hbox (badness 10000) in paragraph at lines 82--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 92--93
 []\OT1/ptm/b/n/12 Mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--91
+Underfull \hbox (badness 10000) in paragraph at lines 94--94
 []\OT1/ptm/m/n/12 News Head-lines
  []
 
 
-Underfull \hbox (badness 6775) in paragraph at lines 91--91
+Underfull \hbox (badness 6775) in paragraph at lines 94--94
 \OT1/ptm/m/n/12 Dataset For Sar-casm
  []
 
 
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 93--93
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 96--96
 [][]| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 96--97
 []\OT1/ptm/m/n/12 10.46
  []
 
 
-Underfull \hbox (badness 1648) in paragraph at lines 95--95
+Underfull \hbox (badness 1648) in paragraph at lines 98--98
 []\OT1/ptm/m/n/12 Sarcasm Ama-zon Re-
  []
 
 
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 95--95
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 98--98
 [][]| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 95--96
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
 []\OT1/ptm/m/n/12 10.46
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--98
+Underfull \hbox (badness 10000) in paragraph at lines 90--101
 
  []
 
 [2]
 
-LaTeX Warning: Citation 'futher' on page 3 undefined on input line 120.
+LaTeX Warning: Citation 'futher' on page 3 undefined on input line 123.
 
 [3] (projectpaper.bbl
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 2
@@ -174,24 +183,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 26--31
  / sarcasm$\OT1/ptm/m/n/12 ,
  []
 
-) [5] (projectpaper.aux) ) 
+) [5] (projectpaper.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 694 strings out of 492452
- 9449 string characters out of 3114457
- 72572 words of memory out of 3000000
- 5085 multiletter control sequences out of 15000+200000
+ 697 strings out of 492452
+ 9490 string characters out of 3114457
+ 73572 words of memory out of 3000000
+ 5088 multiletter control sequences out of 15000+200000
  21524 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 24i,14n,24p,614b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Password is ho
-use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/User
-s/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utm
-bi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
-pe1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on projectpaper.pdf (5 pages, 79295 bytes).
+ 24i,14n,24p,907b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips
+/base/8r.enc}<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/urw/courier/ucrr8a.pfb><C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Passw
+ord is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb
+><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on projectpaper.pdf (5 pages, 80297 bytes).
 PDF statistics:
  39 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

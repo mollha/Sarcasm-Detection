@@ -1,5 +1,6 @@
 from wordcloud import WordCloud, STOPWORDS
 from Code.Dataset.Corpus_of_Sarcasm_in_Twitter_Conversations.pre_processing import pre_process
+from numpy import nan
 import spacy
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
@@ -16,7 +17,7 @@ comment_column = 'tweet'         # which column contains the main data e.g. comm
 indicator_column = 'label'   # column which indicates sarcastic or non-sarcastic
 
 data_frame = pre_process(dataset_path)
-print('hi')
+data_frame = data_frame.replace(to_replace='None', value=nan).dropna()
 data_frame[comment_column] = data_frame[comment_column].astype(str)
 data_frame['len'] = data_frame[comment_column].apply(lambda x: len(x.split(" ")))
 
@@ -39,6 +40,7 @@ data_frame['len'] = data_frame[comment_column].apply(lambda x: len(x.split(" "))
 # selected_topics(lda, vectorizer)
 
 # print(data_frame.head())
+
 text = ' '.join(data_frame[comment_column])
 wordcloud = WordCloud(stopwords=STOPWORDS).generate(text)
 dataset_name = dataset_path[:dataset_path.rfind('.')]
