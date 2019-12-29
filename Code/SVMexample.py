@@ -10,7 +10,6 @@ iris = load_iris()
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 df['target'] = iris.target  # append an extra column (the label)
 df['flower_name'] = df.target.apply(lambda x: iris.target_names[x])
-print(df)
 
 df0 = df[df.target == 0]
 df1 = df[df.target == 1]
@@ -31,11 +30,10 @@ plt.ylabel('width')
 
 x = df.drop(['target', 'flower_name'], axis='columns')
 y = df.target
+print(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
-print(len(x_test))
-print(len(x_train))
 
+print(x_test)
 model.fit(x_train, y_train)
 a = model.score(x_test, y_test)
-print(a)

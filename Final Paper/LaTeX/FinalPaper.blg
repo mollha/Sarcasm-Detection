@@ -1,0 +1,16 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: FinalPaper.aux
+The style file: plain.bst
+I couldn't open database file projectpaper.bib
+---line 21 of file FinalPaper.aux
+ : \bibdata{projectpaper
+ :                      }
+I'm skipping whatever remains of this command
+I found no database files---while reading file FinalPaper.aux
+Warning--I didn't find a database entry for "cambridgesarcasm2019"
+Warning--I didn't find a database entry for "gonzalez2011identifying"
+Warning--I didn't find a database entry for "cambridgeirony2019"
+Warning--I didn't find a database entry for ""
+Warning--I didn't find a database entry for "budgen"
+Warning--I didn't find a database entry for "euther"
+Warning--I didn't find a database entry for "futher"
+(There were 2 error messages)

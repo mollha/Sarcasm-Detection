@@ -68,4 +68,4 @@ embeddings = elmo(x, signature="default", as_dict=True)["elmo"]
 # every word in the input sentence has ELMo vector of size 1024
 
 
-print(embeddings.shape)
+print(embeddings)
