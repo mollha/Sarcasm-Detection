@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 DEC 2019 16:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 DEC 2019 17:30
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -101,155 +101,130 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--55
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
+Underfull \hbox (badness 10000) in paragraph at lines 73--75
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
+Underfull \hbox (badness 10000) in paragraph at lines 73--75
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
 
  []
 
 [2]
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
-LaTeX Warning: Citation `gonzalez2011identifying' on page 3 undefined on input 
-line 98.
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 88.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 88.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 88.
+
+LaTeX Warning: Citation `cambridgeirony2019' on page 3 undefined on input line 
+92.
+
+
+LaTeX Warning: Citation `cambridgesarcasm2019' on page 3 undefined on input lin
+e 94.
+
+
+Overfull \hbox (30.1122pt too wide) in paragraph at lines 88--97
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--97
+
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 98--99
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+
+ []
+
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 144--146
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 144--146
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 149--151
-
- []
-
-
-LaTeX Warning: Citation `gonzalez2011identifying' on page 4 undefined on input 
-line 152.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
-
- []
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 160.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 160.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 160.
-
-LaTeX Warning: Citation `cambridgeirony2019' on page 4 undefined on input line 
-164.
-
-
-LaTeX Warning: Citation `cambridgesarcasm2019' on page 4 undefined on input lin
-e 166.
-
-
-Overfull \hbox (30.1122pt too wide) in paragraph at lines 160--169
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--169
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 170--171
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--176
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 []\OT1/ptm/b/n/12 Mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
 []\OT1/ptm/m/n/12 News Head-lines
  []
 
 
-Underfull \hbox (badness 6775) in paragraph at lines 189--189
+Underfull \hbox (badness 6775) in paragraph at lines 126--126
 \OT1/ptm/m/n/12 Dataset For Sar-casm
  []
 
 
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 191--191
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 128--128
 [][]| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
 []\OT1/ptm/m/n/12 10.46
  []
 
 
-Underfull \hbox (badness 1648) in paragraph at lines 193--193
+Underfull \hbox (badness 1648) in paragraph at lines 130--130
 []\OT1/ptm/m/n/12 Sarcasm Ama-zon Re-
  []
 
 
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 193--193
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 130--130
 [][]| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
 []\OT1/ptm/m/n/12 10.46
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--196
+Underfull \hbox (badness 10000) in paragraph at lines 122--133
 
  []
 
-[5]
 
-LaTeX Warning: Citation `budgen' on page 6 undefined on input line 216.
-
-
-LaTeX Warning: Citation `euther' on page 6 undefined on input line 218.
+LaTeX Warning: Citation `budgen' on page 4 undefined on input line 153.
 
 
-LaTeX Warning: Citation `futher' on page 6 undefined on input line 218.
+LaTeX Warning: Citation `euther' on page 4 undefined on input line 155.
 
 
-LaTeX Warning: Citation 'futher' on page 6 undefined on input line 218.
+LaTeX Warning: Citation `futher' on page 4 undefined on input line 155.
 
-[6] (FinalPaper.bbl
+
+LaTeX Warning: Citation 'futher' on page 4 undefined on input line 155.
+
+[4] (FinalPaper.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [7] (FinalPaper.aux)
+) [5] (FinalPaper.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 661 strings out of 492452
- 8892 string characters out of 3114457
+ 660 strings out of 492452
+ 8884 string characters out of 3114457
  72572 words of memory out of 3000000
- 5057 multiletter control sequences out of 15000+200000
+ 5056 multiletter control sequences out of 15000+200000
  21009 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  24i,14n,24p,1106b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -260,9 +235,9 @@ s/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs
 ta/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Passwor
 d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on FinalPaper.pdf (7 pages, 76168 bytes).
+Output written on FinalPaper.pdf (5 pages, 71740 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
+ 35 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
