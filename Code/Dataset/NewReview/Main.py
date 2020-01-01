@@ -5,7 +5,6 @@ import re
 
 nlp = spacy.load('en_core_web_md')
 
-
 def data_cleaning(data):
     # data = re.sub(r'http\S+', '', data)  # remove URLs
     punctuation = '!"#$%&()*+-/:;<=>?@[\\]^_`{|}~'
@@ -37,6 +36,19 @@ if __name__ == '__main__':
     r_data['data'] = regular_data['title_and_review'].apply(tokenize)
     print('Finished Data Cleaning')
     r_data['label'] = 0
-
     combined_data = pd.concat([r_data, s_data])
+    # produce Spacy glove embeddings
+    count = 0
+    spacy_embeddings = []
+    last = 0.0
+    for data_point in pd.concat([regular_data['title_and_review'], sarcastic_data['title_and_review']]):
+        count += 1
+        val = round(count / len(combined_data), 2)
+        if val != last:
+            print(val)
+            last = val
+        spacy_embeddings.append(nlp(data_point).vector)
+    # spacy_embeddings = [[nlp(word).vector for word in data_point] for data_point in combined_data['data']]
+    print(spacy_embeddings[0:5])
     glove_embeddings = GloVeConfig(combined_data)
+

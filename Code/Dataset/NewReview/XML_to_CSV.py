@@ -2,8 +2,8 @@ import os
 import itertools
 import xml.etree.ElementTree as ET
 
-file_type = "Regular"
-# file_type = "Ironic"
+# file_type = "Regular"
+file_type = "Ironic"
 
 inputdir = "./" + file_type
 csv = open(file_type + ".csv", "w+")
