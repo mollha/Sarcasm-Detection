@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import time
 import tensorflow as tf
 import tensorflow_hub as hub
 import spacy
@@ -10,6 +11,7 @@ pd.set_option('display.max_colwidth', 200)
 nlp = spacy.load('en_core_web_md', disable=['parser', 'ner'])
 
 # ---------------------- READ IN DATASET ---------------------------
+print('Reading in Dataset ...')
 ironic_data = pd.read_csv('Ironic.csv', encoding="ISO-8859-1")
 ironic_data['ironic'] = 1
 ironic_data["title_and_review"] = ironic_data["title"] + '. ' + ironic_data["review"]
@@ -20,6 +22,7 @@ regular_data['ironic'] = 0
 regular_data["title_and_review"] = regular_data["title"] + '. ' + regular_data["review"]
 regular_data = regular_data.drop(['product', 'stars', 'key', 'date', 'author', 'title', 'review'], axis='columns')
 # combined_data = pd.concat([regular_data, ironic_data])
+print('Finished Reading Dataset!')
 
 
 # ------------------------- CLEAN DATASET -----------------------------
@@ -53,9 +56,12 @@ def clean_dataframe(data: pd.DataFrame):
     data["title_and_review"] = lemmatization(data["title_and_review"])
     return data
 
-
+print('Starting Data Cleaning ...')
+last = time.time()
 regular_data = clean_dataframe(regular_data)
 ironic_data = clean_dataframe(ironic_data)
+print('Finished Cleaning the Data - took ' + str(round((time.time() - last), 2)) + ' seconds')
+
 
 # function for producing batches of data, with the aim of limiting memory usage
 def batch_data(data: pd.DataFrame) -> list:
@@ -75,21 +81,28 @@ def elmo_vectors(x):
         return sess.run(tf.reduce_mean(embeddings,1))
 
 # batch data
+last = time.time()
 regular = batch_data(regular_data)
 ironic = batch_data(ironic_data)
+print('Finished Batching the Data - took ' + str(round((time.time() - last), 2)) + ' seconds')
 
 # vectorize batched data
-regular = [elmo_vectors(x['title_and_review']) for x in regular]
-ironic = [elmo_vectors(x['title_and_review']) for x in ironic]
-
-# concatenate batched data back into a single array
-regular = np.concatenate(regular, axis = 0)
-ironic = np.concatenate(ironic, axis = 0)
-
-# save vectors as pickle files
 pickle_out = open("elmo_regular.pickle", "wb")
-pickle.dump(regular, pickle_out)
+count = 0
+initial_time = time.time()
+for x in regular:
+    count += 1
+    if count % 10 == 0:
+        print('Count: ', count)
+        print('Time taken so far: ', round(time.time() - initial_time, 2))
+    pickle.dump(elmo_vectors(x['title_and_review']), pickle_out)
 pickle_out.close()
+
 pickle_out = open("elmo_ironic.pickle", "wb")
-pickle.dump(ironic, pickle_out)
+count = 0
+for x in ironic:
+    if count % 10 == 0:
+        print('Count: ', count)
+    count += 1
+    pickle.dump(elmo_vectors(x['title_and_review']), pickle_out)
 pickle_out.close()
