@@ -47,27 +47,22 @@ if __name__ == '__main__':
 
     combined_data = pd.concat([r_data, s_data])
 
+
     def vector_func(x):
         return nlp(x).vector
     # combined_data['vector'] = combined_data['data'].apply(vector_func)
     sarcastic_data['vector'] = sarcastic_data['data'].apply(vector_func)
     regular_data['vector'] = regular_data['data'].apply(vector_func)
 
+    print(sarcastic_data['vector'][0])
     print('Total time: ', time.time() - start)
 
     # try and use our SVM
-    def my_SVM(sarcastic_data: pd.DataFrame, regular_data: pd.DataFrame):
-        # ------------------------------ SPLIT DATA INTO TRAIN AND TEST -----------------------------------
-        # shuffles data and splits
-        model = SVC(gamma='auto', C=10, kernel='linear')
-        regular_train, regular_test, x_train, x_test = train_test_split(regular_data, regular_data['label'],
-                                                                        test_size=0.3)
-        ironic_train, ironic_test, y_train, y_test = train_test_split(sarcastic_data, sarcastic_data['label'],
-                                                                      test_size=0.3)
-        model.fit(regular_train, ironic_train)
-        a = model.score(regular_test, ironic_test)
-        print('score: ', a)
-    # my_SVM(sarcastic_data, regular_data)
+    print('Training ML models')
+    combined_data = pd.concat([sarcastic_data, regular_data])
+    labels = combined_data['label']
+    combined_data = combined_data['vector'].apply(pd.Series)
+    my_SVM(combined_data, labels)
 
 
 

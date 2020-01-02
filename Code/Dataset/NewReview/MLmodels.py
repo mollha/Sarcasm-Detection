@@ -3,17 +3,30 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 
-def my_SVM(sarcastic_data: pd.DataFrame, regular_data: pd.DataFrame):
+def my_SVM(data, data_labels):
     # ------------------------------ SPLIT DATA INTO TRAIN AND TEST -----------------------------------
     # shuffles data and splits
+    combined_train, combined_test, combined_train_labels, combined_test_labels = train_test_split(data, data_labels,
+                                                                    test_size=0.3)
     model = SVC(gamma='auto', C=10, kernel='linear')
-    regular_train, regular_test, x_train, x_test = train_test_split(regular_data, regular_data['label'], test_size=0.3)
-    ironic_train, ironic_test, y_train, y_test = train_test_split(sarcastic_data, sarcastic_data['label'], test_size=0.3)
-    model.fit(regular_train, ironic_train)
-    a = model.score(regular_test, ironic_test)
+    model.fit(combined_train, combined_train_labels)
+    a = model.score(combined_test, combined_test_labels)
     print('score: ', a)
+
+
+    # regular_train, regular_test, x_train, x_test = train_test_split(regular_data, regular_data['label'],
+    #                                                                 test_size=0.3)
+    # sarcastic_train, sarcastic_test, sarcastic_train_labels, sarcastic_test_labels = train_test_split(sarcastic_data, sarcastic_data['label'],
+    #                                                               test_size=0.3)
+
+
+    # model.fit(sarcastic_train['vector'], sarcastic_train['label'])
+    # a = model.score(sarcastic_test['vector'], sarcastic_train['label'])
+    # print('score: ', a)
 
 
 # MACHINE LEARNING MODELS
