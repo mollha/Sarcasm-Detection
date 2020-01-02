@@ -13,6 +13,9 @@ def my_SVM(data, data_labels):
     combined_train, combined_test, combined_train_labels, combined_test_labels = train_test_split(data, data_labels,
                                                                     test_size=0.3)
     model = SVC(gamma='auto', C=10, kernel='linear')
+    model = LogisticRegression(C = 10)
+    model = RandomForestClassifier(n_estimators = 100, max_depth = None, max_features = 'sqrt')
+    model = GaussianNB()
     model.fit(combined_train, combined_train_labels)
     a = model.score(combined_test, combined_test_labels)
     print('score: ', a)
