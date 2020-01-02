@@ -1,16 +1,6 @@
 import time
 import pandas as pd
-import numpy as np
 from scipy import spatial
-from collections import Counter
-
-"""
-sarcastic_data = pd.read_csv(path_to_sarcastic, encoding="ISO-8859-1")
-sarcastic_data["title_and_review"] = sarcastic_data["title"] + '. ' + sarcastic_data["review"]
-
-regular_data = pd.read_csv(path_to_regular, encoding="ISO-8859-1")
-regular_data["title_and_review"] = regular_data["title"] + '. ' + regular_data["review"]
-"""
 
 
 class GloVeConfig:
