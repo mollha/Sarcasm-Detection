@@ -3,6 +3,7 @@ from Code.Dataset.NewReview.glove_vectors import GloVeConfig
 import pandas as pd
 import re
 import time
+from Code.Dataset.NewReview.MLmodels import my_SVM
 
 nlp = spacy.load('en_core_web_md')
 def data_cleaning(data):
@@ -43,8 +44,14 @@ if __name__ == '__main__':
 
     def vector_func(x):
         return nlp(x).vector
-    combined_data['vector'] = combined_data['data'].apply(vector_func)
+    # combined_data['vector'] = combined_data['data'].apply(vector_func)
+    sarcastic_data['vector'] = sarcastic_data['data'].apply(vector_func)
+    regular_data['vector'] = regular_data['data'].apply(vector_func)
+
     print('Total time: ', time.time() - start)
+
+    # try and use our SVM
+    my_SVM(sarcastic_data, regular_data)
 
 
 
