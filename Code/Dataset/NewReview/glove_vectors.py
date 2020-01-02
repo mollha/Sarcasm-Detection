@@ -72,11 +72,20 @@ class GloVeConfig:
     def vectorize(self):
         print('Vectorizing textual data')
 
-        def individual(vector, glove_dict):
-            vector_list = []
-            for token in vector:
-                if token in glove_dict:
-                    vector_list.append(glove_dict[token])
-            return vector_list
+        df['mean'] = df.mean(axis=1)
+        .apply(pd.Series)
+
+        def get_glove_embedding(token: str) -> list:
+            if token in self.glove_dict:
+                return self.glove_dict[token]
+            return []
+
+        def get_mean_embedding(data: str) -> list:
+            .apply(get_glove_embedding)
+
+        vector_df = self.dataset['data'].apply(get_glove_embedding)
+
+        for line in self.dataset:
+
 
         return [individual(token, self.glove_dict) for token in self.dataset]

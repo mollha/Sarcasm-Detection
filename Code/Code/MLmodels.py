@@ -7,6 +7,18 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 
+class SupportVectorMachine:
+    def __init__(self):
+        self.svm = SVC(gamma='auto', C=10, kernel='linear')
+
+    def train(self, training_data, training_labels):
+        self.svm.fit(training_data, training_labels)
+        return self.svm
+
+    def score(self, testing_data, testing_labels):
+        return self.svm.score(testing_data, testing_labels)
+
+
 def my_SVM(data, data_labels):
     # ------------------------------ SPLIT DATA INTO TRAIN AND TEST -----------------------------------
     # shuffles data and splits
