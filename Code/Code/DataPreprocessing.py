@@ -14,7 +14,7 @@ def data_cleaning(data, rm_urls=True, rm_punc=None, lower=True, rm_numbers=True,
         return text.replace("[0-9]", "")
 
     def remove_duplicate_whitespaces(text: str) -> str:
-        return ' '.join(data.split())  # remove duplicate whitespaces
+        return ' '.join(text.split())  # remove duplicate whitespaces
 
     if rm_urls:
         data = remove_urls(data)  # remove URLs
