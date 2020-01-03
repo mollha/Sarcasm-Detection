@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # try and use our SVM
     print('Training ML models')
-    labels = data['label']
+    labels = data['sarcasm_label']
     data = data['vector'].apply(pd.Series)
     my_SVM(data, labels)
 
