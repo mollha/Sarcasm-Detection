@@ -1,27 +1,13 @@
 import spacy
-from Code.Dataset.NewReview.glove_vectors import GloVeConfig
 import pandas as pd
-from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split
-import re
 import time
-from Code.Dataset.NewReview.MLmodels import my_SVM
+from Code.Code.MLmodels import SupportVectorMachine
+from sklearn.model_selection import train_test_split
+from Code.Code.DataPreprocessing import data_cleaning
 
 nlp = spacy.load('en_core_web_md')
-def data_cleaning(data):
-    # data = re.sub(r'http\S+', '', data)  # remove URLs
-    punctuation = '!"#$%&()*+-/:;<=>?@[\\]^_`{|}~'
-    data = ''.join(ch for ch in data if ch not in set(punctuation))  # remove punctuation marks
-    data = data.lower()  # convert to lowercase
-    data = data.replace("[0-9]", " ")  # remove numbers
-    data = ' '.join(data.split())  # remove whitespaces
-    return data
 
 
-def tokenize(sentence):
-    value = data_cleaning(sentence)
-    nlp_sentence = nlp(value)
-    return [token.norm_ for token in nlp_sentence]
 
 
 if __name__ == '__main__':
@@ -35,10 +21,7 @@ if __name__ == '__main__':
     print('Finished Data Cleaning')
 
     print('Vectorizing...')
-    def vector_func(x):
-        return nlp(x).vector
-
-    data['vector'] = data['clean_data'].apply(vector_func)
+    data['vector'] = data['clean_data'].apply(lambda x: nlp(x).vector)
     print('Finished Vectorizing...')
     print('Total time: ', time.time() - start)
 
@@ -46,7 +29,13 @@ if __name__ == '__main__':
     print('Training ML models')
     labels = data['sarcasm_label']
     data = data['vector'].apply(pd.Series)
-    my_SVM(data, labels)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(data, labels, test_size=0.3)
+
+    svm = SupportVectorMachine()
+    svm.train(training_data, training_labels)
+    svm.score(testing_data, testing_labels)
+
+
 
 
 
