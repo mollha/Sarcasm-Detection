@@ -48,7 +48,7 @@ def create_csv(file_type):
         csv_points.insert(0, title_and_review)
         return ','.join(csv_points)
 
-    csv.write("sarcasm_label,clean_data,key,stars,title,date,author,product,review\n")
+    csv.write("sarcasm_label,text_data,key,stars,title,date,author,product,review\n")
     for file_name in os.listdir(inputdir):
         if ".html" in file_name:
             continue

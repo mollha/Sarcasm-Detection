@@ -26,7 +26,7 @@ class GloVeConfig:
         first = time.time()
         with open('GLOVEDATA/glove.twitter.27B.50d.txt', "r", encoding="utf-8") as file:
             gloveDict = {line.split()[0]: list(map(float, line.split()[1:])) for line in file}
-            del gloveDict['0.45973']    # for some reason, this entry has 49 dimensions
+            del gloveDict['0.45973']    # for some reason, this entry has 49 dimensions instead of 50
         # print(Counter([len(gloveDict[key]) for key in gloveDict]))
         print(len(gloveDict), "words in the GLOVE dictionary\n")
         print('Took ' + str(round(time.time() - first, 2)) + ' seconds to construct glove dictionary')
@@ -69,6 +69,12 @@ class GloVeConfig:
         print('\n---------------- Both Results ------------------')
         get_stats('both')
 
+    def tokenize(self):
+        def get_glove_embedding(token: str) -> list:
+            return [] if token not in self.glove_dict else self.glove_dict[token]
+
+
+
     def vectorize(self):
         print('Vectorizing textual data')
 
@@ -76,14 +82,13 @@ class GloVeConfig:
         .apply(pd.Series)
 
         def get_glove_embedding(token: str) -> list:
-            if token in self.glove_dict:
-                return self.glove_dict[token]
-            return []
+            return [] if token not in self.glove_dict else self.glove_dict[token]
 
         def get_mean_embedding(data: str) -> list:
             .apply(get_glove_embedding)
 
-        vector_df = self.dataset['data'].apply(get_glove_embedding)
+        vector_df = self.dataset['data'].apply(lambda x: [] if x not in self.glove_dict else self.glove_dict[x])
+
 
         for line in self.dataset:
 
