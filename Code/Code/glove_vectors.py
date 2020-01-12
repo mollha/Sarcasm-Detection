@@ -2,7 +2,6 @@ import time
 import pandas as pd
 from scipy import spatial
 
-
 class GloVeConfig:
     def __init__(self, dataset: pd.Series):
         # ----------------- CONFIGURE DATASET -------------------
@@ -13,9 +12,9 @@ class GloVeConfig:
         print('Glove Dictionary Built Successfully.')
         self.vectorized_data = self.vectorize()
         print('Data Vectorized Successfully....')
-
-        print(self.find_closest_embeddings(self.glove_dict['cheese'], 3))
-        self.print_stats()
+        #
+        # print(self.find_closest_embeddings(self.glove_dict['cheese'], 3))
+        # self.print_stats()
 
     @staticmethod
     def refresh_dict() -> dict:
@@ -28,6 +27,9 @@ class GloVeConfig:
         print(len(gloveDict), "words in the GLOVE dictionary\n")
         print('Took ' + str(round(time.time() - first, 2)) + ' seconds to construct glove dictionary')
         return gloveDict
+
+    def get_vectorized_data(self):
+        return self.vectorized_data
 
     def check_proportion(self):
         all_in, total_in, total_not = set(), 0, 0

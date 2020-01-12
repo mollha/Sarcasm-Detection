@@ -10,6 +10,7 @@ from Code.Code.glove_vectors import GloVeConfig
 from sklearn.metrics import f1_score
 from sklearn.svm import SVC
 from spacy.tokenizer import Tokenizer
+import numpy as np
 
 nlp = spacy.load('en_core_web_md')
 gb_token = Tokenizer(nlp.vocab)
@@ -20,29 +21,48 @@ def tokenize(x):
     return x.split()
 
 if __name__ == '__main__':
-    data = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/Data.csv", encoding="ISO-8859-1")
-    data['text_data'] = data['text_data'].apply(data_cleaning)
-    token_data = data['text_data'].apply(lambda x: tokenize(x))
-    glove_embeddings = GloVeConfig(token_data)
-    exit()
-
-    # produce Spacy glove embeddings
     start = time.time()
-
+    # --------- READING DATA ----------
     data = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/Data.csv", encoding="ISO-8859-1")
 
     print('Starting Data Cleaning...')
-    data['clean_data'] = data['clean_data'].apply(data_cleaning)
-    vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True,
-                                 token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
-    data_vectorized = vectorizer.fit_transform(data['clean_data'])
-    print(data_vectorized)
-    print('Finished Data Cleaning')
+    data['clean_data'] = data['text_data'].apply(data_cleaning)
+    print('Finished Data Cleaning.')
+
+    print('Tokenizing...')
+    token_data = data['text_data'].apply(lambda x: tokenize(x))  # tokenizing sentences
+    print('Finished Tokenizing.')
 
     print('Vectorizing...')
-    data['vector'] = data['clean_data'].apply(lambda x: nlp(x).vector)
-    print('Finished Vectorizing...')
+    # glove_embeddings = GloVeConfig(token_data)
+    # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
+    vector = data['text_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
+    print('Finished Vectorizing.')
+
     print('Total time: ', time.time() - start)
+
+    # try and use our SVM
+    print('Training ML models')
+    labels = data['sarcasm_label']
+    training_data, testing_data, training_labels, testing_labels = train_test_split(vector.apply(pd.Series), labels, test_size=0.3)
+
+    svm = SupportVectorMachine()
+    svm.train(training_data, training_labels)
+    score = svm.score(testing_data, testing_labels)
+    print(score)
+
+
+
+    exit()
+
+
+    # data['clean_data'] = data['clean_data'].apply(data_cleaning)
+    # vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True,
+    #                              token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
+    # data_vectorized = vectorizer.fit_transform(data['clean_data'])
+    # print(data_vectorized)
+    # print('Finished Data Cleaning')
+
 
     # try and use our SVM
     print('Training ML models')
