@@ -3,6 +3,7 @@
 \usepackage{durhampaper}
 \usepackage{url}
 \usepackage{harvard}
+\usepackage[utf8x]{inputenc}
 \usepackage{cite}
 \citationmode{abbr}
 \bibliographystyle{plain}
@@ -147,18 +148,31 @@ One-hot encoding has two main disadvantages, firstly, each vector is the size of
 \noindent Data pre-processing is an important stage in most NLP tasks, with the potential to hinder or boost model performance. Datasets in this domain are especially messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalization, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the domain, as for some datasets, certain types of pre-processing may result in the removal of useful features.
 
 
-
-
-
 On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 
 scraped from Twitter or Amazon product reviews, where spelling errors are rife
-\vfill
+
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
 %This section should be between 4 to 7 pages in length.
+\subsection{Vectorization of textual data}
+\noindent Extracting meaningful data from large corpora is undoubtedly a complex task, however in order to do this successfully, we must first construct word vectors that capture semantic and syntactic relationships in a process known as vectorization. In this section, we examine this process with the aim of answering the question: how can we \textit{best} vectorize text so as to encapsulate the important features of language?
 
+
+\paragraph{Traditional Approaches --}
+\noindent Perhaps the simplest vectorization approach is \textit{Bag of Words (BOW)}, which encodes text as a single vector containing a count of the number of occurrences of each word in the snippet. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. Predictably, vectors produced in this way do not preserve the context within which words are found, complicating the task of discerning their meaning. Hence, these approaches are unlikely to be suitable in the application domain of detecting sarcasm - a highly contextual phenomenon. The \textit{Bag of N-grams} approach is a generalisation of Bag of Words, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this results in a much larger and sparser feature set.
+
+
+\paragraph{Word Embedding --}
+\noindent First introduced in Mikolov et al\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space. Unlike previous techniques, words that share a similar context tend to have collinear vectors, that is to say they are clustered together in the feature space. Consequently, Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
+
+Despite their ability to preserve semantic relationships, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set. \textit{Bojanowski et al\ (2017)} \cite{bojanowski2016enriching} describes a different vectorization technique used in Facebook's open-source fastText library. In the fastText approach, each word is represented as a bag of character n-grams which enables it to capture meaning for substrings such as prefixes and suffixes. In order to produce word embeddings for out-of-vocabulary tokens i.e.\ words not included in the training set, fastText composes vectors for the substrings that form the word. However, like Word2Vec and GloVe, FastText produces a single embedding for each word - hence, it cannot disambiguate polysemous words.
+
+\paragraph{Contextualized Word Embedding --}
+In pursuit of a more robust approach, we look to deep neural language models. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilizes a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. Like fastText, they are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found.\\
+Devlin et al. (2018) \cite{devlin2018bert} introduced the \textit{BERT} framework, a multi-layer bidirectional transformer model consisting of two main steps - \textit{pre-training} and \textit{fine-tuning}. During pre-training, unlabeled data is used to train the model on different tasks, providing some initial parameters that are tweaked in the fine-tuning stage (a procedure known as \textit{transfer learning}). BERT uses a \textit{masked language model} which "masks" 15\% of the input tokens with the aim of predicting them based on their context. This allows BERT to leverage both left and right contexts simultaneously, unlike ELMO which uses shallow concatenation of separately trained left-to-right and right-to-left language models. 
+\vfill
 
 
 \section{Results}
