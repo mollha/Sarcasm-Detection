@@ -48,7 +48,6 @@ def create_csv(file_type):
         csv_points.insert(0, title_and_review)
         return ','.join(csv_points)
 
-    csv.write("sarcasm_label,text_data,key,stars,title,date,author,product,review\n")
     for file_name in os.listdir(inputdir):
         if ".html" in file_name:
             continue
@@ -58,5 +57,8 @@ def create_csv(file_type):
 
 if __name__ == "__main__":
     open("./Data.csv", 'w').close()
+    csv = open("./Data.csv", "a")
+    csv.write("sarcasm_label,text_data,key,stars,title,date,author,product,review\n")
+    csv.close()
     create_csv("Regular")
     create_csv("Ironic")

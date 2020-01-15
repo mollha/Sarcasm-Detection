@@ -11,14 +11,19 @@ from sklearn.model_selection import train_test_split
 
 class SupportVectorMachine:
     def __init__(self):
-        self.svm = SVC(gamma='auto', C=10, kernel='linear')
+        # self.svm = SVC(gamma='auto', C=10, kernel='linear')
+        self.svm = SVC(gamma='auto', C=10, kernel='rbf')
 
     def train(self, training_data, training_labels):
         self.svm.fit(training_data, training_labels)
         return self.svm
 
-    def score(self, testing_data, testing_labels):
+    def accuracy(self, testing_data, testing_labels):
         return self.svm.score(testing_data, testing_labels)
+
+    def f1(self, testing_data, testing_labels):
+        predictions = self.svm.predict(testing_data)
+        return f1_score(testing_labels, predictions)
 
 
 def my_SVM(data, data_labels):

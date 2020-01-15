@@ -63,6 +63,10 @@ class GloVeConfig:
         def get_mean_embedding(row: list) -> list:
             tokenized_row = [self.get_glove_embedding(token) for token in row]
             valid_row = [list_value for list_value in tokenized_row if list_value]
+            if len(valid_row) == 0:
+                print(row)
+                print('aleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeert')
+                print(list(zip(*valid_row)))
             zipped_values = list(zip(*valid_row))
             return [sum(value) / len(zipped_values) for value in zipped_values]
 
