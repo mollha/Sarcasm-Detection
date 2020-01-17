@@ -14,6 +14,13 @@ models = {0: SVC(gamma='auto', C=10, kernel='linear'),
           4: MultinomialNB()}
 
 
+def get_model(model_number):
+    try:
+        return models[model_number]
+    except KeyError:
+        print('Invalid model number, please enter a number between 0 and ', len(models))
+        return None
+
 def calculate_f1_score(trained_model, testing_data, testing_labels):
     predictions = trained_model.predict(testing_data)
     return f1_score(testing_labels, predictions)
@@ -27,3 +34,7 @@ def train_and_evaluate(untrained_model, data: tuple):
     accuracy = trained_model.score(testing_data, testing_labels)
     f1 = calculate_f1_score(trained_model, testing_data, testing_labels)
     return trained_model, accuracy, f1
+
+
+def LDA_with_svm():
+    pass

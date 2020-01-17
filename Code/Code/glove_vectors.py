@@ -24,7 +24,7 @@ class GloVeConfig:
             gloveDict = {line.split()[0]: list(map(float, line.split()[1:])) for line in file}
             del gloveDict['0.45973']    # for some reason, this entry has 49 dimensions instead of 50
         # print(Counter([len(gloveDict[key]) for key in gloveDict]))
-        print(len(gloveDict), "words in the GLOVE dictionary\n")
+        # print(len(gloveDict), "words in the GLOVE dictionary\n")
         print('Took ' + str(round(time.time() - first, 2)) + ' seconds to construct glove dictionary')
         return gloveDict
 
@@ -64,9 +64,7 @@ class GloVeConfig:
             tokenized_row = [self.get_glove_embedding(token) for token in row]
             valid_row = [list_value for list_value in tokenized_row if list_value]
             if len(valid_row) == 0:
-                print(row)
-                print('aleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeert')
-                print(list(zip(*valid_row)))
+                raise Exception('No words from ' + str(row) + ' could be found in the glove dictionary')
             zipped_values = list(zip(*valid_row))
             return [sum(value) / len(zipped_values) for value in zipped_values]
 
