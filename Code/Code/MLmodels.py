@@ -6,7 +6,7 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.model_selection import train_test_split
 
 class SupportVectorMachine:
