@@ -47,33 +47,12 @@ if __name__ == '__main__':
     labels = data['sarcasm_label']
     training_data, testing_data, training_labels, testing_labels = train_test_split(vector.apply(pd.Series), labels, test_size=0.3)
 
-    untrained_model = get_model(0)
-    trained_model, accuracy, f1_score_val = train_and_evaluate(untrained_model, (training_data, testing_data, training_labels, testing_labels))
-    print('Accuracy: ', accuracy)
-    print('F1 score: ', f1_score_val)
+    lda_with_svm((training_data, testing_data, training_labels, testing_labels))
 
 
     exit()
 
-    # data['clean_data'] = data['clean_data'].apply(data_cleaning)
-    # vectorizer = CountVectorizer(min_df=5, max_df=0.9, stop_words='english', lowercase=True,
-    #                              token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
-    # data_vectorized = vectorizer.fit_transform(data['clean_data'])
-    # print(data_vectorized)
-    # print('Finished Data Cleaning')
-
-
-    # try and use our SVM
-    print('Training ML models')
-    labels = data['sarcasm_label']
-    data = data['vector'].apply(pd.Series)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(data, labels, test_size=0.3)
-
-    NUM_TOPICS = 10
-    lda = LatentDirichletAllocation(n_components=NUM_TOPICS, max_iter=10, learning_method='online', verbose=True)
-    lda.fit(training_data, training_labels)
-    s = lda.score(testing_data, testing_labels)
-    print('s', s)
-    # data_lda = lda.fit_transform(data_vectorized)
-    # print(data_lda.score((testing_data, testing_labels)))
-
+    untrained_model = get_model(0)
+    trained_model, accuracy, f1_score_val = train_and_evaluate(untrained_model, (training_data, testing_data, training_labels, testing_labels))
+    print('Accuracy: ', accuracy)
+    print('F1 score: ', f1_score_val)
