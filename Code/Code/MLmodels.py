@@ -27,6 +27,10 @@ def calculate_f1_score(trained_model, testing_data, testing_labels):
     return f1_score(testing_labels, predictions)
 
 
+def cross_validation():
+    pass
+
+
 def train_and_evaluate(untrained_model, data: tuple):
     # data is a tuple containing (training_data, testing_data, training_labels, testing_labels)
     training_data, testing_data, training_labels, testing_labels = data
