@@ -35,11 +35,9 @@ if __name__ == '__main__':
     print('Finished Tokenizing.')
 
     print('Vectorizing...')
-    # glove_embeddings = GloVeConfig(token_data)
-    # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
-    vector = data['clean_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
-    # data['vector'] = glove_embeddings.get_vectorized_data()
-    data['vector'] = vector
+    glove_embeddings = GloVeConfig(token_data)
+    vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
+    # vector = data['clean_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
     # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
     print('Finished Vectorizing.')
 
