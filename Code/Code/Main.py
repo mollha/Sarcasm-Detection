@@ -38,7 +38,6 @@ if __name__ == '__main__':
     vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
     # vector = data['text_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
     # data['vector'] = glove_embeddings.get_vectorized_data()
-    data['vector'] = vector
     # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
     print('Finished Vectorizing.')
 
@@ -47,7 +46,7 @@ if __name__ == '__main__':
     # try and use our SVM
     print('Training ML models')
     labels = data['sarcasm_label']
-    clf = SVC(gamma='auto', C=10, kernel='linear')
+    clf = MultinomialNB()
     # scores = cross_val_score(clf, data['vector'], labels, cv=5)
     scores = cross_val_score(clf, vector.apply(pd.Series), labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
