@@ -1,6 +1,7 @@
 import spacy
 import pandas as pd
 import time
+from Code.Code.LSTM import get_LSTM
 from Code.Code.MLmodels import *
 from sklearn.model_selection import train_test_split
 from Code.Code.DataPreprocessing import data_cleaning
@@ -34,10 +35,11 @@ if __name__ == '__main__':
     print('Finished Tokenizing.')
 
     print('Vectorizing...')
-    glove_embeddings = GloVeConfig(token_data)
-    vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
-    # vector = data['text_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
+    # glove_embeddings = GloVeConfig(token_data)
+    # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
+    vector = data['clean_data'].apply(lambda x: nlp(x).vector)   # spaCy glove embeddings
     # data['vector'] = glove_embeddings.get_vectorized_data()
+    data['vector'] = vector
     # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
     print('Finished Vectorizing.')
 
@@ -46,7 +48,8 @@ if __name__ == '__main__':
     # try and use our SVM
     print('Training ML models')
     labels = data['sarcasm_label']
-    clf = MultinomialNB()
+    print(vector[14])
+    clf = get_LSTM()
     # scores = cross_val_score(clf, data['vector'], labels, cv=5)
     scores = cross_val_score(clf, vector.apply(pd.Series), labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
