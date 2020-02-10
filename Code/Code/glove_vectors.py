@@ -2,6 +2,7 @@ import time
 import pandas as pd
 from scipy import spatial
 
+
 class GloVeConfig:
     def __init__(self, dataset: pd.Series):
         # ----------------- CONFIGURE DATASET -------------------
