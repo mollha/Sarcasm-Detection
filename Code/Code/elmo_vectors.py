@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import time
 import tensorflow as tf
-import tensorflow_hub as hub
+# import tensorflow_hub as hub
 import spacy
 import re
 import pickle
