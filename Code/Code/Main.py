@@ -1,14 +1,14 @@
 import spacy
 import pandas as pd
 import time
-from Dissertation.Code.Code.LSTM import get_LSTM
-from Dissertation.Code.Code.MLmodels import *
+from Code.Code.LSTM import get_LSTM
+from Code.Code.MLmodels import *
 import ast
 from sklearn.model_selection import train_test_split
-from Dissertation.Code.Code.DataPreprocessing import data_cleaning
+from Code.Code.DataPreprocessing import data_cleaning
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
-from Dissertation.Code.Code.glove_vectors import GloVeConfig
+from Code.Code.glove_vectors import GloVeConfig
 from sklearn.model_selection import cross_val_score
 import numpy as np
 

@@ -11,5 +11,6 @@ Code/Dataset/SarcasmAmazonReviewsCorpus/Ironic
 Code/Dataset/SarcasmAmazonReviewsCorpus/Regular
 Code/WordEmbedding/Practice_Dataset/*
 !Code/Dataset/SARC/train-balanced-sarcasm.png
+!Datasets/Sarcasm_Amazon_Review_Corpus/processing_scripts/*
 GLOVEDATA
 /Code/Code/Datasets/*
