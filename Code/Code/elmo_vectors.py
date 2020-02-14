@@ -25,14 +25,11 @@ elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
 
 # Remember - already dealt with CSV header in CleanData.csv
 
-def elmo_vectors(x):
+def elmo_vectors(x, sess):
     embeddings = elmo(x, signature="default", as_dict=True)["elmo"]
-
-    with tf.compat.v1.Session() as sess:
-        sess.run(tf.compat.v1.global_variables_initializer())
-        sess.run(tf.compat.v1.tables_initializer())
-        # return average of ELMo features
-        return sess.run(tf.reduce_mean(embeddings,1))
+    #
+    # return average of ELMo features
+    return sess.run(tf.reduce_mean(embeddings,1))
 
 # batch data
 total_amount = len(data['clean_data'])
@@ -47,16 +44,19 @@ csv = open("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/elmo_ve
 csv.write('vector')
 batched = batch_data(data['clean_data'])
 # remember to skip initial lne
-for batch in batched:
-    count += 10
-    if count > 10:
-        print('\nProgress: ', str(round(count / total_amount, 3)) + '%')
-        time_so_far = round(time.time() - initial_time, 2)
-        print('Estimated time remaining: ' + str(round(((time_so_far/count)*(total_amount - count))/60, 2)) + ' mins')
-    elmo_train = [elmo_vectors([token.text for token in nlp(x)]) for x in batch]
-    for line in elmo_train:
-        line = np.mean(line, axis=0)
-        line = list(line)
-        csv.write('\n' + str(line))
+with tf.compat.v1.Session() as sess:
+    for batch in batched:
+        sess.run(tf.compat.v1.global_variables_initializer())
+        sess.run(tf.compat.v1.tables_initializer())
+        count += 10
+        if count > 10:
+            print('\nProgress: ', str(round(count / total_amount, 3)) + '%')
+            time_so_far = round(time.time() - initial_time, 2)
+            print('Estimated time remaining: ' + str(round(((time_so_far/count)*(total_amount - count))/60, 2)) + ' mins')
+        elmo_train = [elmo_vectors([token.text for token in nlp(x)], sess) for x in batch]
+        for line in elmo_train:
+            line = np.mean(line, axis=0)
+            line = list(line)
+            csv.write('\n' + str(line))
 
 csv.close()
