@@ -20,24 +20,20 @@ def bag_of_words(dataset: pd.Series):
         csv.write('"' + str(vector) + '"')
     return list_of_vectors
 
+def tf_idf(dataset: pd.Series):
+    vectoriser = TfidfVectorizer()
+    x = vectoriser.fit_transform(dataset)
+    open("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/tf_idf.csv", 'w').close()
+    csv = open("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/tf_idf.csv", "a")
+    # write feature names as the first line
+    csv.write('vector')
 
-# def all_words(dataset: pd.Series) -> dict:
-#     dictionary = {}
-#     for _, data_point in dataset.iteritems():
-#         for x in nlp(data_point):
-#             val = x.text
-#             if val in dictionary:
-#                 dictionary[val] += 1
-#             else:
-#                 dictionary[val] = 1
-#     return dictionary
-
-def computeTF(wordDict, bagOfWords):
-    tfDict = {}
-    bagOfWordsCount = len(bagOfWords)
-    for word, count in wordDict.items():
-        tfDict[word] = count / float(bagOfWordsCount)
-    return tfDict
+    array = x.toarray()
+    list_of_vectors = array.tolist()
+    for vector in list_of_vectors:
+        csv.write('\n')
+        csv.write('"' + str(vector) + '"')
+    return list_of_vectors
 
 
 # def tf_idf(dataset: pd.Series):

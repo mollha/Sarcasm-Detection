@@ -1,7 +1,7 @@
 import spacy
 import pandas as pd
 import time
-from Code.Code.LSTM import get_LSTM
+from Code.Code.LSTM import *
 from Code.Code.MLmodels import *
 from Code.Code.create_vectors import *
 import ast
@@ -35,23 +35,34 @@ if __name__ == '__main__':
 
 
     if re_run_token_vector:
-        print('GloVe Vectorizing...')
-        token_data = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
-        glove_embeddings = GloVeConfig(token_data)
-        vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
-        # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
-        vector.to_csv(path_or_buf="Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
-                      index=False, header=['vector'])
+        # print('GloVe Vectorizing...')
+        # token_data = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
+        # glove_embeddings = GloVeConfig(token_data)
+        # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
+        # # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
+        # vector.to_csv(path_or_buf="Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
+        #               index=False, header=['vector'])
 
         # print('BOW Vectorizing...')
         # token_data = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
         # vector = bag_of_words(token_data)
+         # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
+
+        print('TFIDF Vectorizing...')
+        token_data = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
+        vector = tf_idf(token_data)
+    # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
+
     else:
         # glove vectors
         # vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
         #                      encoding="ISO-8859-1")['vector']
-        vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/bag_of_words.csv",
-                             encoding="ISO-8859-1")['vector']
+        # vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/bag_of_words.csv",
+        #                      encoding="ISO-8859-1")['vector']
+
+        #tf-idf
+        vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/tf_idf.csv",
+                              encoding="ISO-8859-1")['vector']
         vector = vector.apply(lambda x: ast.literal_eval(x))
 
     # ---------------------------------------------------------------------------------------------------------------

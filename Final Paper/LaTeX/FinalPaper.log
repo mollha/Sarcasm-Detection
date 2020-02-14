@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 FEB 2020 09:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 FEB 2020 14:37
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -221,38 +221,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--79
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 106--107
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 116--117
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 []\OT1/ptm/b/n/12 Mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 120--120
 []\OT1/ptm/m/n/12 News Head-lines
  []
 
 
-Underfull \hbox (badness 6775) in paragraph at lines 118--118
+Underfull \hbox (badness 6775) in paragraph at lines 120--120
 \OT1/ptm/m/n/12 Dataset For Sar-casm
- []
-
-
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 120--120
-[][]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 120--121
-[]\OT1/ptm/m/n/12 10.46
- []
-
-
-Underfull \hbox (badness 1648) in paragraph at lines 122--122
-[]\OT1/ptm/m/n/12 Sarcasm Ama-zon Re-
  []
 
 
@@ -266,12 +251,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 122--123
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--125
+Underfull \hbox (badness 1648) in paragraph at lines 124--124
+[]\OT1/ptm/m/n/12 Sarcasm Ama-zon Re-
+ []
+
+
+Overfull \hbox (3.63304pt too wide) in paragraph at lines 124--124
+[][]| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
+[]\OT1/ptm/m/n/12 10.46
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--127
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 149--150
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
@@ -280,7 +280,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 149--150
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 ) [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
  []
 
@@ -308,11 +308,11 @@ Underfull \hbox (badness 4391) in paragraph at lines 87--92
 . org / dictionary / english /
  []
 
-
+[11]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [11]) [12] (FinalPaper.aux) ) 
+)) [12] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
  2800 strings out of 492452
  36387 string characters out of 3114457
@@ -321,19 +321,19 @@ Here is how much of TeX's memory you used:
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,14n,29p,1468b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Pa
-ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Password is ho
-use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/User
-s/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utm
-bi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
-pe1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (12 pages, 134455 bytes).
+{C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
+12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Password is house/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Pas
+sword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.
+pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/u
+rw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2
+.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on FinalPaper.pdf (12 pages, 135309 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -95,6 +95,8 @@ Support Vector Machines (SVM), can be effective when smaller amounts of training
 \paragraph{Deep-Learning Classifiers --}
 Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Two common DNN architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). They typically require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
+https://arxiv.org/pdf/1703.03091.pdf
+
 This has already been used
 Write about RNN uses
 
@@ -203,7 +205,17 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 
 \paragraph{Convolutional Neural Networks --}
 
+Convolutional neural networks output fixed sized vectors, they are often applied to classification tasks. Convolutions are very fast.
 
+Convolutional Neural Networks have sought success in a number of tasks
+
+They consist of neurons with weights and biases
+CNNs consist of a few layers of convolutions with non-linear activation functions - they have fewer layers than typical neural networks. Each layer applies dfferent filters and combines their result.
+
+Pooling layers are used, typically after convolutions. They subsample their input. Usually, performing pooling consists of applying a max operation to the result. Pooling provides a fixed size output matrix, typically required for classification. Allows variable size sentences and variable size filters, obtaining same output dimensions. 
+
+Each row of a matrix corresponds to one token
+Filters slide over full rows of the matrix of the input matrix., therefore the width of filters is typically the widt
 
 
 
