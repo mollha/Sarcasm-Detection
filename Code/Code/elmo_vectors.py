@@ -6,6 +6,8 @@ import spacy
 import numpy as np
 import pickle
 
+ # TODO get proper ELMO
+
 pd.set_option('display.max_colwidth', 200)
 nlp = spacy.load('en_core_web_md', disable=['parser', 'ner'])
 
