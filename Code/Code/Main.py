@@ -33,7 +33,6 @@ if __name__ == '__main__':
     # --------------------------- TOKENIZE AND VECTORIZE -------------------------------
     re_run_token_vector = False
 
-
     if re_run_token_vector:
         # print('GloVe Vectorizing...')
         # token_data = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
@@ -61,7 +60,7 @@ if __name__ == '__main__':
         #                      encoding="ISO-8859-1")['vector']
 
         #tf-idf
-        vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/tf_idf.csv",
+        vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
                               encoding="ISO-8859-1")['vector']
         vector = vector.apply(lambda x: ast.literal_eval(x))
 
@@ -72,7 +71,7 @@ if __name__ == '__main__':
     # try and use our SVM
     print('Training ML models')
     labels = data['sarcasm_label']
-    classifier = get_model(0)
+    classifier = get_model(4)
     scores = cross_val_score(classifier, vector.apply(pd.Series), labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
     print('Score: ', five_fold_cross_validation)

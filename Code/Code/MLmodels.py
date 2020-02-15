@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
+from sklearn.cluster import KMeans
 import pandas as pd
 import numpy as np
 
@@ -13,7 +14,9 @@ models = {0: SVC(gamma='auto', C=10, kernel='linear'),
           1: LogisticRegression(C=10),
           2: RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt'),
           3: GaussianNB(),
-          4: MultinomialNB()}
+          4: MultinomialNB(),
+          5: KMeans(n_clusters=5, init='k-means++', max_iter=300, n_init=10, random_state=0)
+          }
 
 
 def get_model(model_number):
