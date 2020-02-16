@@ -6,6 +6,7 @@
 \usepackage{harvard}
 \usepackage[utf8x]{inputenc}
 \usepackage{wrapfig}
+\usepackage{graphicx}
 
 \usepackage{titlesec}
 \setcounter{secnumdepth}{4}
@@ -13,7 +14,7 @@
 \citationmode{abbr}
 \bibliographystyle{plain}
 
-\title{An Analysis of Machine Learning and Deep Learning Techniques for the Detection of Sarcasm in Online Product Reviews}
+\title{An Analysis of Machine Learning and Deep Learning Techniques for Detecting Sarcasm in Online Text}
 \author{} % leave; your name goes into \student{}
 \student{Molly Hayward}
 \supervisor{Dr Noura Al-Moubayed}
@@ -41,27 +42,36 @@ This section should not be longer than half of a page, and having no more than o
 \end{abstract}
 
 \begin{keywords}
-Machine learning, Deep learning, Sarcasm detection
+Machine learning, Deep learning, Sarcasm Detection, Sentiment Analysis, Classification
 \end{keywords}
 
-\newpage
 
 \section{Introduction}
-\noindent Sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridgesarcasm2020}. Sarcasm poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it transforms the sentiment polarity of a positive or negative utterance into its opposite. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. This phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the sentiment analysis task.\\
+\noindent Sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridgesarcasm2020}. Sarcasm poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it transforms the sentiment polarity of a positive or negative utterance into its opposite. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. This phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the sentiment analysis task.
 
+\subsection{Problem Background}
+\noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognize sarcastic intent; due in part to the lack of an all-encompassing, universal definition of sarcasm. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
 
-\noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognize sarcastic intent; due in part to the lack of an all-encompassing, universal definition of sarcasm. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.\\
+These factors make sarcasm detection an extremely complex task for both humans and computers. Despite this, \textit{most} humans can recognise sarcastic intent \textit{most} of the time. If we could replicate this performance, or even perhaps improve upon it, we could move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.
 
-
-All of these components make sarcasm detection an extremely complex task for both humans and computers. Despite this, most humans can recognise sarcasm most of the time. If we could replicate this performance, or even perhaps improve upon it, we could move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.\\
-
-
+\subsection{Research Questions and Objectives}
 \noindent The \textbf{research questions} guiding this project are as follows --
 \\ \indent \textit{Which linguistic cues indicate sarcastic intent in written text? How can a model be used to detect the words that correlate more to sarcastic labels? Do deep learning techniques perform better than machine learning approaches for sarcasm detection? Can the solution be used to improve the sentiment analysis task? Does the proposed solution perform well on other datasets?}\\
 
-This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.\\
+\noindent The following objectives were designed to address these specific research questions, and have been divided into three categories depending on their priority level and difficulty.
+
+The \textbf{minimum} objectives of this project were to evaluate, compare and clean high-quality datasets, as well as to experiment with and evaluate machine learning architectures on these datasets. I achieved this by ...
+
+The \textbf{intermediate} objectives of this project were to experiment with and evaluate deep learning models on the chosen datasets, and determine which is the best performing solution. Additionally, I also evaluated the model against unseen data. I achieved this by...
+
+The \textbf{advanced} objectives of this project were to implement an attention-based deep neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. I achieved this by ...
 
 
+
+
+%This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.\\%
+
+\vfill
 
 \section{Related Work}
 In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. Hence, I have provided an overview of their definitions. Online, it is commonly found in opinion-based user generated content.
@@ -107,8 +117,6 @@ Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanish
 
 Convolutional Neural Networks allow us to extract higher-level features, and they are based on the mathematical operation of convolution. \textit{Zhang et al. (2015)}  \cite{zhang2015character} explored the used of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as an Amazon product review corpus. CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
 
-\vfill
-
 
 %This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations. Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
 
@@ -130,8 +138,14 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 
 
 \section{Solution}
-\subsection{Overview of architecture}
-This problem is essentially a binary classification problem. Given a snippet of text: is it sarcastic? or is it non-sarcastic? First, the data is collected and pre-processed. Then, features are extracted and the data is vectorised. These vectors are used to train to a classifier, which is then evaluated using a number of techniques.\\
+This problem is essentially a binary classification problem. Given a snippet of text: is it sarcastic? or is it non-sarcastic? First, the data is collected and pre-processed. Then, features are extracted and the data is vectorised. These vectors are used to train to a classifier, which is then carefully evaluated in order to account for potential overfitting.
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{Images/modelpipeline2.png}
+	\label{Model Pipeline}
+\end{center}
+
+
+
 
 \subsection{Implementation Tools}
 This project was heavily focused on implementation. I decided to use python, as it has an abundance of libraries well-suited to machine learning and deep learning tasks. I used \textbf{pandas} for manipulating the datasets, and incorporated \textbf{SpaCy} when cleaning and tokenizing the data. In terms of classification, I did most of my machine learning implementation using \textbf{scikit-learn}, and used \textbf{keras} to construct deep learning models.
