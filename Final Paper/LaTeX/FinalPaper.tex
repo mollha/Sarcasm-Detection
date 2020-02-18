@@ -6,6 +6,7 @@
 \usepackage{harvard}
 \usepackage[utf8x]{inputenc}
 \usepackage{wrapfig}
+\usepackage{booktabs}
 \usepackage{graphicx}
 
 \usepackage{titlesec}
@@ -13,6 +14,7 @@
 \usepackage{cite}
 \citationmode{abbr}
 \bibliographystyle{plain}
+\renewcommand*{\arraystretch}{0}
 
 \title{An Analysis of Machine Learning and Deep Learning Techniques for Detecting Sarcasm in Online Text}
 \author{} % leave; your name goes into \student{}
@@ -28,11 +30,11 @@
 
 \begin{abstract}
 \\ \indent \textbf{Context / Background --} 
-Sarcasm is a powerful linguistic anomaly that when present in text, can alter its meaning entirely. Detecting sarcasm proves a significant challenge for traditional sentiment analysers. This highlights the scope for innovative machine learning and deep learning solutions to this complex problem.
+Sarcasm is a powerful linguistic anomaly that when present in text, can alter its meaning entirely. Detecting sarcasm proves a significant challenge for traditional sentiment analysers and humans alike. This highlights the scope for innovative machine learning and deep learning solutions to this ill-structured problem.
 
-\indent \textbf{Aims --} Despite the challenges in this domain, the ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy.
+\indent \textbf{Aims --} Despite the challenges in this domain, the ultimate aim of this project was to produce a tool that can be used to detect sarcasm with a \textit{high degree} of accuracy. 
 
-\indent \textbf{Method --} In my endeavour to realise this aim, I implemented state-of-the-art word embedding and text classification techniques.
+\indent \textbf{Method --} In my endeavour to realise this aim, I used state-of-the-art contextualised word embeddings and deep learning classification models.
 
 \indent \textbf{Results --} Through extensive experimentation, I found that
 
@@ -47,7 +49,7 @@ Machine learning, Deep learning, Sarcasm Detection, Sentiment Analysis, Classifi
 
 
 \section{Introduction}
-\noindent Sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridgesarcasm2020}. Sarcasm poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it transforms the sentiment polarity of a positive or negative utterance into its opposite. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. This phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the sentiment analysis task.
+\noindent Sarcasm is defined as the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way \cite{cambridgesarcasm2020}. Sarcasm poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it transforms the sentiment polarity of a positive or negative utterance into its opposite. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the sentiment analysis task.
 
 \subsection{Problem Background}
 \noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognize sarcastic intent; due in part to the lack of an all-encompassing, universal definition of sarcasm. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
@@ -74,37 +76,37 @@ The \textbf{advanced} objectives of this project were to implement an attention-
 \vfill
 
 \section{Related Work}
-In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. Hence, I have provided an overview of their definitions. Online, it is commonly found in opinion-based user generated content.
+\noindent In this section, we will compare classification model architectures used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks as they may have potential to perform well in this specific domain. In most approaches, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. 
+In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. Hence, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content.
 
 \begin{center}
-	Table 1: Definition of subjective terms
+	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm
 \end{center}
-\begin{tabular}{p{3cm}p{8cm}p{5cm}}
+\begin{center}
+\begin{tabular}{p{2cm}p{12cm}}
 	\hline
-	\textbf{Term} & \textbf{Definition} & \textbf{Example}\\
+	\textbf{Term} & \textbf{Definition}\\
 	\hline\hline
-	Irony & The use of words that are the opposite of what you mean, as a way of being funny. \cite{cambridgeirony2020} &  Example of irony\\
+	Irony & The use of words that are the opposite of what you mean, as a way of being funny. \cite{cambridgeirony2020}\\
 	\hline
-	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way. \cite{cambridgesarcasm2020} &  Example of sarcasm\\
+	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way. \cite{cambridgesarcasm2020}\\
 	\hline
 \end{tabular}\\
+\end{center}
 
-\noindent Most approaches treat sarcasm detection as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. In the following text, I will compare methods used specifically in sarcasm detection research, as well as techniques that have seen success in other NLP classification tasks as they may have potential to perform well in this specific domain.
+\subsection{Traditional Classifiers}
+\noindent A number of simple linguistic approaches have been used in previous research into sarcasm detection. One such class of naive approaches is \textit{rule-based}, where text is classified based on a set of linguistic rules. Maynard and Greenwood (2014) \cite{maynard2014cares} proposed that the sentiment contained in hashtags can indicate the prescence of sarcasm in tweets, such as \#notreally in the example "I love doing the washing-up \#notreally". They used a rule-based approach to determine that if the sentiment of a tweet contradicts that of the hashtag, then this tweet is an example of sarcasm. In Riloff et al. (2013) \cite{riloff2013sarcasm}, sarcasm is described as a contrast between positive sentiment and negative situation. This description is leveraged by Bharti et al (2015) \cite{bharti2015parsing}, which presents two rule-based approaches to sarcasm detection. The first approach identifies sentiment bearing situation phrases, classifying the phrase as sarcastic if the negative situation is juxtaposed with a positive sentence. Rule-based techniques are fairly primitive when compared to their modern, deep learning counterparts, as each ruleset must be generated manually and for each dataset.
 
-\paragraph{Traditional Classifiers --}
-A number of simple linguistic approaches have been used in previous research into sarcasm detection. One such class of naive approaches is \textit{rule-based}, where text is classified based on a set of linguistic rules. Maynard and Greenwood (2014) \cite{maynard2014cares} proposed that the sentiment contained in hashtags can indicate the prescence of sarcasm in tweets, such as \#notreally in the example "I love doing the washing-up \#notreally". They used a rule-based approach to determine that if the sentiment of a tweet contradicts that of the hashtag, then this tweet is an example of sarcasm. In Riloff et al. (2013) \cite{riloff2013sarcasm}, sarcasm is described as a contrast between positive sentiment and negative situation. This description is leveraged by Bharti et al (2015) \cite{bharti2015parsing}, which presents two rule-based approaches to sarcasm detection. The first approach identifies sentiment bearing situation phrases, classifying the phrase as sarcastic if the negative situation is juxtaposed with a positive sentence. Rule-based techniques are fairly primitive when compared to their modern, deep learning counterparts. Especially when you consider that each ruleset must be generated manually and for each dataset and domain.
+\subsection{Machine-Learning Classifiers}
+\noindent Using both labelled and unlabelled training data, a machine-learning algorithm can learn patterns that are associated with each category of data. This allows it to classify unseen text into these categories without the need for a static linguistic rule set. If the training data is high-quality and plentiful, the model can begin to make accurate predictions. There are a few general architectures of machine-learning classifiers, including Naive Bayes, Support Vector machines (SVMs) and logistic regression based classifiers. Although, not all approaches fit neatly into these categories.
 
+Tsur et al. (2010) \cite{tsur2010icwsm} proposed a novel semi-supervised algorithm, \textit{SASI}, for sarcasm identification; trained on a small balanced seed of 160 reviews (80 sarcastic and 80 non-sarcastic) from a corpus of 66000 human-annotated Amazon product reviews. In order to mimic the ambiguous and spectral nature of sarcasm, a discrete score between 1 (non-sarcastic) and 5 (definitely sarcastic) is assigned to each sentence; scores of 3 and higher indicate sarcasm. Syntactic and pattern-based features are extracted and fed to a classifier which utilizes a strategy similar to k-nearest neighbor (kNN), whereby a sarcasm score is assigned to an unseen vector based upon the weighted average of the k-nearest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. SASI was evaluated against a gold standard dataset of unseen sentences - achieving a precision of 77\% and recall of 83.1\%, resulting in an $F_{1}$ score of 79.9\% on newly discovered sentences.
 
-\paragraph{Machine-Learning Classifiers --}
-Using labelled training data, a machine-learning algorithm can learn patterns that are associated with each category of data. This allows it to classify unseen text into these categories without the need for a static linguistic rule set. If the training data is high-quality and plentiful, the model can begin to make accurate predictions. There are a few general categories of machine-learning classifiers, including Naive Bayes, Support Vector machines (SVMs) and logistic regression based classifiers. Although, not all approaches fit neatly into these categories.
-
-For example, Tsur et al. (2010) \cite{tsur2010icwsm} used a semi-supervised algorithm, \textit{SASI}, in order to detect sarcasm in online product reviews. Their dataset contained 66000 Amazon reviews, each annotated by three humans as a result of crowdsourcing. They extracted syntactic and pattern-based features from the corpus, then used a classifcation strategy similar to k-nearest neighbor (kNN), whereby they assigned a score to each feature vector in the test set by computing the weighted average of the k-closest neighbors in the training set N.B. neighbours are vectors that share at least one pattern feature. This model had relative success - achieving a precision of 77\% and recall of 83.1\% on newly discovered sentences.
-
-Naive Bayes classifiers are supervised algorithms that use bayes theorem to make predictions. Reyes et al. (2013) \cite{reyes2013multidimensional} used naive bayes and decision trees algorithm in order to detect irony which is closely related to sarcasm. They experimented with balanced and unbalanced distributions (25\% ironic tweets and 75\% other), achieving an F-score of 0.72 on the balanced distribution, dropping to 0.53 for the inbalanced distribution. In a similar vein, Barbieri et al. (2014) \cite{barbieri2014modelling} used random forest and decision tree classifiers, also for the detection of irony. They used six types of features in order to represent tweets, and recorded results over three categories of training data - education, humor and politics.
+Naive Bayes classifiers are supervised algorithms that use bayes theorem to make predictions. Reyes et al. (2013) \cite{reyes2013multidimensional} used a naive bayes and decision trees algorithm in order to detect irony which is closely related to sarcasm. They experimented with balanced and unbalanced distributions (25\% ironic tweets and 75\% other), achieving an F-score of 0.72 on the balanced distribution, dropping to 0.53 for the inbalanced distribution. In a similar vein, Barbieri et al. (2014) \cite{barbieri2014modelling} used random forest and decision tree classifiers, also for the detection of irony. They used six types of features in order to represent tweets, and recorded results over three categories of training data - education, humor and politics.
 
 Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than naive bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimization, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimization and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
-\paragraph{Deep-Learning Classifiers --}
+\subsection{Deep-Learning Classifiers}
 Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Two common DNN architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). They typically require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
 https://arxiv.org/pdf/1703.03091.pdf
@@ -138,39 +140,47 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 
 
 \section{Solution}
-This problem is essentially a binary classification problem. Given a snippet of text: is it sarcastic? or is it non-sarcastic? First, the data is collected and pre-processed. Then, features are extracted and the data is vectorised. These vectors are used to train to a classifier, which is then carefully evaluated in order to account for potential overfitting.
+\noindent This project addresses a classification problem. In the simplest terms, this project aims to identify, given a snippet of text: is it sarcastic? or is it non-sarcastic? First, the data is collected and pre-processed. Then, features are extracted and the data is vectorised. These vectors are used to train to a classifier, which is then carefully evaluated in order to account for potential overfitting. The following figure out
+\begin{center}
+	\textbf{Figure -:} Overview of the model pipeline
+\end{center}
 \begin{center}
 	\includegraphics[width=0.8\textwidth]{Images/modelpipeline2.png}
 	\label{Model Pipeline}
 \end{center}
 
-
-
-
 \subsection{Implementation Tools}
-This project was heavily focused on implementation. I decided to use python, as it has an abundance of libraries well-suited to machine learning and deep learning tasks. I used \textbf{pandas} for manipulating the datasets, and incorporated \textbf{SpaCy} when cleaning and tokenizing the data. In terms of classification, I did most of my machine learning implementation using \textbf{scikit-learn}, and used \textbf{keras} to construct deep learning models.
+\noindent This project was majoritively written in python, as it has an abundance of open-source libraries well-suited to machine learning and deep learning tasks. We used \textbf{pandas} for manipulating the datasets, as it provides functionality for applying functions globally across the dataset. This simplifies the process of data pre-processing. We also  incorporated \textbf{SpaCy} when cleaning and tokenizing the data. In terms of classification, I did most of my machine learning implementation using \textbf{scikit-learn}, and used \textbf{keras} to construct deep learning models. The model interface was written using web-application development languages including HTML, CSS and JavaScript.
 
 \subsection{Datasets}
-I used publically available datasets in order to produce results. I avoided using datasets of tweet ids, whereby the original tweet must be scraped using the Twitter API. This is because some of the original tweets are non longer available on twitter, therefore this would not make for a fair comparison between my results and the results of the source study. I experimented with data from multiple domains and online platforms, including Twitter, Amazon, Reddit. and even news headlines. This data was all user generated, although data from news headlines is more likely to be well-structured than more informal platforms.\\
+\noindent I used publically available datasets in order to produce results. I avoided using datasets of tweet ids, whereby the original tweet must be scraped using the Twitter API. This is because some of the original tweets are non longer available on twitter, therefore this would not make for a fair comparison between my results and the results of the source study. I experimented with data from multiple domains and online platforms, including Twitter, Amazon, Reddit and even news headlines. This data was all user generated, although data from news headlines is more likely to be well-structured than data from more informal platforms.\\
 
-\begin{tabular}{p{4cm}p{3cm}p{2cm}}
-	\hline
-	\textbf{Title} & \textbf{Size} & \textbf{Mean Length}\\
-	\hline\hline
-	News Headlines Dataset For Sarcasm Detection & \begin{tabular}{@{}c@{}@{}} \\26709 instances \\ +ve: 43.9\% \\ -ve: 56.1\% \end{tabular} &  9.85 words\\
-	\hline
-	SARC & \begin{tabular}{@{}c@{}@{}} \\1010826 instances \\ +ve: 50\% \\ -ve: 50\% \end{tabular} &  10.46 words\\
-	\hline
-	Sarcasm Amazon Reviews Corpus & \begin{tabular}{@{}c@{}@{}} \\1010826 instances \\ +ve: 50\% \\ -ve: 50\% \end{tabular} &  10.46 words\\
-	\hline
-\end{tabular}\\
+In News Headlines, I expect that the sarcasm may be more contextual and that the data will be free from spelling and grammar errors.
 
+\begin{center}
+	\textbf{Figure -}:  Statistical breakdown of the datasets used in this project
+\end{center}
+\begin{center}
+	\begin{tabular}{p{4.3cm}p{2cm}cp{3cm}p{3cm}}
+		\toprule
+		\textbf{Dataset Title} & \textbf{Number of data points} & \textbf{Avg. \#tokens} & \textbf{\% in GloVe dictionary}\\
+		\midrule\midrule
+		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\[1ex] +ve: 47.6\% \\[1ex] -ve: 52.4\% \end{tabular} &  11.2 tokens & 97.8\%\\[1ex]
+		\midrule
+		SARC & \begin{tabular}{c@{}@{}@{}} \\1010826\\[1ex] +ve: 50\% \\[1ex] -ve: 50\% \end{tabular} &  10.46 words\\[1ex]
+		\midrule
+		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\[1ex] +ve: 34.9\% \\[1ex] -ve: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% \\[1ex]
+		\hline
+	\end{tabular}\\
+\end{center}
 
 
 \subsection{Data pre-processing}
 \noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalization, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features. \\
 
 Reducing sparsity in the dataset is vital in order to use word embeddings such as Word2Vec and GloVe. They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may be indicative of sarcasm. N.B. It is necessary to re-introduce this meaning in some form. I decided to add the token ! before a capitalised word, indicating emphasis, or "shouting". On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatiliztion e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalization can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
+
+In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
@@ -191,6 +201,8 @@ Despite their ability to preserve semantic relationships, Word2Vec and GloVe do 
 \paragraph{Contextualized Word Embedding --}
 In pursuit of a more robust approach, we look to deep neural language models. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilizes a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. Like fastText, they are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found.\\
 Devlin et al. (2018) \cite{devlin2018bert} introduced the \textit{BERT} framework, a multi-layer bidirectional transformer model consisting of two main steps - \textit{pre-training} and \textit{fine-tuning}. During pre-training, unlabeled data is used to train the model on different tasks, providing some initial parameters that are tweaked in the fine-tuning stage (a procedure known as \textit{transfer learning}). BERT uses a \textit{masked language model} which "masks" 15\% of the input tokens with the aim of predicting them based on their context. This allows BERT to leverage both left and right contexts simultaneously, unlike ELMO which uses shallow concatenation of separately trained left-to-right and right-to-left language models. 
+
+I experimented with feature extraction techniques from each category - for word embeddings, I used GloVe, and for contextualised word embeddings I experimented with ElMo.
 
 
 \subsection{Classification}
@@ -215,7 +227,7 @@ As an unsupervised algorithm, K-Means clustering does not require labelled train
 Support vector machines are a popular model for binary classification tasks, where a hyperplane is drawn such that the data points are separated into two groups. For the specific task of sarcasm detection, these categories are sarcastic and non-sarcastic. The distance from data points to the hyperplane is known as the margin, and  the hyperplane is drawn such that the margin between classification groups is maximised.
 
 
-\paragraph{Naive Bayes Classifier --} This is a probabilistic model derived from Bayes theorem, where all features are assumed to be independent of one another. Commonly used in the document classification problem, we calculate ${P(Sarcastic | features)}$. This is  the probability of an outcome A (i.e. statement is sarcastic), given its feature vector, x. There are a number of variations of Naive Bayes - including Multinomial, Bernoulli and Gaussian. 
+\paragraph{Na\"{i}ve Bayes Classifier --} This is a probabilistic model derived from Bayes theorem, where all features are assumed to be independent of one another. Commonly used in the document classification problem, we calculate ${P(Sarcastic | features)}$. This is  the probability of an outcome A (i.e. statement is sarcastic), given its feature vector, x. There are a number of variations of Naive Bayes - including Multinomial, Bernoulli and Gaussian. 
 
 \paragraph{Logistic Regression --} A statistical model commonly used for binary classifcation. It aims to predict the likelihood of an event occuring given some previous data. It works with binary data, i.e. is the statement sarcastic or not. It is more advanced than linear regression, which aims to model data using a linear equation.
 
@@ -248,10 +260,35 @@ Filters slide over full rows of the matrix of the input matrix., therefore the w
 
 
 \section{Results}
+\subsection{Evaluation Method}
+\noindent This section will discuss our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, I will instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore I will consider both measures separately, as well as in combination.
+
+\begin{align*}
+\mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}
+\end{align*}
+
+\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
-
+\begin{center}
+	\textbf{Figure -}: Results of Machine Learning Classifiers on the Sarcasm Amazon Review Corpus
+\end{center}
+\begin{center}
+	\begin{tabular}{p{8cm}p{2cm}}
+		\hline
+		\textbf{Model architecture} & \textbf{$F_{1}$ Score}\\
+		\hline\hline
+		GloVe + Support Vector Machine & 0.739\\
+		\hline
+		GloVe + Logistic Regression & 0.730\\
+		\hline
+		GloVe + Random Forest Classifier & 0.644\\
+		\hline
+		GloVe + Gaussian Na\"{i}ve Bayes & 0.415\\
+		\hline
+	\end{tabular}\\
+\end{center}
 
 \subsection{Sentiment Analysis Experimentation}
 In this experiment, we strive to answer the research question: \textit{Can the solution be used to improve the sentiment analysis task?} We hypothesise that incorporating a sarcasm label as an additional feature for the sentiment analysis task will improve the performance of a sentiment analyser. I used a pre-built state-of-the-art model, and a gold-standard benchmark dataset against which to test my hypothesis.

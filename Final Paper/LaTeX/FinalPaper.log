@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 FEB 2020 12:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 FEB 2020 20:10
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -139,6 +139,27 @@ g\wrapfig.sty"
 \WF@everypar=\toks24
 Package: wrapfig 2003/01/31  v 3.6
 )
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bookta
+bs\booktabs.sty"
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen114
+\lightrulewidth=\dimen115
+\cmidrulewidth=\dimen116
+\belowrulesep=\dimen117
+\belowbottomsep=\dimen118
+\aboverulesep=\dimen119
+\abovetopsep=\dimen120
+\cmidrulesep=\dimen121
+\cmidrulekern=\dimen122
+\defaultaddspace=\dimen123
+\@cmidla=\count102
+\@cmidlb=\count103
+\@aboverulesep=\dimen124
+\@belowrulesep=\dimen125
+\@thisruleclass=\count104
+\@lastruleclass=\count105
+\@thisrulewidth=\dimen126
+)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphi
 cs\graphicx.sty"
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
@@ -166,8 +187,8 @@ Package graphics Info: Driver file: pdftex.def on input line 105.
 cs-def\pdftex.def"
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen114
-\Gin@req@width=\dimen115
+\Gin@req@height=\dimen127
+\Gin@req@width=\dimen128
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/titles
 ec\titlesec.sty"
@@ -175,12 +196,12 @@ Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \ttl@box=\box30
 \beforetitleunit=\skip46
 \aftertitleunit=\skip47
-\ttl@plus=\dimen116
-\ttl@minus=\dimen117
+\ttl@plus=\dimen129
+\ttl@minus=\dimen130
 \ttl@toksa=\toks26
-\titlewidth=\dimen118
-\titlewidthlast=\dimen119
-\titlewidthfirst=\dimen120
+\titlewidth=\dimen131
+\titlewidthlast=\dimen132
+\titlewidthfirst=\dimen133
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cite\c
 ite.sty"
@@ -190,20 +211,20 @@ Package: cite 2015/02/27  v 5.5
 ) (FinalPaper.aux)
 \openout1 = `FinalPaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
-5.
+7.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
@@ -272,94 +293,49 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 29.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 29.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 31.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 44.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 44.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 46.
  [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--60
-
- []
-
-
-Overfull \hbox (30.1122pt too wide) in paragraph at lines 82--91
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--91
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
 
  []
 
 [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
 
  []
 
 [4]
-<Images/modelpipeline2.png, id=18, 909.3975pt x 222.23026pt>
+<Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 143.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 148.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--155
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 158--159
-[]\OT1/ptm/b/n/12 Mean
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
-[]\OT1/ptm/m/n/12 News Head-lines
- []
-
-
-Underfull \hbox (badness 6775) in paragraph at lines 160--160
-\OT1/ptm/m/n/12 Dataset For Sar-casm
- []
-
-
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 162--162
-[][]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--163
-[]\OT1/ptm/m/n/12 10.46
- []
-
-
-Underfull \hbox (badness 1648) in paragraph at lines 164--164
-[]\OT1/ptm/m/n/12 Sarcasm Ama-zon Re-
- []
-
-
-Overfull \hbox (3.63304pt too wide) in paragraph at lines 164--164
-[][]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 164--165
-[]\OT1/ptm/m/n/12 10.46
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--167
+Underfull \hbox (badness 10000) in paragraph at lines 156--157
 
  []
 
 [5 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
+Overfull \hbox (5.06223pt too wide) in paragraph at lines 168--168
+[][]| 
+ []
+
+
+Overfull \hbox (5.06223pt too wide) in paragraph at lines 172--172
+[][]| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 
  []
 
@@ -368,45 +344,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 171--172
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 ) [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
 
  []
 
-[9] (FinalPaper.bbl [10]
-Underfull \hbox (badness 1048) in paragraph at lines 74--78
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
+
+ []
+
+[10] (FinalPaper.bbl [11]
+Underfull \hbox (badness 1048) in paragraph at lines 80--84
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[11]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-2.
+8.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 2150) in paragraph at lines 87--92
+Underfull \hbox (badness 2150) in paragraph at lines 93--98
 []\OT1/ptm/m/n/12 Cambridge Uni-ver-sity Press.  Sar-casm: mean-ing in the cam-
 bridge en-glish dic-
  []
 
 
-Underfull \hbox (badness 4391) in paragraph at lines 87--92
+Underfull \hbox (badness 4391) in paragraph at lines 93--98
 \OT1/ptm/m/n/12 tio-nary.  $\OT1/pcr/m/n/12 https : / / dictionary . cambridge 
 . org / dictionary / english /
  []
 
-
+[12]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [12] (FinalPaper.aux) ) 
+)) [13] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 3785 strings out of 492452
- 52801 string characters out of 3114457
- 123752 words of memory out of 3000000
- 8066 multiletter control sequences out of 15000+200000
+ 3846 strings out of 492452
+ 53698 string characters out of 3114457
+ 124518 words of memory out of 3000000
+ 8123 multiletter control sequences out of 15000+200000
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1631b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -415,16 +395,17 @@ KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
 Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
 d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
 12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Password is house/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Pas
-sword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.
-pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/u
-rw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (12 pages, 173507 bytes).
+1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is ho
+use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Us
+ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
+tmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/
+Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on FinalPaper.pdf (13 pages, 187721 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -17,21 +17,29 @@ nlp = spacy.load('en_core_web_md')
 
 if __name__ == '__main__':
     start = time.time()
+    # path_to_dataset_root = "Datasets/Sarcasm_Amazon_Review_Corpus"
+    path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
+    chunk_size = 500
 
     # -------------------------- READING AND CLEANING DATA ------------------------------
-    re_run_cleaning = False
-    # Data cleaning has already been applied
-    data = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/OriginalData.csv", encoding="ISO-8859-1")
+    re_run_cleaning = False  # Set to False if data cleaning has already been applied
+    original_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv",
+                                       encoding="ISO-8859-1", chunksize=chunk_size)
+    original_data_chunk_list = [chunk for chunk in original_data_chunks]
 
     if re_run_cleaning:
         print('Starting Data Cleaning...')
-        data['clean_data'] = data['text_data'].apply(data_cleaning)
+        for data in original_data_chunks:
+            data['clean_data'] = data['text_data'].apply(data_cleaning)
+        print('Data Cleaning complete.\n')
     else:
-        data['clean_data'] = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/CleanData.csv",
-                                         encoding="ISO-8859-1")
-
+        clean_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv",
+                                        encoding="ISO-8859-1", chunksize=chunk_size)
+        for index, data in enumerate(clean_data_chunks):
+            og_chunk = original_data_chunk_list[index]
+            og_chunk['clean_data'] = data
     # --------------------------- TOKENIZE AND VECTORIZE -------------------------------
-    re_run_token_vector = False
+    re_run_token_vector = True
 
     if re_run_token_vector:
         # print('GloVe Vectorizing...')
@@ -39,30 +47,36 @@ if __name__ == '__main__':
         # glove_embeddings = GloVeConfig(token_data)
         # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
         # # TODO need to make this cope with the scenario that no words in a sentence belong to glove dictionary
-        # vector.to_csv(path_or_buf="Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
+        # vector.to_csv(path_or_buf=path_to_dataset_root + "/processed_data/Vectors/glove_vectors.csv",
         #               index=False, header=['vector'])
 
         # print('BOW Vectorizing...')
         # token_data = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
-        # vector = bag_of_words(token_data)
+        # vector = bag_of_words(path_to_dataset_root, token_data)
          # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
 
         print('TFIDF Vectorizing...')
-        token_data = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
-        vector = tf_idf(token_data)
+        for chunk in original_data_chunk_list:
+            chunk['token_data'] = chunk['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
+        original_data_chunk_list = tf_idf(path_to_dataset_root, original_data_chunk_list)
     # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
 
     else:
         # glove vectors
-        # vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
-        #                      encoding="ISO-8859-1")['vector']
-        # vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/bag_of_words.csv",
-        #                      encoding="ISO-8859-1")['vector']
+        # vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/glove_vectors.csv",
+        #                      encoding="ISO-8859-1", chunksize=chunk_size)
 
-        #tf-idf
-        vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
-                              encoding="ISO-8859-1")['vector']
-        vector = vector.apply(lambda x: ast.literal_eval(x))
+        # bag of words vectors
+        # vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/bag_of_words.csv",
+        #                      encoding="ISO-8859-1", chunksize=chunk_size)
+
+        vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/tf_idf.csv",
+                                        encoding="ISO-8859-1", chunksize=chunk_size)
+        # tf-idf
+        for index, data in enumerate(vector_chunk_list):
+            og_chunk = original_data_chunk_list[index]
+            og_chunk['vector'] = data
+            og_chunk['vector'] = og_chunk['vector'].apply(lambda x: ast.literal_eval(x))
 
     # ---------------------------------------------------------------------------------------------------------------
 
@@ -71,7 +85,8 @@ if __name__ == '__main__':
     # try and use our SVM
     print('Training ML models')
     labels = data['sarcasm_label']
-    classifier = get_model(4)
+    classifier = get_model(3)
+
     scores = cross_val_score(classifier, vector.apply(pd.Series), labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
     print('Score: ', five_fold_cross_validation)
