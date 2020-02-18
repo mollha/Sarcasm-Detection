@@ -1,5 +1,6 @@
 # TODO make k-fold cross validation
 import pandas as pd
+import ast
 from Code.Code.MLmodels import *
 import spacy
 
@@ -41,11 +42,18 @@ def k_fold_cross_validation(k: int, data_chunk_list: list):
 
 if __name__ == "__main__":
     path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
-    chunk_size = 500
-    original_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv",
+    chunk_size = 1000
+    ma_list = pd.read_pickle(path_to_dataset_root + "/processed_data/Vectors/tf_idf.pckl")
+    print(len(ma_list))
+
+    original_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/tf_idf.csv",
                                        encoding="ISO-8859-1", chunksize=chunk_size)
     original_data_chunk_list = [chunk for chunk in original_data_chunks]
-    for chunk in original_data_chunk_list:
-        chunk['vector'] = chunk['clean_data'].apply(lambda x: nlp(x))
+    print('Length of list: ', len(original_data_chunk_list))
+
+    for index in range(len(original_data_chunk_list)):
+        print(index)
+        chunk = original_data_chunk_list[index]
+        chunk['vector'] = chunk['vector'].apply(lambda x: ast.literal_eval(x))
 
     k_fold_cross_validation(3, original_data_chunk_list)
