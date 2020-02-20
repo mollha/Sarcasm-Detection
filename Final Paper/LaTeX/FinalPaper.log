@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 FEB 2020 20:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  19 FEB 2020 16:31
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -319,93 +319,114 @@ File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
 Package pdftex.def Info: Images/modelpipeline2.png  used on input line 148.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
-
+ [5 <./Images/modelpipeline2.png>]
+Underfull \hbox (badness 1173) in paragraph at lines 168--168
+[]\OT1/ptm/b/n/12 Number of
  []
 
-[5 <./Images/modelpipeline2.png>]
-Overfull \hbox (5.06223pt too wide) in paragraph at lines 168--168
+
+Overfull \hbox (8.78436pt too wide) in paragraph at lines 168--169
+[]\OT1/ptm/b/n/12 Benchmark| 
+ []
+
+
+Overfull \hbox (2.21678pt too wide) in paragraph at lines 170--170
 [][]| 
  []
 
 
-Overfull \hbox (5.06223pt too wide) in paragraph at lines 172--172
+Overfull \hbox (2.21678pt too wide) in paragraph at lines 172--172
 [][]| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--180
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
 [6]
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
+
+ []
+
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-) [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 239--240
+) [7]
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
  []
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 270--271
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 
  []
 
-[10] (FinalPaper.bbl [11]
-Underfull \hbox (badness 1048) in paragraph at lines 80--84
-[]\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
-a-teek Vij.  A deeper
+[9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 272--273
+
  []
 
+(FinalPaper.bbl [11]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-8.
+1.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 2150) in paragraph at lines 93--98
+) [12]
+Underfull \hbox (badness 1048) in paragraph at lines 97--101
+[]\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
+a-teek Vij.  A deeper
+ []
+
+
+Underfull \hbox (badness 2150) in paragraph at lines 116--121
 []\OT1/ptm/m/n/12 Cambridge Uni-ver-sity Press.  Sar-casm: mean-ing in the cam-
 bridge en-glish dic-
  []
 
 
-Underfull \hbox (badness 4391) in paragraph at lines 93--98
+Underfull \hbox (badness 4391) in paragraph at lines 116--121
 \OT1/ptm/m/n/12 tio-nary.  $\OT1/pcr/m/n/12 https : / / dictionary . cambridge 
 . org / dictionary / english /
  []
 
-[12]
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [13] (FinalPaper.aux) ) 
+) [13]) [14] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 3846 strings out of 492452
- 53698 string characters out of 3114457
- 124518 words of memory out of 3000000
- 8123 multiletter control sequences out of 15000+200000
+ 3850 strings out of 492452
+ 53760 string characters out of 3114457
+ 125534 words of memory out of 3000000
+ 8127 multiletter control sequences out of 15000+200000
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1631b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
-12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is ho
-use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Us
-ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
-tmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (13 pages, 187721 bytes).
+{C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Pa
+ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password 
+is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><
+C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/ti
+mes/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on FinalPaper.pdf (14 pages, 190573 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 88 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
