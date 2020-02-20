@@ -54,14 +54,15 @@ if __name__ == '__main__':
         # vector.to_csv(path_or_buf=path_to_dataset_root + "/processed_data/Vectors/glove_vectors.csv",
         #               index=False, header=['vector'])
 
-        # print('BOW Vectorizing...')
-        # token_data = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
-        # vector = bag_of_words(path_to_dataset_root, token_data)
+        print('BOW Vectorizing...')
+        data['token_data'] = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))
+        vector = sparse_vectors(path_to_dataset_root, data, 'bag_of_words')
          # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
 
-        print('TFIDF Vectorizing...')
-        data['token_data'] = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))
-        vector = tf_idf(path_to_dataset_root, data)
+        # print('TFIDF Vectorizing...')
+        # data['token_data'] = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))
+        # vector = tf_idf(path_to_dataset_root, data)
+
 
         # for chunk in original_data_chunk_list:
         #     chunk['token_data'] = chunk['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences

@@ -43,8 +43,10 @@ def k_fold_cross_validation(k: int, data_chunk_list: list):
 if __name__ == "__main__":
     path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
     chunk_size = 1000
-    ma_list = pd.read_pickle(path_to_dataset_root + "/processed_data/Vectors/tf_idf.pckl")
-    print(len(ma_list))
+    ma_list = pd.read_pickle(path_to_dataset_root + "/processed_data/Vectors/glove.pckl")
+    print(ma_list[0])
+
+    exit()
 
     original_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/tf_idf.csv",
                                        encoding="ISO-8859-1", chunksize=chunk_size)
