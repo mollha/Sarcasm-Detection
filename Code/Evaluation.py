@@ -1,7 +1,6 @@
 # TODO make k-fold cross validation
-import pandas as pd
 import ast
-from Code.Code.MLmodels import *
+from Code.MLmodels import *
 import spacy
 
 nlp = spacy.load('en_core_web_md')

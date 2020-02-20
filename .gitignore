@@ -3,14 +3,10 @@ venv
 *.pyc
 *.aux
 *.bbl
-Code/Dataset/SARC/*
+Code1/Dataset/SARC/*
 *.csv
 *.json
 *.html
-Code/Dataset/SarcasmAmazonReviewsCorpus/Ironic
-Code/Dataset/SarcasmAmazonReviewsCorpus/Regular
-Code/WordEmbedding/Practice_Dataset/*
-!Code/Dataset/SARC/train-balanced-sarcasm.png
+Code/Datasets/*
 !Datasets/Sarcasm_Amazon_Review_Corpus/processing_scripts/*
 GLOVEDATA
-/Code/Code/Datasets/*

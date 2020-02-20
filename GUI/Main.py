@@ -1,9 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5.Qt import *
 import sys
-from Code.GUI.MenuWIdget import MenuWidget
+from GUI.MenuWIdget import MenuWidget
 
 
 class Main(QMainWindow):

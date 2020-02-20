@@ -1,15 +1,9 @@
-import spacy
-import pandas as pd
 import time
-from Code.Code.LSTM import *
-from Code.Code.MLmodels import *
-from Code.Code.create_vectors import *
+from Code.LSTM import *
+from Code.MLmodels import *
+from Code.create_vectors import *
 import ast
-from sklearn.model_selection import train_test_split
-from Code.Code.DataPreprocessing import data_cleaning
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
-from Code.Code.glove_vectors import GloVeConfig
+from Code.DataPreprocessing import data_cleaning
 from sklearn.model_selection import cross_val_score
 import numpy as np
 
