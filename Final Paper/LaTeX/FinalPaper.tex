@@ -210,12 +210,7 @@ We considered a number of linguistic features in combination with the vectors pr
 
 \subsection{Classification}
 \noindent 
-In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features.
-
-
-\noindent There exists an extensive body of literature covering machine learning and deep learning approaches to natural language processing problems, however in the application domain of sarcasm detection, they mostly display low accuracy.\\
-I experimented with a number of combinations of feature extraction techniques and classification models. A summary is given below:
-
+In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features as outlined in the previous section.
 
 \subsubsection{Machine Learning Models}
 In terms of machine learning models, I experimented with supervised and unsupervised learning (k-means clustering)
@@ -238,6 +233,8 @@ In terms of machine learning models, I experimented with supervised and unsuperv
 In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
 
 RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
+
+
 
 \paragraph{Convolutional Neural Networks --}
 
