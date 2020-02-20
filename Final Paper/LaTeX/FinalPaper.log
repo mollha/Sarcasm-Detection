@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  20 FEB 2020 12:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  20 FEB 2020 13:12
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -190,18 +190,26 @@ File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 \Gin@req@height=\dimen127
 \Gin@req@width=\dimen128
 )
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/multir
+ow\multirow.sty"
+Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
+\multirow@colwidth=\skip46
+\multirow@cntb=\count106
+\multirow@dima=\skip47
+\bigstrutjot=\dimen129
+)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/titles
 ec\titlesec.sty"
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \ttl@box=\box30
-\beforetitleunit=\skip46
-\aftertitleunit=\skip47
-\ttl@plus=\dimen129
-\ttl@minus=\dimen130
+\beforetitleunit=\skip48
+\aftertitleunit=\skip49
+\ttl@plus=\dimen130
+\ttl@minus=\dimen131
 \ttl@toksa=\toks26
-\titlewidth=\dimen131
-\titlewidthlast=\dimen132
-\titlewidthfirst=\dimen133
+\titlewidth=\dimen132
+\titlewidthlast=\dimen133
+\titlewidthfirst=\dimen134
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cite\c
 ite.sty"
@@ -211,20 +219,20 @@ Package: cite 2015/02/27  v 5.5
 ) (FinalPaper.aux)
 \openout1 = `FinalPaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
-7.
+9.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
@@ -293,45 +301,39 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 31.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 33.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 48.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 46.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 48.
  [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--62
+Underfull \hbox (badness 10000) in paragraph at lines 62--64
 
  []
 
-[2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+[2] [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
-[4]
 <Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 150.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 152.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
- [5 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 1173) in paragraph at lines 170--170
+[5 <./Images/modelpipeline2.png>]
+Underfull \hbox (badness 1173) in paragraph at lines 172--172
 []\OT1/ptm/b/n/12 Number of
  []
 
 
-Overfull \hbox (8.78436pt too wide) in paragraph at lines 170--171
+Overfull \hbox (8.78436pt too wide) in paragraph at lines 172--173
 []\OT1/ptm/b/n/12 Benchmark| 
- []
-
-
-Overfull \hbox (2.21678pt too wide) in paragraph at lines 172--172
-[][]| 
  []
 
 
@@ -339,13 +341,18 @@ Overfull \hbox (2.21678pt too wide) in paragraph at lines 174--174
 [][]| 
  []
 
+
+Overfull \hbox (2.21678pt too wide) in paragraph at lines 176--176
+[][]| 
+ []
+
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 197--198
+Underfull \hbox (badness 10000) in paragraph at lines 199--200
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 199--200
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
@@ -354,27 +361,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 199--200
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 201--203
+Underfull \hbox (badness 10000) in paragraph at lines 203--205
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 205--207
+Underfull \hbox (badness 10000) in paragraph at lines 207--209
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--210
+Underfull \hbox (badness 10000) in paragraph at lines 210--212
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 233--234
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 266--267
+Underfull \hbox (badness 10000) in paragraph at lines 268--269
 
  []
 
@@ -409,13 +416,13 @@ i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )) [13] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 3848 strings out of 492452
- 53719 string characters out of 3114457
- 126526 words of memory out of 3000000
- 8125 multiletter control sequences out of 15000+200000
+ 3902 strings out of 492452
+ 54643 string characters out of 3114457
+ 127083 words of memory out of 3000000
+ 8175 multiletter control sequences out of 15000+200000
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 46i,14n,30p,1631b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 46i,14n,30p,1632b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is house/AppData/Local/Programs/Mi
 KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
 Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
@@ -429,7 +436,7 @@ tmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
 ype1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/M
 iKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/
 Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (13 pages, 188489 bytes).
+Output written on FinalPaper.pdf (13 pages, 188313 bytes).
 PDF statistics:
  85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

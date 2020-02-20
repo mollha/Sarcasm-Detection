@@ -10,17 +10,12 @@ tf.compat.v1.disable_eager_execution()
 nlp = spacy.load('en_core_web_md')
 
 
-
-class ElMoSession:
-    def __init__(self, dataset: pd.Series, step: int, start_index: int, total_rows: int, vector_list: list, elmo):
-        print('Created New Session')
-        self.elmo = elmo
-        print('elmo')
-        self.dataset = dataset
-        self.start = start_index
-        self.total_rows = total_rows
-        self.vector_list = vector_list
-        self.step = step
+class ElMoVectorizer:
+    def __init__(self):
+        self.elmo_module = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
+        self.dataset = None
+        self.vector_list = []
+        self.step = 80
 
     def elmo_vectors(self, tokens, session):
         embeddings = self.elmo(tokens, signature="default", as_dict=True)["elmo"]
@@ -48,15 +43,6 @@ class ElMoSession:
                         print('Count: ' + str(count) + '/' + str(self.total_rows))
                     self.vector_list.append(list(np.mean(self.elmo_vectors(x, sess), axis=0)))
         return self.vector_list
-
-
-class ElMoVectorizer:
-    def __init__(self):
-        self.elmo_session = None
-        self.elmo_module = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
-        self.dataset = None
-        self.vector_list = []
-        self.step = 80
 
     def fit_transform(self, dataset: pd.Series):
         self.dataset = dataset
@@ -152,7 +138,7 @@ def sparse_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
 
 if __name__ == '__main__':
     path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
-    hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
+    elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
     data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
 
     data['token_data'] = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
