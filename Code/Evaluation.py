@@ -1,9 +1,10 @@
 # TODO make k-fold cross validation
 import ast
-from Code1.MLmodels import *
+from Code.MLmodels import *
 import spacy
 
 nlp = spacy.load('en_core_web_md')
+
 def get_dataset_size(data_chunk_list: list) -> int:
     """
     Given a list of data chunks, return the total number of data points in the dataset
@@ -43,7 +44,9 @@ if __name__ == "__main__":
     path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
     chunk_size = 1000
     ma_list = pd.read_pickle(path_to_dataset_root + "/processed_data/Vectors/glove.pckl")
-    print(ma_list[0])
+    print(len(ma_list))
+    print(type(ma_list[0]))
+    print(ma_list[0].tolist())
 
     exit()
 

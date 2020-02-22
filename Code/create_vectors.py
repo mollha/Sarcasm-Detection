@@ -16,7 +16,7 @@ class ElMoVectorizer:
         self.elmo_module = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
         self.dataset = None
         self.vector_list = []
-        self.step = 5
+        self.step = 200
 
     def elmo_vectors(self, tokens, session):
         embeddings = self.elmo_module(tokens, signature="default", as_dict=True)["elmo"]
@@ -126,8 +126,8 @@ def sparse_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
 
 
 if __name__ == '__main__':
-    path_to_dataset_root = "Datasets/Sarcasm_Amazon_Review_Corpus"
-    # path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
+    # path_to_dataset_root = "Datasets/Sarcasm_Amazon_Review_Corpus"
+    path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
     data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
 
     # data['token_data'] = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
