@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  20 FEB 2020 13:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  22 FEB 2020 21:22
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -242,6 +242,21 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 sencs.def"
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/context/base
+/mkii\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count107
+\scratchdimen=\dimen135
+\scratchbox=\box31
+\nofMPsegments=\count108
+\nofMParguments=\count109
+\everyMPshowfont=\toks27
+\MPscratchCnt=\count110
+\MPscratchDim=\dimen136
+\MPnumerator=\count111
+\makeMPintoPDFobject=\count112
+\everyMPtoPDFconversion=\toks28
+)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdi
 ek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -279,16 +294,15 @@ diek\ifluatex.sty"
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 ))))
-("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/generic/ober
-diek\pdftexcmds.sty"
-Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pdftex
+cmds\pdftexcmds.sty"
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/generic/ober
-diek\ifpdf.sty"
-Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/generic/ifte
+x\iftex.sty"
+Package: iftex 2019/11/07 v1.0c TeX engine tests
 )
-Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
@@ -312,47 +326,47 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--64
+Underfull \hbox (badness 10000) in paragraph at lines 62--66
 
  []
 
 [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 124--125
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 
  []
 
 <Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 152.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 154.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
 [5 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 1173) in paragraph at lines 172--172
+Underfull \hbox (badness 1173) in paragraph at lines 174--174
 []\OT1/ptm/b/n/12 Number of
  []
 
 
-Overfull \hbox (8.78436pt too wide) in paragraph at lines 172--173
+Overfull \hbox (8.78436pt too wide) in paragraph at lines 174--175
 []\OT1/ptm/b/n/12 Benchmark| 
  []
 
 
-Overfull \hbox (2.21678pt too wide) in paragraph at lines 174--174
+Overfull \hbox (1.44891pt too wide) in paragraph at lines 176--176
 [][]| 
  []
 
 
-Overfull \hbox (2.21678pt too wide) in paragraph at lines 176--176
+Overfull \hbox (1.44891pt too wide) in paragraph at lines 178--178
 [][]| 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 199--200
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
+Underfull \hbox (badness 10000) in paragraph at lines 204--205
 
  []
 
@@ -361,12 +375,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 201--202
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 203--205
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 207--209
+Underfull \hbox (badness 10000) in paragraph at lines 206--208
 
  []
 
@@ -375,13 +384,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 210--212
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--215
+
+ []
+
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 235--236
+Underfull \hbox (badness 10000) in paragraph at lines 238--239
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
+Underfull \hbox (badness 10000) in paragraph at lines 271--272
 
  []
 
@@ -416,10 +430,10 @@ i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )) [13] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 3902 strings out of 492452
- 54643 string characters out of 3114457
- 127083 words of memory out of 3000000
- 8175 multiletter control sequences out of 15000+200000
+ 4247 strings out of 492452
+ 59327 string characters out of 3114457
+ 131066 words of memory out of 3000000
+ 8515 multiletter control sequences out of 15000+200000
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1632b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -436,7 +450,7 @@ tmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
 ype1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/M
 iKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/
 Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (13 pages, 188313 bytes).
+Output written on FinalPaper.pdf (13 pages, 187830 bytes).
 PDF statistics:
  85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
