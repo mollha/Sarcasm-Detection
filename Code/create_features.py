@@ -2,6 +2,7 @@ from pycorenlp import StanfordCoreNLP
 import spacy
 import numpy as np
 import pandas as pd
+import pickle
 
 nlp = spacy.load('en_core_web_md')
 
@@ -14,7 +15,7 @@ nlp = spacy.load('en_core_web_md')
 
 class SentimentAnnotator:
     def __init__(self):
-        self.nlp_wrapper = StanfordCoreNLP('http://localhost:9000')
+        self.nlp_wrapper = None
         self.settings = {'annotators': 'sentiment',
                          'outputFormat': 'json',
                          'timeout': 1000,
@@ -41,6 +42,9 @@ class SentimentAnnotator:
         :param string: string of data
         :return: list of sentiment count averages across all sentences
         """
+        if self.nlp_wrapper is None:
+            self.nlp_wrapper = StanfordCoreNLP('http://localhost:9000')
+
         all_sentences = self.nlp_wrapper.annotate(string, properties=self.settings)["sentences"]
         sentiment_values = []
 
@@ -52,13 +56,31 @@ class SentimentAnnotator:
         return list(np.mean(sentiment_values, axis=0))
 
 
+feature_type = {'sentiment': SentimentAnnotator()}
+
+
+def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
+    """
+    Given a particular dataset and feature type, extract these features from the data and store them in a pickle file
+    :param path_to_root: insert the path to the correct location to store newly generated features
+    :param data: DataFrame containing column called CleanData (strings of data to extract features from)
+    :param feature: feature type is a string representing the feature type to extract - valid strings include 'sentiment'
+    :return: NoneType
+    """
+    open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'wb').close()
+    store_in = open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'ab')
+
+    annotator = feature_type[feature]
+    data[feature + '_features'] = data['clean_data'].apply(lambda x: annotator.annotate_data(x))
+
+    pickle.dump(data[feature + '_features'].tolist(), store_in)
+    store_in.close()
+
+
 if __name__ == '__main__':
+    # ------------------------------------------ CONFIGURE ROOT TO DATA ----------------------------------------------
     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
     path_to_dataset_root = dataset_paths[1]
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
+    read_in_data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
 
-    annotator = SentimentAnnotator()
-    print(annotator.annotate_data("This is a string"))
-
-    # data['sentiment_features'] = data.apply(lambda x: annotator.annotate_data(x))
-    # print(data['sentiment_features'])
+    extract_features(path_to_dataset_root, read_in_data, 'sentiment')
