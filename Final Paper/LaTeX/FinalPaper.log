@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  22 FEB 2020 21:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  25 FEB 2020 09:11
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -375,31 +375,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 204--205
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 206--208
+<Images/glovediagram.png, id=34, 344.487pt x 274.02374pt>
+File: Images/glovediagram.png Graphic file (type png)
+<use Images/glovediagram.png>
+Package pdftex.def Info: Images/glovediagram.png  used on input line 216.
+(pdftex.def)             Requested size: 138.34096pt x 110.0424pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 228--230
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 210--212
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 213--215
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 238--239
+[8 <./Images/glovediagram.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 231--233
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 271--272
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 
  []
 
-[10] (FinalPaper.bbl [11]
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+
+ []
+
+[11] (FinalPaper.bbl [12]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
 0.
 
@@ -424,35 +425,39 @@ Underfull \hbox (badness 4391) in paragraph at lines 105--110
 . org / dictionary / english /
  []
 
-[12]
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [13] (FinalPaper.aux) ) 
+) [13]) [14] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4247 strings out of 492452
- 59327 string characters out of 3114457
- 131066 words of memory out of 3000000
- 8515 multiletter control sequences out of 15000+200000
+ 4256 strings out of 492452
+ 59538 string characters out of 3114457
+ 131074 words of memory out of 3000000
+ 8523 multiletter control sequences out of 15000+200000
  22198 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 46i,14n,30p,1632b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
-12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is ho
-use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Us
-ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
-tmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (13 pages, 187830 bytes).
+ 46i,14n,30p,1622b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Pa
+ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmmi12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Password
+ is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is hou
+se/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Use
+rs/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/ut
+mb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on FinalPaper.pdf (14 pages, 225963 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 102 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
