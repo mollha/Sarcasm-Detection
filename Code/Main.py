@@ -96,7 +96,7 @@ if __name__ == '__main__':
     start = time.time()
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[1]
+    path_to_dataset_root = dataset_paths[0]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # Read in raw data
@@ -105,12 +105,14 @@ if __name__ == '__main__':
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, False)
 
-    # Vectorise data, or retrieve pre-computed vectors
-    vector = 'elmo'
-    data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
+    # # Vectorise data, or retrieve pre-computed vectors
+    # vector = 'elmo'
+    # print('Vector Type: ' + vector)
+    # data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
     # Create features, or retrieve pre-generated features
     feature = 'sentiment'
+    print('Feature Type: ' + feature)
     data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
     # Use feature INSTEAD of vector
