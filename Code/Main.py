@@ -96,7 +96,7 @@ if __name__ == '__main__':
     start = time.time()
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[0]
+    path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # Read in raw data
@@ -111,8 +111,7 @@ if __name__ == '__main__':
 
     # Create features, or retrieve pre-generated features
     feature = 'sentiment'
-    fea = get_feature_col(data, path_to_dataset_root, "sentiment")
-    print(fea)
+    data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
     # Use feature INSTEAD of vector
     data['vector'] = data['feature']

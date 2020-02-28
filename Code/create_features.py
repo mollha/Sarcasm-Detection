@@ -68,51 +68,10 @@ def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
     :param feature: feature type is a string representing the feature type to extract - valid strings include 'sentiment'
     :return: NoneType
     """
-    # open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'wb').close()
-    # store_in = open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'ab')
-
-    # open(path_to_root + "/processed_data/Features/" + feature + ".csv", 'w').close()
-    #csv = open(path_to_root + "/processed_data/Features/" + feature + ".csv", 'a')
-
-    start = 0
-
+    open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'wb').close()
+    store_in = open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'ab')
     annotator = feature_type[feature]
-    # print(annotator.annotate_data(data['clean_data'][0]))
-    print('Starting...')
-    #csv.write('fuckkk')
-    # features = []
-    for x, d in enumerate(data['clean_data']):
-        if x >= start:
-            ann = annotator.annotate_data(d)
-            csv = open(path_to_root + "/processed_data/Features/" + feature + ".csv", 'a')
-            csv.write('"' + str(ann) + '"\n')
-            print(x, ann)
-            # features.append(ann)
 
-    # data['feature_col'] = data['clean_data'].apply(lambda x: annotator.annotate_data(x))
-
-    # pickle.dump(features, store_in)
-    # store_in.close()
-
-
-if __name__ == '__main__':
-    # ------------------------------------------ CONFIGURE ROOT TO DATA ----------------------------------------------
-    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
-    # path_to_dataset_root = dataset_paths[1]
-    # read_in_data = pd.read_csv(path_to_dataset_root + "/processed_data/Features/sentiment.csv", encoding="ISO-8859-1")
-    # list_data = read_in_data.values.tolist()
-    # print(type(list_data[0]))
-    # open(path_to_dataset_root + "/processed_data/Features/" + 'sentiment' + ".pckl", 'wb').close()
-    # store_in = open(path_to_dataset_root + "/processed_data/Features/" + 'sentiment' + ".pckl", 'ab')
-    #
-    # pickle.dump(list_data, store_in)
-    # store_in.close()
-
-    #
-    # #
-    # # run again
-    # path_to_dataset_root = dataset_paths[1]
-    # read_in_data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
-    #
-    # extract_features(path_to_dataset_root, read_in_data, 'sentiment')
-    #
+    data['feature_col'] = data['clean_data'].apply(lambda x: annotator.annotate_data(x))
+    pickle.dump(data['feature_col'], store_in)
+    store_in.close()
