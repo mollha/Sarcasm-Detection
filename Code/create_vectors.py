@@ -5,7 +5,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import tensorflow as tf
 import tensorflow_hub as hub
 import time
-import numpy as np
 tf.compat.v1.disable_eager_execution()
 
 nlp = spacy.load('en_core_web_md')
@@ -38,9 +37,9 @@ class ElMoVectorizer:
                 print('Time: ', time_taken)
 
                 if index + self.step >= dataset_size:
-                    elmo_train = self.elmo_vectors(data['clean_data'].iloc[index:].tolist(), sess)
+                    elmo_train = self.elmo_vectors(dataset['clean_data'].iloc[index:].tolist(), sess)
                 else:
-                    elmo_train = self.elmo_vectors(data['clean_data'].iloc[index:index + self.step].tolist(), sess)
+                    elmo_train = self.elmo_vectors(dataset['clean_data'].iloc[index:index + self.step].tolist(), sess)
 
                 for vector in elmo_train:
                     self.vector_list.append(vector)
@@ -107,15 +106,16 @@ vectorisers = {'bag_of_words': CountVectorizer(), 'tf_idf': TfidfVectorizer(), '
                'elmo': ElMoVectorizer()}
 
 
-def sparse_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
+def compute_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
     # vectors can be bag_of_words or tf_idf
     open(path_to_root + "/processed_data/Vectors/" + vector + ".pckl", 'wb').close()
     store_in = open(path_to_root + "/processed_data/Vectors/" + vector + ".pckl", 'ab')
     vectoriser = vectorisers[vector]
 
-    print('4')
-    array = vectoriser.fit_transform(data['clean_data'])
-    # array = vectoriser.fit_transform(data['token_data'])
+    if vector == 'elmo':
+        array = vectoriser.fit_transform(data['clean_data'])
+    else:
+        array = vectoriser.fit_transform(data['token_data'])
 
     if type(array) != list:
         if type(array) != pd.Series:
@@ -123,12 +123,3 @@ def sparse_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
         array = array.tolist()
     pickle.dump(array, store_in)
     store_in.close()
-
-
-if __name__ == '__main__':
-    # path_to_dataset_root = "Datasets/Sarcasm_Amazon_Review_Corpus"
-    path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv", encoding="ISO-8859-1")
-
-    # data['token_data'] = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
-    sparse_vectors(path_to_dataset_root, data, 'elmo')
