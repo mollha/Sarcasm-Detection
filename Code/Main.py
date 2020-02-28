@@ -4,6 +4,7 @@ import spacy
 from Code.MLmodels import *
 from Code.create_vectors import compute_vectors
 from Code.create_features import extract_features
+from Code.evaluate_data import sentiment_evaluate
 from Code.DataPreprocessing import *
 from sklearn.model_selection import cross_val_score
 import numpy as np
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     start = time.time()
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[0]
+    path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # Read in raw data
@@ -114,6 +115,8 @@ if __name__ == '__main__':
     feature = 'sentiment'
     print('Feature Type: ' + feature)
     data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
+
+    sentiment_evaluate(data)
 
     # Use feature INSTEAD of vector
     data['vector'] = data['feature']
