@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 
+
 \usepackage{multirow}
 \pagestyle{empty}
 \usepackage{titlesec}
@@ -91,12 +92,15 @@ In similar studies, the terms irony and sarcasm are often used interchangeably \
 	\hline\vspace{0.5pt}
 	\textbf{Term} & \vspace{0.5pt}\textbf{Definition}\\[1.2ex]
 	\hline\hline
-	Irony & The use of words that are the opposite of what you mean, as a way of being funny. \cite{cambridgeirony2020}\\
+	Irony & The use of words that are the opposite of what you mean, as a way of being funny.
+	\footnotemark[1]\\
 	\hline
-	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way. \cite{cambridgesarcasm2020}\\
+	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way.\footnotemark[2]\\
 	\hline
 \end{tabular}\\
 \end{center}
+\footnotetext[1]{www.dictionary.cambridge.org/dictionary/english/irony}
+\footnotetext[2]{www.dictionary.cambridge.org/dictionary/english/sarcasm}
 
 \subsection{Traditional Classifiers}
 \noindent A number of simple linguistic approaches have been used in previous research. One such class of na\"{i}ve approaches is \textit{rule-based}, where text is classified based on a set of linguistic rules. Maynard and Greenwood (2014) \cite{maynard2014cares} proposed that the sentiment contained in hashtags can indicate the prescence of sarcasm in tweets, such as \#notreally in the example "I love doing the washing-up \#notreally". They used a rule-based approach, whereby if the sentiment of a tweet contradicts that of the hashtag, then this tweet is labelled sarcastic. They reported an $F_{1}$ score of 91.03\% on a random sample consisting of 400 tweets.
@@ -182,7 +186,7 @@ Four datasets are selected, and a statistical break down of their properties is 
 \vspace{2pt}
 
 \begin{enumerate}
-	\item \textbf{News Headlines Dataset For Sarcasm Detection}\\ This dataset was collated for use in  \textit{Misra et al. (2019)} \cite{misra2019sarcasm}. Headlines are collected from two news sources - \textit{The Onion} \cite{onion2020} and \textit{The Huffington Post} \cite{huffpost2020}. The Onion is renowned for posting satiricial news, and these sarcastic headlines account for the sarcastic instances in the dataset. The non-sarcastic instances were collected from the Huffington Post. There is little noise in this dataset, as news headlines are written formally, and are far less likely to contain spelling and grammar errors than data from more informal platforms. These headlines are self contained, unlike tweets which may be in response to another tweet, thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 89.7\%. NB. Accuracy was used as the dataset is approximately balanced.
+	\item \textbf{News Headlines Dataset For Sarcasm Detection}\\ This dataset was collated for use in  \textit{Misra et al. (2019)} \cite{misra2019sarcasm}. Headlines are collected from two news sources - \textit{The Onion} \footnote{www.theonion.com} and \textit{The Huffington Post} \footnote{www.huffpost.com}. The Onion is renowned for posting satiricial news, and these sarcastic headlines account for the sarcastic instances in the dataset. The non-sarcastic instances were collected from the Huffington Post. There is little noise in this dataset, as news headlines are written formally, and are far less likely to contain spelling and grammar errors than data from more informal platforms. These headlines are self contained, unlike tweets which may be in response to another tweet, thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 89.7\%. NB. Accuracy was used as the dataset is approximately balanced.
 	
 	
 	\item \textbf{Sarcasm Amazon Review Corpus}\\ This corpus was collected using the procedure outlined in \textit{Filatova (2012)} \cite{filatova2012irony}. Amazon reviews are collected via crowdsourcing, and are human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. The author's punctuation and spelling is preserved, therefore this data is very messy.
