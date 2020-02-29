@@ -11,7 +11,7 @@ import numpy as np
 
 
 models = {0: SVC(gamma='auto', C=10, kernel='linear'),
-          1: LogisticRegression(C=10),
+          1: LogisticRegression(C=10, max_iter=300),
           2: RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt'),
           3: GaussianNB(),
           4: KMeans(n_clusters=5, init='k-means++', max_iter=300, n_init=10, random_state=0)

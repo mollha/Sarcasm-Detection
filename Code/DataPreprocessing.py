@@ -1,19 +1,17 @@
 import re
-import pandas as pd
 
-def split_positive_and_negative_samples(dataset: pd.DataFrame) -> tuple:
+
+def data_cleaning(data_string: str, rm_urls=True, rm_punc=None, lower=True, rm_numbers=True, rm_dp_wspc=True):
     """
-    Given a dataset, separate the samples into positive (sarcastic) and negative (non-sarcastic) samples
-    :param dataset: dataset containing a column called sarcasm_label, this column must contain integers
-    :return:
+    Given data as a string and a set of flags, clean data accordingly
+    :param data_string:
+    :param rm_urls: remove urls
+    :param rm_punc: remove punctuation, optional parameter list can be provided of the punctuation to remove
+    :param lower: convert text to lowercase
+    :param rm_numbers: remove numbers
+    :param rm_dp_wspc: remove duplicate whitespaces -> converting to a single whitespace
+    :return: cleaned string
     """
-    # TODO assert that dataset['sarcasm_label'] exists in the dataset
-    # TODO assert that dataset['sarcasm_label'] has integer values
-
-    return dataset[dataset['sarcasm_label'] == 1], dataset[dataset['sarcasm_label'] == 0]
-
-def data_cleaning(data, rm_urls=True, rm_punc=None, lower=True, rm_numbers=True, rm_dp_wspc=True):
-
     def remove_urls(text: str) -> str:
         return re.sub(r'http\S+', '', text)  # remove URLs
 
@@ -29,17 +27,29 @@ def data_cleaning(data, rm_urls=True, rm_punc=None, lower=True, rm_numbers=True,
         return ' '.join(text.split())  # remove duplicate whitespaces
 
     if rm_urls:
-        data = remove_urls(data)  # remove URLs
+        data_string = remove_urls(data_string)  # remove URLs
 
     if rm_punc:
-        data = remove_punctuation(data, rm_punc)  # remove punctuation
+        data_string = remove_punctuation(data_string, rm_punc)  # remove punctuation
 
     if lower:
-        data = data.lower()  # convert to lowercase
+        data_string = data_string.lower()  # convert to lowercase
 
     if rm_numbers:
-        data = remove_numbers(data)  # convert to lowercase
+        data_string = remove_numbers(data_string)  # convert to lowercase
 
     if rm_dp_wspc:
-        data = remove_duplicate_whitespaces(data)  # remove duplicate whitespaces
-    return data
+        data_string = remove_duplicate_whitespaces(data_string)  # remove duplicate whitespaces
+    return data_string
+
+
+def apply_params(x: str):
+    settings = {
+        "remove_urls": True,
+        "remove_punctuation": True,
+        "lowercase": True,
+        "remove_numbers": True,
+        "remove_duplicate_whitespaces": True}
+
+    return data_cleaning(x, settings["remove_urls"], settings["remove_punctuation"],
+                         settings["lowercase"], settings["remove_numbers"], settings["remove_duplicate_whitespaces"])

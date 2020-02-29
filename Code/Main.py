@@ -1,94 +1,134 @@
 import time
-from Code1.LSTM import *
-from Code1.MLmodels import *
-from Code1.create_vectors import *
-import ast
-from Code1.DataPreprocessing import data_cleaning
+from Code.LSTM import *
+import spacy
+from Code.MLmodels import *
+from Code.create_vectors import compute_vectors
+from Code.create_features import extract_features
+from Code.evaluate_data import sentiment_evaluate
+from Code.DataPreprocessing import *
 from sklearn.model_selection import cross_val_score
 import numpy as np
+import os.path
+from random import randint
 
 nlp = spacy.load('en_core_web_md')
 
+
+def get_clean_data_col(data_frame: pd.DataFrame, re_clean: bool, extend_path='') -> pd.DataFrame:
+    """
+    Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
+    :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
+    :param re_clean: boolean flag -> set to True to have the data cleaned again
+    :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
+    :return: a pandas DataFrame containing cleaned data
+    """
+    if re_clean:
+        input_data = ''
+        while not input_data:
+            input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
+            input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+
+        if input_data == 'y':
+            # This could potentially overwrite pre-cleaned text if triggered accidentally
+            # The process of cleaning data can take a while, so -> proceed with caution
+            print('RE-CLEANING ... PROCEED WITH CAUTION!')
+            exit()  # uncomment this line if you would still like to proceed
+            data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
+            extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
+                ''.join([randint(0, 9) for _ in range(0, 8)])
+            data_frame['clean_data'].to_csv(
+                path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                index=False, header=['clean_data'])
+    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")
+
+
+def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> list:
+    """
+    Given a vector type, retrieve pre-computed vectors for data, or compute them and return them as a list
+    :param data_frame: DataFrame containing 'clean_data' column
+    :param path_to_root: path to dataset root -> used for file naming
+    :param vector_type: a string representing the type of vectors to produce
+    :return: a list of vectors
+    """
+    valid_vector_types = {'elmo', 'bag_of_words', 'tf_idf', 'glove'}
+    vector_type = vector_type.lower().strip()
+
+    if vector_type not in valid_vector_types:
+        raise TypeError('Invalid vector type "' + vector_type + '"')
+
+    if not os.path.isfile(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl"):
+        input_data = ''
+        while not input_data:
+            input_data = input('\nWARNING - This action could overwrite pre-vectorised data: proceed? y / n\n')
+            input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+
+        if input_data == 'y':
+            print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
+            exit()  # uncomment this line if you would still like to proceed
+            if vector_type in {'bag_of_words', 'tf_idf', 'glove'}:
+                data_frame['token_data'] = data_frame['clean_data'].apply(
+                    lambda x: " ".join([token.text for token in nlp(x)]))
+                compute_vectors(path_to_root, data_frame,  vector_type)
+    return pd.read_pickle(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl")
+
+
+def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: str):
+    valid_feature_types = {'sentiment'}
+    feature_type = feature_type.lower().strip()
+
+    if feature_type not in valid_feature_types:
+        raise TypeError('Invalid feature type "' + feature_type + '"')
+
+    if not os.path.isfile(path_to_root + "/processed_data/Features/" + feature_type + ".pckl"):
+        input_data = ''
+        while not input_data:
+            input_data = input('\nWARNING - This action could overwrite pre-extracted data: proceed? y / n\n')
+            input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+
+        if input_data == 'y':
+            print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
+            exit()  # uncomment this line if you would still like to proceed
+            extract_features(path_to_root, data_frame,  feature_type)
+    return pd.read_pickle(path_to_root + "/processed_data/Features/" + feature_type + ".pckl")
+
+
 if __name__ == '__main__':
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
     start = time.time()
-    # path_to_dataset_root = "Datasets/Sarcasm_Amazon_Review_Corpus"
-    path_to_dataset_root = "Datasets/news-headlines-dataset-for-sarcasm-detection"
-    # chunk_size = 500
 
-    # -------------------------- READING AND CLEANING DATA ------------------------------
-    re_run_cleaning = False  # Set to False if data cleaning has already been applied
-    # original_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv",
-    #                                    encoding="ISO-8859-1", chunksize=chunk_size)
-    # original_data_chunk_list = [chunk for chunk in original_data_chunks]
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[1]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
 
+    # Read in raw data
     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
 
-    if re_run_cleaning:
-        print('Starting Data Cleaning...')
-        # for data in original_data_chunks:
-        #     data['clean_data'] = data['text_data'].apply(data_cleaning)
-        data['clean_data'] = data['text_data'].apply(data_cleaning)
-        print('Data Cleaning complete.\n')
-    else:
-        # clean_data_chunks = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv",
-        #                                 encoding="ISO-8859-1", chunksize=chunk_size)
-        data['clean_data'] = pd.read_csv(path_to_dataset_root + "/processed_data/CleanData.csv",
-                                        encoding="ISO-8859-1")
-        # for index, data in enumerate(clean_data_chunks):
-        #     og_chunk = original_data_chunk_list[index]
-        #     og_chunk['clean_data'] = data
-    # --------------------------- TOKENIZE AND VECTORIZE -------------------------------
-    re_run_token_vector = True
+    # Clean data, or retrieve pre-cleaned data
+    data['clean_data'] = get_clean_data_col(data, False)
 
-    if re_run_token_vector:
-        # print('GloVe Vectorizing...')
-        # token_data = data['clean_data'].apply(lambda x: [token.text for token in nlp(x)])  # tokenizing sentences
-        # glove_embeddings = GloVeConfig(token_data)
-        # vector = glove_embeddings.get_vectorized_data()  # my glove embeddings
-        # vector.to_csv(path_or_buf=path_to_dataset_root + "/processed_data/Vectors/glove_vectors.csv",
-        #               index=False, header=['vector'])
+    # # Vectorise data, or retrieve pre-computed vectors
+    # vector = 'elmo'
+    # print('Vector Type: ' + vector)
+    # data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
-        print('BOW Vectorizing...')
-        data['token_data'] = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))
-        vector = sparse_vectors(path_to_dataset_root, data, 'bag_of_words')
-         # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
+    # Create features, or retrieve pre-generated features
+    feature = 'sentiment'
+    print('Feature Type: ' + feature)
+    data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
-        # print('TFIDF Vectorizing...')
-        # data['token_data'] = data['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))
-        # vector = tf_idf(path_to_dataset_root, data)
+    sentiment_evaluate(data)
 
-
-        # for chunk in original_data_chunk_list:
-        #     chunk['token_data'] = chunk['clean_data'].apply(lambda x: " ".join([token.text for token in nlp(x)]))  # tokenizing sentences
-        # original_data_chunk_list = tf_idf(path_to_dataset_root, original_data_chunk_list)
-    # TODO AttributeError: 'list' object has no attribute 'apply' (for cross eval pandas series)
-
-    else:
-        # glove vectors
-        # vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/glove_vectors.csv",
-        #                      encoding="ISO-8859-1", chunksize=chunk_size)
-
-        # bag of words vectors
-        # vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/bag_of_words.csv",
-        #                      encoding="ISO-8859-1", chunksize=chunk_size)
-
-        vector_chunk_list = pd.read_csv(path_to_dataset_root + "/processed_data/Vectors/tf_idf.csv",
-                                        encoding="ISO-8859-1", chunksize=chunk_size)
-        # tf-idf
-        for index, data in enumerate(vector_chunk_list):
-            og_chunk = original_data_chunk_list[index]
-            og_chunk['vector'] = data
-            og_chunk['vector'] = og_chunk['vector'].apply(lambda x: ast.literal_eval(x))
+    # Use feature INSTEAD of vector
+    data['vector'] = data['feature']
 
     # ---------------------------------------------------------------------------------------------------------------
 
     print('Configuration time: ', time.time() - start)
 
-    # try and use our SVM
     print('Training ML models')
     labels = data['sarcasm_label']
-    classifier = get_model(3)
+    classifier = get_model(1)
 
-    scores = cross_val_score(classifier, vector.apply(pd.Series), labels, cv=5, scoring='f1_macro')
+    scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
     print('Score: ', five_fold_cross_validation)
