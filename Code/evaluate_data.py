@@ -22,7 +22,7 @@ def sentiment_evaluate(data: pd.DataFrame):
     positive_feature_df = positive_samples['feature'].apply(pd.Series)
     negative_feature_df = negative_samples['feature'].apply(pd.Series)
 
-    print(positive_feature_df.mean(axis=0))
-    print(negative_feature_df.mean(axis=0))
+    print(positive_feature_df.mean(axis=0).tolist())
+    print(negative_feature_df.mean(axis=0).tolist())
 
 
