@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 FEB 2020 10:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 MAR 2020 11:08
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -365,12 +365,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 206--207
 
  []
 
-
+[7]
 Underfull \hbox (badness 10000) in paragraph at lines 208--209
 
  []
 
-[7]
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
@@ -380,7 +380,7 @@ File: Images/glovediagram.png Graphic file (type png)
 <use Images/glovediagram.png>
 Package pdftex.def Info: Images/glovediagram.png  used on input line 220.
 (pdftex.def)             Requested size: 138.34096pt x 110.0424pt.
- [8 <./Images/glovediagram.png>]
+ [8]
 Underfull \hbox (badness 10000) in paragraph at lines 232--234
 
  []
@@ -390,7 +390,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 235--237
 
  []
 
-[9]
+[9 <./Images/glovediagram.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 260--261
 
  []
@@ -400,7 +400,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 293--294
 
  []
 
-[11] (FinalPaper.bbl [12]
+[11]
+<Images/NHSD_sentimentlabels.png, id=52, 462.528pt x 346.896pt>
+File: Images/NHSD_sentimentlabels.png Graphic file (type png)
+<use Images/NHSD_sentimentlabels.png>
+Package pdftex.def Info: Images/NHSD_sentimentlabels.png  used on input line 38
+9.
+(pdftex.def)             Requested size: 230.56593pt x 172.92354pt.
+<Images/SARC_sentimentlabels.png, id=53, 462.528pt x 346.896pt>
+File: Images/SARC_sentimentlabels.png Graphic file (type png)
+<use Images/SARC_sentimentlabels.png>
+Package pdftex.def Info: Images/SARC_sentimentlabels.png  used on input line 39
+0.
+(pdftex.def)             Requested size: 230.56593pt x 172.92354pt.
+ [12]
+<Images/absolute_differences.png, id=59, 462.528pt x 346.896pt>
+File: Images/absolute_differences.png Graphic file (type png)
+<use Images/absolute_differences.png>
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 39
+8.
+(pdftex.def)             Requested size: 230.56593pt x 172.92354pt.
+ [13 <./Images/NHSD_sentimentlabels.png> <./Images/SARC_sentimentlabels.png> <.
+/Images/absolute_differences.png>] (FinalPaper.bbl [14]
 Underfull \hbox (badness 1048) in paragraph at lines 80--84
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
@@ -410,34 +431,37 @@ a-teek Vij.  A deeper
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [13]) [14] (FinalPaper.aux) ) 
+) [15]) [16] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4224 strings out of 492452
- 58987 string characters out of 3114457
- 130058 words of memory out of 3000000
- 8493 multiletter control sequences out of 15000+200000
- 26892 words of font info for 52 fonts, out of 3000000 for 9000
+ 4254 strings out of 492452
+ 59809 string characters out of 3114457
+ 136080 words of memory out of 3000000
+ 8517 multiletter control sequences out of 15000+200000
+ 27820 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1622b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is house/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Pa
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Pa
 ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Password
- is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
-2.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is hou
-se/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users
-/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb
-i8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (14 pages, 215119 bytes).
+m/cmbx8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
+i6.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is ho
+use/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
+ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
+tmri8a.pfb>
+Output written on FinalPaper.pdf (16 pages, 307813 bytes).
 PDF statistics:
- 98 PDF objects out of 1000 (max. 8388607)
+ 118 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

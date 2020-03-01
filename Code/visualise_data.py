@@ -60,10 +60,11 @@ def visualise_sentiment(positive: np.ndarray, negative: np.ndarray):
     plt.xlabel('Sentiment Labels', fontsize=13)
     plt.xticks(index + bar_width, labels)
     plt.legend()
+    # plt.title('Sarcasm Amazon Review Corpus', fontweight='bold', fontsize=14)
 
     plt.tight_layout()
     plt.show()
-    # plt.savefig('Images/NHSD_sentimentlabels.png')
+    # plt.savefig('Images/SARC_sentimentlabels.png')
 
 
 if __name__ == "__main__":
