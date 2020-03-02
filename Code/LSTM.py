@@ -4,12 +4,10 @@ from sklearn.metrics import f1_score, accuracy_score
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import pandas as pd
-import ast
+from Code.Main import get_clean_data_col, get_vector_col
 from sklearn.model_selection import cross_val_score
 import tensorflow as tf
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
+from keras.layers import Dense, LSTM
 from keras.models import Sequential
 from keras.layers.core import Activation, Dropout, Dense
 from keras.layers import Flatten
@@ -77,15 +75,25 @@ def construct_model(dataset: pd.Series):
 
 if __name__ == '__main__':
     # Data cleaning has already been applied
-    data = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/OriginalData.csv", encoding="ISO-8859-1")
-    data['clean_data'] = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/CleanData.csv",
-                                         encoding="ISO-8859-1")
-    vector = pd.read_csv("Datasets/Sarcasm_Amazon_Review_Corpus/processed_data/Vectors/glove_vectors.csv",
-                              encoding="ISO-8859-1")['vector']
-    vector = vector.apply(lambda x: ast.literal_eval(x))
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[0]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
+
+    # Read in raw data
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
+
+    data['clean_data'] = data['clean_data'] = get_clean_data_col(data,  path_to_dataset_root, False)
+
+    # Clean data, or retrieve pre-cleaned data
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+
+    # Vectorise data, or retrieve pre-computed vectors
+    data['vector'] = get_vector_col(data, path_to_dataset_root, 'glove')
     labels = data['sarcasm_label']
 
-    training_data, testing_data, training_labels, testing_labels = train_test_split(vector.apply(pd.Series), labels, test_size=0.3)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(data['vector'].apply(pd.Series), labels, test_size=0.3)
 
     def make_conv():
         return construct_model(training_data)

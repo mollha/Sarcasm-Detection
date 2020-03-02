@@ -1,4 +1,3 @@
-from Code.LSTM import *
 import spacy
 from Code.MLmodels import *
 from Code.create_vectors import compute_vectors
@@ -14,7 +13,7 @@ import time
 nlp = spacy.load('en_core_web_md')
 
 
-def get_clean_data_col(data_frame: pd.DataFrame, re_clean: bool, extend_path='') -> pd.DataFrame:
+def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool, extend_path='') -> pd.DataFrame:
     """
     Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
     :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
@@ -39,7 +38,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, re_clean: bool, extend_path='')
             data_frame['clean_data'].to_csv(
                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                 index=False, header=['clean_data'])
-    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")[:500]
+    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")
 
 
 def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> list:
@@ -69,7 +68,7 @@ def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> 
                 data_frame['token_data'] = data_frame['clean_data'].apply(
                     lambda x: " ".join([token.text for token in nlp(x)]))
                 compute_vectors(path_to_root, data_frame,  vector_type)
-    return pd.read_pickle(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl")[:500]
+    return pd.read_pickle(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl")
 
 
 def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: str):
@@ -101,14 +100,15 @@ if __name__ == '__main__':
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # Read in raw data
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:500]
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
 
     # Clean data, or retrieve pre-cleaned data
-    data['clean_data'] = get_clean_data_col(data, False)
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
     # Vectorise data, or retrieve pre-computed vectors
     vector = 'tf_idf'
     print('Vector Type: ' + vector)
+
     data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
     # Create features, or retrieve pre-generated features
