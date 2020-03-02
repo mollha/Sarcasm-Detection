@@ -1,4 +1,5 @@
 import pandas as pd
+from spacy.lang import en
 
 
 def split_positive_and_negative_samples(dataset: pd.DataFrame) -> tuple:
@@ -8,6 +9,30 @@ def split_positive_and_negative_samples(dataset: pd.DataFrame) -> tuple:
     :return:
     """
     return dataset[dataset['sarcasm_label'] == 1], dataset[dataset['sarcasm_label'] == 0]
+
+
+def count_distinct_tokens(dataset: pd.DataFrame, tokenizer: en.English) -> int:
+    """
+    Given a data frame and a tokenizer, count the number of distinc
+    :param tokenizer:
+    :param dataset:
+    :return:
+    """
+    token_set = set()
+    total = len(dataset['clean_data'])
+
+    def extract_tokens(x: str) -> None:
+        token_set.update({token.text for token in tokenizer(x)})
+
+    for index, item in enumerate(dataset['clean_data']):
+        extract_tokens(item)
+
+        # if not index % 100:
+        #     progress = index / total
+        #     print(100 * round(progress, 2), '%')
+
+    return len(token_set)
+
 
 
 def sentiment_evaluate(data: pd.DataFrame):

@@ -1,15 +1,15 @@
-import time
 from Code.LSTM import *
 import spacy
 from Code.MLmodels import *
 from Code.create_vectors import compute_vectors
 from Code.create_features import extract_features
-from Code.evaluate_data import sentiment_evaluate
+from Code.evaluate_data import sentiment_evaluate, count_distinct_tokens
 from Code.DataPreprocessing import *
 from sklearn.model_selection import cross_val_score
 import numpy as np
 import os.path
 from random import randint
+import time
 
 nlp = spacy.load('en_core_web_md')
 
@@ -39,7 +39,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, re_clean: bool, extend_path='')
             data_frame['clean_data'].to_csv(
                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                 index=False, header=['clean_data'])
-    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")
+    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")[:500]
 
 
 def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> list:
@@ -64,12 +64,12 @@ def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> 
 
         if input_data == 'y':
             print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
-            exit()  # uncomment this line if you would still like to proceed
+            # exit()  # uncomment this line if you would still like to proceed
             if vector_type in {'bag_of_words', 'tf_idf', 'glove'}:
                 data_frame['token_data'] = data_frame['clean_data'].apply(
                     lambda x: " ".join([token.text for token in nlp(x)]))
                 compute_vectors(path_to_root, data_frame,  vector_type)
-    return pd.read_pickle(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl")
+    return pd.read_pickle(path_to_root + "/processed_data/Vectors/" + vector_type + ".pckl")[:500]
 
 
 def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: str):
@@ -93,42 +93,42 @@ def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: s
 
 
 if __name__ == '__main__':
-    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
     start = time.time()
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
     # Choose a dataset from the list of valid data sets
     path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # Read in raw data
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:500]
 
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, False)
 
-    # # Vectorise data, or retrieve pre-computed vectors
-    # vector = 'elmo'
-    # print('Vector Type: ' + vector)
-    # data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
+    # Vectorise data, or retrieve pre-computed vectors
+    vector = 'tf_idf'
+    print('Vector Type: ' + vector)
+    data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
     # Create features, or retrieve pre-generated features
-    feature = 'sentiment'
-    print('Feature Type: ' + feature)
-    data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
+    # feature = 'sentiment'
+    # print('Feature Type: ' + feature)
+    # data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
-    sentiment_evaluate(data)
+#    sentiment_evaluate(data)
 
-    # Use feature INSTEAD of vector
-    data['vector'] = data['feature']
+    # # Use feature INSTEAD of vector
+    # data['vector'] = data['feature']
 
     # ---------------------------------------------------------------------------------------------------------------
 
-    print('Configuration time: ', time.time() - start)
-
     print('Training ML models')
     labels = data['sarcasm_label']
-    classifier = get_model(1)
+    classifier_name, classifier = get_model(4)
+    print('Classifier: ' + classifier_name)
 
-    scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=5, scoring='f1_macro')
+    scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
     print('Score: ', five_fold_cross_validation)
+    print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')

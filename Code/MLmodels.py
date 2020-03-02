@@ -9,21 +9,26 @@ from sklearn.cluster import KMeans
 import pandas as pd
 import numpy as np
 
-
 models = {0: SVC(gamma='auto', C=10, kernel='linear'),
           1: LogisticRegression(C=10, max_iter=300),
           2: RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt'),
           3: GaussianNB(),
-          4: KMeans(n_clusters=5, init='k-means++', max_iter=300, n_init=10, random_state=0)
+          4: KMeans(n_clusters=2, init='k-means++', max_iter=300, n_init=10, random_state=0)
           }
 
+model_names = {0: "Support Vector Machine",
+               1: "Logistic Regression",
+               2: "Random Forest Classifier",
+               3: "Gaussian Naive Bayes",
+               4: "K-Means"
+               }
 
-def get_model(model_number):
+
+def get_model(model_number) -> tuple:
     try:
-        return models[model_number]
+        return model_names[model_number], models[model_number]
     except KeyError:
         print('Invalid model number, please enter a number between 0 and ', len(models))
-        return None
 
 
 def calculate_f1_score(trained_model, testing_data, testing_labels):
