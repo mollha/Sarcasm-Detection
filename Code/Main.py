@@ -63,7 +63,7 @@ def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> 
 
         if input_data == 'y':
             print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
-            # exit()  # uncomment this line if you would still like to proceed
+            exit()  # uncomment this line if you would still like to proceed
             if vector_type in {'bag_of_words', 'tf_idf', 'glove'}:
                 data_frame['token_data'] = data_frame['clean_data'].apply(
                     lambda x: " ".join([token.text for token in nlp(x)]))

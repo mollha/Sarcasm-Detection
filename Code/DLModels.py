@@ -22,8 +22,7 @@ from keras.layers import Input
 from keras.layers.embeddings import Embedding
 
 
-def get_embedding_layer():
-    embed_dim = 128
+def get_embedding_layer(embed_dim):
     scale_by = 2500
     return Embedding(input_dim=scale_by + 1, output_dim=embed_dim, input_length=50)
 
@@ -72,7 +71,7 @@ def lstm_model():
     embed_dim = 128
     lstm_out = 128
     model = Sequential()
-    model.add(get_embedding_layer())
+    model.add(get_embedding_layer(embed_dim))
     model.add(LSTM(lstm_out, dropout=0.2, kernel_initializer='he_normal', activation='tanh', return_sequences=True))
     model.add(LSTM(lstm_out, dropout=0.2, kernel_initializer='he_normal', activation='tanh'))
     model.add(Dropout(0.2))
@@ -95,12 +94,20 @@ def cnn_lstm_network():
 
 def new_model():
     model = Sequential()
-    model.add(Dense(12, input_length=50, activation='relu'))
+    model.add(get_embedding_layer(50))
+    model.add(Dense(units=50, activation='relu'))
     model.add(Dense(8, activation='relu'))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
+
+def modely():
+    model = Sequential()
+    model.add(get_embedding_layer())
+    model.add(LSTM(100, return_sequences=True))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
     return model
-
 
 def create_model():
     embed_dim = 128
@@ -155,10 +162,9 @@ if __name__ == '__main__':
     labels = data['sarcasm_label']
     batch_size = 16
 
-    training_data, testing_data, training_labels, testing_labels = train_test_split(vectorised_data, labels, test_size=0.20, random_state=36)
-    KerasClassifier(build_fn=cnn_model)
-    model = cnn_model()
-    model.fit(training_data, training_labels, batch_size=batch_size, epochs=10)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(vectorised_data, labels, test_size=0.20)
+    model = KerasClassifier(build_fn=new_model)
+    model.fit(training_data, training_labels, batch_size=16, epochs=10)
     preds_valid = model.predict(testing_data)
     print(preds_valid)
 
