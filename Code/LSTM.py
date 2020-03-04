@@ -42,21 +42,6 @@ def conv(data: pd.Series):
     return model
 
 
-def lstm_2(data):
-    trainable = True
-    plot = True
-    shuffle = False
-    epochs = 50
-    batch_size = 256
-    embedding_dim = 300
-    hidden_units = 256
-    dropout = 0.3
-    embedding_layer = create_embedding_layer(data)
-    X = LSTM(hidden_units, kernel_initializer='he_normal', activation='tanh',
-             dropout=dropout, return_sequences=True)
-    return X
-
-
 def lstm_model(data):
     # create a sequential model
     model = Sequential()
