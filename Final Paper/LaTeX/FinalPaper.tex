@@ -8,6 +8,8 @@
 \usepackage{wrapfig}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{float}
+
 
 
 \usepackage{multirow}
@@ -88,9 +90,9 @@ In similar studies, the terms irony and sarcasm are often used interchangeably \
 	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm
 \end{center}
 \begin{center}
-\begin{tabular}{p{2cm}p{12cm}}
-	\hline\vspace{0.5pt}
-	\textbf{Term} & \vspace{0.5pt}\textbf{Definition}\\[1.2ex]
+\begin{tabular}{p{1.5cm}p{13cm}}
+	\hline
+	\textbf{Term} & \textbf{Definition}\\
 	\hline\hline
 	Irony & The use of words that are the opposite of what you mean, as a way of being funny.
 	\footnotemark[1]\\
@@ -117,22 +119,18 @@ Na\"{i}ve Bayes classifiers are supervised algorithms that use bayes theorem to 
 Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than na\"{i}ve bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimisation, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimisation and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
 \subsection{Deep-Learning Classifiers}
-Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Two common DNN architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). They typically require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
+Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Though there are many forms of DNN, two commonly used architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). Oftentimes, deep neural networks require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
-https://arxiv.org/pdf/1703.03091.pdf
+%https://arxiv.org/pdf/1703.03091.pdf
 
-This has already been used
-Write about RNN uses
 
-One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. 
-Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanishing gradient problem.  \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy.
+
+One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanishing gradient problem.  \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy.
 
 Convolutional Neural Networks allow us to extract higher-level features, and they are based on the mathematical operation of convolution. \textit{Zhang et al. (2015)}  \cite{zhang2015character} explored the used of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as an Amazon product review corpus. CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
 
 
 %This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations. Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
-
-
 
 
 
@@ -177,9 +175,9 @@ Four datasets are selected, and a statistical break down of their properties is 
 		\toprule
 		\textbf{Dataset Title} & \textbf{Number of data points} & \textbf{Avg. \#tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark}\\
 		\midrule\midrule
-		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\[1ex] pos: 47.6\% \\[1ex] neg: 52.4\% \end{tabular} &  11.2 tokens & 97.8\% & 89.7\%\\[1ex]
+		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\ pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  11.2 tokens & 97.8\% & 89.7\%\\
 		\midrule
-		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\[1ex] pos: 34.9\% \\[1ex] neg: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% & N/A \\[1ex]
+		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% & N/A \\
 		\hline
 	\end{tabular}\\
 \end{center}
@@ -264,6 +262,8 @@ In terms of machine learning models, we experiment with supervised and unsupervi
 \end{enumerate}
 
 \subsubsection{Deep Learning Models}
+Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers.
+
 \paragraph{Recurrent Neural Networks --}
 In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
 
@@ -272,21 +272,28 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 
 
 \paragraph{Convolutional Neural Networks --}
+A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised form of neural network. They were popularised for their applications in computer vision, hence they are designed to be used with two-dimensional image data \cite{krizhevsky2012imagenet}, but have since been adapted for text-based classification tasks. CNNs consist of a few layers of convolutions with non-linear activation functions - they have fewer layers than typical neural networks, where each layer applies dfferent filters and combines their result. The convolution operation is very fast, therefore many convolutional layers can be used in a single network.
 
-Convolutional neural networks output fixed sized vectors, hence they are often applied to classification tasks. Convolutions are very fast.
+\begin{minipage}{0.35\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+		\textbf{Figure -}: $m \times n$ feature vector\\
+		$
+		\begin{bmatrix}
+		w_{1,1} & w_{1,2} & ... & w_{1,N}\\
+		w_{2, 1} & w_{2, 2} & ... & w_{2, N} \\
+		\vdots & \vdots & \vdots & \vdots \\
+		w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
+		\end{bmatrix}
+		$
+	\end{center}
+	\end{figure}
+\end{minipage} \hfill
+\begin{minipage}{0.6\textwidth}
+	Each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence. This feature vector is used as input to the convolutional neural network. 
+\end{minipage}
 
-Convolutional Neural Networks have sought success in a number of tasks
-
-
-
-They consist of neurons with weights and biases
-CNNs consist of a few layers of convolutions with non-linear activation functions - they have fewer layers than typical neural networks. Each layer applies dfferent filters and combines their result.
-
-Pooling layers are used, typically after convolutions. They subsample their input. Usually, performing pooling consists of applying a max operation to the result. Pooling provides a fixed size output matrix, typically required for classification. Allows variable size sentences and variable size filters, obtaining same output dimensions. 
-
-Each row of a matrix corresponds to one token
-Filters slide over full rows of the matrix of the input matrix, therefore the width of filters is typically the widt
-
+Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing a k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtaining features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
 
 
 
