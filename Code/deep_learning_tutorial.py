@@ -77,7 +77,6 @@ class GloveEmbeddingLayer(Embedding):
             if embedding_vector is not None:
                 embedding_matrix[i] = embedding_vector
         return embedding_matrix
-
 # ---------------------------------------------------------------------------------
 
 # Initialize session
@@ -144,39 +143,17 @@ max_w = 20000
 max_s_l = 1000
 tokenizer = Tokenizer(num_words=max_w)
 tokenizer.fit_on_texts(data['clean_data'])
-print(train_text)
 sequences1 = tokenizer.texts_to_sequences(old_tt)
 sequences2 = tokenizer.texts_to_sequences(old_tet)
 
 training_data = pad_sequences(sequences1, maxlen=max_s_l)
 testing_data = pad_sequences(sequences2, maxlen=max_s_l)
-word_index = tokenizer.word_index
-print('Found %s unique tokens.' % len(word_index))
-
-
-# prepare embedding matrix
-num_words = min(max_w, len(word_index) + 1)
-embedding_matrix = np.zeros((num_words, 50))
-for word, i in word_index.items():
-    if i >= max_w:
-        continue
-    embedding_vector = embeddings_index.get(word)
-    if embedding_vector is not None:
-        # words not found in embedding index will be all-zeros.
-        embedding_matrix[i] = embedding_vector
-
-embedding_layer = Embedding(num_words,
-                            50,
-                            embeddings_initializer=Constant(embedding_matrix),
-                            input_length=max_s_l,
-                            trainable=False)
 
 def build_model():
     model = Sequential()
     # model.add(ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string"))
     # model.add(MultihotEmbedding(vocab_size=40000, input_shape=(1,)))
     model.add(GloveEmbeddingLayer(tokenizer, max_w, max_s_l))
-    # model.add(embedding_layer)
     model.add(Dense(256, activation='relu'))
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))

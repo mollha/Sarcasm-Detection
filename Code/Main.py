@@ -105,11 +105,14 @@ if __name__ == '__main__':
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
+    # machine learning models
     # Vectorise data, or retrieve pre-computed vectors
     vector = 'tf_idf'
     print('Vector Type: ' + vector)
 
+    # if machine learning
     data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
+
 
     # Create features, or retrieve pre-generated features
     # feature = 'sentiment'
@@ -120,6 +123,8 @@ if __name__ == '__main__':
 
     # # Use feature INSTEAD of vector
     # data['vector'] = data['feature']
+
+    # if deep learning:
 
     # ---------------------------------------------------------------------------------------------------------------
 
