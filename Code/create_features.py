@@ -75,15 +75,3 @@ def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
     data['feature_col'] = data['clean_data'].apply(lambda x: annotator.annotate_data(x))
     pickle.dump(data['feature_col'], store_in)
     store_in.close()
-
-
-sa = SentimentAnnotator()
-print(sa.annotate_data("i"))
-print(sa.annotate_data("love"))
-print(sa.annotate_data("when"))
-print(sa.annotate_data("my"))
-print(sa.annotate_data("train"))
-print(sa.annotate_data("is"))
-print(sa.annotate_data("late"))
-print(sa.annotate_data("!"))
-print(sa.annotate_data("i love when my train is late!"))
