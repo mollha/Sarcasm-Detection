@@ -8,10 +8,8 @@
 \usepackage{wrapfig}
 \usepackage{booktabs}
 \usepackage{graphicx}
-
-
+\usepackage{float}
 \usepackage{multirow}
-\pagestyle{empty}
 \usepackage{titlesec}
 \setcounter{secnumdepth}{4}
 \usepackage{cite}
@@ -88,9 +86,9 @@ In similar studies, the terms irony and sarcasm are often used interchangeably \
 	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm
 \end{center}
 \begin{center}
-\begin{tabular}{p{2cm}p{12cm}}
-	\hline\vspace{0.5pt}
-	\textbf{Term} & \vspace{0.5pt}\textbf{Definition}\\[1.2ex]
+\begin{tabular}{p{1.5cm}p{13cm}}
+	\hline
+	\textbf{Term} & \textbf{Definition}\\
 	\hline\hline
 	Irony & The use of words that are the opposite of what you mean, as a way of being funny.
 	\footnotemark[1]\\
@@ -117,22 +115,18 @@ Na\"{i}ve Bayes classifiers are supervised algorithms that use bayes theorem to 
 Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than na\"{i}ve bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimisation, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimisation and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
 \subsection{Deep-Learning Classifiers}
-Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Two common DNN architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). They typically require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
+Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Though there are many forms of DNN, two commonly used architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). Oftentimes, deep neural networks require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
-https://arxiv.org/pdf/1703.03091.pdf
+%https://arxiv.org/pdf/1703.03091.pdf
 
-This has already been used
-Write about RNN uses
 
-One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. 
-Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanishing gradient problem.  \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy.
+
+One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanishing gradient problem.  \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy.
 
 Convolutional Neural Networks allow us to extract higher-level features, and they are based on the mathematical operation of convolution. \textit{Zhang et al. (2015)}  \cite{zhang2015character} explored the used of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as an Amazon product review corpus. CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
 
 
 %This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations. Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
-
-
 
 
 
@@ -177,9 +171,9 @@ Four datasets are selected, and a statistical break down of their properties is 
 		\toprule
 		\textbf{Dataset Title} & \textbf{Number of data points} & \textbf{Avg. \#tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark}\\
 		\midrule\midrule
-		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\[1ex] pos: 47.6\% \\[1ex] neg: 52.4\% \end{tabular} &  11.2 tokens & 97.8\% & 89.7\%\\[1ex]
+		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\ pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  11.2 tokens & 97.8\% & 89.7\%\\
 		\midrule
-		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\[1ex] pos: 34.9\% \\[1ex] neg: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% & N/A \\[1ex]
+		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% & N/A \\
 		\hline
 	\end{tabular}\\
 \end{center}
@@ -205,7 +199,7 @@ In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw da
 \subsection{Feature Extraction}
 \noindent Extracting meaningful data from large corpora is a complex task, however in order to do this successfully, we first construct word vectors that capture semantic and syntactic relationships. The textual data is transformed into numerical vectors, so as to encapsulate the seminal features of language.\\
 
-\noindent \textbf{Traditional Approaches --} We utilise a number of traditional vectorisation methods - perhaps the simplest of which is \textit{Bag of Words (BOW)}, whereby a snippet of text is encoded as a single vector containing a count of the number of occurrences of each word. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. These approaches have two main disadvantages, firstly, each vector is the size of the vocabulary, creating sparse inefficient representations. Secondly, vectors produced in this way do not preserve the context within which words are found, and sarcasm is a highly contextual phenomenon. \\The \textit{Bag of N-grams} approach is a generalisation of the BOW approach, whereby instead of counting the number of occurrences of each unigram, we count the number of occurrences of each N-gram. This allows us to capture a small window of context around each word, however this can result in an even larger and sparser feature set.\\
+\noindent \textbf{Traditional Approaches --} We utilise a number of traditional vectorisation methods - perhaps the simplest of which is \textit{Bag of Words (BOW)}, whereby a snippet of text is encoded as a single vector containing a count of the number of occurrences of each word. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. These approaches have two main disadvantages, firstly, each vector is the size of the vocabulary, creating sparse inefficient representations. Secondly, vectors produced in this way do not preserve the context within which words are found, and sarcasm is a highly contextual phenomenon. \\
 
 \noindent \textbf{Word Embedding --} Embeddings produce lower-dimensional vectors than the sparse representations generated by earlier techniques. Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space, such that words that share a similar context are clustered together in the feature space.
 
@@ -232,13 +226,18 @@ The word meanings are encapsulated by the ratios of co-occurence probabilties, r
 \noindent \textbf{Contextualized Word Embedding --}
 In pursuit of a more robust approach, we look to deep neural language models. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilises a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.\\
 
-\begin{center}
-	\textbf{Figure -:} Overview of the ElMo model pipeline
-\end{center}
-\begin{center}
-	\includegraphics[width=0.6\textwidth]{Images/elmo_diagram.png}
-	\label{ElMo Model}
-\end{center}
+\begin{minipage}{0.45\textwidth}
+	\begin{center}
+		\textbf{Figure -:} Overview of the ElMo model pipeline
+	\end{center}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{Images/elmo_diagram.png}
+		\label{ElMo Model}
+	\end{center}
+\end{minipage} \hfill
+\begin{minipage}{0.5\textwidth}
+	Text here
+\end{minipage}
 
 \noindent \textbf{Miscellaneous Features --}
 We consider a number of linguistic features in combination with the vectors produced by the aforementioned vectorisation approaches, by concatenating both vectors. For example, meta-data can be used as features for datasets containing additional information, e.g. Sarcasm Amazon Review Corpus, using the number of stars in a review as an additional feature. As these features are manually selected for the domain, and are closely related to the type of data contained in the dataset, these features are outlined in the results section alongside the experiments within which they were used.\\
@@ -264,6 +263,8 @@ In terms of machine learning models, we experiment with supervised and unsupervi
 \end{enumerate}
 
 \subsubsection{Deep Learning Models}
+Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers. We use Binary Cross-Entropy loss.
+
 \paragraph{Recurrent Neural Networks --}
 In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
 
@@ -272,21 +273,28 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 
 
 \paragraph{Convolutional Neural Networks --}
+A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised form of neural network. They were popularised for their applications in computer vision, hence they are designed to be used with two-dimensional image data \cite{krizhevsky2012imagenet}, but have since been adapted for text-based classification tasks. CNNs consist of a few layers of convolutions with non-linear activation functions - they have fewer layers than typical neural networks, where each layer applies dfferent filters and combines their result. The convolution operation is very fast, therefore many convolutional layers can be used in a single network.
 
-Convolutional neural networks output fixed sized vectors, hence they are often applied to classification tasks. Convolutions are very fast.
+\begin{minipage}{0.35\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+		\textbf{Figure -}: $m \times n$ feature vector\\
+		$
+		\begin{bmatrix}
+		w_{1,1} & w_{1,2} & ... & w_{1,N}\\
+		w_{2, 1} & w_{2, 2} & ... & w_{2, N} \\
+		\vdots & \vdots & \vdots & \vdots \\
+		w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
+		\end{bmatrix}
+		$
+	\end{center}
+	\end{figure}
+\end{minipage} \hfill
+\begin{minipage}{0.6\textwidth}
+	Each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence. This feature vector is used as input to the convolutional neural network. 
+\end{minipage}
 
-Convolutional Neural Networks have sought success in a number of tasks
-
-
-
-They consist of neurons with weights and biases
-CNNs consist of a few layers of convolutions with non-linear activation functions - they have fewer layers than typical neural networks. Each layer applies dfferent filters and combines their result.
-
-Pooling layers are used, typically after convolutions. They subsample their input. Usually, performing pooling consists of applying a max operation to the result. Pooling provides a fixed size output matrix, typically required for classification. Allows variable size sentences and variable size filters, obtaining same output dimensions. 
-
-Each row of a matrix corresponds to one token
-Filters slide over full rows of the matrix of the input matrix, therefore the width of filters is typically the widt
-
+Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing a k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
 
 
 
@@ -301,6 +309,9 @@ Filters slide over full rows of the matrix of the input matrix, therefore the wi
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
+
+\subsection{Experimental Settings}
+For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.
 
 
 \subsection{News Headlines for Sarcasm Detection}
@@ -369,12 +380,36 @@ Filters slide over full rows of the matrix of the input matrix, therefore the wi
 %\end{center}
 
 \subsection{Experimentation with sentiment features}
-\noindent In this experiment, we strive to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, called the SentimentAnnotator \cite{socher2013recursive}, by Stanford NLP in order to extract features from each of our datasets. Given a snippet of text, the sentiment annotator assigns a discrete label between 0 and 4, where 0 is very negative and 4 is very positive. We contruct $ 1 \times 6 $ dimensional vectors for each instance in the dataset, where values 0 - 4 are the proportion of tokens in the snippet that fall into each class, and value 5 is the overall sentiment label assigned to the snippet. For example, the vector [0.1, 0.2, 0.2, 0.1, 0.1, 2] represents a snippet whereby 10\% of tokens are very negative, 20\% are negative, 20\% are neutral, 10\% are positive, 10\% are very positive and the overall sentiment label is 2 (neutral).
+\noindent In this experiment, we answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each of our datasets. The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens, as well as the overall sentiment of the snippet. We contruct $ 1 \times 6 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet, and value 5 shows the overall sentiment label.\\
 
-As our features are small, we train a logistic regressor for this task. We can use logistic regression to assess which features are useful for classifying samples. We then use 5-fold cross-validation to compute the $F_1$ score of the trained models.
+\noindent Example: \textit{"i love when my train is late!"}\\
+
+\begin{tabular}{|p{3cm}||p{0.2cm}p{1cm}p{1cm}p{1cm}p{1cm}p{0.8cm}p{1cm}p{1cm}|}
+\hline 
+Tokens & i & love & when & my & train & is & late & !\\ 
+\hline 
+Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 2 & 2\\ 
+\hline 
+\end{tabular}
+\vspace{10pt}
+
+\begin{tabular}{|p{3.8cm}||p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|} 
+	\hline 
+	Sentiment Labels & {0} & {1} & {2} & {3} & {4}\\ 
+	\hline 
+	\textbf{Frequency} of tokens & 0 & 0 & 7 & 0 & 1\\ 
+	\textbf{Proportion} of tokens & 0 & 0 & 0.875 & 0 & 0.125\\
+	\hline  
+\end{tabular}
+\vspace{10pt}
+
+{Overall sentiment}: 3.0\\
+\indent {Feature vector}: [0.0, 0.0, 0.875, 0.0, 0.125, 3.0]\\
+
+\noindent As the feature vectors are small ($1 \times 6$ dimensions), we use logistic regression for this task. We train two logistic regressors separately using sentiment features only - this enables us to assess whether sentiment features alone are indicative of sarcasm in different media types. We then use 5-fold cross-validation to compute the $F_1$ scores of the trained models.
 
 \begin{center}
-	\textbf{Figure -}: $F_1$ score of logistic regression models trained on each dataset
+	\textbf{Figure -}: $F_1$ score of logistic regression models trained on sentiment features
 \end{center}
 
 \begin{center}
@@ -389,25 +424,34 @@ As our features are small, we train a logistic regressor for this task. We can u
 	\end{tabular}
 \end{center}
 
-\noindent Our results show that sentiment features improved the model performance when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. A visualisation of these results is given in the figure below.
+\noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
+\vfill
 
-\begin{figure}[htp]
-	\centering
-	\textbf{Figure -:} Mean proportion of tokens in each sentiment class
-	\includegraphics[width=.5\textwidth]{Images/NHSD_sentimentlabels.png}\hfill
-	\includegraphics[width=.5\textwidth]{Images/SARC_sentimentlabels.png}\hfill
-	\label{fig:figure3}
-\end{figure}
+\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\textbf{Figure -:} Absolute differences\\
+			\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
+			\label{Sarcasm Amazon Review Corpus}
+		\end{center}
+	\end{figure}
+\end{minipage} \hfill
+\begin{minipage}{0.6\textwidth}
+	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
+\end{minipage}
 
-In the figure depicting the results for the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection figure displays the opposite. This  explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 
-\begin{center}
-	\textbf{Figure -:} Absolute differences between the proportion of tokens\\ in each sentiment class between sarcastic and non-sarcastic instances
-	\includegraphics[width=0.5\textwidth]{Images/absolute_differences.png}
-	\label{Sarcasm Amazon Review Corpus}
-\end{center}
+%\begin{figure}[htp]
+%	\centering
+%	\textbf{Figure -:} Mean proportion of tokens in each sentiment class
+%%	\includegraphics[width=.5\textwidth]{Images/NHSD_sentimentlabels.png}\hfill
+%	\includegraphics[width=.5\textwidth]{Images/SARC_sentimentlabels.png}\hfill
+%	\label{fig:figure3}
+%\end{figure}
 
 %This section should be between 2 to 3 pages in length.
+
+\newpage
 
 \section{Evaluation}
 In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
