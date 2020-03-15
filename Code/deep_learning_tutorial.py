@@ -22,6 +22,7 @@ import numpy as np
 sess = tf.Session()
 K.set_session(sess)
 
+ds_size = 100
 dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
 # Choose a dataset from the list of valid data sets
@@ -29,7 +30,7 @@ path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
 # Read in raw data
-data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:10000]
+data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:ds_size]
 
 
 def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
@@ -59,7 +60,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                 index=False, header=['clean_data'])
     return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                       encoding="ISO-8859-1")[:10000]
+                       encoding="ISO-8859-1")[:ds_size]
 
 
 # Clean data, or retrieve pre-cleaned data
