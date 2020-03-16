@@ -1,25 +1,28 @@
-import tensorflow as tf
-import pandas as pd
-import tensorflow_hub as hub
-from Code.DataPreprocessing import *
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
 import os
-import re
-from sklearn.metrics import f1_score, accuracy_score
-from random import randint
-from keras import backend as K
-from keras.layers import Dense, Input, Embedding, Flatten
-from keras.models import Model, load_model, Sequential
-from keras.engine import Layer
-from sklearn.model_selection import train_test_split
-from keras.initializers import Constant
 import numpy as np
-K.set_session(tf.Session())
-
+import pandas as pd
+from keras.engine import Layer
+from random import randint
+from Code.DataPreprocessing import *
+from keras.preprocessing.sequence import pad_sequences
+from keras.layers.normalization import BatchNormalization
+from keras.models import Sequential
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense
+from keras.layers.embeddings import Embedding
+from keras import backend as K
+from keras.initializers import Constant
+from keras.preprocessing.text import Tokenizer
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score
+import tensorflow as tf
+import tensorflow_hub as hub
+max_w = 20000
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
+
+
 class ElmoEmbeddingLayer(Layer):
+
     def __init__(self, **kwargs):
         self.dimensions = 1024
         self.elmo = None
@@ -40,25 +43,25 @@ class ElmoEmbeddingLayer(Layer):
                            as_dict=True,
                            signature='default',
                            )['default']
+        print(result.shape)
+        result = K.expand_dims(result, axis=-1)
+        print(result.shape)
         return result
 
-    def compute_mask(self, inputs, mask=None):
-        return K.not_equal(inputs, '--PAD--')
-
-    def compute_output_shape(self, input_shape):
-        return input_shape[0], self.dimensions
+    # def compute_mask(self, inputs, mask=None):
+    #     return K.not_equal(inputs, '--PAD--')
+    #
+    # def compute_output_shape(self, input_shape):
+    #     return input_shape[0], self.dimensions
 
 
 class GloveEmbeddingLayer(Embedding):
-    def __init__(self, tokeniser, max_num_words, max_seq_len):
+    def __init__(self, tokeniser, max_seq_len):
         self.MAX_SEQUENCE_LENGTH = max_seq_len
-        self.MAX_NUM_WORDS = max_num_words
-        self.num_words = min(max_num_words, len(tokeniser.word_index) + 1)
         self.output_dim = 50
-        self.embeddings_matrix = self.compute_embedding_matrix(self.num_words, tokeniser)
-        print(self.embeddings_matrix)
-        super(GloveEmbeddingLayer, self).__init__(input_dim=min(self.num_words, len(tokeniser.word_index) + 1),
-                                                  output_dim=50,
+        self.embeddings_matrix = self.compute_embedding_matrix(len(tokeniser.word_index) + 1, tokeniser)
+        super(GloveEmbeddingLayer, self).__init__(input_dim=len(tokeniser.word_index) + 1,
+                                                  output_dim=self.output_dim,
                                                   embeddings_initializer=Constant(self.embeddings_matrix),
                                                   input_length=self.MAX_SEQUENCE_LENGTH,
                                                   trainable=False
@@ -71,15 +74,37 @@ class GloveEmbeddingLayer(Embedding):
 
         embedding_matrix = np.zeros((vocab_size, self.output_dim))
         for word, i in tokeniser.word_index.items():
-            if i >= self.MAX_NUM_WORDS:
+            if i >= vocab_size:
                 continue
             embedding_vector = embeddings_index.get(word)
             if embedding_vector is not None:
                 embedding_matrix[i] = embedding_vector
         return embedding_matrix
-# ---------------------------------------------------------------------------------
 
-# Initialize session
+
+# -------------------------------- HELPER FUNCTIONS ----------------------------------
+
+def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
+    if vector_type == 'elmo':
+        # text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
+        # text = text.to_numpy()
+        # print(text)
+        text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
+        text = np.array(text, dtype=object)[:, np.newaxis]
+        print(text.shape)
+        return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string")
+
+    elif vector_type == 'glove':
+        max_len = 1000
+        tokenizer = Tokenizer()
+        tokenizer.fit_on_texts(sarcasm_data)
+        sequences = tokenizer.texts_to_sequences(sarcasm_data)
+        padded_data = pad_sequences(sequences, maxlen=max_len, padding='post')
+        print(padded_data.shape)
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer, max_len)
+    else:
+        raise TypeError('Vector type must be "elmo" or "glove"')
+
 dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
 # Choose a dataset from the list of valid data sets
@@ -122,63 +147,49 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
 
 # Clean data, or retrieve pre-cleaned data
 data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-with open('Datasets/GLOVEDATA/glove.twitter.27B.50d.txt', "r", encoding="utf-8") as file:
-    embeddings_index = {line.split()[0]: list(map(float, line.split()[1:])) for line in file}
-    del embeddings_index['0.45973']  # for some reason, this entry has 49 dimensions instead of 50
+print("\nGLOVE MODEL")
 
-split = data['clean_data'].apply(pd.Series)
-train_df, test_df, train_l, test_l = train_test_split(data['clean_data'], data['sarcasm_label'], test_size=0.2)
-train_text = [' '.join(t.split()[0:150]) for t in train_df]
-old_tt = train_text[:]
-print(train_text)
-train_text = np.array(train_text, dtype=object)[:, np.newaxis]
-train_label = list(train_l)
+# get the data
+s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo')
+# Split into training and test data
+X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
-test_text = [' '.join(t.split()[0:150]) for t in test_df]
-old_tet = test_text[:]
-test_text = np.array(test_text, dtype=object)[:, np.newaxis]
-test_label = list(test_l)
 
-max_w = 20000
-max_s_l = 1000
-tokenizer = Tokenizer(num_words=max_w)
-tokenizer.fit_on_texts(data['clean_data'])
-sequences1 = tokenizer.texts_to_sequences(old_tt)
-sequences2 = tokenizer.texts_to_sequences(old_tet)
-
-training_data = pad_sequences(sequences1, maxlen=max_s_l)
-testing_data = pad_sequences(sequences2, maxlen=max_s_l)
-
-def build_model():
-    model = Sequential()
-    model.add(ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string"))
-    # model.add(MultihotEmbedding(vocab_size=40000, input_shape=(1,)))
-    #model.add(GloveEmbeddingLayer(tokenizer, max_w, max_s_l))
-    model.add(Dense(256, activation='relu'))
+def cnn_network(model):
+    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
     model.add(Flatten())
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
-# Build and fit
-model = build_model()
-model.fit(train_text,
-          train_label,
-          validation_data=(test_text, test_label),
-          epochs=4,
-          batch_size=32)
-# model.fit(training_data,
-#           train_label,
-#           validation_data=(testing_data, test_label),
-#           epochs=15,
-#           batch_size=32)
+# Train models from scratch
+model = Sequential()
+e = emb_layer
+e.trainable = False
+model.add(e)
 
+model = cnn_network(model)
+# model.add(LSTM(units=100, dropout=0.5, recurrent_dropout=0.5, return_sequences=False))
+model.add(Dense(units=1, activation='sigmoid'))
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
+                        epochs=10, batch_size=128)
 
-# model.summary()
-model.save('ElmoModel.h5')
-pre_save_preds = model.predict_classes(testing_data)  # predictions before we clear and reload model
-score = f1_score(test_label, pre_save_preds)
+# evaluate
+y_pred = model.predict_classes(x=X_test)
+score = f1_score(labels_test, y_pred)
+# model = KerasClassifier(build_fn=new_model)
 print(score)
 
-# model = build_model()
-# model.load_weights('ElmoModel.h5')
+# class_weight = {0: 1.0, 1: 1.0}
+# my_adam = optimizers.Adam(lr=0.003, decay=0.001)
+# print(model.summary())

@@ -6,7 +6,13 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 import os
 import re
+from keras.layers import LSTM, Bidirectional
+from keras.layers import ReLU
+from keras.layers import MaxPool1D, MaxPooling1D
+from keras.layers import Conv1D
+from keras.layers.normalization import BatchNormalization
 from sklearn.metrics import f1_score, accuracy_score
+from keras.wrappers.scikit_learn import KerasClassifier
 from random import randint
 from keras import backend as K
 from keras.layers import Dense, Input, Embedding, Flatten
@@ -16,6 +22,8 @@ from sklearn.model_selection import train_test_split
 from keras.initializers import Constant
 import numpy as np
 K.set_session(tf.Session())
+max_w = 20000
+max_s_l = 1000
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -77,14 +85,56 @@ class GloveEmbeddingLayer(Embedding):
             if embedding_vector is not None:
                 embedding_matrix[i] = embedding_vector
         return embedding_matrix
-# ---------------------------------------------------------------------------------
 
 
-def build_model():
+# -------------------------------- HELPER FUNCTIONS ----------------------------------
+
+def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
+    text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
+    labels = list(sarcasm_labels)
+
+    if vector_type == 'elmo':
+        text = np.array(text, dtype=object)[:, np.newaxis]
+        return text, labels, ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string")
+
+    elif vector_type == 'glove':
+        tokenizer = Tokenizer(num_words=max_w)
+        tokenizer.fit_on_texts(text)
+        sequences = tokenizer.texts_to_sequences(text)
+        padded_data = pad_sequences(sequences, maxlen=max_s_l)
+        return padded_data, labels, GloveEmbeddingLayer(tokenizer, max_w, max_s_l)
+    else:
+        raise TypeError('Vector type must be "elmo" or "glove"')
+
+def cnn(embedding_layer):
+    model = Sequential()
+    model.add(embedding_layer)
+    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+
+    model.add(Flatten())
+    model.add(Dense(units=1, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
+
+def build_model(embedding_layer):
     model = Sequential()
     # model.add(ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string"))
     # model.add(MultihotEmbedding(vocab_size=40000, input_shape=(1,)))
-    model.add(GloveEmbeddingLayer(tokenizer, max_w, max_s_l))
+    # model.add(GloveEmbeddingLayer(tokenizer, max_w, max_s_l))
+    model.add(embedding_layer)
     model.add(Dense(256, activation='relu'))
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
@@ -137,41 +187,33 @@ if __name__ == "__main__":
 
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+    s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo')
 
+    train_d, test_d, train_l, test_l = train_test_split(s_data, l_data, test_size=0.2)
 
-    split = data['clean_data'].apply(pd.Series)
-    train_df, test_df, train_l, test_l = train_test_split(data['clean_data'], data['sarcasm_label'], test_size=0.2)
-    train_text = [' '.join(t.split()[0:150]) for t in train_df]
-    old_tt = train_text[:]
-    print(train_text)
-    train_text = np.array(train_text, dtype=object)[:, np.newaxis]
-    train_label = list(train_l)
-
-    test_text = [' '.join(t.split()[0:150]) for t in test_df]
-    old_tet = test_text[:]
-    test_text = np.array(test_text, dtype=object)[:, np.newaxis]
-    test_label = list(test_l)
-
-    max_w = 20000
-    max_s_l = 1000
-    tokenizer = Tokenizer(num_words=max_w)
-    tokenizer.fit_on_texts(data['clean_data'])
-    sequences1 = tokenizer.texts_to_sequences(old_tt)
-    sequences2 = tokenizer.texts_to_sequences(old_tet)
-
-    training_data = pad_sequences(sequences1, maxlen=max_s_l)
-    testing_data = pad_sequences(sequences2, maxlen=max_s_l)
+    # model.fit(training_data, training_labels, batch_size=16, epochs=10)
+    # preds_valid = model.predict(testing_data)
+    # print(preds_valid)
+    #
+    # # loss, score = model.evaluate(testing_data, testing_labels, batch_size=16)
+    # # print(testing_labels)
+    # score = f1_score(testing_labels, preds_valid)
+    #
+    # print('Score: %.2f' % score)
 
 
     # Build and fit
-    model = build_model()
-    model.fit(training_data,
-              train_label,
-              validation_data=(testing_data, test_label),
+    #model = build_model(emb_layer)
+    model = cnn(emb_layer)
+    model.summary()
+    model.fit(train_d,
+              train_l,
+              validation_data=(test_d, test_l),
               epochs=15,
               batch_size=32)
-    pre_save_preds = model.predict_classes(testing_data)  # predictions before we clear and reload model
-    score = f1_score(test_label, pre_save_preds)
+    pre_save_preds = model.predict_classes(test_d)  # predictions before we clear and reload model
+    score = f1_score(test_l, pre_save_preds)
+    # model = KerasClassifier(build_fn=new_model)
     print(score)
 
 
