@@ -11,7 +11,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import load_model
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D, Bidirectional
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -128,20 +128,22 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
 def lstm_network(model):
-    model.add(LSTM(units=128, dropout=0.2, kernel_initializer='he_normal', activation='tanh', return_sequences=True))
-    model.add(LSTM(units=128, dropout=0.2, kernel_initializer='he_normal', activation='tanh'))
-    model.add(Dropout(0.2))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
-
-def new_lstm_network(model):
     model.add(LSTM(60, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dropout(0.1))
     model.add(Dense(50, activation="relu"))
     model.add(Dropout(0.1))
     model.add(Dense(1, activation="sigmoid"))
+    model.compile(loss='binary_crossentropy',
+                  optimizer='adam',
+                  metrics=['accuracy'])
+    return model
+
+
+def bi_directional_lstm_network(model):
+    model.add(Bidirectional(LSTM(64)))
+    model.add(Dropout(0.5))
+    model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
@@ -242,7 +244,7 @@ e.trainable = False
 model.add(e)
 
 # model = cnn_network_batch_norm(model)
-model = new_lstm_network(model)
+model = lstm_network(model)
 #model = cnn_network(model)
 model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
