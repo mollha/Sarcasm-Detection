@@ -205,7 +205,8 @@ e = emb_layer
 e.trainable = False
 model.add(e)
 
-model = cnn_network(model)
+# model = cnn_network(model)
+model = lstm_network(model)
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                         epochs=18, batch_size=max_batch_size)
 
