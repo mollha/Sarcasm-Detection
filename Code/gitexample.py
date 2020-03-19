@@ -1,4 +1,5 @@
 import os
+from keras.utils import CustomObjectScope
 import numpy as np
 import pandas as pd
 from keras.engine import Layer
@@ -6,8 +7,10 @@ from random import randint
 from Code.DataPreprocessing import *
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers.normalization import BatchNormalization
+from keras.models import load_model
 from keras.models import Sequential
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Input, Dropout
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -38,8 +41,8 @@ class ElmoEmbeddingLayer(Layer):
 
     def call(self, inputs, mask=None):
         # inputs.shape = [batch_size, seq_len]
-        seq_len = [inputs.shape[1]] * inputs.shape[
-            0]  # this will give a list of seq_len: [seq_len, seq_len, ..., seq_len] just like the official example.
+        seq_len = [inputs.shape[1]] * inputs.shape[0]
+        # this will give a list of seq_len: [seq_len, seq_len, ..., seq_len] just like the official example.
         result = self.elmo(inputs={"tokens": K.cast(inputs, dtype=tf.string),
                                    "sequence_len": seq_len},
                            as_dict=True,
@@ -51,33 +54,37 @@ class ElmoEmbeddingLayer(Layer):
     def compute_mask(self, inputs, mask=None):
         if not self.mask:
             return None
-
-        output_mask = K.not_equal(inputs, '--PAD--')
-        return output_mask
+        return K.not_equal(inputs, '--PAD--')
 
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[1], self.dimensions
 
 
 class GloveEmbeddingLayer(Embedding):
-    def __init__(self, tokeniser, max_seq_len):
+    def __init__(self, word_index, max_seq_len, **kwargs):
+        self.word_index = word_index
         self.MAX_SEQUENCE_LENGTH = max_seq_len
         self.output_dim = 50
-        self.embeddings_matrix = self.compute_embedding_matrix(len(tokeniser.word_index) + 1, tokeniser)
-        super(GloveEmbeddingLayer, self).__init__(input_dim=len(tokeniser.word_index) + 1,
+        self.embeddings_matrix = self.compute_embedding_matrix(len(self.word_index) + 1)
+        super(GloveEmbeddingLayer, self).__init__(input_dim=len(self.word_index) + 1,
                                                   output_dim=self.output_dim,
                                                   embeddings_initializer=Constant(self.embeddings_matrix),
                                                   input_length=self.MAX_SEQUENCE_LENGTH,
-                                                  trainable=False
+                                                  trainable=False,
+                                                  **kwargs
                                                   )
 
-    def compute_embedding_matrix(self, vocab_size, tokeniser):
+    def get_config(self):
+        return {'word_index': self.word_index,
+                'max_seq_len': self.MAX_SEQUENCE_LENGTH}
+
+    def compute_embedding_matrix(self, vocab_size):
         with open('Datasets/GLOVEDATA/glove.twitter.27B.50d.txt', "r", encoding="utf-8") as file:
             embeddings_index = {line.split()[0]: list(map(float, line.split()[1:])) for line in file}
             del embeddings_index['0.45973']  # for some reason, this entry has 49 dimensions instead of 50
 
         embedding_matrix = np.zeros((vocab_size, self.output_dim))
-        for word, i in tokeniser.word_index.items():
+        for word, i in self.word_index.items():
             if i >= vocab_size:
                 continue
             embedding_vector = embeddings_index.get(word)
@@ -96,9 +103,13 @@ def pad_string(tokens: list, limit: int) -> list:
     return tokens
 
 
-def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
+def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
     length_limit = 150
     if vector_type == 'elmo':
+        number_of_batches = len(sarcasm_data) // (max_batch_size*cv)
+        print('Amount used', number_of_batches*max_batch_size)
+        sarcasm_data = sarcasm_data[:number_of_batches*max_batch_size]
+        sarcasm_labels = sarcasm_labels[:number_of_batches*max_batch_size]
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
@@ -109,7 +120,7 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
         tokenizer.fit_on_texts(sarcasm_data)
         sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer, length_limit)
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -121,6 +132,21 @@ def lstm_network(model):
     model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    return model
+
+
+def cnn_2(model):
+    model.add(Dropout(0.2))
+    model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
+    model.add(GlobalMaxPooling1D())
+    # vanilla hidden layer:
+    model.add(Dense(250))
+    model.add(Dropout(0.2))
+    model.add(Activation('relu'))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy',
+                  optimizer='adam',
+                  metrics=['accuracy'])
     return model
 
 
@@ -150,7 +176,7 @@ dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlin
 path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
-set_size = 16000
+set_size = 4000 # 160000
 
 # Read in raw data
 data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -188,10 +214,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
 
 # Clean data, or retrieve pre-cleaned data
 data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-
-print("\nGLOVE MODEL")
-# get the data
-s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove')
+s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove', 5)
 # Split into training and test data
 X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
@@ -206,9 +229,17 @@ e.trainable = False
 model.add(e)
 
 # model = cnn_network(model)
-model = lstm_network(model)
+# model = lstm_network(model)
+model = cnn_2(model)
+model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
+early_stopping = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto')
+#model.fit(train_X, train_y, validation_split=0.3)
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                        epochs=18, batch_size=max_batch_size)
+                        epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
+with CustomObjectScope({'GloveEmbeddingLayer': GloveEmbeddingLayer}):
+    model = load_model('best_model.h5')
+
 
 # evaluate
 y_pred = model.predict_classes(x=X_test)
