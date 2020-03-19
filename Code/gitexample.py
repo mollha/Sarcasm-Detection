@@ -7,7 +7,7 @@ from Code.DataPreprocessing import *
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers.normalization import BatchNormalization
 from keras.models import Sequential
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Input
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -19,6 +19,48 @@ import tensorflow_hub as hub
 max_w = 20000
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
+class NewElmoEmbeddingLayer(Layer):
+
+    def __init__(self, mask, **kwargs):
+        self.dimensions = 1024
+        self.trainable = True
+        self.mask = mask
+        super(NewElmoEmbeddingLayer, self).__init__(**kwargs)
+
+
+    def build(self, input_shape):
+        self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
+                               name="{}_module".format(self.name))
+        self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
+        super(NewElmoEmbeddingLayer, self).build(input_shape)
+
+
+    def call(self, inputs, mask=None):
+        # inputs.shape = [batch_size, seq_len]
+        seq_len = [inputs.shape[1]] * inputs.shape[
+            0]  # this will give a list of seq_len: [seq_len, seq_len, ..., seq_len] just like the official example.
+        result = self.elmo(inputs={"tokens": K.cast(inputs, dtype=tf.string),
+                                   "sequence_len": seq_len},
+                           as_dict=True,
+                           signature='tokens',
+                           )['elmo']
+        print(result.shape)
+        return result
+
+
+    def compute_mask(self, inputs, mask=None):
+        if not self.mask:
+            return None
+
+        output_mask = K.not_equal(inputs, '--PAD--')
+        return output_mask
+
+
+    def compute_output_shape(self, input_shape):
+        return (input_shape[0], input_shape[1], self.dimensions)
+
+
+
 
 
 class ElmoEmbeddingLayer(Layer):
@@ -86,12 +128,15 @@ class GloveEmbeddingLayer(Embedding):
 
 def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
     if vector_type == 'elmo':
-        # text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
-        # text = text.to_numpy()
+        text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
+        text = text.replace({None: ""})
+        text = text.to_numpy()
         # print(text)
-        text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
-        text = np.array(text, dtype=object)[:, np.newaxis]
-        print(text.shape)
+        # text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
+        # text = np.array(text, dtype=object)[:, np.newaxis]
+        sequence_length=150
+        return text, sarcasm_labels, NewElmoEmbeddingLayer(batch_input_shape=(128, sequence_length), input_dtype="string", mask=None)
+        #Input(batch_shape=(128, sequence_length), dtype=tf.string)
         return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string")
 
     elif vector_type == 'glove':
@@ -171,6 +216,8 @@ def cnn_network(model):
     model.add(Flatten())
     return model
 
+sequence_length= 150
+
 # Train models from scratch
 model = Sequential()
 e = emb_layer
@@ -192,4 +239,4 @@ print(score)
 
 # class_weight = {0: 1.0, 1: 1.0}
 # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-# print(model.summary())
+print(model.summary())
