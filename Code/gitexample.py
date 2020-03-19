@@ -1,6 +1,7 @@
 import os
 from keras.utils import CustomObjectScope
 import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
 from keras.engine import Layer
 from random import randint
@@ -20,7 +21,7 @@ from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
 max_w = 20000
-max_batch_size = 32
+max_batch_size = 1
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -131,11 +132,23 @@ def lstm_network(model):
     model.add(LSTM(units=128, dropout=0.2, kernel_initializer='he_normal', activation='tanh'))
     model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
+
+def new_lstm_network(model):
+    model.add(LSTM(60, return_sequences=True))
+    model.add(GlobalMaxPooling1D())
+    model.add(Dropout(0.1))
+    model.add(Dense(50, activation="relu"))
+    model.add(Dropout(0.1))
+    model.add(Dense(1, activation="sigmoid"))
+    model.compile(loss='binary_crossentropy',
+                  optimizer='adam',
+                  metrics=['accuracy'])
     return model
 
 
-def cnn_2(model):
+def cnn_network(model):
     model.add(Dropout(0.2))
     model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
     model.add(GlobalMaxPooling1D())
@@ -150,7 +163,7 @@ def cnn_2(model):
     return model
 
 
-def cnn_network(model):
+def cnn_network_batch_norm(model):
     model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
     model.add(BatchNormalization())
     model.add(ReLU())
@@ -176,7 +189,7 @@ dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlin
 path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
-set_size = 4000 # 160000
+set_size = 5000  # 22895
 
 # Read in raw data
 data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -228,11 +241,11 @@ e = emb_layer
 e.trainable = False
 model.add(e)
 
-# model = cnn_network(model)
-# model = lstm_network(model)
-model = cnn_2(model)
+# model = cnn_network_batch_norm(model)
+model = new_lstm_network(model)
+#model = cnn_network(model)
 model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
-early_stopping = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto')
+early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
 #model.fit(train_X, train_y, validation_split=0.3)
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                         epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
@@ -250,3 +263,23 @@ print(score)
 # class_weight = {0: 1.0, 1: 1.0}
 # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
 # print(model.summary())
+loss = history.history["loss"]
+val_loss = history.history["val_loss"]
+epochs = range(1, len(loss)+1)
+plt.plot(epochs, loss, label="Training loss")
+plt.plot(epochs, val_loss, label="Validation loss")
+plt.title("Training and validation loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.legend()
+plt.show()
+
+accuracy = history.history["acc"]
+val_accuracy = history.history["val_acc"]
+plt.plot(epochs, accuracy, label="Training accuracy")
+plt.plot(epochs, val_accuracy, label="Validation accuracy")
+plt.title("Training and validation accuracy")
+plt.ylabel("Accuracy")
+plt.xlabel("Epochs")
+plt.legend()
+plt.show()
