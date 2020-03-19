@@ -140,7 +140,7 @@ def lstm_network(model):
     return model
 
 
-def bi_directional_lstm_network(model):
+def bidirectional_lstm_network(model):
     model.add(Bidirectional(LSTM(64)))
     model.add(Dropout(0.5))
     model.add(Dense(1, activation='sigmoid'))
@@ -191,7 +191,7 @@ dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlin
 path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
-set_size = 5000  # 22895
+set_size = 200  # 22895
 
 # Read in raw data
 data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -244,10 +244,11 @@ e.trainable = False
 model.add(e)
 
 # model = cnn_network_batch_norm(model)
-model = lstm_network(model)
+# model = lstm_network(model)
+model = bidirectional_lstm_network(model)
 #model = cnn_network(model)
 model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
-early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
+early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
 #model.fit(train_X, train_y, validation_split=0.3)
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                         epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
@@ -276,8 +277,8 @@ plt.ylabel("Loss")
 plt.legend()
 plt.show()
 
-accuracy = history.history["acc"]
-val_accuracy = history.history["val_acc"]
+accuracy = history.history["accuracy"]
+val_accuracy = history.history["val_accuracy"]
 plt.plot(epochs, accuracy, label="Training accuracy")
 plt.plot(epochs, val_accuracy, label="Validation accuracy")
 plt.title("Training and validation accuracy")
