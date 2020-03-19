@@ -150,7 +150,7 @@ dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlin
 path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
-set_size = 640
+set_size = 16000
 
 # Read in raw data
 data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -191,7 +191,7 @@ data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
 print("\nGLOVE MODEL")
 # get the data
-s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo')
+s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove')
 # Split into training and test data
 X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
@@ -207,7 +207,7 @@ model.add(e)
 
 model = cnn_network(model)
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                        epochs=6, batch_size=max_batch_size)
+                        epochs=18, batch_size=max_batch_size)
 
 # evaluate
 y_pred = model.predict_classes(x=X_test)
