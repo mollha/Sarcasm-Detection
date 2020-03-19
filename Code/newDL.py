@@ -106,6 +106,8 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
+
+
 def cnn(embedding_layer):
     model = Sequential()
     model.add(embedding_layer)

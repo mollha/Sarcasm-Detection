@@ -46,39 +46,8 @@ def old_model():
     print(model.summary())
     return model
 
-def cnn_model():
-    model = Sequential()
-    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
 
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
 
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-
-    model.add(Flatten())
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    return model
-
-def lstm_model():
-    embed_dim = 128
-    lstm_out = 128
-    model = Sequential()
-    model.add(get_embedding_layer(embed_dim))
-    model.add(LSTM(lstm_out, dropout=0.2, kernel_initializer='he_normal', activation='tanh', return_sequences=True))
-    model.add(LSTM(lstm_out, dropout=0.2, kernel_initializer='he_normal', activation='tanh'))
-    model.add(Dropout(0.2))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-    print(model.summary())
-    return model
 
 def cnn_lstm_network():
     model = Sequential()

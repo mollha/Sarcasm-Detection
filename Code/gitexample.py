@@ -7,7 +7,7 @@ from Code.DataPreprocessing import *
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers.normalization import BatchNormalization
 from keras.models import Sequential
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Input
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Input, Dropout
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -19,22 +19,22 @@ import tensorflow_hub as hub
 max_w = 20000
 max_batch_size = 32
 
+
 # ---------------------------- Create Embedding Layer Classes ----------------------------
 class ElmoEmbeddingLayer(Layer):
 
-    def __init__(self, mask, **kwargs):
+    def __init__(self, **kwargs):
         self.dimensions = 1024
         self.trainable = True
-        self.mask = mask
+        self.mask = None
+        self.elmo = None
         super(ElmoEmbeddingLayer, self).__init__(**kwargs)
-
 
     def build(self, input_shape):
         self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
                                name="{}_module".format(self.name))
         self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
         super(ElmoEmbeddingLayer, self).build(input_shape)
-
 
     def call(self, inputs, mask=None):
         # inputs.shape = [batch_size, seq_len]
@@ -48,7 +48,6 @@ class ElmoEmbeddingLayer(Layer):
         print(result.shape)
         return result
 
-
     def compute_mask(self, inputs, mask=None):
         if not self.mask:
             return None
@@ -56,9 +55,8 @@ class ElmoEmbeddingLayer(Layer):
         output_mask = K.not_equal(inputs, '--PAD--')
         return output_mask
 
-
     def compute_output_shape(self, input_shape):
-        return (input_shape[0], input_shape[1], self.dimensions)
+        return input_shape[0], input_shape[1], self.dimensions
 
 
 class GloveEmbeddingLayer(Embedding):
@@ -88,7 +86,7 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-# -------------------------------- HELPER FUNCTIONS ----------------------------------
+# ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
     tokens = tokens[0:limit]
     extend_by = limit - len(tokens)
@@ -97,34 +95,54 @@ def pad_string(tokens: list, limit: int) -> list:
         tokens.extend([""] * extend_by)
     return tokens
 
+
 def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
     length_limit = 150
-    print('shapes: ', len(sarcasm_data))
     if vector_type == 'elmo':
-        # print([t.split()[0:150] for t in sarcasm_data])
-        # text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
-
-        #print(text)
-        print(text.shape)
         text = text.replace({None: ""})
         text = text.to_numpy()
-        #print(text)
-        # text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
-        # text = np.array(text, dtype=object)[:, np.newaxis]
-        sequence_length=150
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(32, length_limit), input_dtype="string", mask=None)
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(32, length_limit), input_dtype="string")
 
     elif vector_type == 'glove':
-        max_len = 1000
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(sarcasm_data)
         sequences = tokenizer.texts_to_sequences(sarcasm_data)
-        padded_data = pad_sequences(sequences, maxlen=max_len, padding='post')
-        print(padded_data.shape)
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer, max_len)
+        padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer, length_limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
+
+
+# -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
+def lstm_network(model):
+    model.add(LSTM(units=128, dropout=0.2, kernel_initializer='he_normal', activation='tanh', return_sequences=True))
+    model.add(LSTM(units=128, dropout=0.2, kernel_initializer='he_normal', activation='tanh'))
+    model.add(Dropout(0.2))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    return model
+
+
+def cnn_network(model):
+    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(MaxPool1D(pool_size=2, strides=1))
+    model.add(Flatten())
+    model.add(Dense(units=1, activation='sigmoid'))
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return model
+
+# ---------------------------------------------------------------------------------------------------------------------
 
 dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
@@ -178,21 +196,6 @@ s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sa
 X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
 
-def cnn_network(model):
-    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Flatten())
-    return model
 
 sequence_length= 150
 
@@ -203,11 +206,8 @@ e.trainable = False
 model.add(e)
 
 model = cnn_network(model)
-# model.add(LSTM(units=100, dropout=0.5, recurrent_dropout=0.5, return_sequences=False))
-model.add(Dense(units=1, activation='sigmoid'))
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                        epochs=10, batch_size=max_batch_size)
+                        epochs=6, batch_size=max_batch_size)
 
 # evaluate
 y_pred = model.predict_classes(x=X_test)
