@@ -164,25 +164,6 @@ def cnn_network(model):
                   metrics=['accuracy'])
     return model
 
-
-def cnn_network_batch_norm(model):
-    model.add(Conv1D(filters=32, kernel_size=4, strides=2, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Conv1D(filters=32, kernel_size=3, strides=1, padding='valid', use_bias=False))
-    model.add(BatchNormalization())
-    model.add(ReLU())
-    model.add(MaxPool1D(pool_size=2, strides=1))
-    model.add(Flatten())
-    model.add(Dense(units=1, activation='sigmoid'))
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    return model
-
 # ---------------------------------------------------------------------------------------------------------------------
 
 dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
