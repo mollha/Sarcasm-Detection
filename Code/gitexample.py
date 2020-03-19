@@ -17,22 +17,23 @@ from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
 max_w = 20000
+max_batch_size = 32
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
-class NewElmoEmbeddingLayer(Layer):
+class ElmoEmbeddingLayer(Layer):
 
     def __init__(self, mask, **kwargs):
         self.dimensions = 1024
         self.trainable = True
         self.mask = mask
-        super(NewElmoEmbeddingLayer, self).__init__(**kwargs)
+        super(ElmoEmbeddingLayer, self).__init__(**kwargs)
 
 
     def build(self, input_shape):
         self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
                                name="{}_module".format(self.name))
         self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
-        super(NewElmoEmbeddingLayer, self).build(input_shape)
+        super(ElmoEmbeddingLayer, self).build(input_shape)
 
 
     def call(self, inputs, mask=None):
@@ -58,43 +59,6 @@ class NewElmoEmbeddingLayer(Layer):
 
     def compute_output_shape(self, input_shape):
         return (input_shape[0], input_shape[1], self.dimensions)
-
-
-
-
-
-class ElmoEmbeddingLayer(Layer):
-
-    def __init__(self, **kwargs):
-        self.dimensions = 1024
-        self.elmo = None
-        self.trainable = True
-        super(ElmoEmbeddingLayer, self).__init__(**kwargs)
-
-    def build(self, input_shape):
-        # Create a trainable weight variable for this layer.
-        self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
-                               name="{}_module".format(self.name))
-
-        self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
-        super(ElmoEmbeddingLayer, self).build(input_shape)
-
-    def call(self, x, mask=None):
-        # this is where layer's logic lives, the forward function
-        result = self.elmo(K.squeeze(K.cast(x, tf.string), axis=1),
-                           as_dict=True,
-                           signature='default',
-                           )['default']
-        print(result.shape)
-        result = K.expand_dims(result, axis=-1)
-        print(result.shape)
-        return result
-
-    # def compute_mask(self, inputs, mask=None):
-    #     return K.not_equal(inputs, '--PAD--')
-    #
-    # def compute_output_shape(self, input_shape):
-    #     return input_shape[0], self.dimensions
 
 
 class GloveEmbeddingLayer(Embedding):
@@ -125,19 +89,31 @@ class GloveEmbeddingLayer(Embedding):
 
 
 # -------------------------------- HELPER FUNCTIONS ----------------------------------
+def pad_string(tokens: list, limit: int) -> list:
+    tokens = tokens[0:limit]
+    extend_by = limit - len(tokens)
+
+    if extend_by > 0:
+        tokens.extend([""] * extend_by)
+    return tokens
 
 def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str):
+    length_limit = 150
+    print('shapes: ', len(sarcasm_data))
     if vector_type == 'elmo':
-        text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
+        # print([t.split()[0:150] for t in sarcasm_data])
+        # text = pd.DataFrame([t.split()[0:150] for t in sarcasm_data])
+        text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
+
+        #print(text)
+        print(text.shape)
         text = text.replace({None: ""})
         text = text.to_numpy()
-        # print(text)
+        #print(text)
         # text = [' '.join(t.split()[0:150]) for t in sarcasm_data]
         # text = np.array(text, dtype=object)[:, np.newaxis]
         sequence_length=150
-        return text, sarcasm_labels, NewElmoEmbeddingLayer(batch_input_shape=(128, sequence_length), input_dtype="string", mask=None)
-        #Input(batch_shape=(128, sequence_length), dtype=tf.string)
-        return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(1,), input_dtype="string")
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(32, length_limit), input_dtype="string", mask=None)
 
     elif vector_type == 'glove':
         max_len = 1000
@@ -156,8 +132,10 @@ dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlin
 path_to_dataset_root = dataset_paths[1]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
+set_size = 640
+
 # Read in raw data
-data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
+data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
 
 
 def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
@@ -187,13 +165,13 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                 index=False, header=['clean_data'])
     return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                       encoding="ISO-8859-1")
+                       encoding="ISO-8859-1")[:set_size]
 
 
 # Clean data, or retrieve pre-cleaned data
 data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-print("\nGLOVE MODEL")
 
+print("\nGLOVE MODEL")
 # get the data
 s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo')
 # Split into training and test data
@@ -229,7 +207,7 @@ model = cnn_network(model)
 model.add(Dense(units=1, activation='sigmoid'))
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                        epochs=10, batch_size=128)
+                        epochs=10, batch_size=max_batch_size)
 
 # evaluate
 y_pred = model.predict_classes(x=X_test)
@@ -239,4 +217,4 @@ print(score)
 
 # class_weight = {0: 1.0, 1: 1.0}
 # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-print(model.summary())
+# print(model.summary())
