@@ -11,8 +11,8 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import load_model
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D, \
-    Bidirectional
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense
+from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional, TimeDistributed
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -21,9 +21,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
-
-max_w = 20000
-max_batch_size = 32
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -95,6 +92,23 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
+class BagOfWordsEmbeddingLayer(Embedding):
+    def __init__(self, word_index, model_weights, **kwargs):
+        self.word_index = word_index
+        self.model_weights = model_weights
+        super(BagOfWordsEmbeddingLayer, self).__init__(input_dim=len(self.word_index) + 1,
+                                                       output_dim=self.word_index,
+                                                       embeddings_initializer=Constant(self.model_weights),
+                                                       input_length=self.word_index,
+                                                       trainable=False,
+                                                       **kwargs
+                                                       )
+
+    def get_config(self):
+        return {'word_index': self.word_index,
+                'model_weights': self.model_weights}
+
+
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def get_length_limit(dataset_name: str) -> int:
     # TODO define reasoned integers for this
@@ -143,13 +157,24 @@ def load_model_from_file(filename: str, custom_layers: dict):
 
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
-def lstm_network(model):
+def new_lstm_network(model):
     model.add(LSTM(60, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dropout(0.1))
     model.add(Dense(50, activation="relu"))
     model.add(Dropout(0.1))
     model.add(Dense(1, activation="sigmoid"))
+    model.compile(loss='binary_crossentropy',
+                  optimizer='adam',
+                  metrics=['accuracy'])
+    return model
+
+def lstm_network(model):
+    model.add(LSTM(50, return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(100, return_sequences=False))
+    model.add(Dropout(0.2))
+    model.add(TimeDistributed(Dense(1, activation="sigmoid")))
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
@@ -182,18 +207,17 @@ def cnn_network(model):
 
 
 # ---------------------------------------------- MAIN FUNCTIONS ------------------------------------------------------
-def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
+def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float, max_batch_size: int):
     length_limit = 150
     if vector_type == 'elmo':
-        number_of_batches = len(sarcasm_data) // (max_batch_size * cv)
-        sarcasm_data = sarcasm_data[:number_of_batches * max_batch_size * cv]
-        sarcasm_labels = sarcasm_labels[:number_of_batches * max_batch_size * cv]
+        number_of_batches = len(sarcasm_data) // (max_batch_size * (1/split))
+        sarcasm_data = sarcasm_data[:number_of_batches * max_batch_size * (1/split)]
+        sarcasm_labels = sarcasm_labels[:number_of_batches * max_batch_size * (1/split)]
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
         return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit), input_dtype="string"), \
                {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
-
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(sarcasm_data)
@@ -201,24 +225,57 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
         padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
         return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit), \
                {'GloveEmbeddingLayer': GloveEmbeddingLayer}
+    elif vector_type == 'bag_of_words':
+        tokenizer = Tokenizer()
+        tokenizer.fit_on_texts(sarcasm_data)
+        sequences = tokenizer.texts_to_sequences(sarcasm_data)
+        matrix = tokenizer.texts_to_matrix(sarcasm_data, mode='freq')
+        print(tokenizer.word_index)
+        print(matrix)
+        return sequences, sarcasm_labels, BagOfWordsEmbeddingLayer(tokenizer.word_index, model_weights=matrix), \
+               {'BagOfWordsEmbeddingLayer': BagOfWordsEmbeddingLayer}
     else:
-        raise TypeError('Vector type must be "elmo" or "glove"')
+        raise TypeError('Vector type must be "elmo", "glove" or "bag_of_words"')
 
 
-def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
+def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
+    max_batch_size = 1 if model_name == 'lstm' or model_name == 'bi-lstm' else 32
+
     model = Sequential()
     sarcasm_data, sarcasm_labels, embedding_layer, cus_layers = prepare_embedding_layer(sarcasm_data=sarcasm_data,
                                                                                         sarcasm_labels=sarcasm_labels,
-                                                                                        vector_type=vector_type, cv=cv)
+                                                                                        vector_type=vector_type,
+                                                                                        split=split,
+                                                                                        max_batch_size=max_batch_size)
     model.add(embedding_layer)
-
     if model_name == 'lstm':
         model = lstm_network(model)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model)
     elif model_name == 'cnn':
         model = cnn_network(model)
-    return sarcasm_data, sarcasm_labels, model, cus_layers
+    return sarcasm_data, sarcasm_labels, model, cus_layers, max_batch_size
+
+
+def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
+    s_data, l_data, dl_model, custom_layers, max_batch_size = get_model(model_name, sarcasm_data, sarcasm_labels, vector_type, 5)
+    X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=split)
+    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
+    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
+    model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
+                                 epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
+    load_model_from_file(file_name, custom_layers)
+
+    y_pred = dl_model.predict_classes(x=X_test)
+    score = f1_score(labels_test, y_pred)
+    print('Score: ', score)
+
+    # class_weight = {0: 1.0, 1: 1.0}
+    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
+    # print(model.summary())
+    visualise_results(model_history)
 
 
 if __name__ == "__main__":
@@ -227,8 +284,7 @@ if __name__ == "__main__":
     # Choose a dataset from the list of valid data sets
     path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
-
-    set_size = 22895
+    set_size = 2200
 
     # Read in raw data
     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -267,27 +323,10 @@ if __name__ == "__main__":
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
-    model_name = 'cnn'
-    vector_type = 'elmo'
+    model_name = 'lstm'
+    vector_type = 'glove'
+    sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
 
-    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
+    get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
 
-    s_data, l_data, dl_model, custom_layers = get_model(model_name, data['clean_data'], data['sarcasm_label'], vector_type, 5)
-    X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
-    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
-    early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
-    model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                                 epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
-
-    load_model_from_file(file_name, custom_layers)
-
-    y_pred = dl_model.predict_classes(x=X_test)
-    score = f1_score(labels_test, y_pred)
-    # model = KerasClassifier(build_fn=new_model)
-    print(score)
-
-    # class_weight = {0: 1.0, 1: 1.0}
-    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-    # print(model.summary())
-    visualise_results(model_history)

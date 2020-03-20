@@ -8,6 +8,7 @@ from sklearn.model_selection import cross_val_score
 import numpy as np
 import os.path
 from random import randint
+from Code.DLmodels import get_results
 import time
 
 nlp = spacy.load('en_core_web_md')
@@ -94,24 +95,25 @@ def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: s
 if __name__ == '__main__':
     start = time.time()
     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
-
     # Choose a dataset from the list of valid data sets
     path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
+    max_batch_size = 32
+    set_size = 22895
 
     # Read in raw data
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
 
     # Clean data, or retrieve pre-cleaned data
-    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)[:set_size]
 
     # machine learning models
     # Vectorise data, or retrieve pre-computed vectors
-    vector = 'tf_idf'
-    print('Vector Type: ' + vector)
-
-    # if machine learning
-    data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
+    # vector = 'tf_idf'
+    # print('Vector Type: ' + vector)
+    #
+    # # if machine learning
+    # data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
 
     # Create features, or retrieve pre-generated features
@@ -128,12 +130,20 @@ if __name__ == '__main__':
 
     # ---------------------------------------------------------------------------------------------------------------
 
-    print('Training ML models')
-    labels = data['sarcasm_label']
-    classifier_name, classifier = get_model(4)
-    print('Classifier: ' + classifier_name)
+    model_name = 'cnn'
+    vector_type = 'glove'
+    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
+    sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
 
-    scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
-    five_fold_cross_validation = np.mean(scores)
-    print('Score: ', five_fold_cross_validation)
-    print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
+    get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
+
+
+    # print('Training ML models')
+    # labels = data['sarcasm_label']
+    # classifier_name, classifier = get_model(4)
+    # print('Classifier: ' + classifier_name)
+    #
+    # scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
+    # five_fold_cross_validation = np.mean(scores)
+    # print('Score: ', five_fold_cross_validation)
+    # print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
