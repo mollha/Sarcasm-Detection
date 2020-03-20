@@ -11,7 +11,8 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import load_model
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D, Bidirectional
+from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D, \
+    Bidirectional
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -20,8 +21,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
+
 max_w = 20000
-max_batch_size = 1
+max_batch_size = 32
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -112,25 +114,32 @@ def pad_string(tokens: list, limit: int) -> list:
     return tokens
 
 
-def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
-    length_limit = 150
-    if vector_type == 'elmo':
-        number_of_batches = len(sarcasm_data) // (max_batch_size*cv)
-        sarcasm_data = sarcasm_data[:number_of_batches*max_batch_size]
-        sarcasm_labels = sarcasm_labels[:number_of_batches*max_batch_size]
-        text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
-        text = text.replace({None: ""})
-        text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(32, length_limit), input_dtype="string")
+def visualise_results(history):
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+    epochs = range(1, len(loss) + 1)
+    plt.plot(epochs, loss, label="Training loss")
+    plt.plot(epochs, val_loss, label="Validation loss")
+    plt.title("Training and validation loss")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
 
-    elif vector_type == 'glove':
-        tokenizer = Tokenizer()
-        tokenizer.fit_on_texts(sarcasm_data)
-        sequences = tokenizer.texts_to_sequences(sarcasm_data)
-        padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit)
-    else:
-        raise TypeError('Vector type must be "elmo" or "glove"')
+    accuracy = history.history["accuracy"]
+    val_accuracy = history.history["val_accuracy"]
+    plt.plot(epochs, accuracy, label="Training accuracy")
+    plt.plot(epochs, val_accuracy, label="Validation accuracy")
+    plt.title("Training and validation accuracy")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epochs")
+    plt.legend()
+    plt.show()
+
+
+def load_model_from_file(filename: str, custom_layers: dict):
+    with CustomObjectScope(custom_layers):
+        return load_model(filename)
 
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
@@ -173,42 +182,43 @@ def cnn_network(model):
 
 
 # ---------------------------------------------- MAIN FUNCTIONS ------------------------------------------------------
+def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
+    length_limit = 150
+    if vector_type == 'elmo':
+        number_of_batches = len(sarcasm_data) // (max_batch_size * cv)
+        sarcasm_data = sarcasm_data[:number_of_batches * max_batch_size * cv]
+        sarcasm_labels = sarcasm_labels[:number_of_batches * max_batch_size * cv]
+        text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
+        text = text.replace({None: ""})
+        text = text.to_numpy()
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit), input_dtype="string"), \
+               {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
+
+    elif vector_type == 'glove':
+        tokenizer = Tokenizer()
+        tokenizer.fit_on_texts(sarcasm_data)
+        sequences = tokenizer.texts_to_sequences(sarcasm_data)
+        padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit), \
+               {'GloveEmbeddingLayer': GloveEmbeddingLayer}
+    else:
+        raise TypeError('Vector type must be "elmo" or "glove"')
+
+
 def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
     model = Sequential()
-    sarcasm_data, sarcasm_labels, embedding_layer = prepare_embedding_layer(sarcasm_data=sarcasm_data,
-                                                                            sarcasm_labels=sarcasm_labels,
-                                                                            vector_type=vector_type, cv=cv)
+    sarcasm_data, sarcasm_labels, embedding_layer, cus_layers = prepare_embedding_layer(sarcasm_data=sarcasm_data,
+                                                                                        sarcasm_labels=sarcasm_labels,
+                                                                                        vector_type=vector_type, cv=cv)
     model.add(embedding_layer)
 
     if model_name == 'lstm':
         model = lstm_network(model)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model)
-    elif model == 'cnn':
+    elif model_name == 'cnn':
         model = cnn_network(model)
-
-def visualise_results(history):
-    loss = history.history["loss"]
-    val_loss = history.history["val_loss"]
-    epochs = range(1, len(loss) + 1)
-    plt.plot(epochs, loss, label="Training loss")
-    plt.plot(epochs, val_loss, label="Validation loss")
-    plt.title("Training and validation loss")
-    plt.xlabel("Epochs")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.show()
-
-    accuracy = history.history["accuracy"]
-    val_accuracy = history.history["val_accuracy"]
-    plt.plot(epochs, accuracy, label="Training accuracy")
-    plt.plot(epochs, val_accuracy, label="Validation accuracy")
-    plt.title("Training and validation accuracy")
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epochs")
-    plt.legend()
-    plt.show()
-
+    return sarcasm_data, sarcasm_labels, model, cus_layers
 
 
 if __name__ == "__main__":
@@ -218,7 +228,7 @@ if __name__ == "__main__":
     path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
-    set_size = 200  # 22895
+    set_size = 22895
 
     # Read in raw data
     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -253,36 +263,26 @@ if __name__ == "__main__":
         return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                            encoding="ISO-8859-1")[:set_size]
 
+
     # Clean data, or retrieve pre-cleaned data
     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-    s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove', 5)
-    # Split into training and test data
+
+    model_name = 'cnn'
+    vector_type = 'elmo'
+
+    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
+
+    s_data, l_data, dl_model, custom_layers = get_model(model_name, data['clean_data'], data['sarcasm_label'], vector_type, 5)
     X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
-
-
-    sequence_length= 150
-
-    # Train models from scratch
-    model = Sequential()
-    e = emb_layer
-    model.add(e)
-
-    # model = lstm_network(model)
-    model = bidirectional_lstm_network(model)
-    #model = cnn_network(model)
-    model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
+    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
     early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
-    #model.fit(train_X, train_y, validation_split=0.3)
-    model_history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                            epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+    model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
+                                 epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
-    with CustomObjectScope({'GloveEmbeddingLayer': GloveEmbeddingLayer}):
-        model = load_model('best_model.h5')
+    load_model_from_file(file_name, custom_layers)
 
-
-    # evaluate
-    y_pred = model.predict_classes(x=X_test)
+    y_pred = dl_model.predict_classes(x=X_test)
     score = f1_score(labels_test, y_pred)
     # model = KerasClassifier(build_fn=new_model)
     print(score)
