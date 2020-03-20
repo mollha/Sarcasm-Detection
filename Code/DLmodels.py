@@ -49,7 +49,6 @@ class ElmoEmbeddingLayer(Layer):
                            as_dict=True,
                            signature='tokens',
                            )['elmo']
-        print(result.shape)
         return result
 
     def compute_mask(self, inputs, mask=None):
@@ -95,6 +94,15 @@ class GloveEmbeddingLayer(Embedding):
 
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
+def get_length_limit(dataset_name: str) -> int:
+    # TODO define reasoned integers for this
+    datasets = {'news-headlines-dataset-for-sarcasm-detection': 150, 'Sarcasm_Amazon_Review_Corpus': 500}
+    try:
+        return datasets[dataset_name]
+    except KeyError:
+        raise ValueError('Dataset name "' + dataset_name + '" does not exist')
+
+
 def pad_string(tokens: list, limit: int) -> list:
     tokens = tokens[0:limit]
     extend_by = limit - len(tokens)
@@ -108,7 +116,6 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
     length_limit = 150
     if vector_type == 'elmo':
         number_of_batches = len(sarcasm_data) // (max_batch_size*cv)
-        print('Amount used', number_of_batches*max_batch_size)
         sarcasm_data = sarcasm_data[:number_of_batches*max_batch_size]
         sarcasm_labels = sarcasm_labels[:number_of_batches*max_batch_size]
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
@@ -164,106 +171,123 @@ def cnn_network(model):
                   metrics=['accuracy'])
     return model
 
-# ---------------------------------------------------------------------------------------------------------------------
 
-dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+# ---------------------------------------------- MAIN FUNCTIONS ------------------------------------------------------
+def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
+    model = Sequential()
+    sarcasm_data, sarcasm_labels, embedding_layer = prepare_embedding_layer(sarcasm_data=sarcasm_data,
+                                                                            sarcasm_labels=sarcasm_labels,
+                                                                            vector_type=vector_type, cv=cv)
+    model.add(embedding_layer)
 
-# Choose a dataset from the list of valid data sets
-path_to_dataset_root = dataset_paths[1]
-print('Selected dataset: ' + path_to_dataset_root[9:])
+    if model_name == 'lstm':
+        model = lstm_network(model)
+    elif model_name == 'bi-lstm':
+        model = bidirectional_lstm_network(model)
+    elif model == 'cnn':
+        model = cnn_network(model)
 
-set_size = 200  # 22895
+def visualise_results(history):
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+    epochs = range(1, len(loss) + 1)
+    plt.plot(epochs, loss, label="Training loss")
+    plt.plot(epochs, val_loss, label="Validation loss")
+    plt.title("Training and validation loss")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
 
-# Read in raw data
-data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
-
-
-def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
-                       extend_path='') -> pd.DataFrame:
-    """
-    Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
-    :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
-    :param re_clean: boolean flag -> set to True to have the data cleaned again
-    :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
-    :return: a pandas DataFrame containing cleaned data
-    """
-    if re_clean:
-        input_data = ''
-        while not input_data:
-            input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
-            input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
-
-        if input_data == 'y':
-            # This could potentially overwrite pre-cleaned text if triggered accidentally
-            # The process of cleaning data can take a while, so -> proceed with caution
-            print('RE-CLEANING ... PROCEED WITH CAUTION!')
-            exit()  # uncomment this line if you would still like to proceed
-            data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
-            extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
-                ''.join([randint(0, 9) for _ in range(0, 8)])
-            data_frame['clean_data'].to_csv(
-                path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                index=False, header=['clean_data'])
-    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                       encoding="ISO-8859-1")[:set_size]
-
-
-# Clean data, or retrieve pre-cleaned data
-data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove', 5)
-# Split into training and test data
-X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
+    accuracy = history.history["accuracy"]
+    val_accuracy = history.history["val_accuracy"]
+    plt.plot(epochs, accuracy, label="Training accuracy")
+    plt.plot(epochs, val_accuracy, label="Validation accuracy")
+    plt.title("Training and validation accuracy")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epochs")
+    plt.legend()
+    plt.show()
 
 
 
-sequence_length= 150
+if __name__ == "__main__":
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
-# Train models from scratch
-model = Sequential()
-e = emb_layer
-e.trainable = False
-model.add(e)
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[1]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
 
-# model = cnn_network_batch_norm(model)
-# model = lstm_network(model)
-model = bidirectional_lstm_network(model)
-#model = cnn_network(model)
-model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
-early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
-#model.fit(train_X, train_y, validation_split=0.3)
-history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                        epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+    set_size = 200  # 22895
 
-with CustomObjectScope({'GloveEmbeddingLayer': GloveEmbeddingLayer}):
-    model = load_model('best_model.h5')
+    # Read in raw data
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
 
 
-# evaluate
-y_pred = model.predict_classes(x=X_test)
-score = f1_score(labels_test, y_pred)
-# model = KerasClassifier(build_fn=new_model)
-print(score)
+    def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
+                           extend_path='') -> pd.DataFrame:
+        """
+        Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
+        :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
+        :param re_clean: boolean flag -> set to True to have the data cleaned again
+        :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
+        :return: a pandas DataFrame containing cleaned data
+        """
+        if re_clean:
+            input_data = ''
+            while not input_data:
+                input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
+                input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
 
-# class_weight = {0: 1.0, 1: 1.0}
-# my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-# print(model.summary())
-loss = history.history["loss"]
-val_loss = history.history["val_loss"]
-epochs = range(1, len(loss)+1)
-plt.plot(epochs, loss, label="Training loss")
-plt.plot(epochs, val_loss, label="Validation loss")
-plt.title("Training and validation loss")
-plt.xlabel("Epochs")
-plt.ylabel("Loss")
-plt.legend()
-plt.show()
+            if input_data == 'y':
+                # This could potentially overwrite pre-cleaned text if triggered accidentally
+                # The process of cleaning data can take a while, so -> proceed with caution
+                print('RE-CLEANING ... PROCEED WITH CAUTION!')
+                exit()  # uncomment this line if you would still like to proceed
+                data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
+                extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
+                    ''.join([randint(0, 9) for _ in range(0, 8)])
+                data_frame['clean_data'].to_csv(
+                    path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                    index=False, header=['clean_data'])
+        return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                           encoding="ISO-8859-1")[:set_size]
 
-accuracy = history.history["accuracy"]
-val_accuracy = history.history["val_accuracy"]
-plt.plot(epochs, accuracy, label="Training accuracy")
-plt.plot(epochs, val_accuracy, label="Validation accuracy")
-plt.title("Training and validation accuracy")
-plt.ylabel("Accuracy")
-plt.xlabel("Epochs")
-plt.legend()
-plt.show()
+    # Clean data, or retrieve pre-cleaned data
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+    s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove', 5)
+    # Split into training and test data
+    X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
+
+
+
+    sequence_length= 150
+
+    # Train models from scratch
+    model = Sequential()
+    e = emb_layer
+    model.add(e)
+
+    # model = lstm_network(model)
+    model = bidirectional_lstm_network(model)
+    #model = cnn_network(model)
+    model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
+    #model.fit(train_X, train_y, validation_split=0.3)
+    model_history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
+                            epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
+    with CustomObjectScope({'GloveEmbeddingLayer': GloveEmbeddingLayer}):
+        model = load_model('best_model.h5')
+
+
+    # evaluate
+    y_pred = model.predict_classes(x=X_test)
+    score = f1_score(labels_test, y_pred)
+    # model = KerasClassifier(build_fn=new_model)
+    print(score)
+
+    # class_weight = {0: 1.0, 1: 1.0}
+    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
+    # print(model.summary())
+    visualise_results(model_history)
