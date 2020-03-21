@@ -1,7 +1,9 @@
 import re
+import spacy
 
+nlp = spacy.load('en_core_web_md')
 
-def data_cleaning(data_string: str, rm_urls=True, rm_punc=None, lower=True, rm_numbers=True, rm_dp_wspc=True):
+def data_cleaning(data_string: str, rm_urls=True, rm_punc=True, lower=True, rm_numbers=True, rm_dp_wspc=True, rm_stop=True):
     """
     Given data as a string and a set of flags, clean data accordingly
     :param data_string:
@@ -15,22 +17,26 @@ def data_cleaning(data_string: str, rm_urls=True, rm_punc=None, lower=True, rm_n
     def remove_urls(text: str) -> str:
         return re.sub(r'http\S+', '', text)  # remove URLs
 
-    def remove_punctuation(text: str, characters: list) -> str:
-        banned_punctuation = set([char for char in '!"#$%&()*+-/:;<=>?@[\\]^_`{|}~'])
-        banned_punctuation = banned_punctuation if not characters else set(characters)
+    def remove_punctuation(text: str) -> str:
+        text = re.sub(r'[^\x00-\x7F]+', ' ', text)
+        banned_punctuation = set([char for char in '#$%&()*+-/:;<>[]^_`{|}~'])
         return ''.join(ch for ch in text if ch not in banned_punctuation)  # remove punctuation marks
 
     def remove_numbers(text: str) -> str:
-        return text.replace("[0-9]", "")
+        return re.sub("[0-9]", "", text)
 
     def remove_duplicate_whitespaces(text: str) -> str:
         return ' '.join(text.split())  # remove duplicate whitespaces
+
+    def remove_stopwords(text: str) -> str:
+        words = [token.text for token in nlp(text) if not token.is_stop]
+        return ' '.join(words)
 
     if rm_urls:
         data_string = remove_urls(data_string)  # remove URLs
 
     if rm_punc:
-        data_string = remove_punctuation(data_string, rm_punc)  # remove punctuation
+        data_string = remove_punctuation(data_string)  # remove punctuation
 
     if lower:
         data_string = data_string.lower()  # convert to lowercase
@@ -40,6 +46,9 @@ def data_cleaning(data_string: str, rm_urls=True, rm_punc=None, lower=True, rm_n
 
     if rm_dp_wspc:
         data_string = remove_duplicate_whitespaces(data_string)  # remove duplicate whitespaces
+
+    # if rm_stop:
+    #     data_string = remove_stopwords(data_string)  # remove stop words
     return data_string
 
 
@@ -49,7 +58,9 @@ def apply_params(x: str):
         "remove_punctuation": True,
         "lowercase": True,
         "remove_numbers": True,
-        "remove_duplicate_whitespaces": True}
+        "remove_duplicate_whitespaces": True,
+        "remove_stopwords": True}
 
     return data_cleaning(x, settings["remove_urls"], settings["remove_punctuation"],
-                         settings["lowercase"], settings["remove_numbers"], settings["remove_duplicate_whitespaces"])
+                         settings["lowercase"], settings["remove_numbers"], settings["remove_duplicate_whitespaces"],
+                         settings['remove_stopwords'])

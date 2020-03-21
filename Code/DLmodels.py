@@ -1,26 +1,22 @@
-import os
-from keras.utils import CustomObjectScope
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
-from keras.engine import Layer
-from random import randint
-from Code.DataPreprocessing import *
-from keras.preprocessing.sequence import pad_sequences
-from keras.layers.normalization import BatchNormalization
-from keras.models import load_model
-from keras.models import Sequential
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import LSTM, ReLU, Conv1D, MaxPool1D, Flatten, Dense
-from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional, TimeDistributed
-from keras.layers.embeddings import Embedding
-from keras import backend as K
-from keras.initializers import Constant
-from keras.preprocessing.text import Tokenizer
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
+from keras import backend as K
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.engine import Layer
+from keras.initializers import Constant
+from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional, TimeDistributed
+from keras.layers import LSTM, Conv1D, Dense
+from keras.layers.embeddings import Embedding
+from keras.models import Sequential
+from keras.models import load_model
+from keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.text import Tokenizer
+from keras.utils import CustomObjectScope
+from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -48,6 +44,7 @@ class ElmoEmbeddingLayer(Layer):
                            as_dict=True,
                            signature='tokens',
                            )['elmo']
+        print(result.shape)
         return result
 
     def compute_mask(self, inputs, mask=None):
@@ -55,8 +52,12 @@ class ElmoEmbeddingLayer(Layer):
             return None
         return K.not_equal(inputs, '--PAD--')
 
+    def get_config(self):
+        return {'trainable': False}
+
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[1], self.dimensions
+
 
 
 class GloveEmbeddingLayer(Embedding):
@@ -153,12 +154,12 @@ def visualise_results(history):
 
 def load_model_from_file(filename: str, custom_layers: dict):
     with CustomObjectScope(custom_layers):
-        return load_model(filename)
-
+        model = load_model(filename)
+    return model
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
-def new_lstm_network(model):
-    model.add(LSTM(60, return_sequences=True))
+def lstm_network(model):
+    model.add(LSTM(60, activation='tanh', return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dropout(0.1))
     model.add(Dense(50, activation="relu"))
@@ -168,18 +169,6 @@ def new_lstm_network(model):
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
-
-def lstm_network(model):
-    model.add(LSTM(50, return_sequences=True))
-    model.add(Dropout(0.2))
-    model.add(LSTM(100, return_sequences=False))
-    model.add(Dropout(0.2))
-    model.add(TimeDistributed(Dense(1, activation="sigmoid")))
-    model.compile(loss='binary_crossentropy',
-                  optimizer='adam',
-                  metrics=['accuracy'])
-    return model
-
 
 def bidirectional_lstm_network(model):
     model.add(Bidirectional(LSTM(64)))
@@ -211,13 +200,13 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
     length_limit = 150
     if vector_type == 'elmo':
         number_of_batches = len(sarcasm_data) // (max_batch_size * (1/split))
-        sarcasm_data = sarcasm_data[:number_of_batches * max_batch_size * (1/split)]
-        sarcasm_labels = sarcasm_labels[:number_of_batches * max_batch_size * (1/split)]
+        sarcasm_data = sarcasm_data[:int((number_of_batches * max_batch_size) / split)]
+        sarcasm_labels = sarcasm_labels[:int((number_of_batches * max_batch_size) / split)]
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit), input_dtype="string"), \
-               {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
+        return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(max_batch_size, length_limit, 1024), batch_input_shape=(max_batch_size, length_limit),
+                                                        input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(sarcasm_data)
@@ -258,13 +247,13 @@ def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Serie
 
 
 def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
-    s_data, l_data, dl_model, custom_layers, max_batch_size = get_model(model_name, sarcasm_data, sarcasm_labels, vector_type, 5)
+    s_data, l_data, dl_model, custom_layers, max_batch_size = get_model(model_name, sarcasm_data, sarcasm_labels, vector_type, split)
     X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=split)
     file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                                 epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+                                 epochs=1, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
     load_model_from_file(file_name, custom_layers)
 
@@ -276,57 +265,3 @@ def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Ser
     # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
     # print(model.summary())
     visualise_results(model_history)
-
-
-if __name__ == "__main__":
-    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
-
-    # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[1]
-    print('Selected dataset: ' + path_to_dataset_root[9:])
-    set_size = 2200
-
-    # Read in raw data
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
-
-
-    def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
-                           extend_path='') -> pd.DataFrame:
-        """
-        Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
-        :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
-        :param re_clean: boolean flag -> set to True to have the data cleaned again
-        :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
-        :return: a pandas DataFrame containing cleaned data
-        """
-        if re_clean:
-            input_data = ''
-            while not input_data:
-                input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
-                input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
-
-            if input_data == 'y':
-                # This could potentially overwrite pre-cleaned text if triggered accidentally
-                # The process of cleaning data can take a while, so -> proceed with caution
-                print('RE-CLEANING ... PROCEED WITH CAUTION!')
-                exit()  # uncomment this line if you would still like to proceed
-                data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
-                extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
-                    ''.join([randint(0, 9) for _ in range(0, 8)])
-                data_frame['clean_data'].to_csv(
-                    path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                    index=False, header=['clean_data'])
-        return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                           encoding="ISO-8859-1")[:set_size]
-
-
-    # Clean data, or retrieve pre-cleaned data
-    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-
-    model_name = 'lstm'
-    vector_type = 'glove'
-    sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
-
-    get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
-
-

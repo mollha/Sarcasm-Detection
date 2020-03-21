@@ -37,9 +37,9 @@ class ElMoVectorizer:
                 print('Time: ', time_taken)
 
                 if index + self.step >= dataset_size:
-                    elmo_train = self.elmo_vectors(dataset['clean_data'].iloc[index:].tolist(), sess)
+                    elmo_train = self.elmo_vectors(dataset.iloc[index:].tolist(), sess)
                 else:
-                    elmo_train = self.elmo_vectors(dataset['clean_data'].iloc[index:index + self.step].tolist(), sess)
+                    elmo_train = self.elmo_vectors(dataset.iloc[index:index + self.step].tolist(), sess)
 
                 for vector in elmo_train:
                     self.vector_list.append(vector)
