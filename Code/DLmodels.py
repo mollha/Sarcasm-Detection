@@ -59,7 +59,6 @@ class ElmoEmbeddingLayer(Layer):
         return input_shape[0], input_shape[1], self.dimensions
 
 
-
 class GloveEmbeddingLayer(Embedding):
     def __init__(self, word_index, max_seq_len, **kwargs):
         self.word_index = word_index
@@ -246,10 +245,10 @@ def get_model(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Serie
     return sarcasm_data, sarcasm_labels, model, cus_layers, max_batch_size
 
 
-def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
+def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
     s_data, l_data, dl_model, custom_layers, max_batch_size = get_model(model_name, sarcasm_data, sarcasm_labels, vector_type, split)
     X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=split)
-    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '.h5'
+    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '_on_' + dataset_name + '.h5'
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),

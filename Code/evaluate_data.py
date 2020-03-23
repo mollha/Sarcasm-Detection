@@ -34,7 +34,6 @@ def count_distinct_tokens(dataset: pd.DataFrame, tokenizer: en.English) -> int:
     return len(token_set)
 
 
-
 def sentiment_evaluate(data: pd.DataFrame):
     """
     Given a DataFrame containing the columns data['feature'] and data['sarcasm_label'], deduce the difference
@@ -47,7 +46,7 @@ def sentiment_evaluate(data: pd.DataFrame):
     positive_feature_df = positive_samples['feature'].apply(pd.Series)
     negative_feature_df = negative_samples['feature'].apply(pd.Series)
 
-    print(positive_feature_df.mean(axis=0).tolist())
-    print(negative_feature_df.mean(axis=0).tolist())
+    print('Positive features: ', positive_feature_df.mean(axis=0).tolist())
+    print('Negative features: ', negative_feature_df.mean(axis=0).tolist())
 
 

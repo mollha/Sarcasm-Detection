@@ -19,6 +19,7 @@ def data_cleaning(data_string: str, rm_urls=True, rm_punc=True, lower=True, rm_n
 
     def remove_punctuation(text: str) -> str:
         text = re.sub(r'[^\x00-\x7F]+', ' ', text)
+        text = text.replace("#sarcasm", ' ')
         banned_punctuation = set([char for char in '#$%&()*+-/:;<>[]^_`{|}~'])
         return ''.join(ch for ch in text if ch not in banned_punctuation)  # remove punctuation marks
 
@@ -35,17 +36,23 @@ def data_cleaning(data_string: str, rm_urls=True, rm_punc=True, lower=True, rm_n
     if rm_urls:
         data_string = remove_urls(data_string)  # remove URLs
 
-    if rm_punc:
-        data_string = remove_punctuation(data_string)  # remove punctuation
+    data_string += ' '  # add space so that user mentions are detected
 
     if lower:
         data_string = data_string.lower()  # convert to lowercase
+
+    if rm_punc:
+        data_string = remove_punctuation(data_string)  # remove punctuation
+
+
 
     if rm_numbers:
         data_string = remove_numbers(data_string)  # convert to lowercase
 
     if rm_dp_wspc:
         data_string = remove_duplicate_whitespaces(data_string)  # remove duplicate whitespaces
+
+    data_string.strip()
 
     # if rm_stop:
     #     data_string = remove_stopwords(data_string)  # remove stop words

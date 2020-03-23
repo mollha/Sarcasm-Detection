@@ -96,7 +96,7 @@ def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: s
 
 if __name__ == '__main__':
     start = time.time()
-    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection", "Datasets/riloff"]
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection", "Datasets/ptacek", "Datasets/riloff"]
 
     # Choose a dataset from the list of valid data sets
     path_to_dataset_root = dataset_paths[2]
@@ -112,37 +112,33 @@ if __name__ == '__main__':
 
     # machine learning models
     # Vectorise data, or retrieve pre-computed vectors
-    vector = 'elmo'
+    vector = 'glove'
     print('Vector Type: ' + vector)
     #
     # # if machine learning
     data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
 
+    # Create features, or retrieve pre-generated features
+    feature = 'sentiment'
+    print('Feature Type: ' + feature)
+    data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
-    # # Create features, or retrieve pre-generated features
-    # feature = 'sentiment'
-    # print('Feature Type: ' + feature)
-    # data['feature'] = get_feature_col(data, path_to_dataset_root, "sentiment")
 
-#    sentiment_evaluate(data)
+    sentiment_evaluate(data)
 
     # # Use feature INSTEAD of vector
-    # data['vector'] = data['feature']
-
-    # if deep learning:
-
+    data['vector'] = data['feature']
     # ---------------------------------------------------------------------------------------------------------------
 
     # model_name = 'lstm'
+    # dataset_name = path_to_dataset_root[9:]
     # vector_type = 'glove'
     # sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
     #
-    # get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
-
-
-    print('Training ML models')
+    # get_results(model_name, dataset_name, sarc_data, sarc_labels, vector_type, 0.2)
+    print('\nTraining ML models')
     labels = data['sarcasm_label']
-    classifier_name, classifier = get_model(0)
+    classifier_name, classifier = get_model(1)
     print('Classifier: ' + classifier_name)
 
     scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
