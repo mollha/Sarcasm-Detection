@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  15 MAR 2020 14:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  24 MAR 2020 17:57
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -340,42 +340,52 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--65
  []
 
 [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 126--127
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
 
  []
 
 <Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 152.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 154.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
 [5 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 1173) in paragraph at lines 172--172
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+ []
+
+
+Underfull \hbox (badness 1173) in paragraph at lines 177--177
 []\OT1/ptm/b/n/12 Number of
  []
 
 
-Overfull \hbox (8.78436pt too wide) in paragraph at lines 172--173
-[]\OT1/ptm/b/n/12 Benchmark| 
+Overfull \hbox (8.78436pt too wide) in paragraph at lines 177--178
+[]\OT1/ptm/b/n/12 Benchmark
  []
 
 
-Overfull \hbox (1.44891pt too wide) in paragraph at lines 174--174
+Overfull \hbox (1.44891pt too wide) in paragraph at lines 179--179
 [][]| 
  []
 
 
-Overfull \hbox (1.44891pt too wide) in paragraph at lines 176--176
+Overfull \hbox (1.44891pt too wide) in paragraph at lines 181--181
 [][]| 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
+
+Overfull \hbox (1.44891pt too wide) in paragraph at lines 183--183
+[][]| 
+ []
+
+[6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
 
  []
 
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 
  []
 
@@ -383,83 +393,88 @@ Underfull \hbox (badness 10000) in paragraph at lines 202--203
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
-)
-<Images/glovediagram.png, id=34, 344.487pt x 274.02374pt>
+) [8]
+<Images/glovediagram.png, id=37, 344.487pt x 274.02374pt>
 File: Images/glovediagram.png Graphic file (type png)
 <use Images/glovediagram.png>
-Package pdftex.def Info: Images/glovediagram.png  used on input line 214.
+Package pdftex.def Info: Images/glovediagram.png  used on input line 223.
 (pdftex.def)             Requested size: 138.34096pt x 110.0424pt.
- [8 <./Images/glovediagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 223--224
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 226--228
+Underfull \hbox (badness 10000) in paragraph at lines 235--237
 
  []
 
-<Images/elmo_diagram.png, id=39, 437.83575pt x 331.2375pt>
+<Images/elmo_diagram.png, id=38, 437.83575pt x 331.2375pt>
 File: Images/elmo_diagram.png Graphic file (type png)
 <use Images/elmo_diagram.png>
-Package pdftex.def Info: Images/elmo_diagram.png  used on input line 234.
+Package pdftex.def Info: Images/elmo_diagram.png  used on input line 243.
 (pdftex.def)             Requested size: 207.50793pt x 156.98564pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
-
- []
-
-[9 <./Images/elmo_diagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 269--270
+[9 <./Images/glovediagram.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
 
  []
 
-[10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 309--310
+[10 <./Images/elmo_diagram.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 278--279
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 318--319
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 383--384
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 385--386
+Underfull \hbox (badness 10000) in paragraph at lines 395--396
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 397--398
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--408
+Underfull \hbox (badness 10000) in paragraph at lines 418--420
 
  []
 
-<Images/absolute_differences.png, id=57, 462.528pt x 346.896pt>
+<Images/absolute_differences.png, id=61, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 43
-4.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 44
+6.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 430--442
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 442--454
 []$[]$  $[]$ 
  []
 
-[13] [14 <./Images/absolute_differences.png>] (FinalPaper.bbl [15]
+[14] [15 <./Images/absolute_differences.png>] (FinalPaper.bbl [16]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[16]
+[17]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [17] (FinalPaper.aux) ) 
+)) [18] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
  4307 strings out of 492452
  60417 string characters out of 3114457
- 136464 words of memory out of 3000000
+ 136465 words of memory out of 3000000
  8567 multiletter control sequences out of 15000+200000
  27820 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -483,9 +498,9 @@ ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
 assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on FinalPaper.pdf (17 pages, 294759 bytes).
+Output written on FinalPaper.pdf (18 pages, 298301 bytes).
 PDF statistics:
- 119 PDF objects out of 1000 (max. 8388607)
+ 122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

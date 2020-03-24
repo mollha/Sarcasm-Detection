@@ -33,9 +33,9 @@
 \\ \indent \textbf{Context / Background --} 
 Sarcasm is a unique form of language that cannot be interpreted at surface-level. Detecting sarcasm proves a significant challenge for traditional sentiment analysers and humans alike. This highlights the scope for innovative machine learning and deep learning solutions to this ill-structured problem.
 
-\indent \textbf{Aims --} Despite the challenges in this domain, this ultimate aim of this project is to produce a tool that can detect sarcasm with a \textit{high degree} of accuracy. 
+\indent \textbf{Aims --} Despite the challenges in this domain, this ultimate aim of this project is to produce a tool that can detect sarcasm in online text with a \textit{high degree} of accuracy. 
 
-\indent \textbf{Method --} State-of-the-art contextualised word embeddings and deep learning classification models are used to realise this aim.
+\indent \textbf{Method --} State-of-the-art contextualised word embeddings (ElMo vectors) and deep learning classification models are used to realise this aim.
 
 \indent \textbf{Results --} Through extensive experimentation, we show that
 
@@ -65,11 +65,13 @@ These factors make sarcasm detection an extremely complex task for both humans a
 
 \noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.
 
-The \textbf{minimum} objectives of this project are to evaluate, compare and clean high-quality datasets, as well as to experiment with and evaluate machine learning architectures on these datasets. This is achieved by ...
+The \textbf{minimum} objectives of this project are to evaluate, compare and clean high-quality datasets, as well as to experiment with and evaluate machine learning architectures on these datasets. We found that a logistic regression model trained on ElMo vectors performed best for all three datasets, achieving $F_{1}$ scores of 84.6\%, 81.3\% and \_\%. 
 
 The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
 
-The \textbf{advanced} objectives of this project are to implement an attention-based deep neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. This is achieved by...
+The \textbf{advanced} objectives of this project are to implement an attention-based deep neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
+
+This is achieved by...
 
 
 
@@ -156,34 +158,41 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 \subsection{Implementation Tools}
 \noindent This project is majoritively written in \textbf{Python}, as it has an abundance of open-source libraries well-suited to machine learning and deep-learning tasks. Additionally, Python is very readable, making it easy for others to interpret, test and reproduce code. We use \textbf{pandas} for manipulating the datasets, as it provides functionality for applying functions globally across the dataset. We use \textbf{pickle} to store the vectorised datasets in memory. Vectorisation is a costly process, therefore writing the files to memory reduces long-term time demands during the experimentation and testing phases. We also  incorporate \textbf{SpaCy} when cleaning and tokenising the data.
 
-In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures. The model interface is written using web-application development languages such as HTML, CSS and JavaScript.
+In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
 
 \subsection{Datasets}
-\noindent In similar studies, large datasets have been collected, and in some cases, made publically available. We evaluate the suitability of many of these datasets and select four which are used in this project. We experimente with data from multiple domains and online platforms, including Twitter, Amazon, Reddit and News outlets. This gives a broad coverage of the way sarcasm is used under different circumstances and in both formal and informal media. We evaluate many datasets and their suitability based on statistics from the dataset and desired attributes. For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
+\noindent In similar studies, large datasets have been collected and some have been made publically available. We experiment with data from multiple domains and online platforms, including Twitter, Amazon, and online news outlets, giving broad coverage of sarcasm usage in both formal and informal media. The suitability of a dataset is determined based on its size, cleanliness and composition. For example, datasets that are too small may not provide a representative view of the true distribution of the data, whereas it may be infeasible to train a model in a reasonable length of time using datasets that are too large as this will require vast amounts of computational resources, hence we use datasets with fewer than 50000 instances. Human-annotated data with minimal spelling and grammatical errors is typically of higher quality than data that is automatically selected using heuristics, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
-Four datasets are selected, and a statistical break down of their properties is provided in figure 3, including the number of instances in the dataset, the average number of tokens in each instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on instances that contain many ill-formed and unrepresented tokens. Additionally, all tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section.
+We also prefer to use datasets whereby the number of positive (sarcastic) and negative (non-sarcastic) instances are approximately balanced, despite sarcasm being a minority class as it is used infrequently in real-life. The reason for this is illustrated in the following example: if we train a classifier on an unbalanced binary dataset whereby the class distribution is 95\% to 5\%, we can achieve an accuracy of 95\% simply by annotating each datapoint with the majority class label. Most machine learning algorithms are designed to optimise overall accuracy, therefore is it important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
+
+
+% For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
+
+\noindent Three datasets are selected, and a statistical break down of their properties is provided in \textit{Figure 3}, including the number of instances in the dataset, the average number of tokens per instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. A benchmark score is provided where the dataset was used in the original paper to train one or more classifiers. The best score achieved in each paper is used as the benchmark which we aim to exceed.
 
 \begin{center}
-	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances
-\end{center}
-\begin{center}
+	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
 	\begin{tabular}{p{4.3cm}p{2.1cm}p{2.6cm}p{2.2cm}p{1.8cm}}
 		\toprule
-		\textbf{Dataset Title} & \textbf{Number of data points} & \textbf{Avg. \#tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark}\\
+		\textbf{Dataset} & \textbf{Number of data points} & \textbf{Avg. tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark Score}\\
 		\midrule\midrule
-		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} \\28619\\ pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  11.2 tokens & 97.8\% & 89.7\%\\
+		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} 28619\\ pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  \hspace{15pt} 11.2 & 97.8\% & 0.897\\
 		\midrule
-		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} \\1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 tokens & 98.2\% & N/A \\
+		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
+			\midrule
+		Pt\'a\v{c}ek et al. & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & 0.947 \\
 		\hline
 	\end{tabular}\\
 \end{center}
 \vspace{2pt}
 
 \begin{enumerate}
-	\item \textbf{News Headlines Dataset For Sarcasm Detection}\\ This dataset was collated for use in  \textit{Misra et al. (2019)} \cite{misra2019sarcasm}. Headlines are collected from two news sources - \textit{The Onion} \footnote{www.theonion.com} and \textit{The Huffington Post} \footnote{www.huffpost.com}. The Onion is renowned for posting satiricial news, and these sarcastic headlines account for the sarcastic instances in the dataset. The non-sarcastic instances were collected from the Huffington Post. There is little noise in this dataset, as news headlines are written formally, and are far less likely to contain spelling and grammar errors than data from more informal platforms. These headlines are self contained, unlike tweets which may be in response to another tweet, thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 89.7\%. NB. Accuracy was used as the dataset is approximately balanced.
+	\item \textbf{News Headlines Dataset For Sarcasm Detection}\\ This dataset was collated for use in  \textit{Misra et al. (2019)} \cite{misra2019sarcasm}. Headlines are collected from two news sources - \textit{The Onion} \footnote{www.theonion.com} and \textit{The Huffington Post} \footnote{www.huffpost.com}. The Onion is renowned for posting satiricial news, and these sarcastic headlines account for the sarcastic instances in the dataset. The non-sarcastic instances were collected from the Huffington Post. There is little noise in this dataset, as news headlines are written formally, and are far less likely to contain spelling and grammar errors than data from more informal platforms. These headlines are self contained, unlike tweets which may be in response to another tweet, thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897. NB. Accuracy was used as the dataset is approximately balanced.
 	
 	
-	\item \textbf{Sarcasm Amazon Review Corpus}\\ This corpus was collected using the procedure outlined in \textit{Filatova (2012)} \cite{filatova2012irony}. Amazon reviews are collected via crowdsourcing, and are human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. The author's punctuation and spelling is preserved, therefore this data is very messy.
+	\item \textbf{Sarcasm Amazon Review Corpus}\\ This corpus was collected using the procedure outlined in \textit{Filatova (2012)} \cite{filatova2012irony}. Amazon reviews are collected via crowdsourcing, and are human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy.
+	
+	\item \textbf{Pt\'a\v{c}ek et al. (2014)}\\ This dataset is one of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}. We use the balanced dataset of 100 000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, a small portion of tweets (\_ tweets) are no longer available on Twitter, therefore they are omitted from the dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
 \end{enumerate}
 
 
@@ -223,7 +232,7 @@ where $C(t_i, t_j)$ is the number of times token \textit{i} co-occurs with token
 The word meanings are encapsulated by the ratios of co-occurence probabilties, rather than the probabilities themselves.\\
 
 
-\noindent \textbf{Contextualized Word Embedding --}
+\noindent \textbf{Contextualised Word Embedding --}
 In pursuit of a more robust approach, we look to deep neural language models. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks. ELMo utilises a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.\\
 
 \begin{minipage}{0.45\textwidth}
@@ -311,10 +320,13 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
 \subsection{Experimental Settings}
-For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.
+For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.\\
+
+For the deep learning experiments, early stopping is used to determine the appropriate number of epochs. This is where training is interrupted if a chosen performance measure stops improving - in these experiments, the performance measure used is the loss on the validation dataset. Additionally, patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is terminate. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve. We track the best performing model during training, and this is the model with the lowest validation loss.
 
 
 \subsection{News Headlines for Sarcasm Detection}
+\subsubsection{yeee}
 
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
