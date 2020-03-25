@@ -1,4 +1,5 @@
 import spacy
+from warnings import filterwarnings
 from Code.MLmodels import *
 from Code.create_vectors import compute_vectors
 from Code.create_features import extract_features
@@ -11,6 +12,7 @@ from random import randint
 from Code.DLmodels import get_results
 import time
 
+# filterwarnings('ignore')
 nlp = spacy.load('en_core_web_md')
 
 
@@ -99,10 +101,10 @@ if __name__ == '__main__':
     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection", "Datasets/ptacek"]
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[0]
+    path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
-    set_size = 2200
+    set_size = 200
 
     # Read in raw data
     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -135,6 +137,7 @@ if __name__ == '__main__':
     sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
 
     get_results(model_name, dataset_name, sarc_data, sarc_labels, vector_type, 0.2)
+    # get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
 
 
     # print('\nTraining ML models')

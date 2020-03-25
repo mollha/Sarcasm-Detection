@@ -12,7 +12,7 @@ from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional,
 from keras.layers import LSTM, Conv1D, Dense
 from keras.layers.embeddings import Embedding
 from keras.models import Sequential
-from keras.models import load_model, model_from_json
+from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.utils import CustomObjectScope
@@ -259,12 +259,13 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=split)
     file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '_on_' + dataset_name + '.h5'
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
-    early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
+    early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1, mode='auto')
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                                  epochs=1, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
     dl_model = load_model_from_file(file_name, custom_layers)
-    y_pred = dl_model.predict_classes(x=X_test)
+    y_pred = dl_model.predict_classes(x=X_test, batch_size=max_batch_size)
+    print(y_pred)
     score = f1_score(labels_test, y_pred)
     print('Score: ', score)
 
