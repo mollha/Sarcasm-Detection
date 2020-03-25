@@ -45,7 +45,6 @@ class ElmoEmbeddingLayer(Layer):
                            as_dict=True,
                            signature='tokens',
                            )['elmo']
-        print(result.shape)
         return result
 
     def compute_mask(self, inputs, mask=None):
@@ -54,8 +53,7 @@ class ElmoEmbeddingLayer(Layer):
         return K.not_equal(inputs, '--PAD--')
 
     def get_config(self):
-        return {'input_shape': self.input_shape,
-                'batch_input_shape': self.batch_input_shape,
+        return {'batch_input_shape': self.batch_input_shape,
                 'input_dtype': "string"}
 
     def compute_output_shape(self, input_shape):
@@ -143,8 +141,8 @@ def visualise_results(history):
     plt.legend()
     plt.show()
 
-    accuracy = history.history["accuracy"]
-    val_accuracy = history.history["val_accuracy"]
+    accuracy = history.history["acc"]
+    val_accuracy = history.history["val_acc"]
     plt.plot(epochs, accuracy, label="Training accuracy")
     plt.plot(epochs, val_accuracy, label="Validation accuracy")
     plt.title("Training and validation accuracy")
@@ -215,7 +213,7 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(max_batch_size, length_limit, 1024), batch_input_shape=(max_batch_size, length_limit),
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit),
                                                         input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
@@ -265,8 +263,7 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                                  epochs=1, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
-    #dl_model = load_model_from_file(file_name, custom_layers)
-
+    dl_model = load_model_from_file(file_name, custom_layers)
     y_pred = dl_model.predict_classes(x=X_test)
     score = f1_score(labels_test, y_pred)
     print('Score: ', score)

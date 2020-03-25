@@ -102,7 +102,7 @@ if __name__ == '__main__':
     path_to_dataset_root = dataset_paths[0]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
-    set_size = 10
+    set_size = 2200
 
     # Read in raw data
     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
@@ -129,9 +129,9 @@ if __name__ == '__main__':
     # data['vector'] = data['feature']
     # ---------------------------------------------------------------------------------------------------------------
 
-    model_name = 'lstm'
+    model_name = 'cnn'
     dataset_name = path_to_dataset_root[9:]
-    vector_type = 'elmo'
+    vector_type = 'glove'
     sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
 
     get_results(model_name, dataset_name, sarc_data, sarc_labels, vector_type, 0.2)
