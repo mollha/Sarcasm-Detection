@@ -13,7 +13,7 @@ def split_positive_and_negative_samples(dataset: pd.DataFrame) -> tuple:
 
 def count_distinct_tokens(dataset: pd.DataFrame, tokenizer: en.English) -> int:
     """
-    Given a data frame and a tokenizer, count the number of distinc
+    Given a data frame and a tokenizer, count the number of distinct tokens
     :param tokenizer:
     :param dataset:
     :return:
@@ -34,10 +34,10 @@ def count_distinct_tokens(dataset: pd.DataFrame, tokenizer: en.English) -> int:
     return len(token_set)
 
 
-def sentiment_evaluate(data: pd.DataFrame):
+def feature_evaluate(data: pd.DataFrame):
     """
     Given a DataFrame containing the columns data['feature'] and data['sarcasm_label'], deduce the difference
-    in sentiment of the sarcastic and non-sarcastic data
+    in features of the sarcastic and non-sarcastic data
     :param data: pandas DataFrame
     :return:
     """

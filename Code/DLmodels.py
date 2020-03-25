@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from keras import utils
 import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -11,7 +12,7 @@ from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional,
 from keras.layers import LSTM, Conv1D, Dense
 from keras.layers.embeddings import Embedding
 from keras.models import Sequential
-from keras.models import load_model
+from keras.models import load_model, model_from_json
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.utils import CustomObjectScope
@@ -44,7 +45,6 @@ class ElmoEmbeddingLayer(Layer):
                            as_dict=True,
                            signature='tokens',
                            )['elmo']
-        print(result.shape)
         return result
 
     def compute_mask(self, inputs, mask=None):
@@ -53,7 +53,8 @@ class ElmoEmbeddingLayer(Layer):
         return K.not_equal(inputs, '--PAD--')
 
     def get_config(self):
-        return {'trainable': False}
+        return {'batch_input_shape': self.batch_input_shape,
+                'input_dtype': "string"}
 
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[1], self.dimensions
@@ -140,8 +141,8 @@ def visualise_results(history):
     plt.legend()
     plt.show()
 
-    accuracy = history.history["accuracy"]
-    val_accuracy = history.history["val_accuracy"]
+    accuracy = history.history["acc"]
+    val_accuracy = history.history["val_acc"]
     plt.plot(epochs, accuracy, label="Training accuracy")
     plt.plot(epochs, val_accuracy, label="Validation accuracy")
     plt.title("Training and validation accuracy")
@@ -155,6 +156,14 @@ def load_model_from_file(filename: str, custom_layers: dict):
     with CustomObjectScope(custom_layers):
         model = load_model(filename)
     return model
+
+# def load_model_from_file_name(json_name, custom_layers: dict):
+#     loaded_model_json = open(json_name, 'r', encoding="ISO-8859-1").read()
+#
+#     with CustomObjectScope(custom_layers):
+#         model = model_from_json(loaded_model_json)
+#         model.load_weights(json_name + '.h5')
+#     return model
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
 def lstm_network(model):
@@ -204,7 +213,7 @@ def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, 
         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(input_shape=(max_batch_size, length_limit, 1024), batch_input_shape=(max_batch_size, length_limit),
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit),
                                                         input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
@@ -254,8 +263,7 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                                  epochs=1, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
-    load_model_from_file(file_name, custom_layers)
-
+    dl_model = load_model_from_file(file_name, custom_layers)
     y_pred = dl_model.predict_classes(x=X_test)
     score = f1_score(labels_test, y_pred)
     print('Score: ', score)

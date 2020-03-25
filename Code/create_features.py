@@ -57,7 +57,28 @@ class SentimentAnnotator:
         return list(np.mean(sentiment_values, axis=0))
 
 
-feature_type = {'sentiment': SentimentAnnotator()}
+class PunctuationAnnotator:
+    @staticmethod
+    def annotate_data(string: str) -> list:
+        """
+        Given a string, decompose it into sentences and annotate each sentence
+        :param string: string of data
+        :return: frequency of ! and ? characters in sentence
+        """
+        tokens = [token.text for token in nlp(string)]
+        counts = [0] * 2
+
+        for token in tokens:
+            counts[0] += token.count('!')
+            counts[1] = token.count('?')
+
+            # if not token.islower():
+            #     counts[2] += 1
+
+        return [count / len(tokens) for count in counts]
+
+
+feature_type = {'sentiment': SentimentAnnotator(), 'punctuation': PunctuationAnnotator()}
 
 
 def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
