@@ -106,7 +106,7 @@ def pad_string(tokens: list, limit: int) -> list:
 
 
 def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
-    length_limit = 150
+    length_limit = 300
     if vector_type == 'elmo':
         number_of_batches = len(sarcasm_data) // (max_batch_size * cv)
         print('Amount used', number_of_batches * max_batch_size)
@@ -224,13 +224,14 @@ def cnn_network(model):
 dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
 # Choose a dataset from the list of valid data sets
-path_to_dataset_root = dataset_paths[1]
+path_to_dataset_root = dataset_paths[0]
 print('Selected dataset: ' + path_to_dataset_root[9:])
 
-set_size = 5000  # 22895
+# set_size = 5000  # 22895
 
 # Read in raw data
-data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
+data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
+print(data.shape)
 
 
 def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
@@ -260,13 +261,13 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                 index=False, header=['clean_data'])
     return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                       encoding="ISO-8859-1")[:set_size]
+                       encoding="ISO-8859-1")#[:set_size]
 
 
 # Clean data, or retrieve pre-cleaned data
 data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 print(data['clean_data'])
-s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'glove', 5)
+s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo', 5)
 # Split into training and test data
 X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
 
@@ -283,7 +284,7 @@ model = lstm_network(model)
 # model = bidirectional_lstm_network(model)
 # model = cnn_network(model)
 model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
-early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
+early_stopping = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto')
 model_history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                           epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
