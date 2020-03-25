@@ -180,7 +180,7 @@ We also prefer to use datasets whereby the number of positive (sarcastic) and ne
 		\midrule
 		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
 			\midrule
-		Pt\'a\v{c}ek et al. & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & 0.947 \\
+		Pt\'a\v{c}ek et al. (2014)& \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & 0.947 \\
 		\hline
 	\end{tabular}\\
 \end{center}
@@ -271,6 +271,35 @@ In terms of machine learning models, we experiment with supervised and unsupervi
 	An ensemble learning method, the random forest classifier fits a number of decision tree classifiers on subsamples of the training set. The decision trees are fairly independent of one another, and this low correlation allows them to produce ensemble predictions that outperform their individual predictions. Where one model goes wrong, the others are able to contradict this incorrect prediction.
 \end{enumerate}
 
+\subsubsection{Experimentation with sentiment features}
+\noindent In this experiment, we answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each of our datasets. The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens, as well as the overall sentiment of the snippet. We contruct $ 1 \times 6 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet, and value 5 shows the overall sentiment label.\\
+
+\noindent Example: \textit{"i love when my train is late!"}\\
+
+\begin{tabular}{|p{3cm}||p{0.2cm}p{1cm}p{1cm}p{1cm}p{1cm}p{0.8cm}p{1cm}p{1cm}|}
+	\hline 
+	Tokens & i & love & when & my & train & is & late & !\\ 
+	\hline 
+	Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 2 & 2\\ 
+	\hline 
+\end{tabular}
+\vspace{10pt}
+
+\begin{tabular}{|p{3.8cm}||p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|} 
+	\hline 
+	Sentiment Labels & {0} & {1} & {2} & {3} & {4}\\ 
+	\hline 
+	\textbf{Frequency} of tokens & 0 & 0 & 7 & 0 & 1\\ 
+	\textbf{Proportion} of tokens & 0 & 0 & 0.875 & 0 & 0.125\\
+	\hline  
+\end{tabular}
+\vspace{10pt}
+
+{Overall sentiment}: 3.0\\
+\indent {Feature vector}: [0.0, 0.0, 0.875, 0.0, 0.125, 3.0]\\
+
+\noindent As the feature vectors are small ($1 \times 6$ dimensions), we use logistic regression for this task. We train two logistic regressors separately using sentiment features only - this enables us to assess whether sentiment features alone are indicative of sarcasm in different media types. We then use 5-fold cross-validation to compute the $F_1$ scores of the trained models.
+
 \subsubsection{Deep Learning Models}
 Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers. We use Binary Cross-Entropy loss.
 
@@ -319,14 +348,13 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
-\subsection{Experimental Settings}
-For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.\\
+\subsection{Machine Learning Experimentation}
+\noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
 
-For the deep learning experiments, early stopping is used to determine the appropriate number of epochs. This is where training is interrupted if a chosen performance measure stops improving - in these experiments, the performance measure used is the loss on the validation dataset. Additionally, patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is terminate. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve. We track the best performing model during training, and this is the model with the lowest validation loss.
+\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.
 
 
-\subsection{News Headlines for Sarcasm Detection}
-\subsubsection{yeee}
+\subsubsection{News Headlines for Sarcasm Detection}
 
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
@@ -349,7 +377,7 @@ For the deep learning experiments, early stopping is used to determine the appro
 \end{center}
 
 
-\subsection{Sarcasm Amazon Review Corpus}
+\subsubsection{Sarcasm Amazon Review Corpus}
 
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
@@ -367,6 +395,28 @@ For the deep learning experiments, early stopping is used to determine the appro
 		Random Forest Classifier &0.525 & 0.487 &  0.669 & 0.727\\
 		Gaussian Naive Bayes  & 0.625  & 0.621&  0.416 &0.666\\
 		K-Means& 0.474  & 0.334   & 0.353 & 0.316\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Pt\'a\v{c}ek et al. (2014) Dataset}
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
+		\hline
+		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		Support Vector Machine   & 0.    & 0. &   0. & 0.\\
+		Logistic Regression &   0. & 0.   & 0. & \textbf{0.}\\
+		Random Forest Classifier &0. & 0. &  0. & 0.\\
+		Gaussian Naive Bayes  & 0.  & 0.&  0. &0.\\
+		K-Means& 0.  & 0.   & 0. & 0.\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -391,34 +441,7 @@ For the deep learning experiments, early stopping is used to determine the appro
 %	\end{tabular}\\
 %\end{center}
 
-\subsection{Experimentation with sentiment features}
-\noindent In this experiment, we answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each of our datasets. The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens, as well as the overall sentiment of the snippet. We contruct $ 1 \times 6 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet, and value 5 shows the overall sentiment label.\\
 
-\noindent Example: \textit{"i love when my train is late!"}\\
-
-\begin{tabular}{|p{3cm}||p{0.2cm}p{1cm}p{1cm}p{1cm}p{1cm}p{0.8cm}p{1cm}p{1cm}|}
-\hline 
-Tokens & i & love & when & my & train & is & late & !\\ 
-\hline 
-Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 2 & 2\\ 
-\hline 
-\end{tabular}
-\vspace{10pt}
-
-\begin{tabular}{|p{3.8cm}||p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|} 
-	\hline 
-	Sentiment Labels & {0} & {1} & {2} & {3} & {4}\\ 
-	\hline 
-	\textbf{Frequency} of tokens & 0 & 0 & 7 & 0 & 1\\ 
-	\textbf{Proportion} of tokens & 0 & 0 & 0.875 & 0 & 0.125\\
-	\hline  
-\end{tabular}
-\vspace{10pt}
-
-{Overall sentiment}: 3.0\\
-\indent {Feature vector}: [0.0, 0.0, 0.875, 0.0, 0.125, 3.0]\\
-
-\noindent As the feature vectors are small ($1 \times 6$ dimensions), we use logistic regression for this task. We train two logistic regressors separately using sentiment features only - this enables us to assess whether sentiment features alone are indicative of sarcasm in different media types. We then use 5-fold cross-validation to compute the $F_1$ scores of the trained models.
 
 \begin{center}
 	\textbf{Figure -}: $F_1$ score of logistic regression models trained on sentiment features
@@ -437,7 +460,6 @@ Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 2 & 2\\
 \end{center}
 
 \noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
-\vfill
 
 \begin{minipage}{0.4\textwidth}
 	\begin{figure}[H]
@@ -464,6 +486,73 @@ Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 2 & 2\\
 %This section should be between 2 to 3 pages in length.
 
 \newpage
+\subsection{Deep Learning Experimentation}
+
+\noindent \textbf{Experimental Settings --} For the deep learning experiments, early stopping is used to determine the appropriate number of epochs. This is where training is interrupted if a chosen performance measure stops improving - in these experiments, the performance measure used is the loss on the validation dataset. Additionally, patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is terminate. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve. We track the best performing model during training, and this is the model with the lowest validation loss.
+
+\subsubsection{News Headlines for Sarcasm Detection}
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Deep Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+		\hline
+		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		CNN   & 0.714    & 0.718\\
+		LSTM &   0.721 & 0.712\\
+		Bi-directional LSTM &0. & 0.643\\
+		\hline
+	\end{tabular}
+\end{center}
+
+
+\subsubsection{Sarcasm Amazon Review Corpus}
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+		\hline
+		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		CNN   & 0.714    & 0.718\\
+		LSTM &   0.721 & 0.712\\
+		Bi-directional LSTM &0. & 0.643\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Pt\'a\v{c}ek et al. (2014) Dataset}
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+		\hline
+		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		CNN   & 0.714    & 0.718\\
+		LSTM &   0.721 & 0.712\\
+		Bi-directional LSTM &0. & 0.643\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\newpage
+
 
 \section{Evaluation}
 In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
