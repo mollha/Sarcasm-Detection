@@ -5,14 +5,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from keras.engine import Layer
 from random import randint
-from Code.DataPreprocessing import *
+from Dissertation.Code.DataPreprocessing import *
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers.normalization import BatchNormalization
 from keras.models import load_model
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.layers import LSTM, Conv1D, MaxPool1D, Flatten, Dense, Dropout, Activation, GlobalMaxPooling1D, \
-    Bidirectional
+    Bidirectional, LeakyReLU, MaxPooling1D
+from keras.layers import SimpleRNN, GRU
 from keras.layers.embeddings import Embedding
 from keras import backend as K
 from keras.initializers import Constant
@@ -21,8 +22,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
-
-max_batch_size = 32
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -105,79 +104,41 @@ def pad_string(tokens: list, limit: int) -> list:
     return tokens
 
 
-def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, cv: int):
-    length_limit = 300
-    if vector_type == 'elmo':
-        number_of_batches = len(sarcasm_data) // (max_batch_size * cv)
-        print('Amount used', number_of_batches * max_batch_size)
-        sarcasm_data = sarcasm_data[:number_of_batches * max_batch_size]
-        sarcasm_labels = sarcasm_labels[:number_of_batches * max_batch_size]
-        text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
-        text = text.replace({None: ""})
-        text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(32, length_limit), input_dtype="string")
-
-    elif vector_type == 'glove':
-        tokenizer = Tokenizer()
-        tokenizer.fit_on_texts(sarcasm_data)
-        sequences = tokenizer.texts_to_sequences(sarcasm_data)
-        padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit)
-    else:
-        raise TypeError('Vector type must be "elmo" or "glove"')
-
-# def prepare_embedding_layer(sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float, max_batch_size: int):
-#     length_limit = 150
-#     if vector_type == 'elmo':
-#         number_of_batches = len(sarcasm_data) // (max_batch_size * (1/split))
-#         sarcasm_data = sarcasm_data[:int((number_of_batches * max_batch_size) / split)]
-#         sarcasm_labels = sarcasm_labels[:int((number_of_batches * max_batch_size) / split)]
-#         text = pd.DataFrame([pad_string(t.split(), length_limit) for t in sarcasm_data])
-#         text = text.replace({None: ""})
-#         text = text.to_numpy()
-#         return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, length_limit),
-#                                                         input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
-#     elif vector_type == 'glove':
-#         tokenizer = Tokenizer()
-#         tokenizer.fit_on_texts(sarcasm_data)
-#         sequences = tokenizer.texts_to_sequences(sarcasm_data)
-#         padded_data = pad_sequences(sequences, maxlen=length_limit, padding='post')
-#         return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, length_limit), \
-#                {'GloveEmbeddingLayer': GloveEmbeddingLayer}
-#     elif vector_type == 'bag_of_words':
-#         tokenizer = Tokenizer()
-#         tokenizer.fit_on_texts(sarcasm_data)
-#         sequences = tokenizer.texts_to_sequences(sarcasm_data)
-#         matrix = tokenizer.texts_to_matrix(sarcasm_data, mode='freq')
-#         print(tokenizer.word_index)
-#         print(matrix)
-#         return sequences, sarcasm_labels, BagOfWordsEmbeddingLayer(tokenizer.word_index, model_weights=matrix), \
-#                {'BagOfWordsEmbeddingLayer': BagOfWordsEmbeddingLayer}
-#     else:
-#         raise TypeError('Vector type must be "elmo", "glove" or "bag_of_words"')
+# def repeat_positive_samples(sarcasm_data: np.ndarray, sarcasm_labels: np.ndarray, sample_pro: float) -> tuple:
+#     # merged = pd.DataFrame({"clean_data": sarcasm_data, "sarcasm_label": sarcasm_labels}, columns=["clean_data", "sarcasm_label"])
+#     positive_samples = merged[merged['sarcasm_label'] == 1]
+#
+#     number_of_positive_samples = len(positive_samples) // (1 / sample_pro)
+#     my_samples = positive_samples[:number_of_positive_samples]
+#     return my_samples['clean_data'].toarray(), my_samples['sarcasm_label'].toarray()
 
 
-def visualise_results(history):
-    loss = history.history["loss"]
-    val_loss = history.history["val_loss"]
-    epochs = range(1, len(loss) + 1)
-    plt.plot(epochs, loss, label="Training loss")
-    plt.plot(epochs, val_loss, label="Validation loss")
-    plt.title("Training and validation loss")
-    plt.xlabel("Epochs")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.show()
+def get_length_limit(dataset_name: str) -> int:
+    # based approximately on the average number of tokens in dataset
+    names = {'news-headlines-dataset-for-sarcasm-detection': 150, 'Sarcasm_Amazon_Review_Corpus': 1000}
+    try:
+        return names[dataset_name]
+    except KeyError:
+        raise ValueError('Dataset name "' + dataset_name + '" does not exist')
 
-    accuracy = history.history["acc"]
-    val_accuracy = history.history["val_acc"]
-    plt.plot(epochs, accuracy, label="Training accuracy")
-    plt.plot(epochs, val_accuracy, label="Validation accuracy")
-    plt.title("Training and validation accuracy")
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epochs")
-    plt.legend()
-    plt.show()
+
+def augment_data(sarcasm_data: np.ndarray, labels: np.ndarray, flag=False) -> tuple:
+    if flag:
+        sarcasm_data = np.concatenate((sarcasm_data, sarcasm_data.copy()))
+        labels = np.concatenate((labels, labels.copy()))
+    return sarcasm_data, labels
+
+
+def get_batch_size(model_name: str) -> int:
+    # online learning for lstms sets batch size to 1
+    batch_sizes = {'lstm': 1, 'bi-lstm': 1, 'cnn': 32, 'vanilla-rnn': 1, 'vanilla-gru': 1}
+    return batch_sizes[model_name]
+
+
+def load_model_from_file(filename: str, custom_layers: dict):
+    with CustomObjectScope(custom_layers):
+        model = load_model(filename)
+    return model
 
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
@@ -204,100 +165,222 @@ def bidirectional_lstm_network(model):
     return model
 
 
-def cnn_network(model):
+# deep CNN
+def deep_cnn_network(model):
+    model.add(Conv1D(128, 7, activation='relu', padding='same'))
+    model.add(MaxPooling1D())
+    model.add(Conv1D(256, 5, activation='relu', padding='same'))
+    model.add(MaxPooling1D())
+    model.add(Conv1D(512, 3, activation='relu', padding='same'))
+    model.add(MaxPooling1D())
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
+
+def vanilla_t(model, shape):
+    model.add(SimpleRNN(50, input_shape=shape, return_sequences=True))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
+
+def vanilla_rnn(model, shape):
+    model.add(GRU(50, input_shape=shape, return_sequences=False))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
+def cnn(model):
     model.add(Dropout(0.2))
     model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
+    #model.add(LeakyReLU(alpha=0.1))
     model.add(GlobalMaxPooling1D())
     # vanilla hidden layer:
     model.add(Dense(250))
     model.add(Dropout(0.2))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha=0.1))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
 
+def cnn_network(model):
+    model.add(Conv1D(512, 3, activation='relu'))
+    model.add(GlobalMaxPooling1D())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
+
+# -------------------------------------------- MAIN FUNCTIONS -----------------------------------------------
+def prepare_embedding_layer(s_data: pd.Series, s_labels: pd.Series, vector_type: str, split: float, max_batch_size: int, limit: int):
+    if vector_type == 'elmo':
+        number_of_batches = len(s_data) // (max_batch_size * (1/split))
+        sarcasm_data = s_data[:int((number_of_batches * max_batch_size) / split)]
+        sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
+        text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
+        text = text.replace({None: ""})
+        text = text.to_numpy()
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
+
+    elif vector_type == 'glove':
+        tokenizer = Tokenizer()
+        tokenizer.fit_on_texts(s_data)
+        sequences = tokenizer.texts_to_sequences(s_data)
+        padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
+        return padded_data, s_labels, GloveEmbeddingLayer(tokenizer.word_index, limit), {'GloveEmbeddingLayer': GloveEmbeddingLayer}
+    else:
+        raise TypeError('Vector type must be "elmo" or "glove"')
+
+
+def visualise_results(history):
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+    epochs = range(1, len(loss) + 1)
+    plt.plot(epochs, loss, label="Training loss")
+    plt.plot(epochs, val_loss, label="Validation loss")
+    plt.title("Training and validation loss")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
+
+    accuracy = history.history["acc"]
+    val_accuracy = history.history["val_acc"]
+    plt.plot(epochs, accuracy, label="Training accuracy")
+    plt.plot(epochs, val_accuracy, label="Validation accuracy")
+    plt.title("Training and validation accuracy")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epochs")
+    plt.legend()
+    plt.show()
+
+
+def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
+    max_batch_size = get_batch_size(model_name)
+    length_limit = get_length_limit(dataset_name)
+    s_data, l_data, e_layer, c_layer = prepare_embedding_layer(sarcasm_data, sarcasm_labels, vector_type, split, max_batch_size, length_limit)
+
+    model = Sequential()
+    e_layer.trainable = False
+    model.add(e_layer)
+    if model_name == 'lstm':
+        model = lstm_network(model)
+    elif model_name == 'bi-lstm':
+        model = bidirectional_lstm_network(model)
+    elif model_name == 'cnn':
+        model = cnn_network(model)
+    elif model_name == 'vanilla-rnn':
+        model = vanilla_rnn(model, (len(s_data), length_limit))
+    elif model_name == 'vanilla-gru':
+        model = vanilla_gru(model, (len(s_data), length_limit))
+    return s_data, l_data, model, c_layer
+
+
+def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, dataset_name: str, vector_type: str):
+    print('Training ' + model_name.upper() + ' using ' + vector + ' vectors.')
+    print('Dataset size: ' + str(len(sarcasm_data)) + '\n')
+    split = 0.2
+    epochs = 100
+    patience = 10
+    max_batch_size = get_batch_size(model_name)
+
+    s_data, l_data, dl_model, custom_layer = get_model(model_name, dataset_name, sarcasm_data, sarcasm_labels, vector_type, split)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split)
+    print(training_data.shape)
+
+    # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
+
+    training_data, training_labels = augment_data(training_data, training_labels, flag=False)
+    testing_data, testing_labels = augment_data(testing_data, testing_labels, flag=False)
+
+    file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '_on_' + dataset_name + '.h5'
+    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
+
+    model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
+                                 epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
+    dl_model = load_model_from_file(file_name, custom_layer)
+    y_pred = dl_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
+    score = f1_score(np.array(testing_labels), np.array(y_pred))
+    print('F1 Score: ', score)
+
+    # evaluate
+
+
+    # class_weight = {0: 1.0, 1: 1.0}
+    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
+    # print(model.summary())
+    visualise_results(model_history)
+
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+if __name__ == '__main__':
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
 
-# Choose a dataset from the list of valid data sets
-path_to_dataset_root = dataset_paths[0]
-print('Selected dataset: ' + path_to_dataset_root[9:])
-
-# set_size = 5000  # 22895
-
-# Read in raw data
-data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
-print(data.shape)
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[0]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
 
 
-def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
-                       extend_path='') -> pd.DataFrame:
-    """
-    Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
-    :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
-    :param re_clean: boolean flag -> set to True to have the data cleaned again
-    :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
-    :return: a pandas DataFrame containing cleaned data
-    """
-    if re_clean:
-        input_data = ''
-        while not input_data:
-            input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
-            input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+    # set_size = 20000  # 22895
 
-        if input_data == 'y':
-            # This could potentially overwrite pre-cleaned text if triggered accidentally
-            # The process of cleaning data can take a while, so -> proceed with caution
-            print('RE-CLEANING ... PROCEED WITH CAUTION!')
-            exit()  # uncomment this line if you would still like to proceed
-            data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
-            extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
-                ''.join([randint(0, 9) for _ in range(0, 8)])
-            data_frame['clean_data'].to_csv(
-                path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                index=False, header=['clean_data'])
-    return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                       encoding="ISO-8859-1")#[:set_size]
+    # Read in raw data
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
+    print(data.shape)
 
 
-# Clean data, or retrieve pre-cleaned data
-data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
-print(data['clean_data'])
-s_data, l_data, emb_layer = prepare_embedding_layer(data['clean_data'], data['sarcasm_label'], 'elmo', 5)
-# Split into training and test data
-X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=0.2)
+    def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
+                           extend_path='') -> pd.DataFrame:
+        """
+        Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
+        :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
+        :param re_clean: boolean flag -> set to True to have the data cleaned again
+        :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
+        :return: a pandas DataFrame containing cleaned data
+        """
+        if re_clean:
+            input_data = ''
+            while not input_data:
+                input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
+                input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
 
-sequence_length = 150
+            if input_data == 'y':
+                # This could potentially overwrite pre-cleaned text if triggered accidentally
+                # The process of cleaning data can take a while, so -> proceed with caution
+                print('RE-CLEANING ... PROCEED WITH CAUTION!')
+                exit()  # uncomment this line if you would still like to proceed
+                data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
+                extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
+                    ''.join([randint(0, 9) for _ in range(0, 8)])
+                data_frame['clean_data'].to_csv(
+                    path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                    index=False, header=['clean_data'])
+        return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                           encoding="ISO-8859-1")# [:set_size]
 
-# Train models from scratch
-model = Sequential()
-e = emb_layer
-e.trainable = False
-model.add(e)
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
-# model = cnn_network_batch_norm(model)
-model = lstm_network(model)
-# model = bidirectional_lstm_network(model)
-# model = cnn_network(model)
-model_checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='auto', save_best_only=True)
-early_stopping = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto')
-model_history = model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
-                          epochs=300, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+    model_n = 'vanilla-rnn'
+    vector = 'glove'
+    d_name = path_to_dataset_root[9:]
 
-with CustomObjectScope({'GloveEmbeddingLayer': GloveEmbeddingLayer}):
-    model = load_model('best_model.h5')
-
-# evaluate
-y_pred = model.predict_classes(x=np.array(X_test), batch_size=max_batch_size)
-score = f1_score(np.array(labels_test), np.array(y_pred))
-# model = KerasClassifier(build_fn=new_model)
-print('Score :', score)
-
-# class_weight = {0: 1.0, 1: 1.0}
-# my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-# print(model.summary())
-visualise_results(model_history)
+    get_results(model_n, data['clean_data'], data['sarcasm_label'], d_name, vector)
