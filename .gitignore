@@ -11,3 +11,4 @@ Code/Datasets/*
 !Datasets/Sarcasm_Amazon_Review_Corpus/processing_scripts/*
 GLOVEDATA
 Code/stanford-corenlp-full-2018-10-05
+Code/TrainedModels/*
