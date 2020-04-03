@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from keras.engine import Layer
 from random import randint
-from Dissertation.Code.DataPreprocessing import *
+from DataPreprocessing import data_cleaning
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers.normalization import BatchNormalization
 from keras.models import load_model
@@ -35,21 +35,20 @@ class ElmoEmbeddingLayer(Layer):
         super(ElmoEmbeddingLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
+        #self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
+                               #name="{}_module".format(self.name))
+        self.elmo = hub.Module(elmo_path, trainable=self.trainable,
                                name="{}_module".format(self.name))
         self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
         super(ElmoEmbeddingLayer, self).build(input_shape)
 
     def call(self, inputs, mask=None):
-        # inputs.shape = [batch_size, seq_len]
         seq_len = [inputs.shape[1]] * inputs.shape[0]
-        # this will give a list of seq_len: [seq_len, seq_len, ..., seq_len] just like the official example.
         result = self.elmo(inputs={"tokens": K.cast(inputs, dtype=tf.string),
                                    "sequence_len": seq_len},
                            as_dict=True,
                            signature='tokens',
                            )['elmo']
-        print(result.shape)
         return result
 
     def compute_mask(self, inputs, mask=None):
@@ -165,7 +164,6 @@ def bidirectional_lstm_network(model):
     return model
 
 
-# deep CNN
 def deep_cnn_network(model):
     model.add(Conv1D(128, 7, activation='relu', padding='same'))
     model.add(MaxPooling1D())
@@ -183,22 +181,25 @@ def deep_cnn_network(model):
     return model
 
 
-def vanilla_t(model, shape):
-    model.add(SimpleRNN(50, input_shape=shape, return_sequences=True))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam',
-                  loss='binary_crossentropy',
-                  metrics=['accuracy'])
-    return model
-
-
 def vanilla_rnn(model, shape):
-    model.add(GRU(50, input_shape=shape, return_sequences=False))
+    model.add(SimpleRNN(50, batch_input_shape=shape, return_sequences=True))
+    model.add(GlobalMaxPooling1D())
     model.add(Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam',
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
+
+
+def vanilla_gru(model, shape):
+    model.add(GRU(50, batch_input_shape=shape, return_sequences=True))
+    model.add(GlobalMaxPooling1D())
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
 
 def cnn(model):
     model.add(Dropout(0.2))
@@ -214,6 +215,7 @@ def cnn(model):
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
+
 
 def cnn_network(model):
     model.add(Conv1D(512, 3, activation='relu'))
@@ -248,6 +250,7 @@ def prepare_embedding_layer(s_data: pd.Series, s_labels: pd.Series, vector_type:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
 
+
 def visualise_results(history):
     loss = history.history["loss"]
     val_loss = history.history["val_loss"]
@@ -260,8 +263,8 @@ def visualise_results(history):
     plt.legend()
     plt.show()
 
-    accuracy = history.history["acc"]
-    val_accuracy = history.history["val_acc"]
+    accuracy = history.history["accuracy"]
+    val_accuracy = history.history["val_accuracy"]
     plt.plot(epochs, accuracy, label="Training accuracy")
     plt.plot(epochs, val_accuracy, label="Validation accuracy")
     plt.title("Training and validation accuracy")
@@ -269,7 +272,6 @@ def visualise_results(history):
     plt.xlabel("Epochs")
     plt.legend()
     plt.show()
-
 
 def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
     max_batch_size = get_batch_size(model_name)
@@ -286,7 +288,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     elif model_name == 'cnn':
         model = cnn_network(model)
     elif model_name == 'vanilla-rnn':
-        model = vanilla_rnn(model, (len(s_data), length_limit))
+        model = vanilla_rnn(model, (max_batch_size, length_limit))
     elif model_name == 'vanilla-gru':
         model = vanilla_gru(model, (len(s_data), length_limit))
     return s_data, l_data, model, c_layer
@@ -296,7 +298,7 @@ def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Ser
     print('Training ' + model_name.upper() + ' using ' + vector + ' vectors.')
     print('Dataset size: ' + str(len(sarcasm_data)) + '\n')
     split = 0.2
-    epochs = 100
+    epochs = 1
     patience = 10
     max_batch_size = get_batch_size(model_name)
 
@@ -323,28 +325,26 @@ def get_results(model_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Ser
 
     # evaluate
 
-
     # class_weight = {0: 1.0, 1: 1.0}
     # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
     # print(model.summary())
     visualise_results(model_history)
 
 
-
 # ---------------------------------------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+    elmo_path = 'Datasets/elmo'
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[0]
+    path_to_dataset_root = dataset_paths[1]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
-
-    # set_size = 20000  # 22895
+    set_size = 2000  # 22895
 
     # Read in raw data
-    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")[:set_size]
     print(data.shape)
 
 
@@ -375,12 +375,12 @@ if __name__ == '__main__':
                     path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
                     index=False, header=['clean_data'])
         return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-                           encoding="ISO-8859-1")# [:set_size]
+                           encoding="ISO-8859-1")[:set_size]
 
     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
 
-    model_n = 'vanilla-rnn'
-    vector = 'glove'
+    model_n = 'lstm'
+    vector = 'elmo'
     d_name = path_to_dataset_root[9:]
 
     get_results(model_n, data['clean_data'], data['sarcasm_label'], d_name, vector)

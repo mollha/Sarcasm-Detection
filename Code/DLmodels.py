@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from keras import utils
+import os
+from random import randint
+from Code.DataPreprocessing import data_cleaning
 import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -273,3 +276,55 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
     # print(model.summary())
     visualise_results(model_history)
+
+
+
+if __name__ == '__main__':
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[1]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
+
+    # set_size = 20000  # 22895
+
+    # Read in raw data
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
+    print(data.shape)
+
+
+    def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
+                           extend_path='') -> pd.DataFrame:
+        """
+        Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
+        :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
+        :param re_clean: boolean flag -> set to True to have the data cleaned again
+        :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
+        :return: a pandas DataFrame containing cleaned data
+        """
+        if re_clean:
+            input_data = ''
+            while not input_data:
+                input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
+                input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+
+            if input_data == 'y':
+                # This could potentially overwrite pre-cleaned text if triggered accidentally
+                # The process of cleaning data can take a while, so -> proceed with caution
+                print('RE-CLEANING ... PROCEED WITH CAUTION!')
+                exit()  # uncomment this line if you would still like to proceed
+                data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
+                extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
+                    ''.join([randint(0, 9) for _ in range(0, 8)])
+                data_frame['clean_data'].to_csv(
+                    path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                    index=False, header=['clean_data'])
+        return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                           encoding="ISO-8859-1")# [:set_size]
+
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+
+    model_n = 'cnn'
+    vector = 'elmo'
+    d_name = path_to_dataset_root[9:]
+    get_results(model_n, d_name, data['clean_data'], data['sarcasm_label'], vector, 0.2)

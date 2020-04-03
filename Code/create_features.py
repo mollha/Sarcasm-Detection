@@ -12,14 +12,6 @@ import os
 nlp = spacy.load('en_core_web_md')
 
 
-# ---------------------------------------------------------------------
-# Start CoreNLP server before using sentiment annotator
-# cd stanford-corenlp-full-2018-10-05/
-# java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
-# note: change the 2g to 1g if space requirements too high
-# ---------------------------------------------------------------------
-
-
 class SentimentAnnotator:
     def __init__(self):
         self.nlp_wrapper = None
@@ -27,6 +19,16 @@ class SentimentAnnotator:
                          'outputFormat': 'json',
                          'timeout': 1000000,
                          }
+
+        # ---------------------------------------------------------------------
+        # Start CoreNLP server before using sentiment annotator
+        # cd stanford-corenlp-full-2018-10-05/
+        # java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
+        # note: change the 2g to 1g if space requirements too high
+        # ---------------------------------------------------------------------
+
+        # os.chdir("./stanford-corenlp-full-2018-10-05/")
+        # os.system('java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer')
 
     def sentence_level(self, sentence_tokens: list) -> list:
         """
@@ -63,38 +65,64 @@ class SentimentAnnotator:
         return list(np.mean(sentiment_values, axis=0))
 
     def fit_transform(self, data: pd.Series):
-        return data.apply(lambda x: self.transform(x)).to_numpy()
+        return data.apply(lambda x: self.transform(x))
 
 
 class PunctuationAnnotator:
+    """
+    PunctuationAnnotator must take raw data, as cleaned data will have some of these features removed (capitalisation)
+    """
+    def __init__(self):
+        self.maximal_features = None
+
     @staticmethod
-    def transform(string: str) -> list:
+    def create_raw_features(string: str):
+        tokens = [token.text for token in nlp(string)]
+        counts = [0] * 5
+
+        for token in tokens:
+            counts[0] += 1  # sentence length
+            counts[1] += token.count('!')   # number of ! tokens
+            counts[2] += token.count('?')    # number of ? tokens
+            counts[3] += token.count("'")   # number of ' tokens
+
+            if not token.islower():
+                counts[4] += 1  # number of tokens that have capital letters
+
+        counts[3] = counts[3] // 2  # number of pairs of quote chars (roughly translates to number of quotes)
+        return counts
+
+    def normalise_features(self, raw_features: pd.Series):
+        self.maximal_features = [-float('inf')] * 5
+
+        for count in raw_features:
+            for idx in range(len(count)):
+                if count[idx] > self.maximal_features[idx]:
+                    self.maximal_features[idx] = count[idx]
+
+        return raw_features.apply(lambda counts: [raw / (maximal * np.mean(self.maximal_features))
+                                                  for raw, maximal in zip(counts, self.maximal_features)])
+
+    def transform(self, string: str) -> list:
         """
         Given a string, decompose it into sentences and annotate each sentence
         :param string: string of data
         :return: frequency of ! and ? characters in sentence
         """
-        tokens = [token.text for token in nlp(string)]
-        counts = [0] * 2
+        if self.maximal_features is None:
+            raise ValueError('Maximal features must be initialised before strings can be transformed')
 
-        # TODO check percentage capitalisation
-
-        for token in tokens:
-            counts[0] += token.count('!')
-            counts[1] = token.count('?')
-
-            # if not token.islower():
-            #     counts[2] += 1
-
-        return [count / len(tokens) for count in counts]
+        counts = self.create_raw_features(string)
+        return [raw / (maximal * np.mean(self.maximal_features)) for raw, maximal in zip(counts, self.maximal_features)]
 
     def fit_transform(self, data: pd.Series):
-        return data.apply(lambda x: self.transform(x)).to_numpy()
+        raw_features = data.apply(lambda x: self.create_raw_features(x))
+        return self.normalise_features(raw_features)
 
 
 class TopicModelAnnotator:
     def __init__(self):
-        self.num_topics = 20
+        self.num_topics = 10
         self.max_iterations = 1000
         self.bow_vectoriser = None
         self.lda = None
@@ -127,7 +155,7 @@ class TopicModelAnnotator:
             print("\nTopic #%d:" % topic_idx)
             print(" ".join([words[i]
                             for i in topic.argsort()[:-top_n - 1:-1]]))
-        return topic_distribution
+        return topic_distribution.tolist()
 
 
 feature_type = {'sentiment': SentimentAnnotator(), 'punctuation': PunctuationAnnotator(),
@@ -146,58 +174,15 @@ def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
     store_in = open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'ab')
     annotator = feature_type[feature]
 
-    data['feature_col'] = annotator.fit_transform(data['clean_data'])
-    pickle.dump(data['feature_col'], store_in)
+    if feature == 'punctuation':
+        feature_data = annotator.fit_transform(data['text_data'])
+    else:
+        feature_data = annotator.fit_transform(data['clean_data'])
+
+    pickle.dump(feature_data, store_in)
     store_in.close()
 
-    if feature == 'topic_model':
+    if feature in {'topic_model', 'punctuation'}:
         annotator_file = open(path_to_root + "/processed_data/Vectorisers/" + feature + "_annotator.pckl", 'ab')
         pickle.dump(annotator, annotator_file)
         annotator_file.close()
-#
-#
-#
-# def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool, extend_path='') -> pd.DataFrame:
-#     """
-#     Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
-#     :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
-#     :param re_clean: boolean flag -> set to True to have the data cleaned again
-#     :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
-#     :return: a pandas DataFrame containing cleaned data
-#     """
-#     if re_clean:
-#         input_data = ''
-#         while not input_data:
-#             input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
-#             input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
-#
-#         if input_data == 'y':
-#             # This could potentially overwrite pre-cleaned text if triggered accidentally
-#             # The process of cleaning data can take a while, so -> proceed with caution
-#             print('RE-CLEANING ... PROCEED WITH CAUTION!')
-#             # exit()  # comment this line if you would still like to proceed
-#             data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
-#             extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
-#                 ''.join([randint(0, 9) for _ in range(0, 8)])
-#             data_frame['clean_data'].to_csv(
-#                 path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
-#                 index=False, header=['clean_data'])
-#     return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv", encoding="ISO-8859-1")
-#
-#
-# if __name__ == "__main__":
-#     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection",
-#                      "Datasets/ptacek"]
-#
-#     # Choose a dataset from the list of valid data sets
-#     path_to_dataset_root = dataset_paths[1]
-#     print('Selected dataset: ' + path_to_dataset_root[9:])
-#
-#     # Read in raw data
-#     data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")  # [:set_size]
-#
-#     # Clean data, or retrieve pre-cleaned data
-#     data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)  # [:set_size]
-#
-#     extract_features(path_to_dataset_root, data, 'topic_model')
-#

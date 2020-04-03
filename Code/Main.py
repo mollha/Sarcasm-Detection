@@ -118,7 +118,7 @@ if __name__ == '__main__':
     dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection", "Datasets/ptacek"]
 
     # Choose a dataset from the list of valid data sets
-    path_to_dataset_root = dataset_paths[0]
+    path_to_dataset_root = dataset_paths[2]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 
     # set_size = 200
@@ -131,41 +131,41 @@ if __name__ == '__main__':
 
     # machine learning models
     # Vectorise data, or retrieve pre-computed vectors
-    vector = 'elmo'
-    print('Vector Type: ' + vector)
-    data['vector'] = get_vector_col(data, path_to_dataset_root, vector)
+    vector_type = 'elmo'
 
-    # Create features, or retrieve pre-generated features
-    features = ['sentiment', 'topic_model']
-    print('Feature Types: ' + ','.join(features))
-    feature_series = [get_feature_col(data, path_to_dataset_root, feature_type) for feature_type in features]
-    data['feature'] = combine_features(feature_series)
+    # print('Vector Type: ' + vector_type)
+    # data['vector'] = get_vector_col(data, path_to_dataset_root, vector_type)
+    #
+    # # Create features, or retrieve pre-generated features
+    # # remember, punctuation features require raw data
+    # features = ['sentiment', 'punctuation']
+    # print('Feature Types: ' + ','.join(features))
+    # feature_series = [get_feature_col(data, path_to_dataset_root, feature_type) for feature_type in features]
+    # data['feature'] = combine_features(feature_series)
+    #
+    # feature_evaluate(data)
 
-    print(data['feature'])
-    feature_evaluate(data)
-
-    print(type(data['vector'][0]))
 
     # Use feature INSTEAD of vector
-    data['vector'] = combine_features([data['vector'], data['feature']])
-
-
+    #data['vector'] = combine_features([data['vector'], data['feature']])
+    #data['vector'] = data['feature']
 
     # ---------------------------------------------------------------------------------------------------------------
-    # exit()
-    # model_name = 'cnn'
+
+    # # exit()
+    # model_name = 'lstm'
     # dataset_name = path_to_dataset_root[9:]
-    # vector_type = 'glove'
     # sarc_data, sarc_labels = data['clean_data'], data['sarcasm_label']
     #
     # get_results(model_name, dataset_name, sarc_data, sarc_labels, vector_type, 0.2)
     # # get_results(model_name, sarc_data, sarc_labels, vector_type, 0.2)
-    # print('\nTraining ML models')
-    labels = data['sarcasm_label']
-    classifier_name, classifier = get_model(1)
-    print('Classifier: ' + classifier_name)
 
-    scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
-    five_fold_cross_validation = np.mean(scores)
-    print('Score: ', five_fold_cross_validation)
-    print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
+    # print('\nTraining ML models')
+    # labels = data['sarcasm_label']
+    # classifier_name, classifier = get_model(1)
+    # print('Classifier: ' + classifier_name)
+    #
+    # scores = cross_val_score(classifier, data['vector'].apply(pd.Series), labels, cv=2, scoring='f1_macro')
+    # five_fold_cross_validation = np.mean(scores)
+    # print('Score: ', five_fold_cross_validation)
+    # print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
