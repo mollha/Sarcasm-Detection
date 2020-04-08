@@ -3,16 +3,14 @@ import spacy
 import numpy as np
 import pandas as pd
 import pickle
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+from Code.DataPreprocessing import *
+from random import randint
+import os
 
 nlp = spacy.load('en_core_web_md')
 
-
-# ---------------------------------------------------------------------
-# Start CoreNLP server before using sentiment annotator
-# cd stanford-corenlp-full-2018-10-05/
-# java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
-# note: change the 2g to 1g if space requirements too high
-# ---------------------------------------------------------------------
 
 class SentimentAnnotator:
     def __init__(self):
@@ -21,6 +19,16 @@ class SentimentAnnotator:
                          'outputFormat': 'json',
                          'timeout': 1000000,
                          }
+
+        # ---------------------------------------------------------------------
+        # Start CoreNLP server before using sentiment annotator
+        # cd stanford-corenlp-full-2018-10-05/
+        # java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
+        # note: change the 2g to 1g if space requirements too high
+        # ---------------------------------------------------------------------
+
+        # os.chdir("./stanford-corenlp-full-2018-10-05/")
+        # os.system('java -mx1g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer')
 
     def sentence_level(self, sentence_tokens: list) -> list:
         """
@@ -37,7 +45,7 @@ class SentimentAnnotator:
             counts[sentiment_val] += 1
         return [count / len(sentence_tokens) for count in counts]
 
-    def annotate_data(self, string: str) -> list:
+    def transform(self, string: str) -> list:
         """
         Given a string, decompose it into sentences and annotate the sentiments of each sentence
         :param string: string of data
@@ -56,29 +64,102 @@ class SentimentAnnotator:
 
         return list(np.mean(sentiment_values, axis=0))
 
+    def fit_transform(self, data: pd.Series):
+        return data.apply(lambda x: self.transform(x))
+
 
 class PunctuationAnnotator:
+    """
+    PunctuationAnnotator must take raw data, as cleaned data will have some of these features removed (capitalisation)
+    """
+    def __init__(self):
+        self.maximal_features = None
+
     @staticmethod
-    def annotate_data(string: str) -> list:
+    def create_raw_features(string: str):
+        tokens = [token.text for token in nlp(string)]
+        counts = [0] * 5
+
+        for token in tokens:
+            counts[0] += 1  # sentence length
+            counts[1] += token.count('!')   # number of ! tokens
+            counts[2] += token.count('?')    # number of ? tokens
+            counts[3] += token.count("'")   # number of ' tokens
+
+            if not token.islower():
+                counts[4] += 1  # number of tokens that have capital letters
+
+        counts[3] = counts[3] // 2  # number of pairs of quote chars (roughly translates to number of quotes)
+        return counts
+
+    def normalise_features(self, raw_features: pd.Series):
+        self.maximal_features = [-float('inf')] * 5
+
+        for count in raw_features:
+            for idx in range(len(count)):
+                if count[idx] > self.maximal_features[idx]:
+                    self.maximal_features[idx] = count[idx]
+
+        return raw_features.apply(lambda counts: [raw / (maximal * np.mean(self.maximal_features))
+                                                  for raw, maximal in zip(counts, self.maximal_features)])
+
+    def transform(self, string: str) -> list:
         """
         Given a string, decompose it into sentences and annotate each sentence
         :param string: string of data
         :return: frequency of ! and ? characters in sentence
         """
-        tokens = [token.text for token in nlp(string)]
-        counts = [0] * 2
+        if self.maximal_features is None:
+            raise ValueError('Maximal features must be initialised before strings can be transformed')
 
-        for token in tokens:
-            counts[0] += token.count('!')
-            counts[1] = token.count('?')
+        counts = self.create_raw_features(string)
+        return [raw / (maximal * np.mean(self.maximal_features)) for raw, maximal in zip(counts, self.maximal_features)]
 
-            # if not token.islower():
-            #     counts[2] += 1
-
-        return [count / len(tokens) for count in counts]
+    def fit_transform(self, data: pd.Series):
+        raw_features = data.apply(lambda x: self.create_raw_features(x))
+        return self.normalise_features(raw_features)
 
 
-feature_type = {'sentiment': SentimentAnnotator(), 'punctuation': PunctuationAnnotator()}
+class TopicModelAnnotator:
+    def __init__(self):
+        self.num_topics = 10
+        self.max_iterations = 1000
+        self.bow_vectoriser = None
+        self.lda = None
+
+    @staticmethod
+    def lemmatisation(text: str) -> str:
+        return " ".join([token.lemma_ if token.lemma_ not in ['-PRON-'] else '' for token in nlp(text) if
+                         token.pos_ in ('NOUN', 'ADJ', 'VERB', 'ADV')])
+
+    def transform(self, string: str) -> list:
+        vector = self.bow_vectoriser.transform(string)
+        topic_distribution = self.lda.transform(vector)
+        return topic_distribution.tolist()
+
+    def fit_transform(self, data: pd.Series):
+        # apply lemmatisation
+        lemmatised_data = data.apply(lambda x: self.lemmatisation(x))
+        self.bow_vectoriser = CountVectorizer(stop_words='english', lowercase=True, token_pattern='[a-zA-Z\-][a-zA-Z\-]{2,}')
+        vectorised_data = self.bow_vectoriser.fit_transform(lemmatised_data)
+
+        self.lda = LatentDirichletAllocation(n_components=self.num_topics, max_iter=self.max_iterations, learning_method='online',
+                                             verbose=True)
+        topic_distribution = self.lda.fit_transform(vectorised_data)
+
+        print("\n----- LDA Model ------")
+        top_n = 10
+
+        words = self.bow_vectoriser.get_feature_names()
+        for topic_idx, topic in enumerate(self.lda.components_):
+            print("\nTopic #%d:" % topic_idx)
+            print(" ".join([words[i]
+                            for i in topic.argsort()[:-top_n - 1:-1]]))
+        return topic_distribution.tolist()
+
+
+feature_type = {'sentiment': SentimentAnnotator(), 'punctuation': PunctuationAnnotator(),
+                'topic_model': TopicModelAnnotator()}
 
 
 def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
@@ -93,6 +174,15 @@ def extract_features(path_to_root: str, data: pd.DataFrame, feature: str):
     store_in = open(path_to_root + "/processed_data/Features/" + feature + ".pckl", 'ab')
     annotator = feature_type[feature]
 
-    data['feature_col'] = data['clean_data'].apply(lambda x: annotator.annotate_data(x))
-    pickle.dump(data['feature_col'], store_in)
+    if feature == 'punctuation':
+        feature_data = annotator.fit_transform(data['text_data'])
+    else:
+        feature_data = annotator.fit_transform(data['clean_data'])
+
+    pickle.dump(feature_data, store_in)
     store_in.close()
+
+    if feature in {'topic_model', 'punctuation'}:
+        annotator_file = open(path_to_root + "/processed_data/Vectorisers/" + feature + "_annotator.pckl", 'ab')
+        pickle.dump(annotator, annotator_file)
+        annotator_file.close()

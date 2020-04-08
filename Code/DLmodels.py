@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from keras import utils
+import os
+from random import randint
+from Code.DataPreprocessing import data_cleaning
 import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -12,7 +15,7 @@ from keras.layers import Dropout, Activation, GlobalMaxPooling1D, Bidirectional,
 from keras.layers import LSTM, Conv1D, Dense
 from keras.layers.embeddings import Embedding
 from keras.models import Sequential
-from keras.models import load_model, model_from_json
+from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.utils import CustomObjectScope
@@ -259,12 +262,13 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     X_train, X_test, labels_train, labels_test = train_test_split(s_data, l_data, test_size=split)
     file_name = 'TrainedModels/' + model_name + '_with_' + vector_type + '_on_' + dataset_name + '.h5'
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
-    early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
+    early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1, mode='auto')
     model_history = dl_model.fit(x=np.array(X_train), y=np.array(labels_train), validation_data=(X_test, labels_test),
                                  epochs=1, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
     dl_model = load_model_from_file(file_name, custom_layers)
-    y_pred = dl_model.predict_classes(x=X_test)
+    y_pred = dl_model.predict_classes(x=X_test, batch_size=max_batch_size)
+    print(y_pred)
     score = f1_score(labels_test, y_pred)
     print('Score: ', score)
 
@@ -272,3 +276,55 @@ def get_results(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sar
     # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
     # print(model.summary())
     visualise_results(model_history)
+
+
+
+if __name__ == '__main__':
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection"]
+
+    # Choose a dataset from the list of valid data sets
+    path_to_dataset_root = dataset_paths[1]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
+
+    # set_size = 20000  # 22895
+
+    # Read in raw data
+    data = pd.read_csv(path_to_dataset_root + "/processed_data/OriginalData.csv", encoding="ISO-8859-1")#[:set_size]
+    print(data.shape)
+
+
+    def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool,
+                           extend_path='') -> pd.DataFrame:
+        """
+        Retrieve the column of cleaned data -> either by cleaning the raw data, or by retrieving pre-cleaned data
+        :param data_frame: data_frame containing a 'text_data' column -> this is the raw textual data
+        :param re_clean: boolean flag -> set to True to have the data cleaned again
+        :param extend_path: choose to read the cleaned data at an extended path -> this is not the default clean data
+        :return: a pandas DataFrame containing cleaned data
+        """
+        if re_clean:
+            input_data = ''
+            while not input_data:
+                input_data = input('\nWARNING - This action could overwrite pre-cleaned data: proceed? y / n\n')
+                input_data = input_data.strip().lower() if input_data.strip().lower() in {'y', 'n'} else ''
+
+            if input_data == 'y':
+                # This could potentially overwrite pre-cleaned text if triggered accidentally
+                # The process of cleaning data can take a while, so -> proceed with caution
+                print('RE-CLEANING ... PROCEED WITH CAUTION!')
+                exit()  # uncomment this line if you would still like to proceed
+                data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
+                extend_path = '' if not os.path.isfile(path_to_dataset_root + "/processed_data/CleanData.csv") else \
+                    ''.join([randint(0, 9) for _ in range(0, 8)])
+                data_frame['clean_data'].to_csv(
+                    path_or_buf=path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                    index=False, header=['clean_data'])
+        return pd.read_csv(path_to_dataset_root + "/processed_data/CleanData" + extend_path + ".csv",
+                           encoding="ISO-8859-1")# [:set_size]
+
+    data['clean_data'] = get_clean_data_col(data, path_to_dataset_root, False)
+
+    model_n = 'cnn'
+    vector = 'elmo'
+    d_name = path_to_dataset_root[9:]
+    get_results(model_n, d_name, data['clean_data'], data['sarcasm_label'], vector, 0.2)

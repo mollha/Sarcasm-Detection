@@ -3,6 +3,8 @@ import spacy
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import tensorflow as tf
+from warnings import filterwarnings; filterwarnings('ignore')
+import os
 import tensorflow_hub as hub
 import time
 tf.compat.v1.disable_eager_execution()
@@ -12,7 +14,7 @@ nlp = spacy.load('en_core_web_md')
 
 class ElMoVectorizer:
     def __init__(self):
-        self.elmo_module = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
+        self.elmo_module = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
         self.dataset = None
         self.vector_list = []
         self.step = 200
@@ -102,8 +104,9 @@ class GloVeVectorizer:
         return self.dataset.apply(lambda x: get_mean_embedding(x))
 
 
-vectorisers = {'bag_of_words': CountVectorizer(), 'tf_idf': TfidfVectorizer(), 'glove': GloVeVectorizer(),
-               'elmo': ElMoVectorizer()}
+vectorisers = {'bag_of_words': CountVectorizer(max_df=0.1, max_features=5000),
+               'tf_idf': TfidfVectorizer(max_df=0.1, max_features=5000),
+               'glove': GloVeVectorizer(), 'elmo': ElMoVectorizer()}
 
 
 def compute_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
@@ -116,6 +119,13 @@ def compute_vectors(path_to_root: str, data: pd.DataFrame, vector: str):
         array = vectoriser.fit_transform(data['clean_data'])
     else:
         array = vectoriser.fit_transform(data['token_data'])
+
+        if vector in {'tf_idf' or 'bag_of_words'}:
+            vectoriser_file = open(path_to_root + "/processed_data/Vectorisers/" + vector + "_vectoriser.pckl", 'ab')
+            pickle.dump(vectoriser, vectoriser_file)
+            vectoriser_file.close()
+
+    print(type(array))
 
     if type(array) != list:
         if type(array) != pd.Series:
