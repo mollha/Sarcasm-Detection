@@ -546,9 +546,9 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \newpage
 \subsection{Deep Learning Experimentation}
-\subsubsection{Experimental Settings}
-Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used
+\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as
 
+\subsubsection{Experimental Settings}
 The upper-bound on the number of epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
