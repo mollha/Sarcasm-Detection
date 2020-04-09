@@ -282,12 +282,11 @@ As supervised machine learning requires hand-crafted features to inform  predict
 In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features as outlined in the previous section.
 
 \subsubsection{Machine Learning Models}
-In terms of machine learning models, we experiment with supervised and unsupervised learning (k-means clustering)
+In terms of machine learning models, we experiment with supervised and unsupervised learning. Each of these models are capable of performing binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
 
 \begin{enumerate}
-	\item \textbf{K-Means Clustering --} As an unsupervised algorithm, K-Means clustering does not require labelled training data. K random cluster centres, or centroids, are selected. Then, the set of observations (training data) is partitioned into k clusters, whereby each data point belongs to the nearest centroid. This will make for an interesting comparison to the remaining models, which rely upon labelled training data.
-	
-	\item \textbf{Support Vector Machine --} Support vector machines are a popular model for binary classification tasks, where a hyperplane is drawn such that the data points are separated into two groups. For the specific task of sarcasm detection, these categories are sarcastic and non-sarcastic. The distance from data points to the hyperplane is known as the margin, and  the hyperplane is drawn such that the margin between classification groups is maximised.
+	\item \textbf{K-Means Clustering --} As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups.
+	\item \textbf{Support Vector Machine (SVM) --} A hyperplane is drawn such that the positive and negative features are partitioned into two groups. The features at the shortest euclidean distance to the hyperplane are known as support vectors, and their distance from the hyperplane is known as the margin. An SVM attempts to maximise this margin in order to create a decisive boundary between the sarcastic and non-sarcastic data.
 	
 	\item \textbf{Na\"{i}ve Bayes Classifier --} This is a probabilistic model derived from Bayes theorem, where all features are assumed to be independent of one another. Commonly used in the document classification problem, we calculate ${P(Sarcastic | features)}$. This is  the probability of an outcome A (i.e. statement is sarcastic), given its feature vector, x. There are a number of variations of Na\"{i}ve Bayes - including Multinomial, Bernoulli and Gaussian. 
 
