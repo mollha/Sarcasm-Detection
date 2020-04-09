@@ -4,7 +4,6 @@ import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import tensorflow as tf
 from warnings import filterwarnings; filterwarnings('ignore')
-import os
 import tensorflow_hub as hub
 import time
 tf.compat.v1.disable_eager_execution()
@@ -63,7 +62,7 @@ class GloVeVectorizer:
     @staticmethod
     def refresh_dict() -> dict:
         print('Building Glove Dictionary....')
-        with open('Datasets/GLOVEDATA/glove.twitter.27B.50d.txt', "r", encoding="utf-8") as file:
+        with open('../../Datasets/GLOVEDATA/glove.twitter.27B.50d.txt', "r", encoding="utf-8") as file:
             gloveDict = {line.split()[0]: list(map(float, line.split()[1:])) for line in file}
             del gloveDict['0.45973']    # for some reason, this entry has 49 dimensions instead of 50
         return gloveDict

@@ -13,3 +13,8 @@ GLOVEDATA
 Code/stanford-corenlp-full-2018-10-05
 Code/TrainedModels/*
 Code/BestModels/*
+
+Code/pkg/datasets/*
+Code/pkg/language_models/*
+Code/pkg/trained_models/*
+

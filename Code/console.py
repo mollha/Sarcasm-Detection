@@ -1,6 +1,6 @@
 import pandas as pd
-from Code.create_vectors import ElMoVectorizer, GloVeVectorizer
-from Code.create_features import SentimentAnnotator, PunctuationAnnotator
+from Code.pkg.vectors.create_vectors import ElMoVectorizer, GloVeVectorizer
+from Code.pkg.vectors.create_features import SentimentAnnotator, PunctuationAnnotator
 
 
 class Vectoriser:
@@ -16,6 +16,17 @@ class Vectoriser:
 
         for vectoriser in self.trained_vectorisers:
             feature_list = vectoriser.transform(list_of_strings).tolist()
+
+            # try:
+            #     feature_list = feature_list.toarray()
+            # except AttributeError:
+            #     pass
+            #
+            # try:
+            #     feature_list = feature_list.tolist()
+            # except AttributeError:
+            #     pass
+
 
             for idx, feature in enumerate(feature_list):
                 list_of_vectors[idx] += feature
