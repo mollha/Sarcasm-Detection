@@ -546,8 +546,15 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \newpage
 \subsection{Deep Learning Experimentation}
+\subsubsection{Experimental Settings}
+Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used
 
-\noindent \textbf{Experimental Settings --} For the deep learning experiments, early stopping is used to determine the appropriate number of epochs. This is where training is interrupted if a chosen performance measure stops improving - in these experiments, the performance measure used is the loss on the validation dataset. Additionally, patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is terminate. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve. We track the best performing model during training, and this is the model with the lowest validation loss.
+The upper-bound on the number of epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+
+\begin{enumerate}
+	\item \textbf{Early stopping --} Training is interrupted when a chosen performance measure stops improving. We monitor the minimisation of the loss on the validation dataset as our chosen performance measure and use this to determine the appropriate number of epochs.
+	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
+\end{enumerate}
 
 Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added. This is a modified version of the 
 
