@@ -151,7 +151,7 @@ def augment_data(sarcasm_data: np.ndarray, labels: np.ndarray, flag=False) -> tu
 
 def get_batch_size(model_name: str) -> int:
     # online learning for lstms sets batch size to 1
-    batch_sizes = {'lstm': 32, 'bi-lstm': 1, 'cnn': 32, 'vanilla-rnn': 1, 'vanilla-gru': 1}
+    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32}
     return batch_sizes[model_name]
 
 
