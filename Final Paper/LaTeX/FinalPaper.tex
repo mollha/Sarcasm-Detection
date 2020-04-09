@@ -80,14 +80,13 @@ This is achieved by...
 
 %This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.\\%
 
-\vfill
-
+\newpage
 \section{Related Work}
 \noindent In this section, we compare classification model architectures used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. In most approaches, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. 
-In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. For clarity, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content such as product reviews.
+In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. For clarity, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content such as product reviews.\vspace{-10pt}
 
 \begin{center}
-	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm
+	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm\vspace{-10pt}
 \end{center}
 \begin{center}
 \begin{tabular}{p{1.5cm}p{13cm}}
@@ -100,16 +99,16 @@ In similar studies, the terms irony and sarcasm are often used interchangeably \
 	Sarcasm & The use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way.\footnotemark[2]\\
 	\hline
 \end{tabular}\\
-\end{center}
+\end{center}\vspace{-10pt}
 \footnotetext[1]{www.dictionary.cambridge.org/dictionary/english/irony}
 \footnotetext[2]{www.dictionary.cambridge.org/dictionary/english/sarcasm}
 
-\subsection{Traditional Classifiers}
+\subsection{Traditional Classifiers}\vspace{-10pt}
 \noindent A number of simple linguistic approaches have been used in previous research. One such class of na\"{i}ve approaches is \textit{rule-based}, where text is classified based on a set of linguistic rules. Maynard and Greenwood (2014) \cite{maynard2014cares} proposed that the sentiment contained in hashtags can indicate the prescence of sarcasm in tweets, such as \#notreally in the example "I love doing the washing-up \#notreally". They used a rule-based approach, whereby if the sentiment of a tweet contradicts that of the hashtag, it is labelled sarcastic. They reported an $F_{1}$ score of 91.03\% on a random sample consisting of 400 tweets. 
 
 Riloff et al. (2013) \cite{riloff2013sarcasm} sarcasm is described as a contrast between positive sentiment and negative situation. This description is leveraged by Bharti et al (2015) \cite{bharti2015parsing}, which presents two rule-based approaches to sarcasm detection. The first approach identifies sentiment bearing situation phrases, classifying the phrase as sarcastic if the negative situation is juxtaposed with a positive sentiment phrase. Rule-based techniques are fairly primitive when compared to their modern, deep learning counterparts, as each ruleset must be generated manually and for each dataset.
 
-\subsection{Machine-Learning Classifiers}
+\subsection{Machine-Learning Classifiers}\vspace{-10pt}
 \noindent A machine-learning algorithm can learn patterns that are associated with sarcastic and non-sarcastic data. This allows it to classify unseen text into these categories without the need for a static linguistic rule set. If the training data is high-quality and plentiful, or an effective unsupervised-learning algorithm is used, then the model can begin to make accurate predictions. There are a number of commonly used architectures of machine-learning classifiers, including Na\"{i}ve Bayes, Support Vector machines (SVMs) and logistic regression based classifiers. Although, not all approaches fit neatly into these categories.
 
 Tsur et al. (2010) \cite{tsur2010icwsm} proposed a novel semi-supervised algorithm, \textit{SASI}, for sarcasm identification; trained on a small balanced seed of 160 reviews (80 sarcastic and 80 non-sarcastic) from a corpus of 66000 human-annotated Amazon product reviews. In order to mimic the ambiguous and spectral nature of sarcasm, a discrete score between 1 (non-sarcastic) and 5 (definitely sarcastic) is assigned to each sentence; scores of 3 and higher indicate sarcasm. Syntactic and pattern-based features are extracted and fed to a classifier which utilises a strategy similar to k-nearest neighbor (kNN), whereby a sarcasm score is assigned to an unseen vector based upon the weighted average of the k-nearest neighbors in the training set. They reported an $F_{1}$ score of 82.7\% on the binary classification task
@@ -118,7 +117,7 @@ Na\"{i}ve Bayes classifiers are supervised algorithms that use bayes theorem to 
 
 Support Vector Machines (SVM), can be effective when smaller amounts of training data are available, however they require more computational resources than na\"{i}ve bayes. SVMs use kernel functions to draw hyperplanes dividing a space into subspaces. Gonz{\'a}lez-Ib{\'a}nez et al\. (2011) \cite{gonzalez2011identifying} used two classifiers, support vector machine with sequential minimal optimisation, as well as logistic regression. Their best result was an accuracy of 0.65, achieved with the combination of support vector machine with sequential miniminal optimisation and unigrams. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used support vector machine and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
-\subsection{Deep-Learning Classifiers}
+\subsection{Deep-Learning Classifiers}\vspace{-10pt}
 Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Though there are many forms of DNN, two commonly used architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). Oftentimes, deep neural networks require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains.
 
 %https://arxiv.org/pdf/1703.03091.pdf
@@ -147,7 +146,11 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 %You need to give all authors' names in each reference.  Do not use ``et al.'' unless there are more than five authors.  Papers that have not been published should be cited as ``unpublished'' \cite{euther}.  Papers that have been submitted or accepted for publication should be cited as ``submitted for publication'' as in \cite{futher} .  You can also cite using just the year when the author's name appears in the text, as in ``but according to Futher \citeyear{futher}, we \dots''.  Where an authors has more than one publication in a year, add `a', `b' etc. after the year.
 
 \section{Solution}
-\noindent This project addresses a binary classification problem, aiming to identify if a given snippet of text is sarcastic or non-sarcastic. First, the data is collected and pre-processed. Then, features are extracted and the data is vectorised. These vectors are used to train to a classifier, which is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
+\noindent This project addresses a binary classification problem, aiming to determine if an unseen snippet of text is sarcastic or non-sarcastic. Our sarcasm detection tool employs trained classification models which form  predictions based on the knowledge gained from features encountered during training. Developing highly accurate classification models remains the greatest challenge in this project, therefore it is the central focus of our solution. Model peformance is strongly dependent on the data pre-processing and feature extraction techniques employed, as well as the choice of model architecture and training procedures. 
+
+In our solution, high quality datasets are first collected and pre-processed. During feature extraction, the textual training data is transformed into numerical vectors and these features are used to train a classification model. The trained classifier is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
+
+
 
 \begin{center}
 	\textbf{Figure 2:} Overview of the model pipeline
@@ -163,9 +166,11 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
 
 \subsection{Datasets}
-\noindent In similar studies, large datasets have been collected and some have been made publically available. We experiment with data from multiple domains and online platforms, including Twitter, Amazon, and online news outlets, giving broad coverage of sarcasm usage in both formal and informal media. The suitability of a dataset is determined based on its size, cleanliness and composition. For example, datasets that are too small may not provide a representative view of the true distribution of the data, whereas it may be infeasible to train a model in a reasonable length of time using datasets that are too large as this will require vast amounts of computational resources, hence we use datasets with fewer than 50000 instances. Human-annotated data with minimal spelling and grammatical errors is typically of higher quality than data that is automatically selected using heuristics, however it is not always possible to gather this data in large quantities due to the time overhead involved.
+\noindent In similar studies, large datasets have been collected and some have been made publically available. We experiment with data from multiple domains and online platforms, including Twitter, Amazon, and Online News outlets, giving broad coverage of sarcasm usage in formal and informal media. The suitability of a dataset is determined based on size, cleanliness and composition.
 
-We also prefer to use datasets whereby the number of positive (sarcastic) and negative (non-sarcastic) instances are approximately balanced, despite sarcasm being a minority class as it is used infrequently in real-life. The reason for this is illustrated in the following example: if we train a classifier on an unbalanced binary dataset whereby the class distribution is 95\% to 5\%, we can achieve an accuracy of 95\% simply by annotating each datapoint with the majority class label. Most machine learning algorithms are designed to optimise overall accuracy, therefore is it important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
+Small datasets do not provide a sufficiently representative view of the true distribution of data, therefore a model trained on this data will fail to generalise to unseen data. On the contrary, it may be infeasible to train a model in a reasonable length of time using large datasets as this will require vast amounts of computational resources. For this reason, we use datasets with fewer than 50000 instances. 
+
+Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved. Additionally, we  prefer to use balanced datasets; despite sarcasm being a minority class due to its infrequent usage in real-life conversation. The reason for this is illustrated in the following example: if we train a classifier on an unbalanced binary dataset whereby the class distribution is 95\% to 5\%, we can achieve an accuracy of 95\% simply by annotating each datapoint with the majority class label. Most machine learning algorithms are designed to optimise overall accuracy, therefore is it important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
 
 
 % For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
@@ -286,6 +291,7 @@ In terms of machine learning models, we experiment with supervised and unsupervi
 
 \begin{enumerate}
 	\item \textbf{K-Means Clustering --} As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups.
+	
 	\item \textbf{Support Vector Machine (SVM) --} A hyperplane is drawn such that the positive and negative features are partitioned into two groups. The features at the shortest euclidean distance to the hyperplane are known as support vectors, and their distance from the hyperplane is known as the margin. An SVM attempts to maximise this margin in order to create a decisive boundary between the sarcastic and non-sarcastic data.
 	
 	\item \textbf{Na\"{i}ve Bayes Classifier --} This is a probabilistic model derived from Bayes theorem, where all features are assumed to be independent of one another. Commonly used in the document classification problem, we calculate ${P(Sarcastic | features)}$. This is  the probability of an outcome A (i.e. statement is sarcastic), given its feature vector, x. There are a number of variations of Na\"{i}ve Bayes - including Multinomial, Bernoulli and Gaussian. 
