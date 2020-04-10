@@ -4,15 +4,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
 from keras.engine import Layer
-from ..data_processing.helper import prepare_data
+from Code.pkg.data_processing.helper import prepare_data
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Dense, Lambda, dot, Activation, concatenate
 from keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
     Bidirectional, LeakyReLU, MaxPooling1D
-from keras.callbacks import Callback
 from keras.layers import SimpleRNN, GRU
 from keras.layers.embeddings import Embedding
 import keras.backend as K
@@ -23,7 +21,6 @@ from sklearn.metrics import f1_score
 import tensorflow as tf
 import tensorflow_hub as hub
 import spacy
-
 
 
 nlp = spacy.load('en_core_web_md')
@@ -108,30 +105,6 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-class AttentionLayer(Layer):
-    def __init__(self, **kwargs):
-        self.W = None
-        self.b = None
-        super(AttentionLayer, self).__init__(**kwargs)
-
-    def build(self, input_shape):
-        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
-        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
-        super(AttentionLayer, self).build(input_shape)
-
-    def call(self, x, mask=None):
-        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
-        at = K.softmax(et)
-        at = K.expand_dims(at, axis=-1)
-        output = x*at
-        return K.sum(output, axis=1)
-
-    def compute_output_shape(self, input_shape):
-        return input_shape[0], input_shape[-1]
-
-    def get_config(self):
-        return super(AttentionLayer, self).get_config()
-
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
     tokens = tokens[0:limit]
@@ -168,7 +141,6 @@ def augment_data(sarcasm_data: np.ndarray, labels: np.ndarray, flag=False) -> tu
 
 
 def get_batch_size(model_name: str) -> int:
-    return 32
     # online learning for lstms sets batch size to 1
     batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32}
     return batch_sizes[model_name]
@@ -241,28 +213,16 @@ def vanilla_gru(model, shape):
     return model
 
 
-# def cnn(model):
-#     model.add(Dropout(0.2))
-#     model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
-#     #model.add(LeakyReLU(alpha=0.1))
-#     model.add(GlobalMaxPooling1D())
-#     # vanilla hidden layer:
-#     model.add(Dense(250))
-#     model.add(Dropout(0.2))
-#     model.add(LeakyReLU(alpha=0.1))
-#     model.add(Dense(1, activation='sigmoid'))
-#     model.compile(loss='binary_crossentropy',
-#                   optimizer='adam',
-#                   metrics=['accuracy'])
-#     return model
-
-def lstm_with_attention(model):
-    model.add(LSTM(60, return_sequences=True))
-    model.add(AttentionLayer())
-    model.add(Dropout(0.1))
-    model.add(Dense(50, activation="relu"))
-    model.add(Dropout(0.1))
-    model.add(Dense(1, activation="sigmoid"))
+def cnn(model):
+    model.add(Dropout(0.2))
+    model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
+    #model.add(LeakyReLU(alpha=0.1))
+    model.add(GlobalMaxPooling1D())
+    # vanilla hidden layer:
+    model.add(Dense(250))
+    model.add(Dropout(0.2))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
@@ -349,9 +309,6 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     model.add(e_layer)
     if model_name == 'lstm':
         model = lstm_network(model)
-    elif model_name == 'attention-lstm':
-        model = lstm_with_attention(model)
-        c_layer['AttentionLayer'] = AttentionLayer()
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model)
     elif model_name == 'cnn':
@@ -361,19 +318,6 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     elif model_name == 'vanilla-gru':
         model = vanilla_gru(model, (len(s_data), length_limit))
     return s_data, l_data, model, c_layer
-
-
-def evaluate_model(model_name, trained_model, testing_data, testing_labels):
-    max_batch_size = get_batch_size(model_name)
-    y_pred = trained_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
-    score = f1_score(np.array(testing_labels), np.array(y_pred))
-    # evaluate
-
-    # class_weight = {0: 1.0, 1: 1.0}
-    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-    # print(model.summary())
-
-    print('F1 Score: ', score)
 
 
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
@@ -401,17 +345,22 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
     early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
 
-    # sess.run(tf.compat.v1.global_variables_initializer())
-    model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
-                                epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+    with tf.compat.v1.Session().as_default():
+        # sess.run(tf.compat.v1.global_variables_initializer())
+        model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
+                                 epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
-    dl_model = load_model_from_file(file_name, custom_layer)
-    print(dl_model.summary())
+        dl_model = load_model_from_file(file_name, custom_layer)
+        y_pred = dl_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
+        score = f1_score(np.array(testing_labels), np.array(y_pred))
+        print('F1 Score: ', score)
 
-    dl_model.layers[idx].output
+        # evaluate
 
-    evaluate_model(model_name, dl_model, testing_data, testing_labels)
+        # class_weight = {0: 1.0, 1: 1.0}
+        # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
+        # print(model.summary())
+        visualise_results(model_history, str(base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
 
-    visualise_results(model_history, str(
-        base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
+
 # ---------------------------------------------------------------------------------------------------------------------

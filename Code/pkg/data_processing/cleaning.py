@@ -3,6 +3,7 @@ import spacy
 
 nlp = spacy.load('en_core_web_md')
 
+
 def data_cleaning(data_string: str, rm_urls=True, rm_punc=True, lower=True, rm_numbers=True, rm_dp_wspc=True, rm_stop=True):
     """
     Given data as a string and a set of flags, clean data accordingly

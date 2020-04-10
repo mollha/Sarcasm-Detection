@@ -4,7 +4,7 @@ base_path = pathlib.Path(__file__).parent.parent.resolve()
 sys.path.insert(1, str(base_path))
 import tensorflow as tf
 import spacy
-from Code.pkg.model_training.DLmodelsNew import get_dl_results
+from Code.pkg.model_training.DLmodels import get_dl_results
 from Code.pkg.model_training.MLmodels import get_ml_results
 from itertools import combinations
 
@@ -17,7 +17,7 @@ def run_dl(models, vectors, datasets):
     for dataset in datasets:  # 0 - AMAZON, 1 - NEWS, 2 - TWEETS
         for model in models:
             for vector in vectors:
-                get_dl_results(model, dataset, vector, set_size=10000)
+                get_dl_results(model, dataset, vector)
 
 
 def run_ml(models, vectors, datasets, features):
@@ -55,7 +55,11 @@ if __name__ == '__main__':
 #     dl_vector_list = ['elmo']
 #     run_dl(dl_model_list, dl_vector_list, [1])
 
-    dl_model_list = ['attention-lstm']
+    # dl_model_list = ['attention-lstm']
+    # dl_vector_list = ['glove']
+    # run_dl(dl_model_list, dl_vector_list, [2])
+
+    dl_model_list = ['bi-lstm']
     dl_vector_list = ['glove']
     run_dl(dl_model_list, dl_vector_list, [2])
     #

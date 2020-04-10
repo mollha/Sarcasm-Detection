@@ -117,6 +117,10 @@ def combine_features(feature_columns: list) -> pd.Series:
 
     return feature_col
 
+def get_dataset_name(dataset_number: int) -> str:
+    dataset_paths = ["amazon_reviews", "news_headlines", "ptacek"]
+    return dataset_paths[dataset_number]
+
 
 def prepare_data(dataset_number: int, vector_type: str, feature_list: list, set_size=None):
     if not vector_type and not feature_list:
@@ -124,7 +128,7 @@ def prepare_data(dataset_number: int, vector_type: str, feature_list: list, set_
 
     base_path = Path(__file__).parent
     dataset_paths = ["amazon_reviews", "news_headlines", "ptacek"]
-    dataset_name = dataset_paths[dataset_number]
+    dataset_name = get_dataset_name(dataset_number)
     print('\nSelected dataset: ' + dataset_name)
 
     path_to_dataset_root = "../datasets/" + dataset_name
