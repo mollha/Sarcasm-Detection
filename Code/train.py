@@ -17,7 +17,7 @@ def run_dl(models, vectors, datasets):
     for dataset in datasets:  # 0 - AMAZON, 1 - NEWS, 2 - TWEETS
         for model in models:
             for vector in vectors:
-                get_dl_results(model, dataset, vector)
+                get_dl_results(model, dataset, vector, set_size=10000)
 
 
 def run_ml(models, vectors, datasets, features):
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     dl_model_list = ['bi-lstm']
     dl_vector_list = ['glove']
-    run_dl(dl_model_list, dl_vector_list, [2])
+    run_dl(dl_model_list, dl_vector_list, [0])
     #
     # dl_model_list = ['bi-lstm']
     # dl_vector_list = ['elmo']

@@ -5,6 +5,7 @@ import pandas as pd
 import pickle
 from pathlib import Path
 from keras.engine import Layer
+from ..data_processing.augmentation import synonym_replacement
 from ..data_processing.helper import prepare_data, get_dataset_name
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
@@ -420,6 +421,16 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
     base_path = Path(__file__).parent
     dataset_name, sarcasm_labels, _, clean_data, _ = prepare_data(dataset_number, vector_type, [], set_size)
+
+    # --------------- Access augmented data if using Amazon review corpus ----------------
+    if dataset_number == 0:
+        target_length = set_size if set_size is not None else 10000
+        clean_data, sarcasm_labels = synonym_replacement(clean_data, sarcasm_labels, target_length)
+        new_data = pd.concat([sarcasm_labels, clean_data], axis=1)
+        new_data.to_csv(
+            path_or_buf=str(base_path / ('../datasets/' + dataset_name + '/processed_data/AugmentedData.csv')),
+            index=False)
+
 
     print('Training ' + model_name.upper() + ' using ' + vector_type + ' vectors.')
     print('Dataset size: ' + str(len(clean_data)) + '\n')
