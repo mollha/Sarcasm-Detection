@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  12 APR 2020 16:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  12 APR 2020 17:46
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -30,6 +30,17 @@ Package: times 2005/04/12 PSNFSS-v9.2a (SPQR)
 ) (durhampaper.sty
 Durham CS undergraduate paper style 'durhampaper.sty'.
 )
+("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\
+array.sty"
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen103
+\ar@mcellbox=\box27
+\extrarowheight=\dimen104
+\NC@list=\toks14
+\extratabsurround=\skip43
+\backup@length=\skip44
+\ar@cellbox=\box28
+)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/url\ur
 l.sty"
 \Urlmuskip=\muskip10
@@ -38,7 +49,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmat
 h\amsmath.sty"
 Package: amsmath 2019/04/01 v2.17c AMS math features
-\@mathmargin=\skip43
+\@mathmargin=\skip45
 
 For additional information on amsmath, use the `?' option.
 
@@ -49,13 +60,13 @@ Package: amstext 2000/06/29 v2.01 AMS text
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmat
 h\amsgen.sty"
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks14
-\ex@=\dimen103
+\@emptytoks=\toks15
+\ex@=\dimen105
 ))
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmat
 h\amsbsy.sty"
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen104
+\pmbraise@=\dimen106
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmat
 h\amsopn.sty"
@@ -71,9 +82,9 @@ LaTeX Info: Redefining \overline on input line 389.
 LaTeX Info: Redefining \ldots on input line 486.
 LaTeX Info: Redefining \dots on input line 489.
 LaTeX Info: Redefining \cdots on input line 610.
-\Mathstrutbox@=\box27
-\strutbox@=\box28
-\big@size=\dimen105
+\Mathstrutbox@=\box29
+\strutbox@=\box30
+\big@size=\dimen107
 LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
 \macc@depth=\count93
@@ -81,21 +92,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
 \dotsspace@=\muskip11
 \c@parentequation=\count95
 \dspbrk@lvl=\count96
-\tag@help=\toks15
+\tag@help=\toks16
 \row@=\count97
 \column@=\count98
 \maxfields@=\count99
-\andhelp@=\toks16
-\eqnshift@=\dimen106
-\alignsep@=\dimen107
-\tagshift@=\dimen108
-\tagwidth@=\dimen109
-\totwidth@=\dimen110
-\lineht@=\dimen111
-\@envbody=\toks17
-\multlinegap=\skip44
-\multlinetaggap=\skip45
-\mathdisplay@stack=\toks18
+\andhelp@=\toks17
+\eqnshift@=\dimen108
+\alignsep@=\dimen109
+\tagshift@=\dimen110
+\tagwidth@=\dimen111
+\totwidth@=\dimen112
+\lineht@=\dimen113
+\@envbody=\toks18
+\multlinegap=\skip46
+\multlinetaggap=\skip47
+\mathdisplay@stack=\toks19
 LaTeX Info: Redefining \[ on input line 2855.
 LaTeX Info: Redefining \] on input line 2856.
 )
@@ -110,8 +121,8 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\i
 nputenc.sty"
 Package: inputenc 2018/08/11 v1.3c Input encoding file
-\inpenc@prehook=\toks19
-\inpenc@posthook=\toks20
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\ut
 f8x.def"
@@ -126,48 +137,48 @@ i-global.def"
 File: uni-global.def 2013/05/13 UCS: Unicode global data
 )
 \uc@secondtry=\count100
-\uc@combtoks=\toks21
-\uc@combtoksb=\toks22
-\uc@temptokena=\toks23
+\uc@combtoks=\toks22
+\uc@combtoksb=\toks23
+\uc@temptokena=\toks24
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/wrapfi
 g\wrapfig.sty"
-\wrapoverhang=\dimen112
-\WF@size=\dimen113
+\wrapoverhang=\dimen114
+\WF@size=\dimen115
 \c@WF@wrappedlines=\count101
-\WF@box=\box29
-\WF@everypar=\toks24
+\WF@box=\box31
+\WF@everypar=\toks25
 Package: wrapfig 2003/01/31  v 3.6
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bookta
 bs\booktabs.sty"
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen114
-\lightrulewidth=\dimen115
-\cmidrulewidth=\dimen116
-\belowrulesep=\dimen117
-\belowbottomsep=\dimen118
-\aboverulesep=\dimen119
-\abovetopsep=\dimen120
-\cmidrulesep=\dimen121
-\cmidrulekern=\dimen122
-\defaultaddspace=\dimen123
+\heavyrulewidth=\dimen116
+\lightrulewidth=\dimen117
+\cmidrulewidth=\dimen118
+\belowrulesep=\dimen119
+\belowbottomsep=\dimen120
+\aboverulesep=\dimen121
+\abovetopsep=\dimen122
+\cmidrulesep=\dimen123
+\cmidrulekern=\dimen124
+\defaultaddspace=\dimen125
 \@cmidla=\count102
 \@cmidlb=\count103
-\@aboverulesep=\dimen124
-\@belowrulesep=\dimen125
+\@aboverulesep=\dimen126
+\@belowrulesep=\dimen127
 \@thisruleclass=\count104
 \@lastruleclass=\count105
-\@thisrulewidth=\dimen126
+\@thisrulewidth=\dimen128
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/enumit
 em\enumitem.sty"
 Package: enumitem 2019/06/20 v3.9 Customized lists
-\enitkv@toks@=\toks25
-\labelindent=\skip46
-\enit@outerparindent=\dimen127
-\enit@toks=\toks26
-\enit@inbox=\box30
+\enitkv@toks@=\toks26
+\labelindent=\skip48
+\enit@outerparindent=\dimen129
+\enit@toks=\toks27
+\enit@inbox=\box32
 \enit@count@id=\count106
 \enitdp@description=\count107
 )
@@ -178,7 +189,7 @@ Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphi
 cs\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks27
+\KV@toks@=\toks28
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphi
 cs\graphics.sty"
@@ -198,38 +209,38 @@ Package graphics Info: Driver file: pdftex.def on input line 105.
 cs-def\pdftex.def"
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen128
-\Gin@req@width=\dimen129
+\Gin@req@height=\dimen130
+\Gin@req@width=\dimen131
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\
 float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count108
-\float@exts=\toks28
-\float@box=\box31
-\@float@everytoks=\toks29
-\@floatcapt=\box32
+\float@exts=\toks29
+\float@box=\box33
+\@float@everytoks=\toks30
+\@floatcapt=\box34
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/multir
 ow\multirow.sty"
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
-\multirow@colwidth=\skip47
+\multirow@colwidth=\skip49
 \multirow@cntb=\count109
-\multirow@dima=\skip48
-\bigstrutjot=\dimen130
+\multirow@dima=\skip50
+\bigstrutjot=\dimen132
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/titles
 ec\titlesec.sty"
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box33
-\beforetitleunit=\skip49
-\aftertitleunit=\skip50
-\ttl@plus=\dimen131
-\ttl@minus=\dimen132
-\ttl@toksa=\toks30
-\titlewidth=\dimen133
-\titlewidthlast=\dimen134
-\titlewidthfirst=\dimen135
+\ttl@box=\box35
+\beforetitleunit=\skip51
+\aftertitleunit=\skip52
+\ttl@plus=\dimen133
+\ttl@minus=\dimen134
+\ttl@toksa=\toks31
+\titlewidth=\dimen135
+\titlewidthlast=\dimen136
+\titlewidthfirst=\dimen137
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cite\c
 ite.sty"
@@ -239,20 +250,20 @@ Package: cite 2015/02/27  v 5.5
 ) (FinalPaper.aux)
 \openout1 = `FinalPaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 3
-0.
+2.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss
 \ot1ptm.fd"
@@ -266,16 +277,16 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 /mkii\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count110
-\scratchdimen=\dimen136
-\scratchbox=\box34
+\scratchdimen=\dimen138
+\scratchbox=\box36
 \nofMPsegments=\count111
 \nofMParguments=\count112
-\everyMPshowfont=\toks31
+\everyMPshowfont=\toks32
 \MPscratchCnt=\count113
-\MPscratchDim=\dimen137
+\MPscratchDim=\dimen139
 \MPnumerator=\count114
 \makeMPintoPDFobject=\count115
-\everyMPtoPDFconversion=\toks32
+\everyMPtoPDFconversion=\toks33
 )
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdi
 ek\epstopdf-base.sty"
@@ -335,23 +346,23 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 36.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 34.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 36.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 51.
  [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--69
+Underfull \hbox (badness 10000) in paragraph at lines 67--71
 
  []
 
 [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 
  []
 
@@ -359,35 +370,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 131--132
 <Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 161.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 163.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
- [5 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 190--190
-[]\OT1/ptm/b/n/12 Dataset
- []
-
-
-Overfull \hbox (8.78436pt too wide) in paragraph at lines 190--191
-[]\OT1/ptm/b/n/12 Benchmark
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
+ [5 <./Images/modelpipeline2.png>] [6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-
- []
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 231--232
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 233--234
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
 
  []
 
@@ -396,7 +387,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 233--234
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
+Underfull \hbox (badness 10000) in paragraph at lines 264--265
 
  []
 
@@ -404,102 +395,102 @@ Underfull \hbox (badness 10000) in paragraph at lines 240--241
 <Images/glovediagram.png, id=37, 344.487pt x 274.02374pt>
 File: Images/glovediagram.png Graphic file (type png)
 <use Images/glovediagram.png>
-Package pdftex.def Info: Images/glovediagram.png  used on input line 248.
+Package pdftex.def Info: Images/glovediagram.png  used on input line 272.
 (pdftex.def)             Requested size: 138.34096pt x 110.0424pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
+Underfull \hbox (badness 10000) in paragraph at lines 281--282
 
  []
 
 [9 <./Images/glovediagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 259--261
+Underfull \hbox (badness 10000) in paragraph at lines 283--285
 
  []
 
 <Images/elmo_diagram.png, id=46, 437.83575pt x 331.2375pt>
 File: Images/elmo_diagram.png Graphic file (type png)
 <use Images/elmo_diagram.png>
-Package pdftex.def Info: Images/elmo_diagram.png  used on input line 267.
+Package pdftex.def Info: Images/elmo_diagram.png  used on input line 291.
 (pdftex.def)             Requested size: 184.44994pt x 139.54335pt.
 
-Underfull \hbox (badness 2707) in paragraph at lines 272--273
+Underfull \hbox (badness 2707) in paragraph at lines 296--297
 \OT1/ptm/m/n/12 con-tex-tu-alised word rep-re-sen-ta-tions. They are
  []
 
 
-Underfull \hbox (badness 2253) in paragraph at lines 272--273
+Underfull \hbox (badness 2253) in paragraph at lines 296--297
 \OT1/ptm/m/n/12 char-ac-ter based, there-fore ro-bust rep-re-sen-ta-tions
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 272--273
+Underfull \hbox (badness 1259) in paragraph at lines 296--297
 \OT1/ptm/m/n/12 can be con-structed for out-of-vocabulary to-kens.
  []
 
 
-Underfull \hbox (badness 1803) in paragraph at lines 272--273
+Underfull \hbox (badness 1803) in paragraph at lines 296--297
 \OT1/ptm/m/n/12 How-ever, rather than 'looking-up' pre-computed
  []
 
 
-Underfull \hbox (badness 1394) in paragraph at lines 272--273
+Underfull \hbox (badness 1394) in paragraph at lines 296--297
 \OT1/ptm/m/n/12 em-bed-dings, ELMo gen-er-ates them dy-nam-i-cally.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--273
+Underfull \hbox (badness 10000) in paragraph at lines 296--297
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--277
+Underfull \hbox (badness 10000) in paragraph at lines 299--301
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--279
+Underfull \hbox (badness 10000) in paragraph at lines 302--303
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 280--281
+Underfull \hbox (badness 10000) in paragraph at lines 304--305
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--303
+Underfull \hbox (badness 10000) in paragraph at lines 325--327
 
  []
 
 [10 <./Images/elmo_diagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 332--333
+Underfull \hbox (badness 10000) in paragraph at lines 356--357
 
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 372--373
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 389--389
-[]\OT1/ptm/b/n/12 Sentiment| 
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 413--413
+[]|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 [13]
 <Images/absolute_differences.png, id=61, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 40
-6.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 43
+0.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 402--414
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 426--438
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--429
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
 
  []
 
@@ -516,13 +507,13 @@ i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )) [20] [21] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4626 strings out of 492452
- 65873 string characters out of 3114457
- 145977 words of memory out of 3000000
- 8882 multiletter control sequences out of 15000+200000
+ 4681 strings out of 492452
+ 66635 string characters out of 3114457
+ 144868 words of memory out of 3000000
+ 8934 multiletter control sequences out of 15000+200000
  27820 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 46i,14n,30p,1783b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 46i,14n,30p,1783b,469s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is house/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
 ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Pa
@@ -542,7 +533,7 @@ al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is
 house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
 ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
 tmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 305073 bytes).
+Output written on FinalPaper.pdf (21 pages, 304463 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

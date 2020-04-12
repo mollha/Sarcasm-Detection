@@ -1,6 +1,8 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{times}
 \usepackage{durhampaper}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{harvard}
@@ -168,7 +170,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
 \newpage
 \subsection{Datasets}
-\vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. \vspace{-4.2pt}
+\vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This includes the number of instances in the dataset, the average number of tokens per instance and a benchmark score where the dataset was used in the original paper to train one or more classifiers. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. \vspace{-4.2pt}
 
 
 \begin{enumerate}[leftmargin=0cm]
@@ -184,32 +186,54 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 
 \begin{center}
-	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
-	\begin{tabular}{p{3.3cm}p{1.6cm}p{2.5cm}p{2.2cm}p{2.2cm}p{1.8cm}}
+	\textbf{Figure -}:  Statistical breakdown of the datasets used in this project \\
+	\vspace{3pt}
+	\begin{tabular}{P{3.3cm}P{2.6cm}P{2.5cm}P{2.2cm}P{3.4cm}}
 		\toprule
-		\textbf{Dataset} & \textbf{Dataset Size} & \textbf{Composition} & \textbf{Avg. tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark Score}\\
 		\hline
-		News Headlines & 28619 & \begin{tabular}{c@{}@{}@{}} pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  \hspace{15pt} 11.2 & 97.8\% & 0.897\\
+		\textbf{Dataset} & \textbf{Dataset Size} & \textbf{Composition}* & \textbf{Avg. tokens} & \textbf{Benchmark Score}\vspace{1pt}\\
 		\hline
-		Amazon Reviews & 1254 & \begin{tabular}{c@{}@{}@{}} pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
+		News Headlines & 28619 & \begin{tabular}{c@{}@{}@{}} pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  11.2 & 0.897\\
+		\hline
+		Amazon Reviews & 1254 & \begin{tabular}{c@{}@{}@{}} pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 & N/A \\
 		\midrule
-		Tweets & 17280 & \begin{tabular}{c@{}@{}@{}} pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  \hspace{15pt}19.8 & 73.9\% & 0.947 \\
+		Twitter Data & 17280 & \begin{tabular}{c@{}@{}@{}} pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  19.8 & 0.947 \\
 		\hline
-	\end{tabular}\\
+	\end{tabular}
 \end{center}
+\vspace{-7pt}
+*\textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
 \vspace{2pt}
 
-\noindent Including the number of instances in the dataset, the average number of tokens per instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. A benchmark score is provided where the dataset was used in the original paper to train one or more classifiers. The best score achieved in each paper is used as the benchmark which we aim to exceed.
-
-The selected datasets were chosen due to their size, cleanliness and composition. Each of the selected datasets are sufficiently large enough to provide a representative view of their respective data sources without exceeding the available computational resources. In addition, these approximately balanced datasets are preferable to unbalanced datasets; despite the infrequent usage of sarcasm in real-life conversations. We can achieve 95\% accuracy when training a classifier on an unbalanced binary dataset where the class distribution is 95\% to 5\%, simply by annotating each datapoint with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
-
-
+\noindent The selected datasets were chosen due to their size, cleanliness and composition. Each of the selected datasets are sufficiently large enough to provide a representative view of their respective data sources without exceeding the available computational resources. In addition, these approximately balanced datasets are preferable to unbalanced datasets; despite the infrequent usage of sarcasm in real-life conversations. We can achieve 95\% accuracy when training a classifier on an unbalanced binary dataset where the class distribution is 95\% to 5\%, simply by annotating each datapoint with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.
 
 \subsection{Data pre-processing}
-\noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features. \\
+\vspace{-4.2pt}
+\noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
+
+
+\begin{center}
+\textbf{Figure -}:  Proportion of tokens in the GloVe dictionary before and after cleaning\\
+\vspace{4pt}
+\begin{tabular}{p{3cm}||p{3cm}p{3cm}}
+	\toprule
+	\hline
+	&\multicolumn{2}{c}{\textbf{Proportion in GloVe dictionary}} \\
+	\hline
+	\textbf{Dataset} & \textbf{Original data} & \textbf{Processed data}\\
+	\hline
+	News Headlines & \hspace{20pt}97.8\% & \hspace{20pt}\_\%\\
+	\hline
+	Amazon Reviews & \hspace{20pt}98.2\% & \hspace{20pt}\_\%\\
+	\hline
+	Twitter Data & \hspace{20pt}73.9\% & \hspace{20pt}\_\%\\
+	\hline
+\end{tabular}\\
+\end{center}
 
 The same pre-processing techniques are applied to all three datasets, although the corpus of tweets and the set of amazon reviews are more likely to benefit from these procedures as they contain more noise.
 
+ and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. 
 
 
 
