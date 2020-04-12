@@ -155,7 +155,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 
 
 \begin{center}
-	\textbf{Figure 2:} Overview of the model pipeline
+	\textbf{Figure \_:} Overview of the solution
 \end{center}
 \begin{center}
 	\includegraphics[width=0.8\textwidth]{Images/modelpipeline2.png}
@@ -166,7 +166,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 \noindent This project is majoritively written in \textbf{Python}, as it has an abundance of open-source libraries well-suited to machine learning and deep-learning tasks. Additionally, Python is very readable, making it easy for others to interpret, test and reproduce code. We use \textbf{pandas} for manipulating the datasets, as it provides functionality for applying functions globally across the dataset. We use \textbf{pickle} to store the vectorised datasets in memory. Vectorisation is a costly process, therefore writing the files to memory reduces long-term time demands during the experimentation and testing phases. We also  incorporate \textbf{SpaCy} when cleaning and tokenising the data.
 
 In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
-
+\newpage
 \subsection{Datasets}
 \vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. \vspace{-4.2pt}
 
@@ -175,7 +175,7 @@ In terms of \textit{classification}, we implement most of the machine learning a
 	\item \textbf{News Headlines Dataset For Sarcasm Detection} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnote{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnote{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.\vspace{-4.2pt}
 	
 	
-	\item \textbf{Sarcasm Amazon Review Corpus} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy.\vspace{-4.2pt}
+	\item \textbf{Sarcasm Amazon Review Corpus} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This dataset was not used by its compilers for classification, hence there is no score available for comparison.\vspace{-4.2pt}
 	
 	\item \textbf{Pt\'a\v{c}ek et al. (2014)} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
 \end{enumerate}
@@ -199,22 +199,6 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \end{center}
 \vspace{2pt}
 
-\begin{center}
-	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
-	\begin{tabular}{p{4.3cm}p{2.1cm}p{2.6cm}p{2.2cm}p{1.8cm}}
-		\toprule
-		\textbf{Dataset} & \textbf{Number of data points} & \textbf{Avg. tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark Score}\\
-		\midrule\midrule
-		News Headlines Dataset For Sarcasm Detection & \begin{tabular}{c@{}@{}@{}} 28619\\ pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  \hspace{15pt} 11.2 & 97.8\% & 0.897\\
-		\midrule
-		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
-			\midrule
-		Pt\'a\v{c}ek et al. (2014)& \begin{tabular}{c@{}@{}@{}} 17280\\ pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  \hspace{15pt}19.8 & 73.9\% & 0.947 \\
-		\hline
-	\end{tabular}\\
-\end{center}
-\vspace{2pt}
-
 \noindent Including the number of instances in the dataset, the average number of tokens per instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. A benchmark score is provided where the dataset was used in the original paper to train one or more classifiers. The best score achieved in each paper is used as the benchmark which we aim to exceed.
 
 The selected datasets were chosen due to their size, cleanliness and composition. Each of the selected datasets are sufficiently large enough to provide a representative view of their respective data sources without exceeding the available computational resources. In addition, these approximately balanced datasets are preferable to unbalanced datasets; despite the infrequent usage of sarcasm in real-life conversations. We can achieve 95\% accuracy when training a classifier on an unbalanced binary dataset where the class distribution is 95\% to 5\%, simply by annotating each datapoint with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
@@ -224,12 +208,19 @@ The selected datasets were chosen due to their size, cleanliness and composition
 \subsection{Data pre-processing}
 \noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features. \\
 
+The same pre-processing techniques are applied to all three datasets, although the corpus of tweets and the set of amazon reviews are more likely to benefit from these procedures as they contain more noise.
+
+
+
+
 Use of \#not may , the quality of the dataset may be dubious.
 Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
 
 
-Reducing sparsity in the dataset is vital in order to use word embeddings such as Word2Vec and GloVe. They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may be indicative of sarcasm. N.B. It is necessary to re-introduce this meaning in some form. We add the token ! before a capitalised word, indicating emphasis, or "shouting". On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatilisation e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
+Reducing sparsity in the dataset is vital in order to use word embeddings such as Word2Vec and GloVe. They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may in turn be indicative of sarcasm. It is necessary to re-introduce this meaning in some form.
+
+We add the token ! before a capitalised word, indicating emphasis, or "shouting". On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatilisation e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 
 In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
 
