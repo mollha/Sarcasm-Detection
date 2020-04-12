@@ -7,6 +7,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{wrapfig}
 \usepackage{booktabs}
+\usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{multirow}
@@ -15,6 +16,7 @@
 \usepackage{cite}
 \citationmode{abbr}
 \bibliographystyle{plain}
+
 
 
 \title{An Analysis of Machine Learning and Deep Learning Techniques for Detecting Sarcasm in Online Text}
@@ -26,7 +28,7 @@
 \date{}
 
 \begin{document}
-
+	
 \maketitle
 
 \begin{abstract}
@@ -166,18 +168,36 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
 
 \subsection{Datasets}
-\noindent In similar studies, large datasets have been collected and some have been made publically available. We experiment with data from multiple domains and online platforms, including Twitter, Amazon, and Online News outlets, giving broad coverage of sarcasm usage in formal and informal media. The suitability of a dataset is determined based on size, cleanliness and composition.
+\vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. \vspace{-4.2pt}
 
 
-
-Small datasets do not provide a sufficiently representative view of the true distribution of data, therefore a model trained on this data will fail to generalise to unseen data. On the contrary, it may be infeasible to train a model in a reasonable length of time using large datasets as this will require vast amounts of computational resources. For this reason, we use datasets with fewer than 50000 instances. 
-
-Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved. Additionally, we  prefer to use balanced datasets; despite sarcasm being a minority class due to its infrequent usage in real-life conversation. The reason for this is illustrated in the following example: if we train a classifier on an unbalanced binary dataset whereby the class distribution is 95\% to 5\%, we can achieve an accuracy of 95\% simply by annotating each datapoint with the majority class label. Most machine learning algorithms are designed to optimise overall accuracy, therefore is it important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
-
+\begin{enumerate}[leftmargin=0cm]
+	\item \textbf{News Headlines Dataset For Sarcasm Detection} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnote{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnote{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.\vspace{-4.2pt}
+	
+	
+	\item \textbf{Sarcasm Amazon Review Corpus} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy.\vspace{-4.2pt}
+	
+	\item \textbf{Pt\'a\v{c}ek et al. (2014)} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
+\end{enumerate}
 
 % For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
 
-\noindent Three datasets are selected, and a statistical break down of their properties is provided in \textit{Figure 3}, including the number of instances in the dataset, the average number of tokens per instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. A benchmark score is provided where the dataset was used in the original paper to train one or more classifiers. The best score achieved in each paper is used as the benchmark which we aim to exceed.
+
+\begin{center}
+	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
+	\begin{tabular}{p{3.3cm}p{1.6cm}p{2.5cm}p{2.2cm}p{2.2cm}p{1.8cm}}
+		\toprule
+		\textbf{Dataset} & \textbf{Dataset Size} & \textbf{Composition} & \textbf{Avg. tokens} & \textbf{\% in GloVe dictionary} & \textbf{Benchmark Score}\\
+		\hline
+		News Headlines & 28619 & \begin{tabular}{c@{}@{}@{}} pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  \hspace{15pt} 11.2 & 97.8\% & 0.897\\
+		\hline
+		Amazon Reviews & 1254 & \begin{tabular}{c@{}@{}@{}} pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
+		\midrule
+		Tweets & 17280 & \begin{tabular}{c@{}@{}@{}} pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  \hspace{15pt}19.8 & 73.9\% & 0.947 \\
+		\hline
+	\end{tabular}\\
+\end{center}
+\vspace{2pt}
 
 \begin{center}
 	\textbf{Figure 3}:  Statistical breakdown of the datasets used in this project \\ N.B. \textit{pos} indicates positive instances and \textit{neg} indicates negative instances.\\
@@ -189,27 +209,23 @@ Secondly, human-annotated data with minimal spelling and grammatical errors is p
 		\midrule
 		Sarcasm Amazon Review Corpus & \begin{tabular}{c@{}@{}@{}} 1254\\ pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  \hspace{15pt}276.4 & 98.2\% & N/A \\
 			\midrule
-		Pt\'a\v{c}ek et al. (2014)& \begin{tabular}{c@{}@{}@{}} 17280\\ pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  \hspace{15pt}19.8 & 98.2\% & 0.947 \\
+		Pt\'a\v{c}ek et al. (2014)& \begin{tabular}{c@{}@{}@{}} 17280\\ pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  \hspace{15pt}19.8 & 73.9\% & 0.947 \\
 		\hline
 	\end{tabular}\\
 \end{center}
 \vspace{2pt}
 
-\begin{enumerate}
-	\item \textbf{News Headlines Dataset For Sarcasm Detection}\\ This dataset was collated for use in  \textit{Misra et al. (2019)} \cite{misra2019sarcasm}. Headlines are collected from two news sources - \textit{The Onion} \footnote{www.theonion.com} and \textit{The Huffington Post} \footnote{www.huffpost.com}. The Onion is renowned for posting satiricial news, and these sarcastic headlines account for the sarcastic instances in the dataset. The non-sarcastic instances were collected from the Huffington Post. There is little noise in this dataset, as news headlines are written formally, and are far less likely to contain spelling and grammar errors than data from more informal platforms. These headlines are self contained, unlike tweets which may be in response to another tweet, thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897. NB. Accuracy was used as the dataset is approximately balanced.
-	
-	
-	\item \textbf{Sarcasm Amazon Review Corpus}\\ This corpus was collected using the procedure outlined in \textit{Filatova (2012)} \cite{filatova2012irony}. Amazon reviews are collected via crowdsourcing, and are human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy.
-	
-	\item \textbf{Pt\'a\v{c}ek et al. (2014)}\\ This dataset is one of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}. We use the balanced dataset of 100 000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, a small portion of tweets (\_ tweets) are no longer available on Twitter, therefore they are omitted from the dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
-\end{enumerate}
+\noindent Including the number of instances in the dataset, the average number of tokens per instance and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. A benchmark score is provided where the dataset was used in the original paper to train one or more classifiers. The best score achieved in each paper is used as the benchmark which we aim to exceed.
+
+The selected datasets were chosen due to their size, cleanliness and composition. Each of the selected datasets are sufficiently large enough to provide a representative view of their respective data sources without exceeding the available computational resources. In addition, these approximately balanced datasets are preferable to unbalanced datasets; despite the infrequent usage of sarcasm in real-life conversations. We can achieve 95\% accuracy when training a classifier on an unbalanced binary dataset where the class distribution is 95\% to 5\%, simply by annotating each datapoint with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
+
 
 
 \subsection{Data pre-processing}
 \noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features. \\
 
 Use of \#not may , the quality of the dataset may be dubious.
-
+Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
 
 
