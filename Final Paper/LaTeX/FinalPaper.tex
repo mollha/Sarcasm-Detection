@@ -210,28 +210,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \vspace{-4.2pt}
 \noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\ \vspace{-10pt}
 
-\noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove hashtags all-together with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-10pt}
+\noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-10pt}
 
-\noindent In addition, punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur in the dataset.\\\vspace{-10pt}
-
-
-thereby enabling the extraction of higher quality features.
-
-The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
-
-Reducing sparsity in the dataset is vital in order to successfully use word-embeddings such as GloVe.
-
-The same pre-processing techniques are applied to all three datasets, although the corpus of tweets and the set of amazon reviews are more likely to benefit from these procedures as they contain more noise.
-
-%Use of \#not may , the quality of the dataset may be dubious.
-%Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
-%They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase.
-
-In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
-
-- remove numbers
-- remove stopwords\\
-
+\noindent In addition, punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.\vspace{-5pt}
 
 \begin{center}
 	\textbf{Figure -}:  Proportion of tokens represented in the GloVe dictionary\\
@@ -249,13 +230,15 @@ In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw da
 	\end{tabular}\\
 \end{center}
 
-\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary.
+\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
 
-This indicates an improvement in quality for Amazon and Twitter data, and consistency of quality for the news headlines corpus.
+%The effectiveness of each technique varies from platform to platform where different actions are permitted e.g. inclusion of user mentions and external hyperlinks. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
 
-In general, we use the same pre-processing scheme for each dataset, although 
+%and written in a formal manner, causing spelling and grammar errors to be minimised.
+%Use of \#not may , the quality of the dataset may be dubious.
+%Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
-The effectiveness of each technique varies from platform to platform where different actions are permitted e.g. inclusion of user mentions and external hyperlinks. 
+
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
