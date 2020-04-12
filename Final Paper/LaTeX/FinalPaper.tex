@@ -212,6 +212,14 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 \noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove hashtags all-together with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-10pt}
 
+\noindent In addition, punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section.\\
+
+Finally, we remove stopwords
+
+
+As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may in turn be indicative of sarcasm. It is necessary to re-introduce this meaning in some form. We manually extract punctuation and capitalisation features, outlined in the feature extraction section below, to encapsulate any semantics that may be ommited in cleaning.
+
+
 thereby enabling the extraction of higher quality features.
 , ensuring there are fewer representations of the same word.
 The text is converted to lowercase, and urls are removed.
@@ -234,27 +242,18 @@ All tokens are converted to lowercase beforehand to make for a fair comparison b
 Reducing sparsity in the dataset is vital in order to successfully use word-embeddings such as GloVe.
 
 
-
-
 The same pre-processing techniques are applied to all three datasets, although the corpus of tweets and the set of amazon reviews are more likely to benefit from these procedures as they contain more noise.
 
 Use of \#not may , the quality of the dataset may be dubious.
 Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
-They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may in turn be indicative of sarcasm. It is necessary to re-introduce this meaning in some form. We manually extract punctuation and capitalisation features, outlined in the feature extraction section below, to encapsulate any semantics that may be ommited in cleaning.
+They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase.
 
 
 
-Transforming text into lowercase is useful for reducing sparsity caused by variations in letter capatilisation e.g. 'not', 'NOT', and 'Not' are all mapped to the same word - 'not'. 
-
-
-Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 
 In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
 
-- convert to lowercase
-- replace \#sarcasm in the twitter dataset for sarcastic instances
-- remove punctuation
 - remove numbers
 - remove stopwords\\
 
