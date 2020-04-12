@@ -1,13 +1,10 @@
 from pycorenlp import StanfordCoreNLP
-import spacy
 import numpy as np
 import pandas as pd
+import spacy
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
-from Code.DataPreprocessing import *
-from random import randint
-import os
 
 nlp = spacy.load('en_core_web_md')
 
