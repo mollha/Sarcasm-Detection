@@ -38,8 +38,8 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
             extend_path = '' if not os.path.isfile((base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")).resolve()) else \
                 ''.join([randint(0, 9) for _ in range(0, 8)])
             data_frame['clean_data'].to_csv(
-                path_or_buf=(base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")).resolve(),
-                index=False, header=['clean_data'])
+                path_or_buf=str(base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")), index=False,
+                header=['clean_data'])
     return pd.read_csv(str(base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")), encoding="ISO-8859-1")
 
 
