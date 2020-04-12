@@ -33,7 +33,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
             # This could potentially overwrite pre-cleaned text if triggered accidentally
             # The process of cleaning data can take a while, so -> proceed with caution
             print('RE-CLEANING ... PROCEED WITH CAUTION!')
-            # exit()  # comment this line if you would still like to proceed
+            exit()  # comment this line if you would still like to proceed
             data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
             extend_path = '' if not os.path.isfile((base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")).resolve()) else \
                 ''.join([randint(0, 9) for _ in range(0, 8)])
@@ -66,7 +66,7 @@ def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> 
 
         if input_data == 'y':
             print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
-            # exit()  # comment this line if you would still like to proceed
+            exit()  # comment this line if you would still like to proceed
             if vector_type in {'bag_of_words', 'tf_idf', 'glove'}:
                 data_frame['token_data'] = data_frame['clean_data'].apply(
                     lambda x: " ".join([token.text for token in nlp(x)]))
@@ -78,6 +78,7 @@ def get_vector_col(data_frame: pd.DataFrame, path_to_root, vector_type: str) -> 
 
 def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: str):
     base_path = Path(__file__).parent
+    pd.read_pickle(str(base_path / (path_to_root + "/processed_data/Features/" + feature_type + ".pckl")))
 
     valid_feature_types = {'sentiment', 'punctuation', 'topic_model'}
     feature_type = feature_type.lower().strip()
@@ -93,7 +94,7 @@ def get_feature_col(data_frame: pd.DataFrame, path_to_root: str, feature_type: s
 
         if input_data == 'y':
             print('RE-VECTORIZING ... PROCEED WITH CAUTION!')
-            # exit()  # comment this line if you would still like to proceed
+            exit()  # comment this line if you would still like to proceed
             extract_features(path_to_root, data_frame,  feature_type)
     return pd.read_pickle(str(base_path / (path_to_root + "/processed_data/Features/" + feature_type + ".pckl")))
 

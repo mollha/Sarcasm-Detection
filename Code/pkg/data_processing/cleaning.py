@@ -20,8 +20,11 @@ def data_cleaning(data_string: str, rm_urls=True, rm_punc=True, lower=True, rm_n
 
     def remove_punctuation(text: str) -> str:
         text = re.sub(r'[^\x00-\x7F]+', ' ', text)
-        text = re.sub(r'([@][\w_-]+)', '<user>', text)
-        text = text.replace("#sarcasm", ' ')
+        text = re.sub(r'([@][\w_-]+)', '<user>', text)  # remove user mentions
+        text = text.replace("#sarcasm", ' ')    # remove #sarcasm for ptacek dataset
+        text = text.replace("#not", 'not')  # replace #not
+        text = re.sub(r'([#][\w_-]+)', ' ', text)  # remove hash tags
+
         banned_punctuation = set([char for char in '#$%&()*+-/:;<>[]^_`{|}~'])
         return ''.join(ch for ch in text if ch not in banned_punctuation)  # remove punctuation marks
 

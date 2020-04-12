@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
+from sklearn.neighbors import KNeighborsClassifier
 from ..data_processing.helper import prepare_data
 import pandas as pd
 import numpy as np
@@ -16,7 +16,7 @@ models = {"svm": SVC(gamma='auto', C=10, kernel='linear'),
           "log_reg": LogisticRegression(C=10, max_iter=300),
           "rfc": RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt'),
           "n_bayes": GaussianNB(),
-          "k_means": KMeans(n_clusters=2, init='k-means++', max_iter=300, n_init=10, random_state=0)
+          "knn": KNeighborsClassifier(n_neighbors=5)
           }
 
 
@@ -24,7 +24,7 @@ full_names = {"svm": "Support Vector Machine",
               "log_reg": "Logistic Regression",
               "rfc": "Random Forest Classifier",
               "n_bayes": "Gaussian Naive Bayes",
-              "k_means": "K Means"
+              "knn": "K-Nearest Neighbour"
               }
 
 
@@ -45,8 +45,8 @@ def get_model(model_name) -> tuple:
 #         return full_names[model_name], RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt')
 #     elif model_name == 'n_bayes':
 #         return full_names[model_name], GaussianNB()
-#     elif model_name == 'k_means':
-#         return full_names[model_name], KMeans(n_clusters=2, init='k-means++', max_iter=300, n_init=10, random_state=0)
+#     elif model_name == 'knn':
+#         return full_names[model_name], KNeighborsClassifier()
 #     else:
 #         raise KeyError('Not a valid model name')
 

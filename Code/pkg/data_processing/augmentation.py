@@ -1,6 +1,8 @@
 import spacy
 import pandas as pd
 from warnings import filterwarnings
+from pathlib import Path
+from os.path import isfile
 
 filterwarnings('ignore')
 nlp = spacy.load('en_core_web_md')
@@ -51,7 +53,14 @@ def form_similar_sequences(text: str, n: int) -> list:
     return short_list
 
 
-def synonym_replacement(text_data: pd.Series, label_data: pd.Series, target_length) -> tuple:
+def synonym_replacement(dataset_name: str, text_data: pd.Series, label_data: pd.Series, target_length) -> tuple:
+    base_path = Path(__file__).parent#
+    augmented_path = str(base_path / ('../datasets/' + dataset_name + "/processed_data/AugmentedData.csv"))
+
+    if isfile(augmented_path):
+        augmented_data = pd.read_csv(augmented_path, encoding="ISO-8859-1")
+        return augmented_data['clean_data'][:target_length], augmented_data['sarcasm_label'][:target_length]
+
     duplicate_no = (target_length // len(text_data)) + 1
     list_of_texts = []
     list_of_labels = []
@@ -66,4 +75,12 @@ def synonym_replacement(text_data: pd.Series, label_data: pd.Series, target_leng
             list_of_labels.append(label)
         if len(list_of_labels) > target_length:
             break
+
+    clean_data, sarcasm_labels = pd.Series(list_of_texts, name="clean_data")[:target_length], pd.Series(list_of_labels, name='sarcasm_label')[
+                                                                 :target_length]
+    new_data = pd.concat([sarcasm_labels, clean_data], axis=1)
+    new_data.to_csv(
+        path_or_buf=str(base_path / ('../datasets/' + dataset_name + '/processed_data/AugmentedData.csv')),
+        index=False)
+
     return pd.Series(list_of_texts, name="clean_data")[:target_length], pd.Series(list_of_labels, name='sarcasm_label')[:target_length]

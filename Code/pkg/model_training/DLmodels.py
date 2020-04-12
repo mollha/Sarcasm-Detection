@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 from pathlib import Path
+from keras import optimizers
 from keras.engine import Layer
 from ..data_processing.augmentation import synonym_replacement
 from ..data_processing.helper import prepare_data, get_dataset_name
@@ -189,7 +190,7 @@ def load_model_from_file(filename: str, custom_layers: dict):
 
 
 # -------------------------------------------- DEEP LEARNING ARCHITECTURES ---------------------------------------------
-def lstm_network(model):
+def lstm_network(model, optimiser):
     model.add(LSTM(60, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dropout(0.1))
@@ -197,22 +198,22 @@ def lstm_network(model):
     model.add(Dropout(0.1))
     model.add(Dense(1, activation="sigmoid"))
     model.compile(loss='binary_crossentropy',
-                  optimizer='adam',
+                  optimizer=optimiser,
                   metrics=['accuracy'])
     return model
 
 
-def bidirectional_lstm_network(model):
+def bidirectional_lstm_network(model, optimiser):
     model.add(Bidirectional(LSTM(64)))
     model.add(Dropout(0.5))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
-                  optimizer='adam',
+                  optimizer=optimiser,
                   metrics=['accuracy'])
     return model
 
 
-def deep_cnn_network(model):
+def deep_cnn_network(model, optimiser):
     model.add(Conv1D(128, 7, activation='relu', padding='same'))
     model.add(MaxPooling1D())
     model.add(Conv1D(256, 5, activation='relu', padding='same'))
@@ -223,27 +224,27 @@ def deep_cnn_network(model):
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam',
+    model.compile(optimizer=optimiser,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
 
 
-def vanilla_rnn(model, shape):
+def vanilla_rnn(model, shape, optimiser):
     model.add(SimpleRNN(50, batch_input_shape=shape, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam',
+    model.compile(optimizer=optimiser,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
 
 
-def vanilla_gru(model, shape):
+def vanilla_gru(model, shape, optimiser):
     model.add(GRU(50, batch_input_shape=shape, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam',
+    model.compile(optimizer=optimiser,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
@@ -264,7 +265,7 @@ def vanilla_gru(model, shape):
 #                   metrics=['accuracy'])
 #     return model
 
-def lstm_with_attention(model):
+def lstm_with_attention(model, optimiser):
     model.add(LSTM(60, return_sequences=True))
     model.add(AttentionLayer())
     model.add(Dropout(0.1))
@@ -272,18 +273,18 @@ def lstm_with_attention(model):
     model.add(Dropout(0.1))
     model.add(Dense(1, activation="sigmoid"))
     model.compile(loss='binary_crossentropy',
-                  optimizer='adam',
+                  optimizer=optimiser,
                   metrics=['accuracy'])
     return model
 
 
-def cnn_network(model):
+def cnn_network(model, optimiser):
     model.add(Conv1D(512, 3, activation='relu'))
     model.add(GlobalMaxPooling1D())
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam',
+    model.compile(optimizer=optimiser,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
@@ -384,24 +385,24 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     s_data, l_data, e_layer, c_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
                                                                       split, max_batch_size, length_limit)
 
-
+    new_adam = optimizers.Adam(lr=0.0001, decay=0.001)
 
     model = Sequential()
     e_layer.trainable = False
     model.add(e_layer)
     if model_name == 'lstm':
-        model = lstm_network(model)
+        model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
-        model = lstm_with_attention(model)
+        model = lstm_with_attention(model, new_adam)
         c_layer['AttentionLayer'] = AttentionLayer
     elif model_name == 'bi-lstm':
-        model = bidirectional_lstm_network(model)
+        model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'cnn':
-        model = cnn_network(model)
+        model = cnn_network(model, new_adam)
     elif model_name == 'vanilla-rnn':
-        model = vanilla_rnn(model, (max_batch_size, length_limit))
+        model = vanilla_rnn(model, (max_batch_size, length_limit), new_adam)
     elif model_name == 'vanilla-gru':
-        model = vanilla_gru(model, (len(s_data), length_limit))
+        model = vanilla_gru(model, (len(s_data), length_limit), new_adam)
     return s_data, l_data, model, c_layer
 
 
@@ -409,12 +410,6 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     max_batch_size = get_batch_size(model_name)
     y_pred = trained_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
     score = f1_score(np.array(testing_labels), np.array(y_pred))
-    # evaluate
-
-    # class_weight = {0: 1.0, 1: 1.0}
-    # my_adam = optimizers.Adam(lr=0.003, decay=0.001)
-    # print(model.summary())
-
     print('F1 Score: ', score)
 
 
@@ -424,13 +419,8 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
 
     # --------------- Access augmented data if using Amazon review corpus ----------------
     if dataset_number == 0:
-        target_length = set_size if set_size is not None else 10000
-        clean_data, sarcasm_labels = synonym_replacement(clean_data, sarcasm_labels, target_length)
-        new_data = pd.concat([sarcasm_labels, clean_data], axis=1)
-        new_data.to_csv(
-            path_or_buf=str(base_path / ('../datasets/' + dataset_name + '/processed_data/AugmentedData.csv')),
-            index=False)
-
+        target_length = set_size if set_size is not None else 15000
+        clean_data, sarcasm_labels = synonym_replacement(dataset_name, clean_data, sarcasm_labels, target_length)
 
     print('Training ' + model_name.upper() + ' using ' + vector_type + ' vectors.')
     print('Dataset size: ' + str(len(clean_data)) + '\n')
