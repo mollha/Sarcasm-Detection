@@ -186,10 +186,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 
 \begin{center}
-	\textbf{Figure -}:  Statistical breakdown of the datasets used in this project \\
+	\textbf{Figure -}: Statistical breakdown of the datasets used in this project \\
 	\vspace{3pt}
 	\begin{tabular}{P{3.3cm}P{2.6cm}P{2.5cm}P{2.2cm}P{3.4cm}}
-		\toprule
 		\hline
 		\textbf{Dataset} & \textbf{Dataset Size} & \textbf{Composition}* & \textbf{Avg. tokens} & \textbf{Benchmark Score}\vspace{1pt}\\
 		\hline
@@ -209,45 +208,74 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 \subsection{Data pre-processing}
 \vspace{-4.2pt}
-\noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
+\noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\ \vspace{-10pt}
+
+\noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove hashtags all-together with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-10pt}
+
+thereby enabling the extraction of higher quality features.
+, ensuring there are fewer representations of the same word.
+The text is converted to lowercase, and urls are removed.
+
+
+This indicates an improvement in quality for Amazon and Twitter data, and consistency of quality for the news headlines corpus.
+
+In general, we use the same pre-processing scheme for each dataset, although 
+
+The effectiveness of each technique varies from platform to platform where different actions are permitted e.g. inclusion of user mentions and external hyperlinks. 
+
+
+inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
+
+
+All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. \\
 
 
 
-\begin{center}
-\textbf{Figure -}:  Proportion of tokens in the GloVe dictionary before and after cleaning\\
-\vspace{4pt}
-\begin{tabular}{p{3cm}||p{3cm}p{3cm}}
-	\toprule
-	\hline
-	&\multicolumn{2}{c}{\textbf{Proportion in GloVe dictionary}} \\
-	\hline
-	\textbf{Dataset} & \textbf{Original data} & \textbf{Processed data}\\
-	\hline
-	News Headlines & \hspace{20pt}97.8\% & \hspace{20pt}\_\%\\
-	\hline
-	Amazon Reviews & \hspace{20pt}98.2\% & \hspace{20pt}\_\%\\
-	\hline
-	Twitter Data & \hspace{20pt}73.9\% & \hspace{20pt}\_\%\\
-	\hline
-\end{tabular}\\
-\end{center}
+Reducing sparsity in the dataset is vital in order to successfully use word-embeddings such as GloVe.
+
+
+
 
 The same pre-processing techniques are applied to all three datasets, although the corpus of tweets and the set of amazon reviews are more likely to benefit from these procedures as they contain more noise.
-
- and the percentage of tokens that are included in the dictionary. GloVe is a method of feature extraction where word embeddings for tokens are provided as a dictionary. The number of tokens present in the GloVe dictionary is a measure of quality, as this method of feature extraction cannot be used on data containing many ill-formed and unrepresented tokens. All tokens are converted to lowercase beforehand to make for a fair comparison between datasets, as only lowercase tokens are present in the GloVe dictionary. A detailed explanation of GloVe is provided in the feature extraction section. 
-
-
 
 Use of \#not may , the quality of the dataset may be dubious.
 Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
 
+They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may in turn be indicative of sarcasm. It is necessary to re-introduce this meaning in some form. We manually extract punctuation and capitalisation features, outlined in the feature extraction section below, to encapsulate any semantics that may be ommited in cleaning.
 
 
-Reducing sparsity in the dataset is vital in order to use word embeddings such as Word2Vec and GloVe. They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may in turn be indicative of sarcasm. It is necessary to re-introduce this meaning in some form. We manually extract punctuation and capitalisation features, outlined in the feature extraction section below, to encapsulate any semantics that may be ommited in cleaning.
 
-On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatilisation e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
+Transforming text into lowercase is useful for reducing sparsity caused by variations in letter capatilisation e.g. 'not', 'NOT', and 'Not' are all mapped to the same word - 'not'. 
+
+
+Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 
 In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
+
+- convert to lowercase
+- replace \#sarcasm in the twitter dataset for sarcastic instances
+- remove punctuation
+- remove numbers
+- remove stopwords\\
+
+
+\begin{center}
+	\textbf{Figure -}:  Proportion of tokens represented in the GloVe dictionary\\
+	\vspace{4pt}
+	\begin{tabular}{p{3cm}||p{3cm}p{3cm}}
+		\hline
+		\textbf{Dataset} & \textbf{Original data} & \textbf{Processed data}\\
+		\hline
+		News Headlines & \hspace{20pt}97.71\% & \hspace{20pt}97.71\%\\
+		\hline
+		Amazon Reviews & \hspace{20pt}83.17\% & \hspace{20pt}98.22\%\\
+		\hline
+		Twitter Data & \hspace{20pt}89.62\% & \hspace{20pt}96.43\%\\
+		\hline
+	\end{tabular}\\
+\end{center}
+
+\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary.
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
