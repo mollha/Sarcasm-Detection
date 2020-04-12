@@ -86,7 +86,7 @@ This is achieved by...
 In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. For clarity, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content such as product reviews.\vspace{-10pt}
 
 \begin{center}
-	\textbf{Figure 1}: Comparison of defintions of Irony and Sarcasm\vspace{-10pt}
+	\textbf{Figure 1}: Comparison of definitions of Irony and Sarcasm\vspace{-10pt}
 \end{center}
 \begin{center}
 \begin{tabular}{p{1.5cm}p{13cm}}
@@ -168,6 +168,8 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \subsection{Datasets}
 \noindent In similar studies, large datasets have been collected and some have been made publically available. We experiment with data from multiple domains and online platforms, including Twitter, Amazon, and Online News outlets, giving broad coverage of sarcasm usage in formal and informal media. The suitability of a dataset is determined based on size, cleanliness and composition.
 
+
+
 Small datasets do not provide a sufficiently representative view of the true distribution of data, therefore a model trained on this data will fail to generalise to unseen data. On the contrary, it may be infeasible to train a model in a reasonable length of time using large datasets as this will require vast amounts of computational resources. For this reason, we use datasets with fewer than 50000 instances. 
 
 Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved. Additionally, we  prefer to use balanced datasets; despite sarcasm being a minority class due to its infrequent usage in real-life conversation. The reason for this is illustrated in the following example: if we train a classifier on an unbalanced binary dataset whereby the class distribution is 95\% to 5\%, we can achieve an accuracy of 95\% simply by annotating each datapoint with the majority class label. Most machine learning algorithms are designed to optimise overall accuracy, therefore is it important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.\\
@@ -205,6 +207,12 @@ Secondly, human-annotated data with minimal spelling and grammatical errors is p
 
 \subsection{Data pre-processing}
 \noindent Data pre-processing is an important stage in natural language processing, with the potential to hinder or boost model performance. Datasets in this domain are inherently messy, often because they are collated from user generated content. Hence, data pre-processing is vital to reduce noise and sparsity in the feature space caused by inconsistent letter capitalisation, varying use of punctuation and erroneous spelling. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features. \\
+
+Use of \#not may , the quality of the dataset may be dubious.
+
+
+
+
 Reducing sparsity in the dataset is vital in order to use word embeddings such as Word2Vec and GloVe. They cannot generalise to out-of-vocabulary tokens i.e. tokens that were not in the original training set, and in the GloVe dictionary, all tokens are given in lowercase. As a result, it is essential that the data is converted to lowercase, however capitalisation can indicate emphasis, which may be indicative of sarcasm. N.B. It is necessary to re-introduce this meaning in some form. We add the token ! before a capitalised word, indicating emphasis, or "shouting". On twitter, users can include hyperlinks to other websites in their tweets, and this can be a source of noise in the dataset. \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} collated a dataset of sarcastic and non-sarcastic tweets, whereby the presence of sarcasm is indicated by the marker \#sarcasm, removing URLS and references to users, as well as hashtags. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that data contained in hashtags can be used to indicate sarcasm, such as \#not. Transforming text into lowercase is a common pre-processing strategy, useful for reducing sparsity caused by variations in letter capatilisation e.g. 'Cat', 'cAt', and 'CAt' are all mapped to the same word - 'cat'. Similarly, removing punctuation and extending contractions (e.g. don't $\rightarrow$ do not) is commonplace. However, punctuation and capitalisation can be used for emphasis, therefore removing these attributes may make the presence of sarcasm less obvious.
 
 In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw data was pre-cleaned, as it had all been transformed into lowercase. As news headlines are written in a formal manner, spelling and grammar errors are rare, thereby increasing the likelihood that pre-trained embeddings are present in the GloVe dictionary.
@@ -217,7 +225,12 @@ In the \textit{News Headlines Dataset For Sarcasm Detection} dataset, the raw da
 
 \noindent \textbf{Traditional Approaches --} We utilise a number of traditional vectorisation methods - perhaps the simplest of which is \textit{Bag of Words (BOW)}, whereby a snippet of text is encoded as a single vector containing a count of the number of occurrences of each word. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. These approaches have two main disadvantages, firstly, each vector is the size of the vocabulary, creating sparse inefficient representations. Secondly, vectors produced in this way do not preserve the context within which words are found, and sarcasm is a highly contextual phenomenon. Nonetheless, they act as a good baseline against which to compare more advanced vectorisation approaches.\\
 
-\noindent \textbf{Word Embedding --} Embeddings produce lower-dimensional vectors than the sparse representations generated by earlier techniques. Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space, such that words that share a similar context are clustered together in the feature space. Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window). An example is given in figure \_. This allows it to capture both global and local statistics of the corpus. GloVe is used in this project to produce word embeddings for each corpus, as some of the datasets have a high average number of tokens in each snippet, therefore local context is insufficient.\\
+\noindent \textbf{Word Embedding --}
+
+
+
+
+ Embeddings produce lower-dimensional vectors than the sparse representations generated by earlier techniques. Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that can be used to produce high-quality vector representations of words - two such models are \textit{Continuous Bag-of-Words} and \textit{Continuous Skip-Gram}. It consists of a shallow (two-layer) neural network that takes a large corpus and produces a high-dimensional vector space, such that words that share a similar context are clustered together in the feature space. Word2Vec is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. In Word2Vec, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, the \textit{GloVe} \cite{pennington2014glove} approach generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window). An example is given in figure \_. This allows it to capture both global and local statistics of the corpus. GloVe is used in this project to produce word embeddings for each corpus, as some of the datasets have a high average number of tokens in each snippet, therefore local context is insufficient.\\
 
 Despite their ability to preserve semantic relationships, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set.
 
@@ -287,16 +300,18 @@ As supervised machine learning requires hand-crafted features to inform  predict
 In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features as outlined in the previous section.
 
 \subsubsection{Machine Learning Models}
-In terms of machine learning models, we experiment with supervised and unsupervised learning. Each of these models are capable of performing binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
+We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
 
 \begin{enumerate}
-	\item \textbf{K-Means Clustering --} As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups.
+	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter whose value is finetuned for each dataset.
+	
+	%As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups. Although K-Means is intended to be a clustering algorithm, it can easilly be applied to classification problems if we assign the majority label to each cluster
 	
 	\item \textbf{Support Vector Machine (SVM) --} A hyperplane is drawn such that the positive and negative features are partitioned into two groups. The features at the shortest euclidean distance to the hyperplane are known as support vectors, and their distance from the hyperplane is known as the margin. An SVM attempts to maximise this margin in order to create a decisive boundary between the sarcastic and non-sarcastic data.
 	
 	\item \textbf{Na\"{i}ve Bayes Classifier --} This is a probabilistic model derived from Bayes theorem, where all features are assumed to be independent of one another. Commonly used in the document classification problem, we calculate ${P(Sarcastic | features)}$. This is  the probability of an outcome A (i.e. statement is sarcastic), given its feature vector, x. There are a number of variations of Na\"{i}ve Bayes - including Multinomial, Bernoulli and Gaussian. 
 
-	\item \textbf{Logistic Regression --} A statistical model that aims to predict the likelihood of an event occuring given some previous data. It works with binary data, i.e. is the statement sarcastic or not. It is more advanced than linear regression, which aims to model data using a linear equation.
+	\item \textbf{Logistic Regression --} A statistical model that aims to predict the likelihood of an event occuring given some previous data. It works with binary data, i.e. is the statement sarcastic or not. It is a more advanced approach than linear regression, which aims to model data using a linear equation.
 
 	\item \textbf{Random Forest Classifier --}
 	An ensemble learning method, the random forest classifier fits a number of decision tree classifiers on subsamples of the training set. The decision trees are fairly independent of one another, and this low correlation allows them to produce ensemble predictions that outperform their individual predictions. Where one model goes wrong, the others are able to contradict this incorrect prediction.
@@ -403,13 +418,14 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 
 
-
 \noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
 
+We also experimented with an unsupervised model - K-Means clustering where the majority label of each cluster was assigned, however, the results were very poor.
 
 
 
-\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds.
+\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.
+
 
 
 %\subsubsection{News Headlines for Sarcasm Detection}
@@ -552,7 +568,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 The upper-bound on the number of epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
-	\item \textbf{Early stopping --} Training is interrupted when a chosen performance measure stops improving. We monitor the minimisation of the loss on the validation dataset as our chosen performance measure and use this to determine the appropriate number of epochs.
+	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
 	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
 \end{enumerate}
 
@@ -564,17 +580,17 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+	\begin{tabular}{|p{4.7cm}||p{1.2cm}|p{1.5cm}|}
 		\hline
 		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
 		\hline
 		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
 		\hline\hline
-		CNN   & 0.  & 0.\\
-		LSTM &   0. & 0.\\
-		Bi-directional LSTM &0. & 0.\\
-		Vanilla RNN &0. & 0.\\
-		Vanilla GRU &0. & 0.\\
+		CNN   & 0.823   & \\
+		LSTM &   0.865 & 0.\\
+		Bi-directional LSTM & 0.864 & 0.\\
+		Vanilla RNN &0.817 & 0.\\
+		Vanilla GRU &0.852 & 0.\\
 		\hline
 	\end{tabular}
 \end{center}
