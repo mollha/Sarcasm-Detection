@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  13 APR 2020 00:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  13 APR 2020 00:27
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -372,7 +372,12 @@ File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
 Package pdftex.def Info: Images/modelpipeline2.png  used on input line 163.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
- [5 <./Images/modelpipeline2.png>] [6]
+ [5 <./Images/modelpipeline2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
+
+ []
+
+[6]
 Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
@@ -532,7 +537,7 @@ al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is
 house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
 ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
 tmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 303422 bytes).
+Output written on FinalPaper.pdf (21 pages, 303447 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
