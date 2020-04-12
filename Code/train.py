@@ -36,7 +36,7 @@ def run_ml(models, vectors, datasets, features):
 
 if __name__ == '__main__':
     # --------------------------
-    dataset_list = [0, 1, 2]
+    dataset_list = [2]
     # --------------------------
 
     # ml_model_list = ['svm', 'log_reg', 'rfc', 'n_bayes', 'k_means']

@@ -33,7 +33,7 @@ def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_c
             # This could potentially overwrite pre-cleaned text if triggered accidentally
             # The process of cleaning data can take a while, so -> proceed with caution
             print('RE-CLEANING ... PROCEED WITH CAUTION!')
-            exit()  # comment this line if you would still like to proceed
+            # exit()  # comment this line if you would still like to proceed
             data_frame['clean_data'] = data_frame['text_data'].apply(data_cleaning)
             extend_path = '' if not os.path.isfile((base_path / (path_to_dataset_root + "/processed_data/CleanData.csv")).resolve()) else \
                 ''.join([randint(0, 9) for _ in range(0, 8)])
