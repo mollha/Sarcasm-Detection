@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  13 APR 2020 18:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  13 APR 2020 19:04
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -397,7 +397,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 219--220
 
  []
 
-[8]
+
 Underfull \hbox (badness 10000) in paragraph at lines 254--255
 
  []
@@ -407,16 +407,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 256--257
 
  []
 
-
+[8]
 Underfull \hbox (badness 10000) in paragraph at lines 258--259
 
  []
 
-<Images/man_woman.jpg, id=36, 72.27pt x 56.00925pt>
-File: Images/man_woman.jpg Graphic file (type jpg)
-<use Images/man_woman.jpg>
-Package pdftex.def Info: Images/man_woman.jpg  used on input line 263.
-(pdftex.def)             Requested size: 145.25842pt x 112.58138pt.
+<Images/outside1.png, id=36, 659.53966pt x 513.78505pt>
+File: Images/outside1.png Graphic file (type png)
+<use Images/outside1.png>
+Package pdftex.def Info: Images/outside1.png  used on input line 263.
+(pdftex.def)             Requested size: 145.25842pt x 113.15065pt.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
@@ -436,68 +436,73 @@ Underfull \hbox (badness 10000) in paragraph at lines 275--276
 
  []
 
-<Images/elmo_diagram1.png, id=37, 437.26387pt x 276.93378pt>
-File: Images/elmo_diagram1.png Graphic file (type png)
-<use Images/elmo_diagram1.png>
-Package pdftex.def Info: Images/elmo_diagram1.png  used on input line 279.
-(pdftex.def)             Requested size: 221.33936pt x 140.18216pt.
+<Images/elmo_diagram.png, id=37, 437.83575pt x 331.2375pt>
+File: Images/elmo_diagram.png Graphic file (type png)
+<use Images/elmo_diagram.png>
+Package pdftex.def Info: Images/elmo_diagram.png  used on input line 279.
+(pdftex.def)             Requested size: 166.00871pt x 125.58852pt.
+
+Overfull \hbox (1.46265pt too wide) in paragraph at lines 277--287
+[]$[]$  $[]$ 
+ []
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 277--287
 
  []
 
-[9 <./Images/man_woman.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 288--290
+[9 <./Images/outside1.png> <./Images/elmo_diagram.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 289--291
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--292
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--316
+Underfull \hbox (badness 10000) in paragraph at lines 315--317
 
  []
 
-[10 <./Images/elmo_diagram1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 345--346
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
 
  []
 
-[11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 385--386
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 386--387
 
  []
 
-
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 402--402
+[12]
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 403--403
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
-<Images/absolute_differences.png, id=55, 462.528pt x 346.896pt>
+<Images/absolute_differences.png, id=56, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 41
-9.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 42
+0.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 415--427
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 416--428
 []$[]$  $[]$ 
  []
 
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
+
+Underfull \hbox (badness 10000) in paragraph at lines 442--443
 
  []
 
-[14 <./Images/absolute_differences.png>] [15] [16] [17] (FinalPaper.bbl
+[13 <./Images/absolute_differences.png>] [14] [15] [16] [17] (FinalPaper.bbl
 [18]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
@@ -510,9 +515,9 @@ i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )) [20] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4683 strings out of 492452
- 66640 string characters out of 3114457
- 144908 words of memory out of 3000000
+ 4682 strings out of 492452
+ 66622 string characters out of 3114457
+ 144907 words of memory out of 3000000
  8935 multiletter control sequences out of 15000+200000
  27820 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -534,9 +539,9 @@ utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
 /Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (20 pages, 419705 bytes).
+Output written on FinalPaper.pdf (20 pages, 379718 bytes).
 PDF statistics:
- 124 PDF objects out of 1000 (max. 8388607)
+ 125 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
