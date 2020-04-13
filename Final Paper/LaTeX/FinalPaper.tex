@@ -252,20 +252,18 @@ Figure \_ shows the proportion of GloVe-representable tokens before and after pr
 
 To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\\vspace{-8pt}
 
-\noindent \textbf{Contextualised Word Embedding --} Deep neural language models offer a more robust approach. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks.
+\noindent \textbf{Contextualised Word Embedding --} Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that ELMo markedly improved the state-of-the-art in a number of NLP tasks.\\
 
 \begin{minipage}{0.4\textwidth}
-	\begin{center}
-		\textbf{Figure -:} ElMo model pipeline
-	\end{center}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{Images/elmo_diagram.png}
+	 	\begin{center}
+		\hspace{-1.5cm}\includegraphics[width=1.2\textwidth]{Images/elmo_diagram1.png}
+		\textbf{Figure -:} ElMo model pipeline\\
 		\label{ElMo Model}
 	\end{center}
 \end{minipage} \hfill
 \begin{minipage}{0.55\textwidth}
-	ELMo utilises a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.\\
-\end{minipage}
+	  ELMo utilises a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.
+\end{minipage}\\
 
 \noindent \textbf{Experimentation with miscellaneous features --}
 As supervised machine learning requires hand-crafted features to inform  predictions, we consider a number of hand-crafted features in addition to the vectors produced by the aforementioned vectorisation approaches. This includes lexical and sentiment features, as well as meta data where this is available as part of the original dataset. For example, the Sarcasm Amazon Review Corpus contains the number of stars in a review, and we can leverage this information as an additional feature. Features that can be shown to improve classifcation scores can be concatenated with our existing vectors (enrichment).\\
