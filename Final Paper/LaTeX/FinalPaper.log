@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 APR 2020 00:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 APR 2020 00:47
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -482,8 +482,13 @@ Overfull \hbox (1.58794pt too wide) in paragraph at lines 305--306
  []
 
 
-Overfull \hbox (6.73389pt too wide) in paragraph at lines 303--311
+Overfull \hbox (1.04343pt too wide) in paragraph at lines 303--311
  [] 
+ []
+
+
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 314--314
+[]|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 
@@ -502,7 +507,7 @@ Overfull \hbox (1.3927pt too wide) in paragraph at lines 317--318
  []
 
 
-Overfull \hbox (8.51802pt too wide) in paragraph at lines 312--320
+Overfull \hbox (2.82756pt too wide) in paragraph at lines 312--320
  [][] 
  []
 
@@ -512,117 +517,117 @@ Underfull \hbox (badness 10000) in paragraph at lines 321--323
  []
 
 [10]
-Overfull \hbox (3.35202pt too wide) in paragraph at lines 331--331
+Overfull \hbox (3.35202pt too wide) in paragraph at lines 336--336
 []|\OT1/ptm/b/n/12 love| 
  []
 
 
-Overfull \hbox (5.99617pt too wide) in paragraph at lines 331--331
+Overfull \hbox (5.99617pt too wide) in paragraph at lines 336--336
 []|\OT1/ptm/b/n/12 when| 
  []
 
 
-Overfull \hbox (4.61504pt too wide) in paragraph at lines 331--331
+Overfull \hbox (4.61504pt too wide) in paragraph at lines 336--336
 []|\OT1/ptm/b/n/12 my| 
  []
 
 
-Overfull \hbox (8.25986pt too wide) in paragraph at lines 331--331
+Overfull \hbox (8.25986pt too wide) in paragraph at lines 336--336
 []|\OT1/ptm/b/n/12 train| 
  []
 
 
-Overfull \hbox (1.58794pt too wide) in paragraph at lines 331--332
+Overfull \hbox (1.58794pt too wide) in paragraph at lines 336--337
 []|\OT1/ptm/b/n/12 late| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 343--343
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 348--348
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 343--343
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 348--348
 []|\OT1/ptm/m/n/12 0.750| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 343--344
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 348--349
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 350--351
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
 
  []
 
 [11]
-Overfull \hbox (6.07767pt too wide) in paragraph at lines 360--360
+Overfull \hbox (6.07767pt too wide) in paragraph at lines 365--365
 []|\OT1/ptm/m/n/12 love| 
  []
 
 
-Overfull \hbox (6.07504pt too wide) in paragraph at lines 360--360
+Overfull \hbox (6.07504pt too wide) in paragraph at lines 365--365
 []|\OT1/ptm/m/n/12 when| 
  []
 
 
-Overfull \hbox (3.95496pt too wide) in paragraph at lines 360--360
+Overfull \hbox (3.95496pt too wide) in paragraph at lines 365--365
 []|\OT1/ptm/m/n/12 my| 
  []
 
 
-Overfull \hbox (4.92381pt too wide) in paragraph at lines 360--360
+Overfull \hbox (4.92381pt too wide) in paragraph at lines 365--365
 []|\OT1/ptm/m/n/12 train| 
  []
 
 
-Overfull \hbox (5.15831pt too wide) in paragraph at lines 360--360
+Overfull \hbox (5.15831pt too wide) in paragraph at lines 365--365
 []|\OT1/ptm/m/n/12 is| 
  []
 
 
-Overfull \hbox (3.15456pt too wide) in paragraph at lines 362--362
+Overfull \hbox (3.15456pt too wide) in paragraph at lines 367--367
 []|\OT1/ptm/m/n/12 2| 
  []
 
 
-Overfull \hbox (3.15456pt too wide) in paragraph at lines 362--362
+Overfull \hbox (3.15456pt too wide) in paragraph at lines 367--367
 []|\OT1/ptm/m/n/12 2| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 372--372
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 377--377
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 372--372
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 377--377
 []|\OT1/ptm/m/n/12 0.750| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 372--373
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 377--378
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 377--379
+Underfull \hbox (badness 10000) in paragraph at lines 382--384
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 408--409
+Underfull \hbox (badness 10000) in paragraph at lines 413--414
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 465--465
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 470--470
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
@@ -631,15 +636,15 @@ Overfull \hbox (0.78032pt too wide) in paragraph at lines 465--465
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 48
-2.
+7.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 478--490
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 483--495
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 509--510
 
  []
 
@@ -680,7 +685,7 @@ utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
 /Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 381137 bytes).
+Output written on FinalPaper.pdf (21 pages, 381211 bytes).
 PDF statistics:
  128 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

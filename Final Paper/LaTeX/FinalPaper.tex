@@ -287,9 +287,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
-As supervised machine learning requires hand-crafted features to inform  predictions, we consider a number of hand-crafted features in addition to the vectors produced by the aforementioned vectorisation approaches. This includes lexical and sentiment features, as well as meta data where this is available as part of the original dataset. For example, the Sarcasm Amazon Review Corpus contains the number of stars in a review, and we can leverage this information as an additional feature. Features that can be shown to improve classifcation scores can be concatenated with our existing vectors (enrichment).\\
+While deep learning algorithms are able to extract high-level features from data, machine learning classifiers require manually selected features to better inform predictions. We consider miscellaneous features in addition to those produced by the aforementioned techniques - including lexical (punctuation) features, topic modelling features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors (enrichment).\\
 
-\noindent The following experiment is designed to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each dataset.
+\noindent To extract sentiment features from each dataset, we use a state-of-the-art model - the \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. Training a classifier on these features enables us to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?}
 
 
 \hspace{-15pt}\begin{minipage}{0.4\textwidth}
@@ -297,10 +297,10 @@ As supervised machine learning requires hand-crafted features to inform  predict
 \end{minipage}
 \hspace{10pt}
 \begin{minipage}{0.55\textwidth}
-	\vspace{10pt}
+	\vspace{8pt}
 	\textbf{Example}: \textit{"i love when my train is late"}\vspace{-15pt}
 	\begin{center}	
-		\begin{tabular}{|m{2cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.7cm}m{0.2cm}m{0.6cm}|}
+		\begin{tabular}{|m{1.8cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.7cm}m{0.2cm}m{0.6cm}|}
 			\hline 
 			\textbf{Tokens} & \textbf{i} & \textbf{love} & \textbf{when} & \textbf{my} & \textbf{train} & \textbf{is} & \textbf{late}\\ 
 			\hline 
@@ -309,7 +309,7 @@ As supervised machine learning requires hand-crafted features to inform  predict
 		\end{tabular}
 		\vspace{5pt}
 		
-		\begin{tabular}{|p{2cm}||p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|} 
+		\begin{tabular}{|p{1.8cm}||p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|} 
 			\hline 
 			\textbf{Sentiment} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4}\\ 
 			\hline 
@@ -320,7 +320,12 @@ As supervised machine learning requires hand-crafted features to inform  predict
 	\end{center}
 	Overall sentiment: 3.0\\
 	Feature vector: [0.000, 0.125, 0.750, 0.000, 0.125]\\
-\end{minipage} \hfill
+\end{minipage}
+
+\noindent We also use topic modelling, where each instance in a dataset is represented as the distribution of its topics (relative to the topics in the global dataset).
+
+
+
 
 
 \newpage
