@@ -207,9 +207,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 \subsection{Data pre-processing}
 \vspace{-4.2pt}
-\noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\ \vspace{-10pt}
+\noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\ \vspace{-8pt}
 
-On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-10pt}
+On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).\\\vspace{-8pt}
 
 In addition, punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.\vspace{-5pt}
 
@@ -244,41 +244,15 @@ Figure \_ shows the proportion of GloVe-representable tokens before and after pr
 %This section should be between 4 to 7 pages in length.
 \subsection{Feature Extraction}
 \vspace{-4.2pt}
-\noindent Extracting meaningful data from large corpora is a complex task, however in order to do this successfully, we first construct word vectors that capture semantic and syntactic relationships. The textual data is transformed into numerical vectors, so as to encapsulate the seminal features of language.\\
+\noindent Extracting meaningful data from large corpora is a complex task, however in order to do this successfully, we first construct word vectors that capture semantic and syntactic relationships. The textual data is transformed into numerical vectors, so as to encapsulate the seminal features of language.\\\vspace{-8pt}
 
-\noindent \textbf{Traditional Approaches --} We utilise a number of traditional vectorisation methods - perhaps the simplest of which is \textit{Bag of Words (BOW)}, whereby a snippet of text is encoded as a single vector containing a count of the number of occurrences of each word. \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} extends the BOW model by providing each word with a score that reflects its level of importance based upon its frequency within the document. These approaches have two main disadvantages, firstly, each vector is the size of the vocabulary, creating sparse inefficient representations. Secondly, vectors produced in this way do not preserve the context within which words are found, and sarcasm is a highly contextual phenomenon. Nonetheless, they act as a good baseline against which to compare more advanced vectorisation approaches.\\
+\noindent \textbf{Traditional Approaches --} We utilise the \textit{Bag of Words (BOW)} and \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} vectorisation approaches. In BOW, text is encoded as a single vector containing a count of the number of occurrences of each word. TF-IDF extends the BOW model by providing each word with a score that reflects its importance based upon its frequency within the document. These approaches create sparse inefficient representations, where each vector is the size of the vocabulary. Additionally, vectors produced in this way do not preserve the context within which words are found, although sarcasm is a highly contextual phenomenon. These approaches are used as a baseline against which to compare more advanced techniques.\\\vspace{-8pt}
 
-\noindent \textbf{Word Embedding --} Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that were the first to be used to produce high-quality vector representations of words, known as word embeddings. Word2Vec consists of a shallow (two-layer) neural network that takes a large corpus and produces lower-dimensional vectors than the sparse representations generated by BOW and TF-IDF; however, intrinsic statistical properties of the corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked.\\\vspace{-10pt}
+\noindent \textbf{Word Embedding --} Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that were the first to be used to produce high-quality vector representations of words, known as word embeddings. Word2Vec consists of a shallow (two-layer) neural network that takes a large corpus and produces lower-dimensional vectors than the sparse representations generated by BOW and TF-IDF; however, intrinsic statistical properties of the training corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked.\\\vspace{-8pt}
 
-To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus, such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window). Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, specifically as the Amazon review corpus has a high average number of tokens in each snippet, therefore taking into account only the local context of a word may result in  semantically less accurate embeddings.\\
+To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\\vspace{-8pt}
 
-
-
-%such that the dot product of two word embeddings is equal to log of the number of times these words co-occur (within a defined window).
-
-
- 
- An example is given in figure \_. This allows it to capture both global and local statistics of the corpus. 
-
-Despite their ability to preserve semantic relationships, Word2Vec and GloVe do not accommodate polysemy, which describes the co-existence of alternative meanings for the same word. In addition, they cannot generalise to words that were not specifically included in the training set.
-
-\begin{center}
-	\textbf{Figure -:} Word co-occurrence matrix with window size 1 for the snippet:\\ \textit{"the clouds are in the sky"}
-\end{center}
-\begin{center}
-	\includegraphics[width=0.3\textwidth]{Images/glovediagram.png}
-	\label{GloVe Pipeline}
-\end{center}
-
-Given a corpus containing W tokens, a $W \times W$ matrix is constructed. The value in cell (x,y) denotes the frequency with which token \textit{x} has co-occurred with token \textit{y} within a fixed-size window. From this co-occurrence matrix, the probability of token \textit{x} co-occurring with token \textit{y} is given by the formula: \begin{center}
-	$P_{co}\bigl( t_x | t_y\bigr) = \frac{C(t_y, t_x)}{C(t_y)}$
-\end{center}
-where $C(t_i, t_j)$ is the number of times token \textit{i} co-occurs with token \textit{j}.
-
-The word meanings are encapsulated by the ratios of co-occurence probabilties, rather than the probabilities themselves.\\
-\newpage
-\noindent \textbf{Contextualised Word Embedding --}
-Deep neural language models offer a more robust approach. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks.\\
+\noindent \textbf{Contextualised Word Embedding --} Deep neural language models offer a more robust approach. Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that the addition of ELMo to existing models can markedly improve the state-of-the-art in a number of NLP tasks.
 
 \begin{minipage}{0.4\textwidth}
 	\begin{center}
