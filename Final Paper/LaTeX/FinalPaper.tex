@@ -289,8 +289,41 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \subsubsection{Miscellaneous Features}
 As supervised machine learning requires hand-crafted features to inform  predictions, we consider a number of hand-crafted features in addition to the vectors produced by the aforementioned vectorisation approaches. This includes lexical and sentiment features, as well as meta data where this is available as part of the original dataset. For example, the Sarcasm Amazon Review Corpus contains the number of stars in a review, and we can leverage this information as an additional feature. Features that can be shown to improve classifcation scores can be concatenated with our existing vectors (enrichment).\\
 
-\noindent The following experiment is designed to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each dataset. The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens. We contruct $ 1 \times 5 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet.\\
+\noindent The following experiment is designed to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?} We use a state-of-the-art model, the SentimentAnnotator \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}, in order to extract sentiment features from each dataset.
 
+
+\hspace{-15pt}\begin{minipage}{0.4\textwidth}
+	The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens. We contruct $ 1 \times 5 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet.
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.55\textwidth}
+	\vspace{10pt}
+	\textbf{Example}: \textit{"i love when my train is late"}\vspace{-15pt}
+	\begin{center}	
+		\begin{tabular}{|m{2cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.7cm}m{0.2cm}m{0.6cm}|}
+			\hline 
+			\textbf{Tokens} & \textbf{i} & \textbf{love} & \textbf{when} & \textbf{my} & \textbf{train} & \textbf{is} & \textbf{late}\\ 
+			\hline 
+			Sentiment & 2 & 4 & 2 & 2 & 2 & 2 & 1\\ 
+			\hline 
+		\end{tabular}
+		\vspace{5pt}
+		
+		\begin{tabular}{|p{2cm}||p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|} 
+			\hline 
+			\textbf{Sentiment} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4}\\ 
+			\hline 
+			Frequency & 0 & 1 & 6 & 0 & 1\\ 
+			Proportion & 0 & 0.125 & 0.750 & 0 & 0.125\\
+			\hline  
+		\end{tabular}
+	\end{center}
+	Overall sentiment: 3.0\\
+	Feature vector: [0.000, 0.125, 0.750, 0.000, 0.125]\\
+\end{minipage} \hfill
+
+
+\newpage
 \hspace{60pt}\textbf{Example}: \textit{"i love when my train is late"}\vspace{-5pt}
 \begin{center}	
 	\begin{tabular}{|m{3.5cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.6cm}m{0.3cm}m{0.6cm}|}
