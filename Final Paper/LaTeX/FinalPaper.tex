@@ -287,18 +287,23 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
-While deep learning algorithms are able to extract high-level features from data, machine learning classifiers require manually selected features to better inform predictions. We consider miscellaneous features in addition to those produced by the aforementioned techniques - including lexical (punctuation) features, topic modelling features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors (enrichment).\\
+While deep learning algorithms are able to extract useful higher-level features from dense vectors (such as ElMo and GloVe), machine learning classifiers may require additional handcrafted features to better inform their predictions. We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\
 
-\noindent To extract sentiment features from each dataset, we use a state-of-the-art model - the \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. Training a classifier on these features enables us to answer the research question: \textit{Can we improve the solution by incorporating sentiment features?}
+\noindent \textbf{1. Punctuation features --} We extract punctuation features following the procedure outlined in Tsur et al. (2010) \cite{tsur2010icwsm}. Five lexical features are combined to produce a $ 1 \times 5 $ dimensional vector for each text snippet, including the length of the snippet in tokens, as well as the number of: "!" characters, "?" characters, quotations and tokens that include at least one capitalised character. These features are normalised by dividing them by the (maximal observed value $ \cdot $ average maximal value of remaining feature groups).\\
 
+%\begin{enumerate}
+%	\item "!" characters\vspace{-10pt}
+%	\item "?" characters\vspace{-10pt}
+%	\item Quotations\vspace{-10pt}
+%	\item Tokens that include at least one capitalised character
+%\end{enumerate}
 
-\hspace{-15pt}\begin{minipage}{0.4\textwidth}
-	The sentiment annotator assigns a discrete label between 0 (very negative) and 4 (very positive) to a snippet of text. For each instance in the dataset, we collect the sentiment values for each of the individual tokens. We contruct $ 1 \times 5 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet.
-\end{minipage}
-\hspace{10pt}
-\begin{minipage}{0.55\textwidth}
-	\vspace{8pt}
-	\textbf{Example}: \textit{"i love when my train is late"}\vspace{-15pt}
+\noindent \textbf{2. Topic features --} We use topic modelling, where each instance in a dataset is represented as the distribution of its topics (relative to the topics in the global dataset).\\
+
+\noindent \textbf{3. Sentiment features --} We produce sentiment features using the state-of-the-art \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. This model uses a Recursive Neural Tensor Network to assign a discrete sentiment label to text, where 0 is very negative and 4 is very positive.\\
+
+\hspace{-15pt}\begin{minipage}{0.55\textwidth}
+	Example: \textit{"i love when my train is late"}\vspace{-15pt}
 	\begin{center}	
 		\begin{tabular}{|m{1.8cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.7cm}m{0.2cm}m{0.6cm}|}
 			\hline 
@@ -319,68 +324,13 @@ While deep learning algorithms are able to extract high-level features from data
 		\end{tabular}
 	\end{center}
 	Overall sentiment: 3.0\\
-	Feature vector: [0.000, 0.125, 0.750, 0.000, 0.125]\\
+	Feature vector: [0.0, 0.125, 0.750, 0.0, 0.125, 3.0]\\
+\end{minipage}
+\hspace{15pt}\begin{minipage}{0.4\textwidth}
+	\vspace{-5pt}
+	For each instance in the dataset, we collect the sentiment values for each of the individual tokens, as well as the overall sentiment of the snippet. We contruct $ 1 \times 6 $ dimensional feature vectors, where values 0 - 4 show the distribution of sentiment classes for tokens in the snippet, and value 5 shows the overall sentiment label.\\
 \end{minipage}
 
-\noindent We also use topic modelling, where each instance in a dataset is represented as the distribution of its topics (relative to the topics in the global dataset).
-
-
-
-
-
-\newpage
-\hspace{60pt}\textbf{Example}: \textit{"i love when my train is late"}\vspace{-5pt}
-\begin{center}	
-	\begin{tabular}{|m{3.5cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.6cm}m{0.3cm}m{0.6cm}|}
-		\hline 
-		\textbf{Tokens} & \textbf{i} & \textbf{love} & \textbf{when} & \textbf{my} & \textbf{train} & \textbf{is} & \textbf{late}\\ 
-		\hline 
-		Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 1\\ 
-		\hline 
-	\end{tabular}
-	\vspace{5pt}
-	
-	\begin{tabular}{|p{3.5cm}||p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|} 
-		\hline 
-		\textbf{Sentiment Labels} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4}\\ 
-		\hline 
-		Frequency of tokens & 0 & 1 & 6 & 0 & 1\\ 
-		Proportion of tokens & 0 & 0.125 & 0.750 & 0 & 0.125\\
-		\hline  
-	\end{tabular}
-\end{center}
-
-\hspace{60pt}Overall sentiment: 3.0
-
-\hspace{60pt}Feature vector: [0.000, 0.125, 0.750, 0.000, 0.125]\\
-
-
-
-\newpage
-
-Example: \textit{"i love when my train is late"}\vspace{5pt}
-
-\begin{tabular}{|m{3cm}||m{0.1cm}m{0.5cm}m{0.7cm}m{0.4cm}m{0.6cm}m{0.1cm}m{0.6cm}|}
-	\hline 
-	Tokens & i & love & when & my & train & is & late\\ 
-	\hline 
-	Sentiment Labels & 2 & 4 & 2 & 2 & 2 & 2 & 1\\ 
-	\hline 
-\end{tabular}
-\vspace{5pt}
-
-\begin{tabular}{|p{3.5cm}||p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|} 
-	\hline 
-	Sentiment Labels & {0} & {1} & {2} & {3} & {4}\\ 
-	\hline 
-	Frequency of tokens & 0 & 1 & 6 & 0 & 1\\ 
-	Proportion of tokens & 0 & 0.125 & 0.750 & 0 & 0.125\\
-	\hline  
-\end{tabular}
-\vspace{10pt}
-
-{Overall sentiment}: 3.0\\
-\indent {Feature vector}: [0.000, 0.125, 0.750, 0.000, 0.125]\\
 
 
 \subsection{Classification}
