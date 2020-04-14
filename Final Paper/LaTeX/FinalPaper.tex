@@ -216,7 +216,7 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 \noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).\\
 
-\noindent In addition, punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.
+\noindent Punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.
 
 \begin{center}
 	\textbf{Figure -}:  Proportion of tokens represented in the GloVe dictionary\\
@@ -287,9 +287,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
-While deep learning algorithms are able to extract useful higher-level features from dense vectors (such as ElMo and GloVe), machine learning classifiers may require additional handcrafted features to better inform their predictions. We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\
+While deep learning algorithms are able to extract useful higher-level features from dense vectors (such as ElMo and GloVe), machine learning classifiers may require additional handcrafted features to better inform their predictions. We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\\vspace{-5pt}
 
-\noindent \textbf{1. Punctuation features --} We extract punctuation features following the procedure outlined in Tsur et al. (2010) \cite{tsur2010icwsm}. Five lexical features are combined to produce a $ 1 \times 5 $ dimensional vector for each text snippet, including the length of the snippet in tokens, as well as the number of: "!" characters, "?" characters, quotations and tokens that include at least one capitalised character. These features are normalised by dividing them by the (maximal observed value $ \cdot $ average maximal value of remaining feature groups).\\
+\noindent \textbf{1. Punctuation features --} We extract punctuation features following the procedure outlined in Tsur et al. (2010) \cite{tsur2010icwsm}. Five lexical features are combined to produce a $ 1 \times 5 $ dimensional vector for each text snippet, including the length of the snippet in tokens, as well as the number of: "!" characters, "?" characters, quotations and tokens that include at least one capitalised character. These features are normalised by dividing them by the (maximal observed value $ \cdot $ average maximal value of remaining feature groups).\\\vspace{-5pt}
 
 %\begin{enumerate}
 %	\item "!" characters\vspace{-10pt}
@@ -298,7 +298,7 @@ While deep learning algorithms are able to extract useful higher-level features 
 %	\item Tokens that include at least one capitalised character
 %\end{enumerate}
 
-\noindent \textbf{2. Topic features --} We use Latent Dirichlet Allocation (LDA) to perform topic modelling - this is an unsupervised machine learning technique where a fixed number of abstract "topics" are identified in a corpus. Each instance in a dataset is represented as the distribution of its topics, relative to the topics in the global dataset. The intuition is that positive and negative instances may each contain their own distinct assortment of topics, thereby informing future predictions on unseen sarcastic and non-sarcastic data.\\
+\noindent \textbf{2. Topic features --} We use Latent Dirichlet Allocation (LDA) to perform topic modelling - this is an unsupervised machine learning technique where a fixed number of abstract "topics" are identified in a corpus. Each instance in a dataset is represented as the distribution of its topics, relative to the topics in the global dataset. The intuition is that positive and negative instances may each contain their own distinct assortment of topics, thereby informing future predictions on unseen sarcastic and non-sarcastic data.\\\vspace{-5pt}
 
 \noindent \textbf{3. Sentiment features --} We produce sentiment features using the state-of-the-art \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. This model uses a Recursive Neural Tensor Network to assign a discrete sentiment label to text, where 0 is very negative and 4 is very positive.\\\vspace{-5pt}
 
@@ -340,8 +340,8 @@ In this section, machine-learning and deep-learning classification models are co
 \subsubsection{Machine Learning Models}
 We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
 
-\begin{enumerate}
-	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter whose value is finetuned for each dataset.
+\begin{enumerate}[leftmargin=0cm]
+	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter, finetuned for each dataset.
 	
 	%As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups. Although K-Means is intended to be a clustering algorithm, it can easilly be applied to classification problems if we assign the majority label to each cluster
 	
@@ -390,6 +390,9 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 
 Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing a k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
 
+\subsection{Attention}
+\vspace{-4.2pt}
+\noindent We add an attention layer to our best performing lstm-based model. This allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} 
 
 
 \section{Results}
