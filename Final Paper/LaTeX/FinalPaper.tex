@@ -298,12 +298,12 @@ While deep learning algorithms are able to extract useful higher-level features 
 %	\item Tokens that include at least one capitalised character
 %\end{enumerate}
 
-\noindent \textbf{2. Topic features --} We use topic modelling, where each instance in a dataset is represented as the distribution of its topics (relative to the topics in the global dataset).\\
+\noindent \textbf{2. Topic features --} We use Latent Dirichlet Allocation (LDA) to perform topic modelling - this is an unsupervised machine learning technique where a fixed number of abstract "topics" are identified in a corpus. Each instance in a dataset is represented as the distribution of its topics, relative to the topics in the global dataset. The intuition is that positive and negative instances may each contain their own distinct assortment of topics, thereby informing future predictions on unseen sarcastic and non-sarcastic data.\\
 
-\noindent \textbf{3. Sentiment features --} We produce sentiment features using the state-of-the-art \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. This model uses a Recursive Neural Tensor Network to assign a discrete sentiment label to text, where 0 is very negative and 4 is very positive.\\
+\noindent \textbf{3. Sentiment features --} We produce sentiment features using the state-of-the-art \textit{SentimentAnnotator} \cite{socher2013recursive} by Stanford CoreNLP \cite{manning2014stanford}. This model uses a Recursive Neural Tensor Network to assign a discrete sentiment label to text, where 0 is very negative and 4 is very positive.\\\vspace{-5pt}
 
 \hspace{-15pt}\begin{minipage}{0.55\textwidth}
-	Example: \textit{"i love when my train is late"}\vspace{-15pt}
+	\textit{Example: "i love when my train is late"}\vspace{-15pt}
 	\begin{center}	
 		\begin{tabular}{|m{1.8cm}||m{0.4cm}m{0.6cm}m{0.75cm}m{0.4cm}m{0.7cm}m{0.2cm}m{0.6cm}|}
 			\hline 
