@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 APR 2020 02:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 APR 2020 03:00
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -383,17 +383,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 208--209
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--216
+Underfull \hbox (badness 10000) in paragraph at lines 218--219
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--255
+Underfull \hbox (badness 10000) in paragraph at lines 220--221
 
  []
 
@@ -402,143 +397,148 @@ Underfull \hbox (badness 10000) in paragraph at lines 257--258
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 260--261
+
+ []
+
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 259--260
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
 
  []
 
 <Images/outside1.png, id=36, 659.53966pt x 513.78505pt>
 File: Images/outside1.png Graphic file (type png)
 <use Images/outside1.png>
-Package pdftex.def Info: Images/outside1.png  used on input line 264.
+Package pdftex.def Info: Images/outside1.png  used on input line 267.
 (pdftex.def)             Requested size: 145.25842pt x 113.15065pt.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 270--271
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 
-Overfull \hbox (1.46265pt too wide) in paragraph at lines 261--273
+Overfull \hbox (1.46265pt too wide) in paragraph at lines 264--276
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--277
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
 
  []
 
 <Images/elmo_diagram.png, id=37, 437.83575pt x 331.2375pt>
 File: Images/elmo_diagram.png Graphic file (type png)
 <use Images/elmo_diagram.png>
-Package pdftex.def Info: Images/elmo_diagram.png  used on input line 280.
+Package pdftex.def Info: Images/elmo_diagram.png  used on input line 283.
 (pdftex.def)             Requested size: 166.00871pt x 125.58852pt.
 
-Overfull \hbox (1.46265pt too wide) in paragraph at lines 278--288
+Overfull \hbox (1.46265pt too wide) in paragraph at lines 281--291
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--288
+Underfull \hbox (badness 10000) in paragraph at lines 281--291
 
  []
 
 [9 <./Images/outside1.png> <./Images/elmo_diagram.png>]
-Overfull \hbox (3.35202pt too wide) in paragraph at lines 310--310
+Overfull \hbox (3.35202pt too wide) in paragraph at lines 313--313
 []|\OT1/ptm/b/n/12 love| 
  []
 
 
-Overfull \hbox (5.99617pt too wide) in paragraph at lines 310--310
+Overfull \hbox (5.99617pt too wide) in paragraph at lines 313--313
 []|\OT1/ptm/b/n/12 when| 
  []
 
 
-Overfull \hbox (4.61504pt too wide) in paragraph at lines 310--310
+Overfull \hbox (4.61504pt too wide) in paragraph at lines 313--313
 []|\OT1/ptm/b/n/12 my| 
  []
 
 
-Overfull \hbox (5.41484pt too wide) in paragraph at lines 310--310
+Overfull \hbox (5.41484pt too wide) in paragraph at lines 313--313
 []|\OT1/ptm/b/n/12 train| 
  []
 
 
-Overfull \hbox (2.3133pt too wide) in paragraph at lines 310--310
+Overfull \hbox (2.3133pt too wide) in paragraph at lines 313--313
 []|\OT1/ptm/b/n/12 is| 
  []
 
 
-Overfull \hbox (1.58794pt too wide) in paragraph at lines 310--311
+Overfull \hbox (1.58794pt too wide) in paragraph at lines 313--314
 []|\OT1/ptm/b/n/12 late| 
  []
 
 
-Overfull \hbox (1.04343pt too wide) in paragraph at lines 308--316
+Overfull \hbox (1.04343pt too wide) in paragraph at lines 311--319
  [] 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 319--319
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 322--322
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 322--322
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 325--325
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 322--322
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 325--325
 []|\OT1/ptm/m/n/12 0.750| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 322--323
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 325--326
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (2.82756pt too wide) in paragraph at lines 317--325
+Overfull \hbox (2.82756pt too wide) in paragraph at lines 320--328
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 326--328
+Underfull \hbox (badness 10000) in paragraph at lines 329--331
 
  []
 
 
-Underfull \hbox (badness 1057) in paragraph at lines 331--332
+Underfull \hbox (badness 1057) in paragraph at lines 334--335
 \OT1/ptm/m/n/12 con-truct $\OT1/cmr/m/n/12 1 \OMS/cmsy/m/n/12  \OT1/cmr/m/n/12
  6$ \OT1/ptm/m/n/12 di-men-sional fea-ture
  []
 
 
-Underfull \hbox (badness 1038) in paragraph at lines 331--332
+Underfull \hbox (badness 1038) in paragraph at lines 334--335
 \OT1/ptm/m/n/12 to-kens in the snip-pet, and value 5
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 331--332
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 363--364
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
 
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
+Underfull \hbox (badness 10000) in paragraph at lines 409--410
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 423--423
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 426--426
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
@@ -546,15 +546,15 @@ Overfull \hbox (0.78032pt too wide) in paragraph at lines 423--423
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 44
-0.
+3.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 436--448
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 439--451
 []$[]$  $[]$ 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 462--463
+Underfull \hbox (badness 10000) in paragraph at lines 465--466
 
  []
 
@@ -595,7 +595,7 @@ utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
 /Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (20 pages, 381100 bytes).
+Output written on FinalPaper.pdf (20 pages, 381203 bytes).
 PDF statistics:
  125 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

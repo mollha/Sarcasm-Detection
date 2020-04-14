@@ -208,9 +208,12 @@ In terms of \textit{classification}, we implement most of the machine learning a
 *\textit{pos} indicates positive instances (sarcastic) and \textit{neg} indicates negative instances (non-sarcastic)\\
 
 
-\noindent The selected datasets were chosen due to their size, cleanliness and composition. Each of the selected datasets are sufficiently large enough to provide a representative view of their respective data sources without exceeding the available computational resources. In addition, these approximately balanced datasets are preferable to unbalanced datasets; despite the infrequent usage of sarcasm in real-life conversations. We can achieve 95\% accuracy when training a classifier on an unbalanced binary dataset where the class distribution is 95\% to 5\%, simply by annotating each datapoint with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide it with approximately equal amounts of sarcastic and non-sarcastic data.
+\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, detailed in the following section, to increase the amount of data used in deep learning, which consequently improves training stability and performance.
 
-\subsection{Data pre-processing}
+Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately sufficient amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
+
+
+\subsection{Pre-processing and Augmentation}
 \vspace{-4.2pt}
 \noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\
 
