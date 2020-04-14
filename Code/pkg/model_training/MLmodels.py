@@ -6,12 +6,16 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from ..data_processing.helper import prepare_data
+from sklearn.model_selection import train_test_split
 import pandas as pd
+from os.path import isfile
 import numpy as np
 import pickle
 import time
 from pathlib import Path
 
+# ------------------------------------ Model dictionaries --------------------------------------
+# List of supported models
 models = {"svm": SVC(gamma='auto', C=10, kernel='linear'),
           "log_reg": LogisticRegression(C=10, max_iter=300),
           "rfc": RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt'),
@@ -19,7 +23,7 @@ models = {"svm": SVC(gamma='auto', C=10, kernel='linear'),
           "knn": KNeighborsClassifier(n_neighbors=5)
           }
 
-
+# Full names of supported models for printing to the console
 full_names = {"svm": "Support Vector Machine",
               "log_reg": "Logistic Regression",
               "rfc": "Random Forest Classifier",
@@ -28,55 +32,68 @@ full_names = {"svm": "Support Vector Machine",
               }
 
 
-def get_model(model_name) -> tuple:
+# -------------------------------------- Main Functions ---------------------------------------
+def get_model(model_name: str) -> tuple:
+    """
+    Given an abbreviated model name as a string, return the model's full name and the corresponding unfit classifier
+    :param model_name: a string containing an abbreviated model name - this is the model to be fetched n.b. for a full
+    list of valid names, view the keys of the full_names dictionary
+    """
     try:
         return full_names[model_name], models[model_name]
     except KeyError:
         print('Invalid model name')
 
 
-
-# def get_model(model_name) -> tuple:
-#     if model_name == 'svm':
-#         return full_names[model_name], SVC(gamma='auto', C=10, kernel='linear')
-#     elif model_name == 'log_reg':
-#         return full_names[model_name], LogisticRegression(C=10, max_iter=300)
-#     elif model_name == 'rfc':
-#         return full_names[model_name], RandomForestClassifier(n_estimators=100, max_depth=None, max_features='sqrt')
-#     elif model_name == 'n_bayes':
-#         return full_names[model_name], GaussianNB()
-#     elif model_name == 'knn':
-#         return full_names[model_name], KNeighborsClassifier()
-#     else:
-#         raise KeyError('Not a valid model name')
-
-
-def calculate_f1_score(trained_model, testing_data, testing_labels):
-    predictions = trained_model.predict(testing_data)
-    return f1_score(testing_labels, predictions)
-
-
-def train_and_evaluate(classifier, data, labels):
-    scores = cross_val_score(classifier, data.apply(pd.Series), labels, cv=5, scoring='f1_macro')
-    return np.mean(scores)
+def evaluate_model(trained_model, testing_data: pd.Series, testing_labels: pd.Series) -> None:
+    """
+    Given a trained model, and some testing data and labels, calculate the F1 score of the model
+    :param trained_model: a sci-kit learn classifier, trained on corpus of vectors
+    :param testing_data: data
+    :param testing_labels: a string containing an abbreviated model name - this is the model to be fetched n.b. for a full
+    """
+    y_pred = trained_model.predict_classes(x=np.array(testing_data))
+    score = f1_score(np.array(testing_labels), np.array(y_pred))
+    print('F1 Score: ', score)
 
 
 def get_ml_results(model_name: str, vector_type: str, feature_list: list, dataset_number: int):
+
+    split = 0.1
+
     base_path = Path(__file__).parent
+    stem = '../trained_models/' + model_name + '_with_' + '_'.join([vector_type] + feature_list) + '_on_' + str(dataset_number) + '.pckl'
+    file_name = str(base_path / stem)
     start = time.time()
     _, sarcasm_labels, sarcasm_data, _, _ = prepare_data(dataset_number, vector_type, feature_list)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(sarcasm_data, sarcasm_labels, test_size=split, shuffle=False)
+
+    if isfile(file_name):
+        print('Model with filename "' + stem + '" already exists - collecting results')
+        ml_model = pd.read_pickle(file_name)
+        evaluate_model(ml_model, testing_data, testing_labels)
+        return
+
+    while True:
+        response = input(
+            'Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
+        if response in {'y', 'n'}:
+            if response == 'y':
+                break
+            else:
+                print('\nCancelling training...')
+                return
 
     print('\nTraining ML models')
     classifier_name, classifier = get_model(model_name)
     print('Classifier: ' + classifier_name)
 
-    scores = cross_val_score(classifier, sarcasm_data, sarcasm_labels, cv=2, scoring='f1_macro')
+    # ------------------------- Evaluate new model with five-fold cross validation -----------------------
+    scores = cross_val_score(classifier, sarcasm_data, sarcasm_labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
     print('Score: ', five_fold_cross_validation)
     print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
+    classifier.fit(training_data, training_labels)
 
-    classifier.fit(sarcasm_data, sarcasm_labels)
-
-    with open(str(base_path / ('../trained_models/' + model_name + '_with_' + '_'.join([vector_type] + feature_list) +
-                               '_on_' + str(dataset_number) + '.pckl')), 'wb') as f:
+    with open(file_name, 'wb') as f:
         pickle.dump(classifier, f)

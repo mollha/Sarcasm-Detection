@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 from pathlib import Path
+from os.path import isfile
 from keras import optimizers
 from keras.engine import Layer
 from ..data_processing.augmentation import synonym_replacement
@@ -164,23 +165,31 @@ def get_length_limit(dataset_name: str) -> int:
         raise ValueError('Dataset name "' + dataset_name + '" does not exist')
 
 
-
-
 def augment_data(sarcasm_data: np.ndarray, labels: np.ndarray, flag=False) -> tuple:
     if flag:
         sarcasm_data = np.concatenate((sarcasm_data, sarcasm_data.copy()))
         labels = np.concatenate((labels, labels.copy()))
-
-
-
     return sarcasm_data, labels
 
 
 def get_batch_size(model_name: str) -> int:
-    return 32
-    # online learning for lstms sets batch size to 1
-    #batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32}
-    #return batch_sizes[model_name]
+    # set batch size to 1 for online learning in lstm
+    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32}
+    return batch_sizes[model_name]
+
+
+def get_custom_layers(model_name=None, vector_type=None):
+    custom_layers = {}
+
+    if model_name and 'attention' in model_name:
+        custom_layers['AttentionLayer'] = AttentionLayer
+
+    if vector_type:
+        if vector_type == 'elmo':
+            custom_layers['ElmoEmbeddingLayer'] = ElmoEmbeddingLayer
+        elif vector_type == 'glove':
+            custom_layers['GloveEmbeddingLayer'] = GloveEmbeddingLayer
+    return custom_layers
 
 
 def load_model_from_file(filename: str, custom_layers: dict):
@@ -249,22 +258,6 @@ def vanilla_gru(model, shape, optimiser):
                   metrics=['accuracy'])
     return model
 
-
-# def cnn(model):
-#     model.add(Dropout(0.2))
-#     model.add(Conv1D(filters=32, kernel_size=4, padding='valid', activation='relu', strides=1))
-#     #model.add(LeakyReLU(alpha=0.1))
-#     model.add(GlobalMaxPooling1D())
-#     # vanilla hidden layer:
-#     model.add(Dense(250))
-#     model.add(Dropout(0.2))
-#     model.add(LeakyReLU(alpha=0.1))
-#     model.add(Dense(1, activation='sigmoid'))
-#     model.compile(loss='binary_crossentropy',
-#                   optimizer='adam',
-#                   metrics=['accuracy'])
-#     return model
-
 def lstm_with_attention(model, optimiser):
     model.add(LSTM(60, return_sequences=True))
     model.add(AttentionLayer())
@@ -326,7 +319,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
         text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string"), {'ElmoEmbeddingLayer': ElmoEmbeddingLayer}
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")
 
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
@@ -340,7 +333,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
 
         sequences = tokenizer.texts_to_sequences(s_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, s_labels, GloveEmbeddingLayer(tokenizer.word_index, limit), {'GloveEmbeddingLayer': GloveEmbeddingLayer}
+        return padded_data, s_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -382,11 +375,10 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     # if i remove the overall sentiment from the 6-dimensional vector, we could mimic the behaviour
     # e.g. [0 0 0 0 1] for each word, when averaging embeddings will be very similar
 
-    s_data, l_data, e_layer, c_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
+    s_data, l_data, e_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
                                                                       split, max_batch_size, length_limit)
 
-    new_adam = optimizers.Adam(lr=0.0001, decay=0.001)
-
+    new_adam = optimizers.Adam() # lr=0.0001, decay=0.001
     model = Sequential()
     e_layer.trainable = False
     model.add(e_layer)
@@ -394,7 +386,6 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
         model = lstm_with_attention(model, new_adam)
-        c_layer['AttentionLayer'] = AttentionLayer
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'cnn':
@@ -403,7 +394,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = vanilla_rnn(model, (max_batch_size, length_limit), new_adam)
     elif model_name == 'vanilla-gru':
         model = vanilla_gru(model, (len(s_data), length_limit), new_adam)
-    return s_data, l_data, model, c_layer
+    return s_data, l_data, model
 
 
 def evaluate_model(model_name, trained_model, testing_data, testing_labels):
@@ -429,21 +420,34 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
     patience = 10
     max_batch_size = get_batch_size(model_name)
 
-    s_data, l_data, dl_model, custom_layer = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split)
-    print(training_data.shape)
+    s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
+    custom_layer = get_custom_layers(model_name, vector_type)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=False)
 
-    # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
-
+    # ------------------------------- AUGMENT DATA IF FLAG IS SET -------------------------------
     training_data, training_labels = augment_data(training_data, training_labels, flag=False)
     testing_data, testing_labels = augment_data(testing_data, testing_labels, flag=False)
+    stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
+    file_name = str(base_path / ('../trained_models/' + stem))
 
-    file_name = str(base_path / ('../trained_models/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'))
+    if isfile(file_name):
+        print('Model with filename "' + stem + '" already exists - collecting results')
+        dl_model = load_model_from_file(file_name, custom_layer)
+        evaluate_model(model_name, dl_model, testing_data, testing_labels)
+        return
 
+    while True:
+        response = input('Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
+        if response in {'y', 'n'}:
+            if response == 'y':
+                break
+            else:
+                print('\nCancelling training...')
+                return
+
+    # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
     model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
     early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
-
-    # sess.run(tf.compat.v1.global_variables_initializer())
     model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
                                 epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
