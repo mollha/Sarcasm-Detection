@@ -208,12 +208,12 @@ In terms of \textit{classification}, we implement most of the machine learning a
 *\textit{pos} indicates positive instances (sarcastic) and \textit{neg} indicates negative instances (non-sarcastic)\\
 
 
-\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, detailed in the following section, to increase the amount of data used in deep learning, which consequently improves training stability and performance.
+\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, explained in the deep learning section, to increase the amount of data used in deep learning as this improves training stability and model performance.
 
 Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately sufficient amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
 
 
-\subsection{Pre-processing and Augmentation}
+\subsection{Data Pre-processing}
 \vspace{-4.2pt}
 \noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\
 
@@ -361,6 +361,9 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 
 \subsubsection{Deep Learning Models}
 Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers. We use Binary Cross-Entropy loss.
+
+We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy.  An adjective or noun chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated 
+
 
 \paragraph{Recurrent Neural Networks --}
 In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
