@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  14 APR 2020 03:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  15 APR 2020 03:24
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -533,50 +533,64 @@ Underfull \hbox (badness 10000) in paragraph at lines 369--370
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 412--413
+Underfull \hbox (badness 10000) in paragraph at lines 410--412
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 429--429
+Underfull \hbox (badness 10000) in paragraph at lines 413--414
+
+ []
+
+
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 430--430
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 [13]
-<Images/absolute_differences.png, id=60, 462.528pt x 346.896pt>
+<Images/absolute_differences.png, id=61, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 44
-6.
+7.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 442--454
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 443--455
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--469
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
 
  []
 
-[14 <./Images/absolute_differences.png>] [15] [16] [17] (FinalPaper.bbl
-[18]
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
+
+ []
+
+[14 <./Images/absolute_differences.png>] [15]
+Overfull \hbox (101.11555pt too wide) in paragraph at lines 511--525
+[] [] 
+ []
+
+[16] [17] [18] [19] [20] (FinalPaper.bbl [21]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[19]
+[22]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [20] (FinalPaper.aux) ) 
+)) [23] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4682 strings out of 492452
- 66622 string characters out of 3114457
- 143911 words of memory out of 3000000
- 8935 multiletter control sequences out of 15000+200000
- 27820 words of font info for 55 fonts, out of 3000000 for 9000
+ 4683 strings out of 492452
+ 66635 string characters out of 3114457
+ 149911 words of memory out of 3000000
+ 8936 multiletter control sequences out of 15000+200000
+ 28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1394b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Password is house/AppData/Local/Programs/Mi
@@ -591,14 +605,16 @@ b><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/Ap
 pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
-sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/
-utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (20 pages, 381372 bytes).
+sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
+assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on FinalPaper.pdf (23 pages, 396020 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
+ 138 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

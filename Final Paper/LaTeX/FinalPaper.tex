@@ -210,7 +210,7 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 \noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, explained in the deep learning section, to increase the amount of data used in deep learning as this improves training stability and model performance.
 
-Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately sufficient amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
+Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately equal amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
 
 
 \subsection{Data Pre-processing}
@@ -408,6 +408,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \begin{align*}
 \mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}
 \end{align*}
+$F_1 \text{ Score} = \frac{2 \times precision \times recall}{precision +  recall}$\\
 
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
@@ -471,10 +472,59 @@ We also experimented with an unsupervised model - K-Means clustering where the m
 
 
 
-\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.
+\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.\\
+
+\begin{tabular}{|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{BOW}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
+	\cline{1-7}
+	& News & Amazon & Twitter & News & Amazon & Twitter\\
+	\cline{1-7}
+	Support Vector Machine & 0.714 & 0.736 & 0.713 &\textbf{0.718} &\textbf{0.775} & 0.724\\
+	Logistic Regression & \textbf{0.721}& \textbf{0.745}& \textbf{0.750}&0.712 &0.748 & \textbf{0.748}\\
+	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715\\
+	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675\\
+	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{|c||}{\textbf{GloVe}} & \multicolumn{3}{c|}{\textbf{ElMo}}\\
+	\cline{1-7}
+	& News & Amazon & Twitter & News & Amazon & Twitter\\
+	\cline{1-7}
+	Support Vector Machine & 0.732 &0.700 & 0.635 & 0.844 & 0.800& 0.754\\
+	Logistic Regression & 0.732 &\textbf{0.713} & 0.630 &\textbf{0.846} & \textbf{0.809} & \textbf{0.762}\\
+	Random Forest Classifier & \textbf{0.754}&0.669 &\textbf{0.645} &0.797 &0.727 & 0.735\\
+	Gaussian Naive Bayes &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
+	K-Nearest Neighbours & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
+	\hline
+\end{tabular}
 
 
+\newpage
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on all datasets
+\end{center}
 
+\hspace{-70pt}\begin{tabular}{|c|c|c|c||c|c|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{BOW} & \multicolumn{3}{c|}{TF-IDF} & \multicolumn{3}{|c||}{GloVe} & \multicolumn{3}{c|}{ElMo}\\
+	\cline{1-13}
+	& 1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3\\
+	\cline{1-13}
+	Support Vector Machine & 0.714 & 0.736 & 0.713 &0.718 &0.775 & 0.724 & 0.732 &0.700 & 0.635 & 0.844 & 0.800& 0.754\\
+	Logistic Regression & 0.721& 0.745& 0.742&0.712 &0.748 & 0.748&0.732 &0.713 & 0.630 &\textbf{0.846} & \textbf{0.809} & \textbf{0.762}\\
+	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715 & 0.754&0.669 &0.645 &0.797 &0.727 & 0.735\\
+	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675 &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
+	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346 & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
+	\hline
+	% etc. ...
+\end{tabular}
+
+
+\newpage
 %\subsubsection{News Headlines for Sarcasm Detection}
 
 \begin{center}
