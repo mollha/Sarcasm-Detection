@@ -403,17 +403,24 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \section{Results}
 \subsection{Evaluation Method}
-\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.\\
+\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.
 
-\begin{minipage}{0.33\textwidth}
-	$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$
-\end{minipage}
-\begin{minipage}{0.28\textwidth}
-	$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$
-\end{minipage}
-\begin{minipage}{0.33\textwidth}
-	$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
-\end{minipage}\\
+\hspace{-30pt}\begin{center}
+	\begin{minipage}{0.4\textwidth}
+		$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$\\
+	\end{minipage}
+	\begin{minipage}{0.4\textwidth}
+		$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
+	\end{minipage}\\
+\end{center}
+\begin{center}
+	\begin{minipage}{0.4\textwidth}
+		$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
+	\end{minipage}\\
+\end{center}
 
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
@@ -470,25 +477,6 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{3cm}||p{2.8cm}|p{3.7cm}|p{2cm}|  }
-		\hline
-		\textbf{Dataset} & \textbf{Best Model}& \textbf{Additional Features} & \textbf{Improved $\mathbf{F_1}$ Score}\\
-		\hline\hline
-		News Headlines & Logistic Regression with ElMo & Sentiment, Topic   & 0.847\\
-		\hline
-		Amazon Reviews& Logistic Regression  with ElMo& Sentiment, Topic & 0.818\\
-		\hline
-		Twitter data & Logistic Regression  with ElMo& Sentiment, Punctuation, Topic  & 0.790\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\newpage
-\begin{center}
 	\textbf{Figure -}: $F_1$ score of logistic regression models trained on hand-crafted features
 \end{center}
 
@@ -522,66 +510,25 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \begin{minipage}{0.6\textwidth}
 	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 \end{minipage}
-\vfill
 %\subsubsection{News Headlines for Sarcasm Detection}
 
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers when trained on handcrafted features
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{9cm}||p{2cm}|  }
+	\begin{tabular}{ |p{3cm}||p{5.4cm}|p{3.7cm}|p{2cm}|  }
 		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
+		\textbf{Dataset} & \textbf{Best Model Architecture}& \textbf{Additional Features} & \textbf{Improved $\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Logistic Regression + ElMo + Sentiment   & 0.846\\
-		Logistic Regression + ElMo + Punctuation & 0.847\\
-		Logistic Regression + ElMo + Topic   & 0.847\\
-		Logistic Regression + ElMo + Topic + Punctuation   & 0.847\\
+		News Headlines & Logistic Regression with ElMo & Sentiment, Topic   & 0.847\\
+		\hline
+		Amazon Reviews& Logistic Regression  with ElMo& Sentiment, Topic & 0.818\\
+		\hline
+		Twitter data & Logistic Regression  with ElMo& Sentiment, Punctuation, Topic  & 0.790\\
 		\hline
 	\end{tabular}
 \end{center}
-
-
-%\subsubsection{Sarcasm Amazon Review Corpus}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{9cm}||p{2cm}|}
-		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Logistic Regression + ElMo + Sentiment   & 0.830\\
-		Logistic Regression + ElMo + Punctuation & 0.809\\
-		Logistic Regression + ElMo + Topic   & 0.811\\
-		Logistic Regression + ElMo + Sentiment + Topic & 0.811\\
-		\hline
-	\end{tabular}
-\end{center}
-
-%\subsubsection{Pt\'a\v{c}ek et al. (2014) Dataset}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
-\end{center}
-
-
-\begin{center}
-	\begin{tabular}{|p{9cm}||p{2cm}| }
-		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Logistic Regression + TF-IDF + Sentiment   & 0.763\\
-		Logistic Regression + TF-IDF + Punctuation & 0.762\\
-		Logistic Regression + TF-IDF + Topic   & 0.763\\
-		Logistic Regression + TF-IDF + Sentiment + Topic & 0.764\\
-		\hline
-	\end{tabular}
-\end{center}
-
 
 
 %
@@ -608,7 +555,6 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 %This section should be between 2 to 3 pages in length.
 
-\newpage
 \subsection{Deep Learning Experimentation}
 \noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as
 
