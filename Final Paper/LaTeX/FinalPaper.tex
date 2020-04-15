@@ -403,21 +403,91 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \section{Results}
 \subsection{Evaluation Method}
-\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.
+\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.\\
 
-\begin{align*}
-\mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}
-\end{align*}
-$F_1 \text{ Score} = \frac{2 \times precision \times recall}{precision +  recall}$\\
+\begin{minipage}{0.33\textwidth}
+	$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$
+\end{minipage}
+\begin{minipage}{0.28\textwidth}
+	$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
+\end{minipage}\\
 
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
-\subsection{Feature Analysis}
+
+\subsection{Machine Learning Experimentation}
+
+%\begin{figure}[htp]
+%	\centering
+%	\textbf{Figure -:} Mean proportion of tokens in each sentiment class
+%%	\includegraphics[width=.5\textwidth]{Images/NHSD_sentimentlabels.png}\hfill
+%	\includegraphics[width=.5\textwidth]{Images/SARC_sentimentlabels.png}\hfill
+%	\label{fig:figure3}
+%\end{figure}
+
+\noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
+
+\noindent We also experimented with an unsupervised model - K-Means clustering where the majority label of each cluster was assigned, however, the results were very poor.\\
+
+
+
+\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.\\
+
+\begin{tabular}{|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{BOW}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
+	\cline{1-7}
+	& News & Amazon & Twitter & News & Amazon & Twitter\\
+	\cline{1-7}
+	Support Vector Machine & 0.714 & 0.736 & 0.713 &\textbf{0.718} &\textbf{0.775} & 0.724\\
+	Logistic Regression & \textbf{0.721}& \textbf{0.745}& \textbf{0.750}&0.712 &0.748 & \textbf{0.748}\\
+	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715\\
+	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675\\
+	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
+	\hline
+\end{tabular}\\
+
+\begin{tabular}{|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{|c||}{\textbf{GloVe}} & \multicolumn{3}{c|}{\textbf{ElMo}}\\
+	\cline{1-7}
+	& News & Amazon & Twitter & News & Amazon & Twitter\\
+	\cline{1-7}
+	Support Vector Machine & 0.732 &0.700 & 0.635 & 0.844 & 0.800& 0.754\\
+	Logistic Regression & 0.732 &\textbf{0.713} & 0.630 &\textbf{0.846} & \textbf{0.809} & \textbf{0.762}\\
+	Random Forest Classifier & \textbf{0.754}&0.669 &\textbf{0.645} &0.797 &0.727 & 0.735\\
+	Gaussian Naive Bayes &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
+	K-Nearest Neighbours & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
+	\hline
+\end{tabular}\\
+\vspace{100pt}
+
 \noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
 
+\begin{center}
+	\begin{tabular}{ |p{3cm}||p{2.8cm}|p{3.7cm}|p{2cm}|  }
+		\hline
+		\textbf{Dataset} & \textbf{Best Model}& \textbf{Additional Features} & \textbf{Improved $\mathbf{F_1}$ Score}\\
+		\hline\hline
+		News Headlines & Logistic Regression with ElMo & Sentiment, Topic   & 0.847\\
+		\hline
+		Amazon Reviews& Logistic Regression  with ElMo& Sentiment, Topic & 0.818\\
+		\hline
+		Twitter data & Logistic Regression  with ElMo& Sentiment, Punctuation, Topic  & 0.790\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\newpage
 \begin{center}
 	\textbf{Figure -}: $F_1$ score of logistic regression models trained on hand-crafted features
 \end{center}
@@ -452,99 +522,11 @@ $F_1 \text{ Score} = \frac{2 \times precision \times recall}{precision +  recall
 \begin{minipage}{0.6\textwidth}
 	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 \end{minipage}
-
-
-%\begin{figure}[htp]
-%	\centering
-%	\textbf{Figure -:} Mean proportion of tokens in each sentiment class
-%%	\includegraphics[width=.5\textwidth]{Images/NHSD_sentimentlabels.png}\hfill
-%	\includegraphics[width=.5\textwidth]{Images/SARC_sentimentlabels.png}\hfill
-%	\label{fig:figure3}
-%\end{figure}
-
-\subsection{Machine Learning Experimentation}
-
-
-
-\noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
-
-We also experimented with an unsupervised model - K-Means clustering where the majority label of each cluster was assigned, however, the results were very poor.
-
-
-
-\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.\\
-
-\begin{tabular}{|c||c|c|c||c|c|c|}
-	\hline
-	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{BOW}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
-	\cline{1-7}
-	& News & Amazon & Twitter & News & Amazon & Twitter\\
-	\cline{1-7}
-	Support Vector Machine & 0.714 & 0.736 & 0.713 &\textbf{0.718} &\textbf{0.775} & 0.724\\
-	Logistic Regression & \textbf{0.721}& \textbf{0.745}& \textbf{0.750}&0.712 &0.748 & \textbf{0.748}\\
-	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715\\
-	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675\\
-	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
-	\hline
-\end{tabular}
-
-\begin{tabular}{|c||c|c|c||c|c|c|}
-	\hline
-	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{|c||}{\textbf{GloVe}} & \multicolumn{3}{c|}{\textbf{ElMo}}\\
-	\cline{1-7}
-	& News & Amazon & Twitter & News & Amazon & Twitter\\
-	\cline{1-7}
-	Support Vector Machine & 0.732 &0.700 & 0.635 & 0.844 & 0.800& 0.754\\
-	Logistic Regression & 0.732 &\textbf{0.713} & 0.630 &\textbf{0.846} & \textbf{0.809} & \textbf{0.762}\\
-	Random Forest Classifier & \textbf{0.754}&0.669 &\textbf{0.645} &0.797 &0.727 & 0.735\\
-	Gaussian Naive Bayes &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
-	K-Nearest Neighbours & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
-	\hline
-\end{tabular}
-
-
-\newpage
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on all datasets
-\end{center}
-
-\hspace{-70pt}\begin{tabular}{|c|c|c|c||c|c|c||c|c|c||c|c|c|}
-	\hline
-	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{BOW} & \multicolumn{3}{c|}{TF-IDF} & \multicolumn{3}{|c||}{GloVe} & \multicolumn{3}{c|}{ElMo}\\
-	\cline{1-13}
-	& 1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3\\
-	\cline{1-13}
-	Support Vector Machine & 0.714 & 0.736 & 0.713 &0.718 &0.775 & 0.724 & 0.732 &0.700 & 0.635 & 0.844 & 0.800& 0.754\\
-	Logistic Regression & 0.721& 0.745& 0.742&0.712 &0.748 & 0.748&0.732 &0.713 & 0.630 &\textbf{0.846} & \textbf{0.809} & \textbf{0.762}\\
-	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715 & 0.754&0.669 &0.645 &0.797 &0.727 & 0.735\\
-	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675 &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
-	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346 & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
-	\hline
-	% etc. ...
-\end{tabular}
-
-
-\newpage
+\vfill
 %\subsubsection{News Headlines for Sarcasm Detection}
 
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.714    & 0.718 &   0.732 & 0.844\\
-		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
-		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
-		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
-		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
-		\hline
-	\end{tabular}
 \end{center}
 
 \begin{center}
@@ -568,22 +550,6 @@ We also experimented with an unsupervised model - K-Means clustering where the m
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		  & \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.736    & 0.775 &   0.700 & 0.800\\
-		Logistic Regression &   0.745 & 0.748   & 0.713 & \textbf{0.809}\\
-		Random Forest Classifier &0.525 & 0.487 &  0.669 & 0.727\\
-		Gaussian Naive Bayes  & 0.625  & 0.621 &  0.416 & 0.666\\
-		K-Nearest Neighbours & 0.476  & 0.607   & 0.561 & 0.685\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
 	\begin{tabular}{ |p{9cm}||p{2cm}|}
 		\hline
 		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
@@ -602,21 +568,6 @@ We also experimented with an unsupervised model - K-Means clustering where the m
 	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
 \end{center}
 
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.713    & 0.724 &   0.635 & 0.754\\
-		Logistic Regression &   0.742 & 0.748 & 0.630 & \textbf{0.762}\\
-		Random Forest Classifier &0.723 & 0.715 &  0.645 & 0.735\\
-		Gaussian Naive Bayes  & 0.681  & 0.675&  0.594 &0.684\\
-		K-Nearest Neighbours & 0.557  & 0.346   & 0.607 & 0.716\\
-		\hline
-	\end{tabular}
-\end{center}
 
 \begin{center}
 	\begin{tabular}{|p{9cm}||p{2cm}| }
