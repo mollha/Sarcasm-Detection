@@ -406,21 +406,23 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.
 
 \hspace{-30pt}\begin{center}
-	\begin{minipage}{0.4\textwidth}
+	\begin{minipage}{0.47\textwidth}
 		$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$\\
 	\end{minipage}
-	\begin{minipage}{0.4\textwidth}
+	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
 		$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
 	\end{minipage}\\
 \end{center}
+\vspace{-10pt}
 \begin{center}
-	\begin{minipage}{0.4\textwidth}
+	\begin{minipage}{0.47\textwidth}
 		$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
 	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
+	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
 		$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
-	\end{minipage}\\
+	\end{minipage}
 \end{center}
+\vspace{4pt}
 
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
 
