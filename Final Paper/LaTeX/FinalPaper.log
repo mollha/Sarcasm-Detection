@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 APR 2020 23:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  17 APR 2020 00:51
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -568,13 +568,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 483--484
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 495--508
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 492--505
 
  []
 
-[14]
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 542--542
+
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 539--539
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
@@ -583,15 +583,15 @@ Overfull \hbox (0.78032pt too wide) in paragraph at lines 542--542
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 55
-9.
+6.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 555--568
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 552--565
 []$[]$  $[]$ 
  []
 
 [16 <./Images/absolute_differences.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 617--618
+Underfull \hbox (badness 10000) in paragraph at lines 614--615
 
  []
 
@@ -633,7 +633,7 @@ ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
 assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on FinalPaper.pdf (20 pages, 477049 bytes).
+Output written on FinalPaper.pdf (20 pages, 477213 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

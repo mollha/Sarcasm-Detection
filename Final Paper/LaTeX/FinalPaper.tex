@@ -71,8 +71,8 @@ Early rule-based approaches introduced the idea that the sentiment contained wit
 
 \subsection{Research Questions and Objectives}
 \noindent The \textbf{research questions} guiding this project are as follows --\\
+\indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
 \indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
-\indent \textit{- Can we improve the solution by incorporating sentiment features?}\\ 
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
 \noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.
@@ -81,7 +81,7 @@ The \textbf{minimum} objectives of this project are to evaluate, compare and cle
 
 The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
 
-The \textbf{advanced} objectives of this project are to implement an attention-based deep neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
+The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
 
 This is achieved by...
 
@@ -439,7 +439,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 
 \subsection{Attention}
 \vspace{-4.2pt}
-\noindent We add an attention layer to our best performing lstm-based model. This allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} 
+\noindent Extending our binary classification solution to incorporate attention allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} We add an attention layer to our best performing lstm-based model. This allows us to 
 
 \newpage
 \section{Results}
@@ -465,7 +465,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \end{center}
 \vspace{4pt}
 
-\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately.
+\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately. We also use the Matthews correlation co-efficient (MCC). This is a balanced measure which only shows high scores if the true positive and negative rates are high, and if the false positive and negative rates are low - taking into account all four quadrants of a confusion matrix.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
@@ -484,12 +484,9 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 
 
 \noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.
-
-
-\subsubsection{Training on Main Features}
-
+\newpage
 \begin{center}
-	\textbf{Figure -a}: $F_1$ scores of machine learning classifiers, trained on BOW and TF-IDF vectors
+	\textbf{Table -}: $F_1$ scores of machine learning classifiers, trained on BOW and TF-IDF vectors
 \end{center}
 
 \begin{tabular}{|c||c|c|c||c|c|c|}
