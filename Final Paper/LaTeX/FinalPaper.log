@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  15 APR 2020 23:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 APR 2020 01:01
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -548,53 +548,43 @@ Overfull \hbox (18.94879pt too wide) in paragraph at lines 422--423
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--428
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 442--443
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--445
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 450--463
+Underfull \hbox (badness 10000) in paragraph at lines 451--464
 
  []
 
 [13]
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 490--490
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 495--495
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 <Images/absolute_differences.png, id=61, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 50
-7.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 51
+2.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 503--516
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 508--521
 []$[]$  $[]$ 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 524--525
+Underfull \hbox (badness 10000) in paragraph at lines 529--530
 []|\OT1/ptm/b/n/12 Improved
  []
 
 
-Underfull \hbox (badness 4391) in paragraph at lines 530--530
+Underfull \hbox (badness 4391) in paragraph at lines 535--535
 []|\OT1/ptm/m/n/12 Sentiment, Punc-tu-a-
  []
 
@@ -612,7 +602,7 @@ File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 Here is how much of TeX's memory you used:
  4683 strings out of 492452
  66635 string characters out of 3114457
- 140911 words of memory out of 3000000
+ 143911 words of memory out of 3000000
  8936 multiletter control sequences out of 15000+200000
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -636,7 +626,7 @@ ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
 assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on FinalPaper.pdf (19 pages, 392530 bytes).
+Output written on FinalPaper.pdf (19 pages, 392652 bytes).
 PDF statistics:
  126 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -403,7 +403,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \section{Results}
 \subsection{Evaluation Method}
-\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.
+\noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.
 
 \hspace{-30pt}\begin{center}
 	\begin{minipage}{0.47\textwidth}
@@ -413,7 +413,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 		$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
 	\end{minipage}\\
 \end{center}
-\vspace{-10pt}
+\vspace{-20pt}
 \begin{center}
 	\begin{minipage}{0.47\textwidth}
 		$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
@@ -424,7 +424,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \end{center}
 \vspace{4pt}
 
-\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
+\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 
@@ -439,13 +439,14 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 %	\label{fig:figure3}
 %\end{figure}
 
-\noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
-
-\noindent We also experimented with an unsupervised model - K-Means clustering where the majority label of each cluster was assigned, however, the results were very poor.\\
-
+\noindent Five classifiers are trained independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo. We separate the results into two tables to allow us to contrast the results of traditional vectorisation approaches (\textit{figure \_}) with embedding approaches (\textit{figure \_}). The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing models are highlighted for each dataset, paired with each vectorisation approach.\\
 
 
 \noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.\\
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of machine learning classifiers, trained on Bag of Words and TF-IDF vectors
+\end{center}
 
 \begin{tabular}{|c||c|c|c||c|c|c|}
 	\hline
@@ -460,6 +461,10 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
 	\hline
 \end{tabular}\\
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of machine learning classifiers, trained on GloVe and ElMo vectors
+\end{center}
 
 \begin{tabular}{|c||c|c|c||c|c|c|}
 	\hline
