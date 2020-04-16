@@ -338,13 +338,13 @@ While deep learning algorithms are able to extract useful higher-level features 
 
 \subsection{Classification}
 \noindent 
-In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features as outlined in the previous section.
+In this section, we describe the machine-learning and deep-learning classification models that are used in this project. These algorithms are trained a set of rich features as outlined in the previous section.
 
 \subsubsection{Machine Learning Models}
-We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
+We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. Brief descriptions of the models are provided below. 
 
 \begin{enumerate}[leftmargin=0cm]
-	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter, finetuned for each dataset.
+	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned.
 	
 	%As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups. Although K-Means is intended to be a clustering algorithm, it can easilly be applied to classification problems if we assign the majority label to each cluster
 	
@@ -360,13 +360,24 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 
 
 \subsubsection{Deep Learning Models}
-Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers. We use Binary Cross-Entropy loss.
+Deep learning classifiers do not require the  hand-crafted features used in supervised classifiers, and are instead capable of learning higher-level features from dense vectors such as ElMo and GloVe. We focus on two categories of neural networks - Recurrent Neural Networks (RNN) and Convolutional Neural Networks (CNN). While it is beyond the scope of this paper to describe in detail each of the model architectures used in this project, we provide a brief explanation of the basic concepts involved in CNNs and RNNs. As we are performing binary classification, we use the Binary Cross-Entropy loss function.
 
-We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy.  An adjective or noun chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated 
+%We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy.  An adjective or noun chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated 
 
 
 \paragraph{Recurrent Neural Networks --}
-In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
+In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network.
+
+In a RNN, there is an additional hidden state which represents the context based on prior inputs. The hidden state is updated as inputs are fed through the network. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
+
+In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
+
+\begin{enumerate}
+	\item Vanilla Recurrent Neural Network
+	\item Vanilla Gated Recurrent Unit
+	\item Long Short-term Memory \textit{(LSTM)}
+	\item Bidirectional Long Short-term Memory \textit{(BiLSTM)}
+\end{enumerate}
 
 RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
 
@@ -394,7 +405,12 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 	Each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence. This feature vector is used as input to the convolutional neural network. 
 \end{minipage}
 
-Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing a k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
+\noindent Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
+
+\begin{enumerate}
+	\item Convolutional Neural Network (CNN)
+	\item Deep Convolutional Neural Network (DCNN)
+\end{enumerate}
 
 \subsection{Attention}
 \vspace{-4.2pt}
@@ -439,18 +455,21 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 %	\label{fig:figure3}
 %\end{figure}
 
-\noindent Five classifiers are trained independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo. We separate the results into two tables to allow us to contrast the results of traditional vectorisation approaches (\textit{figure \_}) with embedding approaches (\textit{figure \_}). The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing models are highlighted for each dataset, paired with each vectorisation approach.\\
+\noindent Five classifiers are trained independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo. We separate the results into two tables to allow us to contrast the results of traditional vectorisation approaches (\textit{figure \_a}) with embedding approaches (\textit{figure \_b}). The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing models are highlighted for each dataset, paired with each vectorisation approach.\\
 
 
-\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.\\
+\noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.
+
+
+\subsubsection{Analysis of Main Features}
 
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of machine learning classifiers, trained on Bag of Words and TF-IDF vectors
+	\textbf{Figure -a}: $F_1$ scores of machine learning classifiers, trained on BOW and TF-IDF vectors
 \end{center}
 
 \begin{tabular}{|c||c|c|c||c|c|c|}
 	\hline
-	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{BOW}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
+		\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{Bag Of Words}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
 	\cline{1-7}
 	& News & Amazon & Twitter & News & Amazon & Twitter\\
 	\cline{1-7}
@@ -463,7 +482,7 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \end{tabular}\\
 
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of machine learning classifiers, trained on GloVe and ElMo vectors
+	\textbf{Figure -b}: $F_1$ scores of machine learning classifiers, trained on GloVe and ElMo vectors
 \end{center}
 
 \begin{tabular}{|c||c|c|c||c|c|c|}
@@ -478,9 +497,14 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 	Gaussian Naive Bayes &0.703 & 0.416& 0.594 &0.640 &0.666 & 0.684\\
 	K-Nearest Neighbours & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
 	\hline
-\end{tabular}\\
-\vspace{100pt}
+\end{tabular}\vspace{10pt}\\
+\noindent In our experiments with traditional vectorisation approaches (\textit{figure \_a}), logistic regression classifiers and support Vector Machines produced the best performing models with the highest $F_1$ scores. The best result of 0.775 came from a Support Vector Machine, trained on Amazon reviews as TF-IDF vectors.
 
+However, logistic regression classifiers and random forest classifiers produced the best performing models when trained on word embeddings, with contextualised embedding approach, ElMo p
+
+
+\vspace{10pt}
+\subsubsection{Analysis of Miscellaneous Features}
 \noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
 \begin{center}
@@ -489,8 +513,6 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 
 \begin{center}
 	\begin{tabular}{|p{7cm}|p{1.8cm}|p{2.6cm}|p{1.6cm}|} 
-		\hline
-		& \multicolumn{3}{|c|}{\textbf{Feature Type}} \\
 		\hline
 		\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
 		\hline\hline
@@ -519,20 +541,24 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \end{minipage}
 %\subsubsection{News Headlines for Sarcasm Detection}
 
+
+
+As Logistic Regression with ElMo vectors produced the highest $F_1$ scores for all three datasets, we concatenate the useful features with ElMo vectors to produce enriched features; using these to train a logistic regression classifier. We then report the $F_1$ scores of these models in figure \_.
+
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers when trained on handcrafted features
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers when trained on enriched ElMo vectors
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{3cm}||p{5.4cm}|p{3.7cm}|p{2cm}|  }
+	\begin{tabular}{ |p{3cm}||p{3.7cm}|p{2cm}|  }
 		\hline
-		\textbf{Dataset} & \textbf{Best Model Architecture}& \textbf{Additional Features} & \textbf{Improved $\mathbf{F_1}$ Score}\\
+		\textbf{Dataset} & \textbf{Additional Features} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		News Headlines & Logistic Regression with ElMo & Sentiment, Topic   & 0.847\\
+		News Headlines & Sentiment, Topic   & 0.847\\
 		\hline
-		Amazon Reviews& Logistic Regression  with ElMo& Sentiment, Topic & 0.818\\
+		Amazon Reviews& Sentiment, Topic & 0.818\\
 		\hline
-		Twitter data & Logistic Regression  with ElMo& Sentiment, Punctuation, Topic  & 0.790\\
+		Twitter data & Sentiment, Punctuation, Topic  & 0.790\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -563,17 +589,18 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 %This section should be between 2 to 3 pages in length.
 
 \subsection{Deep Learning Experimentation}
-\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as
+\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as\\
 
-\subsubsection{Experimental Settings}
-The upper-bound on the number of epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+
+
+\noindent \textbf{Experimental Settings --} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
 	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
 \end{enumerate}
 
-Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added. This is a modified version of the 
+Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
 
 \begin{center}
@@ -581,59 +608,23 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 \end{center}
 
 \begin{center}
-	\begin{tabular}{|p{4.7cm}||p{1.2cm}|p{1.5cm}|}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
 		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		 &\multicolumn{3}{c|}{\textbf{GloVe}} & \multicolumn{3}{c|}{\textbf{ElMo}}\\
+		 \hline
+		\textbf{Model Architechture} &  News & Amazon & Twitter & News & Amazon & Twitter\\
 		\hline\hline
-		CNN   & 0.823   & \\
-		LSTM &   0.865 & 0.\\
-		Bi-directional LSTM & 0.864 & 0.\\
-		Vanilla RNN &0.817 & 0.\\
-		Vanilla GRU &0.852 & 0.\\
-		\hline
-	\end{tabular}
-\end{center}
-
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
-		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		CNN   & 0.  & 0.\\
-		LSTM &   0. & 0.\\
-		Bi-directional LSTM &0. & 0.\\
+		CNN   & 0.823 & 0.827 & 0.801 & 0.861& 0.& 0. \\
+		LSTM & 0.840 & 0.838 & \textbf{0.841} & 0.860& 0.& 0. \\
+		Bi-directional LSTM & \textbf{0.864} & 0.853 & 0.822 & 0.874& 0.& 0. \\
+		Vanilla RNN & 0.817 & 0.803 & 0.785 & 0.855& 0.& 0. \\
+		Vanilla GRU &0.852 & 0.844 & 0.812 & \textbf{0.883} & 0.& 0. \\
 		\hline
 	\end{tabular}
 \end{center}
 
 
 
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
-		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		CNN   & 0.  & 0.\\
-		LSTM &   0. & 0.\\
-		Bi-directional LSTM &0. & 0.\\
-		\hline
-	\end{tabular}
-\end{center}
 
 \newpage
 
