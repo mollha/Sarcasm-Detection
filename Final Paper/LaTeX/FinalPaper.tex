@@ -366,16 +366,20 @@ Deep learning classifiers do not require the  hand-crafted features used in supe
 
 
 \paragraph{Recurrent Neural Networks --}
-In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network.
+As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. However, in a Recurrent Neural Network (RNN), there is an additional hidden state that is updated as inputs are fed through the network. This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing.
 
-In a RNN, there is an additional hidden state which represents the context based on prior inputs. The hidden state is updated as inputs are fed through the network. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
+
+
+
+
+ In a RNN, there is an additional hidden state which represents the context based on prior inputs. The hidden state is . This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
 
 In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
 
 \begin{enumerate}
-	\item Vanilla Recurrent Neural Network
-	\item Vanilla Gated Recurrent Unit
-	\item Long Short-term Memory \textit{(LSTM)}
+	\item \textbf{Vanilla Recurrent Neural Network -- }
+	\item \textbf{Vanilla Gated Recurrent Unit -- }
+	\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
 	\item Bidirectional Long Short-term Memory \textit{(BiLSTM)}
 \end{enumerate}
 
@@ -389,7 +393,6 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \begin{minipage}{0.35\textwidth}
 	\begin{figure}[H]
 		\begin{center}
-		\textbf{Figure -}: $m \times n$ feature vector\\
 		$
 		\begin{bmatrix}
 		w_{1,1} & w_{1,2} & ... & w_{1,N}\\
@@ -398,6 +401,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 		w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
 		\end{bmatrix}
 		$
+		\textbf{Figure -}: $m \times n$ feature vector\\
 	\end{center}
 	\end{figure}
 \end{minipage} \hfill
@@ -412,11 +416,32 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 	\item Deep Convolutional Neural Network (DCNN)
 \end{enumerate}
 
+\hspace{-20pt}\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\includegraphics[width=1\textwidth]{Images/CNNarchNew.png}
+		\centering\textbf{(a)} CNN Architecture\\
+	\end{figure}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.6\textwidth}
+\begin{figure}[H]
+	\includegraphics[width=0.97\textwidth]{Images/DCNNarchNew.png}
+	\centering\textbf{(b)} Deep CNN Architecture\\
+\end{figure}
+\end{minipage}
+
+\begin{center}
+	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures
+\end{center}
+
+
+
+
 \subsection{Attention}
 \vspace{-4.2pt}
 \noindent We add an attention layer to our best performing lstm-based model. This allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} 
 
-
+\newpage
 \section{Results}
 \subsection{Evaluation Method}
 \noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.
@@ -461,7 +486,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.
 
 
-\subsubsection{Analysis of Main Features}
+\subsubsection{Training on Main Features}
 
 \begin{center}
 	\textbf{Figure -a}: $F_1$ scores of machine learning classifiers, trained on BOW and TF-IDF vectors
@@ -504,7 +529,7 @@ However, logistic regression classifiers and random forest classifiers produced 
 
 
 \vspace{10pt}
-\subsubsection{Analysis of Miscellaneous Features}
+\subsubsection{Training on Miscellaneous Features}
 \noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
 \begin{center}
@@ -550,7 +575,7 @@ As Logistic Regression with ElMo vectors produced the highest $F_1$ scores for a
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{3cm}||p{3.7cm}|p{2cm}|  }
+	\begin{tabular}{ |p{3cm}||p{5.2cm}|p{2cm}|  }
 		\hline
 		\textbf{Dataset} & \textbf{Additional Features} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
@@ -587,7 +612,7 @@ As Logistic Regression with ElMo vectors produced the highest $F_1$ scores for a
 
 
 %This section should be between 2 to 3 pages in length.
-
+\newpage
 \subsection{Deep Learning Experimentation}
 \noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as\\
 
@@ -615,6 +640,7 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\textbf{Model Architechture} &  News & Amazon & Twitter & News & Amazon & Twitter\\
 		\hline\hline
 		CNN   & 0.823 & 0.827 & 0.801 & 0.861& 0.& 0. \\
+		Deep CNN   & 0.829 & 0.836 & 0.811 & 0.861& 0.& 0. \\
 		LSTM & 0.840 & 0.838 & \textbf{0.841} & 0.860& 0.& 0. \\
 		Bi-directional LSTM & \textbf{0.864} & 0.853 & 0.822 & 0.874& 0.& 0. \\
 		Vanilla RNN & 0.817 & 0.803 & 0.785 & 0.855& 0.& 0. \\

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 APR 2020 03:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  16 APR 2020 23:16
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -528,78 +528,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 334--335
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 373--374
+Underfull \hbox (badness 10000) in paragraph at lines 377--378
 
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 426--427
+<Images/CNNarchNew.png, id=56, 598.48593pt x 550.30594pt>
+File: Images/CNNarchNew.png Graphic file (type png)
+<use Images/CNNarchNew.png>
+Package pdftex.def Info: Images/CNNarchNew.png  used on input line 421.
+(pdftex.def)             Requested size: 184.44994pt x 169.59383pt.
+<Images/DCNNarchNew.png, id=57, 705.23476pt x 428.802pt>
+File: Images/DCNNarchNew.png Graphic file (type png)
+<use Images/DCNNarchNew.png>
+Package pdftex.def Info: Images/DCNNarchNew.png  used on input line 428.
+(pdftex.def)             Requested size: 268.3818pt x 163.18199pt.
+
+Overfull \hbox (12.18486pt too wide) in paragraph at lines 419--432
+[] $[]$   $[]$ 
+ []
+
+[13 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 429--430
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 
  []
 
 
-Overfull \hbox (18.94879pt too wide) in paragraph at lines 438--439
+Overfull \hbox (18.94879pt too wide) in paragraph at lines 463--464
 []$\OML/cmm/m/it/12 MCC \OT1/cmr/m/n/12 = []$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
-
- []
-
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 470--483
+Underfull \hbox (badness 10000) in paragraph at lines 483--484
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 517--517
-[]|\OT1/ptm/b/n/12 Sentiment| 
+Underfull \hbox (badness 10000) in paragraph at lines 495--508
+
  []
 
 [14]
-<Images/absolute_differences.png, id=64, 462.528pt x 346.896pt>
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 542--542
+[]|\OT1/ptm/b/n/12 Sentiment| 
+ []
+
+[15]
+<Images/absolute_differences.png, id=70, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 53
-4.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 55
+9.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 530--543
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 555--568
 []$[]$  $[]$ 
  []
 
-
-Underfull \hbox (badness 4391) in paragraph at lines 561--561
-[]|\OT1/ptm/m/n/12 Sentiment, Punc-tu-a-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 592--593
+[16 <./Images/absolute_differences.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 617--618
 
  []
 
-[15 <./Images/absolute_differences.png>] [16] (FinalPaper.bbl [17]
+[17] (FinalPaper.bbl [18]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[18]
+[19]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [19] (FinalPaper.aux) ) 
+)) [20] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4683 strings out of 492452
- 66635 string characters out of 3114457
- 144913 words of memory out of 3000000
- 8936 multiletter control sequences out of 15000+200000
+ 4697 strings out of 492452
+ 66968 string characters out of 3114457
+ 143913 words of memory out of 3000000
+ 8948 multiletter control sequences out of 15000+200000
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1394b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -622,9 +633,9 @@ ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
 assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on FinalPaper.pdf (19 pages, 393370 bytes).
+Output written on FinalPaper.pdf (20 pages, 477049 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
+ 132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
