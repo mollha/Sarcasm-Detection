@@ -468,8 +468,161 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately. We also use the Matthews correlation co-efficient (MCC). This is a balanced measure which only shows high scores if the true positive and negative rates are high, and if the false positive and negative rates are low - taking into account all four quadrants of a confusion matrix.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
+\subsection{Analysis of Miscellaneous Features}
+\noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
 
+\begin{center}
+	\textbf{Figure -}: $F_1$ score of logistic regression models trained on hand-crafted features
+\end{center}
+
+\begin{center}
+	\begin{tabular}{|p{7cm}|p{1.8cm}|p{2.6cm}|p{1.6cm}|} 
+		\hline
+		& \multicolumn{3}{|c|}{\textbf{Feature Type}} \\
+		\hline
+		\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
+		\hline\hline
+		News Headlines for Sarcasm Detection & 0.516 & 0.344 & 0.525\\ 
+		\hline
+		Sarcasm Amazon Review Corpus & 0.685 & 0.394 & 0.520\\ 
+		\hline
+		Pt\'a\v{c}ek et al. (2014) & 0.593 & 0.611 & 0.530\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
+
+\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\textbf{Figure -:} Absolute differences\\
+			\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
+			\label{Sarcasm Amazon Review Corpus}
+		\end{center}
+	\end{figure}
+\end{minipage} \hfill
+\begin{minipage}{0.6\textwidth}
+	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
+\end{minipage}
+
+
+\subsection{Comparison of Machine Learning and Deep Learning Classification}
+\subsubsection{News Headlines Dataset}
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |c||c|c|c|c|}
+		\hline
+		\textbf{Model Architechture}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline\hline
+		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
+		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
+		Random Forest Classifier & ElMo  & 0.   & 0. & 0.797\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
+		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
+		\hline\hline
+		LSTM & ElMo  & 0.   & 0. & 0.860\\
+		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
+		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
+		Deep CNN & ElMo & 0.   & 0. & 0.871\\
+		\hline
+	\end{tabular}
+\end{center}
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features
+
+\newpage
+\subsubsection{Amazon Reviews Dataset}
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |c||c|c|c|c|}
+		\hline
+		\textbf{Model Architechture}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline\hline
+		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
+		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
+		Random Forest Classifier & ElMo  & 0.   & 0. & 0.797\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
+		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
+		\hline\hline
+		LSTM & ElMo  & 0.   & 0. & 0.860\\
+		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
+		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
+		Deep CNN & ElMo & 0.   & 0. & 0.871\\
+		\hline
+	\end{tabular}
+\end{center}
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features
+
+\newpage
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
+		\hline
+		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		Support Vector Machine    & 0.714    & 0.718 &   0.732 & 0.844\\
+		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
+		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
+		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
+		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\newpage
+\subsubsection{News Headlines Dataset}
+
+\begin{center}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
+		\hline
+		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
+		\hline
+		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
+		\hline\hline
+		Support Vector Machine    & 0.714    & 0.718 &   0.732 & 0.844\\
+		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
+		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
+		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
+		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
+		\hline
+	\end{tabular}
+\end{center}
+
+
+
+
+
+\newpage
+\begin{tabular}{|c||c|c|c||c|c|c|}
+	\hline
+	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{Bag Of Words}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
+	\cline{1-7}
+	& Recall & Precision & $F_1$ & News & Amazon & Twitter\\
+	\cline{1-7}
+	Support Vector Machine & 0.714 & 0.736 & 0.713 &\textbf{0.718} &\textbf{0.775} & 0.724\\
+	Logistic Regression & \textbf{0.721}& \textbf{0.745}& \textbf{0.750}&0.712 &0.748 & \textbf{0.748}\\
+	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715\\
+	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675\\
+	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
+	\hline
+\end{tabular}\\
 \subsection{Machine Learning Experimentation}
 
 %\begin{figure}[htp]
@@ -520,7 +673,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 	K-Nearest Neighbours & 0.709& 0.561 & 0.607& 0.788& 0.685 & 0.716\\
 	\hline
 \end{tabular}\vspace{10pt}\\
-\noindent In our experiments with traditional vectorisation approaches (\textit{figure \_a}), logistic regression classifiers and support Vector Machines produced the best performing models with the highest $F_1$ scores. The best result of 0.775 came from a Support Vector Machine, trained on Amazon reviews as TF-IDF vectors.
+
 
 However, logistic regression classifiers and random forest classifiers produced the best performing models when trained on word embeddings, with contextualised embedding approach, ElMo p
 
