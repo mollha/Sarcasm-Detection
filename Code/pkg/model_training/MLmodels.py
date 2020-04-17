@@ -1,7 +1,7 @@
 from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
@@ -51,14 +51,29 @@ def evaluate_model(trained_model, testing_data: pd.Series, testing_labels: pd.Se
     :param trained_model: a sci-kit learn classifier, trained on corpus of vectors
     :param testing_data: data
     :param testing_labels: a string containing an abbreviated model name - this is the model to be fetched n.b. for a full
+    :return: NoneType
     """
-    y_pred = trained_model.predict_classes(x=np.array(testing_data))
-    score = f1_score(np.array(testing_labels), np.array(y_pred))
-    print('F1 Score: ', score)
+    y_pred = trained_model.predict(np.array(testing_data))
+    f1 = f1_score(np.array(testing_labels), np.array(y_pred))
+    precision = precision_score(np.array(testing_labels), np.array(y_pred))
+    recall = recall_score(np.array(testing_labels), np.array(y_pred))
+    mcc = matthews_corrcoef(np.array(testing_labels), np.array(y_pred))
+    print('F1 Score: ', f1)
+    print('Precision: ', precision)
+    print('Recall: ', recall)
+
+    print('MCC: ', mcc)
 
 
-def get_ml_results(model_name: str, vector_type: str, feature_list: list, dataset_number: int):
-
+def get_ml_results(model_name: str, vector_type: str, feature_list: list, dataset_number: int) -> None:
+    """
+    Train and evaluate a machine learning model, given vector and feature types, on a chosen dataset
+    :param model_name: abbreviated name of model
+    :param vector_type: type of vectors to use in training
+    :param feature_list: name of additional features (optional), [] if no additional features required
+    :param dataset_number: int representing dataset number: 0 - AMAZON, 1 - NEWS, 2 - TWEETS
+    :return: NoneType
+    """
     split = 0.1
 
     base_path = Path(__file__).parent
@@ -91,9 +106,10 @@ def get_ml_results(model_name: str, vector_type: str, feature_list: list, datase
     # ------------------------- Evaluate new model with five-fold cross validation -----------------------
     scores = cross_val_score(classifier, sarcasm_data, sarcasm_labels, cv=5, scoring='f1_macro')
     five_fold_cross_validation = np.mean(scores)
-    print('Score: ', five_fold_cross_validation)
+    print('5-fold cross validation: ', five_fold_cross_validation)
     print('Time taken: ' + str(round((time.time() - start)/60, 2)) + ' minutes')
     classifier.fit(training_data, training_labels)
+    evaluate_model(classifier, testing_data, testing_labels)
 
     with open(file_name, 'wb') as f:
         pickle.dump(classifier, f)
