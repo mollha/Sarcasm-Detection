@@ -208,7 +208,7 @@ In terms of \textit{classification}, we implement most of the machine learning a
 *\textit{pos} indicates positive instances (sarcastic) and \textit{neg} indicates negative instances (non-sarcastic)\\
 
 
-\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, explained in the deep learning section, to increase the amount of data used in deep learning as this improves training stability and model performance.
+\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus to increase the amount of data used in deep learning as this improves training stability and model performance. We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy. An adjective or noun is chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated to produce 8 variations of each snippet; hence, the final size of the dataset is 10032.
 
 Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately equal amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
 
@@ -237,16 +237,8 @@ Most of the datasets are approximately balanced; despite the fact that sarcasm i
 	\end{tabular}\\
 \end{center}
 
-\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
+\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary (containing 27 billion tokens) as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
 % say hpw many tokens in dict
-
-%The effectiveness of each technique varies from platform to platform where different actions are permitted e.g. inclusion of user mentions and external hyperlinks. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
-
-%and written in a formal manner, causing spelling and grammar errors to be minimised.
-%Use of \#not may , the quality of the dataset may be dubious.
-%Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
-
-
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
@@ -361,8 +353,6 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 
 \subsubsection{Deep Learning Models}
 Deep learning classifiers do not require the  hand-crafted features used in supervised classifiers, and are instead capable of learning higher-level features from dense vectors such as ElMo and GloVe. We focus on two categories of neural networks - Recurrent Neural Networks (RNN) and Convolutional Neural Networks (CNN). While it is beyond the scope of this paper to describe in detail each of the model architectures used in this project, we provide a brief explanation of the basic concepts involved in CNNs and RNNs. As we are performing binary classification, we use the Binary Cross-Entropy loss function.
-
-%We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy.  An adjective or noun chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated 
 
 
 \paragraph{Recurrent Neural Networks --}
@@ -509,16 +499,12 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 
 
 \subsection{Binary Classification}
-\noindent Five classifiers are trained independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo.\\ %The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing models are highlighted for each dataset, paired with each vectorisation approach.\\
+\noindent We train each machine learning classifier independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo vectors. We also experiment with miscellaneous features, combining useful features with our best performing machine learning classifier on each dataset. Additionally, we train each deep learning model separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used to train our deep learning models, as training neural networks on very high dimensional data is computationally intractable. For both our machine learning and deep learning classifiers, we report only a subset of our most informative results, including the result of the best classifier. The precision, recall and $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing machine learning and deep learning models are highlighted for each dataset.\\
 
 
-\noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.
+\noindent \textbf{Experimental Settings for Machine Learning --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\\
 
-\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as\\
-
-
-
-\noindent \textbf{Experimental Settings --} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+\noindent \textbf{Experimental Settings for Deep Learning--} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
