@@ -40,16 +40,16 @@
 \maketitle
 
 \begin{abstract}
-\\ \indent \textbf{Context / Background --} 
-Sarcasm is a unique form of language that cannot be interpreted at surface-level. Detecting sarcasm proves a significant challenge for traditional sentiment analysers and humans alike. This highlights the scope for innovative machine learning and deep learning solutions to this ill-structured problem.
+\\ \noindent \textbf{Context / Background --} 
+With increasing amounts of online opinion-based content to sift through, traditional sentiment analysis tools are employed to perform this task. However, sarcasm is a unique form of language that cannot be interpreted at surface-level, therfore detecting sarcasm proves a significant challenge for traditional sentiment analysers and humans alike. This highlights the scope for innovative machine learning and deep learning solutions to this ill-structured problem.\vspace{5pt}
 
-\indent \textbf{Aims --} Despite the challenges in this domain, this ultimate aim of this project is to produce a tool that can detect sarcasm in online text with a \textit{high degree} of accuracy. 
+\noindent \textbf{Aims --} The ultimate aim of this project is to develop a tool that can detect sarcasm in online text from multiple domains with a \textit{high degree} of accuracy. We aim to determine whether deep neural network architectures are more effective than machine learning classifiers for this task, and to what extent manually extracted sentiment features can be used to improve machine learning classification. Finally, we aim to highlight tokens that correlate more to sarcastic labels.\vspace{5pt}
 
-\indent \textbf{Method --} State-of-the-art contextualised word embeddings (ElMo vectors) and deep learning classification models are used to realise this aim.
+\noindent \textbf{Method --} We gather labelled datasets from online sources containing Amazon reviews, Twitter data and News headlines. Multiple vectorisation approaches are used to transform text into numerical representations, including a state-of-the-art contextualised embedding approach (ElMo). These vectors are used to train various machine learning and deep learning classifiers to detect the presence of sarcasm. In addition, an attention mechanism is incorporated to localise the presence of sarcasm within a passage of text.\vspace{5pt}
 
-\indent \textbf{Results --} Through extensive experimentation, we show that
+\noindent \textbf{Results --} Through extensive experimentation, we show that\vspace{5pt}
 
-\indent \textbf{Conclusions --} In summary, we conclude that
+\noindent \textbf{Conclusions --} In summary, we conclude that
 
 %This section should not be longer than half of a page, and having no more than one or two sentences under each heading is advised. Do not cite references in the abstract.
 \end{abstract}
@@ -60,10 +60,11 @@ Machine learning, Deep learning, Sarcasm Detection, Sentiment, Classification
 
 
 \section{Introduction}
-\noindent Sarcasm is a complex linguistic phenomenon, which when present in text indicates that the literal interpretation differs from the implied meaning. Sarcasm is prevalent in online user-generated content, and poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it inverts the sentiment-polarity of a positive or negative utterance. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the sentiment analysis task.
+\noindent Sarcasm is a complex linguistic phenomenon, which when present in text indicates that the literal interpretation differs from the implied meaning. Sarcasm is prevalent in online user-generated content, and poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it inverts the sentiment-polarity of a positive or negative utterance. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis in opinion mining.
 
 \subsection{Problem Background}
-\noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognise sarcastic intent; due in part to the lack of an all-encompassing, universal definition of sarcasm. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
+\noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition
+. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
 
 These factors make sarcasm detection an extremely complex task for both humans and computers. Despite this, \textit{most} humans can recognise sarcastic intent \textit{most} of the time. We strive to replicate this performance, or even perhaps improve upon it, in order to move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.
 
@@ -71,8 +72,8 @@ Early rule-based approaches introduced the idea that the sentiment contained wit
 
 \subsection{Research Questions and Objectives}
 \noindent The \textbf{research questions} guiding this project are as follows --\\
+\indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
 \indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
-\indent \textit{- Can we improve the solution by incorporating sentiment features?}\\ 
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
 \noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.
@@ -81,7 +82,7 @@ The \textbf{minimum} objectives of this project are to evaluate, compare and cle
 
 The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
 
-The \textbf{advanced} objectives of this project are to implement an attention-based deep neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
+The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
 
 This is achieved by...
 
@@ -92,11 +93,10 @@ This is achieved by...
 
 \newpage
 \section{Related Work}
-\noindent In this section, we compare classification model architectures used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. In most approaches, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. 
-In similar studies, the terms irony and sarcasm are often used interchangeably \cite{tsur2010icwsm}. For clarity, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content such as product reviews.\vspace{-10pt}
+\noindent In this section, we report on classification model architectures used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. In most studies, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. In similar studies, the terms irony and sarcasm are used interchangeably e.g. Tsur et al. (2010) \cite{tsur2010icwsm}. For clarity, an overview of their definitions are given in figure 1. Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm extends this definition to include the potential for criticism - often present in opinion-based content such as product reviews.\vspace{-5pt}
 
 \begin{center}
-	\textbf{Figure 1}: Comparison of definitions of Irony and Sarcasm\vspace{-10pt}
+	\textbf{Table 1}: Comparison of definitions of Irony and Sarcasm\vspace{-10pt}
 \end{center}
 \begin{center}
 \begin{tabular}{p{1.5cm}p{13cm}}
@@ -154,9 +154,9 @@ Convolutional Neural Networks allow us to extract higher-level features, and the
 
 
 %You need to give all authors' names in each reference.  Do not use ``et al.'' unless there are more than five authors.  Papers that have not been published should be cited as ``unpublished'' \cite{euther}.  Papers that have been submitted or accepted for publication should be cited as ``submitted for publication'' as in \cite{futher} .  You can also cite using just the year when the author's name appears in the text, as in ``but according to Futher \citeyear{futher}, we \dots''.  Where an authors has more than one publication in a year, add `a', `b' etc. after the year.
-\newpage
+
 \section{Solution}
-\noindent This project addresses a binary classification problem, aiming to determine if an unseen snippet of text is sarcastic or non-sarcastic. Our sarcasm detection tool employs trained classification models which form  predictions based on the knowledge gained from features encountered during training. Developing highly accurate classification models remains the greatest challenge in this project, therefore it is the central focus of our solution. Model peformance is strongly dependent on the data pre-processing and feature extraction techniques employed, as well as the choice of model architecture and training procedures. 
+\noindent This project addresses a binary classification problem, aiming to determine if an unseen snippet of text is sarcastic or non-sarcastic. Our sarcasm detection tool employs trained classification models which form  predictions based on knowledge gained from features encountered during training. Developing highly accurate classification models remains the greatest challenge in this project, therefore it is the central focus of our solution. Model peformance is strongly dependent on the data pre-processing and feature extraction techniques employed, as well as the choice of model architecture and training procedures. 
 
 In our solution, high quality datasets are first collected and pre-processed. During feature extraction, the textual training data is transformed into numerical vectors and these features are used to train a classification model. The trained classifier is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
 
@@ -208,18 +208,18 @@ In terms of \textit{classification}, we implement most of the machine learning a
 *\textit{pos} indicates positive instances (sarcastic) and \textit{neg} indicates negative instances (non-sarcastic)\\
 
 
-\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus, explained in the deep learning section, to increase the amount of data used in deep learning as this improves training stability and model performance.
+\noindent Each of these datasets are sufficiently large enough to provide a representative view of their respective data sources, without exceeding our computational resources. However, we augment the \textit{Amazon Reviews} corpus using a synonym replacement strategy to increase the amount of data used in deep learning as this improves training stability and model performance. Adjectives and nouns are chosen at random from each snippet of text and are substituted with a synonym so as not to alter the syntax but not the semantics of the text. This procedure is repeated to produce 8 variations of each snippet; hence, the final size of the dataset is 10032.
 
-Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately sufficient amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
+Most of the datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately equal amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
 
 
-\subsection{Data Pre-processing}
+\subsection{Data Pre-Processing}
 \vspace{-4.2pt}
-\noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.\\
+\noindent Datasets of user-generated content are inherently noisy and ill-structured, as users are free to include spelling errors and inconsistent capitalisation. Pre-processing is necessary for removing as much of this noise as possible to reduce sparsity in the feature space; although, we must be careful not to remove useful features.
 
-\noindent On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).\\
+On Twitter, users can include hyperlinks and references to other users in their tweets; however, this can be a source of noise in the dataset therefore we remove them using regular expressions. In \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm}, hashtags are removed in pre-processing. However, \textit{Liebrecht et al. (2013)} \cite{liebrecht2013perfect} showed that the sentiment contained in hashtags can be used to indicate sarcasm, such as the use of \#not to suggest insincerity. In the simplest case, single-word hashtags can be included simply by removing the \# symbol, however multi-word hashtags must first be parsed to separate the tokens. As this is beyond the scope of this project, we remove all hashtags with the exception of \textit{\#not} (which we substitute with \textit{not}).
 
-\noindent Punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.
+Punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.
 
 \begin{center}
 	\textbf{Figure -}:  Proportion of tokens represented in the GloVe dictionary\\
@@ -237,16 +237,7 @@ Most of the datasets are approximately balanced; despite the fact that sarcasm i
 	\end{tabular}\\
 \end{center}
 
-\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
-% say hpw many tokens in dict
-
-%The effectiveness of each technique varies from platform to platform where different actions are permitted e.g. inclusion of user mentions and external hyperlinks. The suitability of each technique is highly dependent on the dataset and on the feature-extraction technique, as certain types of pre-processing may result in the removal of useful features.
-
-%and written in a formal manner, causing spelling and grammar errors to be minimised.
-%Use of \#not may , the quality of the dataset may be dubious.
-%Secondly, human-annotated data with minimal spelling and grammatical errors is preferable to data that is automatically selected using rule-based heuristics (e.g. tweets annotated with \#sarcasm) as it is typically of higher quality, however it is not always possible to gather this data in large quantities due to the time overhead involved.
-
-
+\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary (containing 27 billion tokens) as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
@@ -338,13 +329,13 @@ While deep learning algorithms are able to extract useful higher-level features 
 
 \subsection{Classification}
 \noindent 
-In this section, machine-learning and deep-learning classification models are considered. These algorithms are trained a set of rich features as outlined in the previous section.
+In this section, we describe the machine-learning and deep-learning classification models that are used in this project. These algorithms are trained a set of rich features as outlined in the previous section.
 
 \subsubsection{Machine Learning Models}
-We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. A brief description of the models are provided below. 
+We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models perform binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. Brief descriptions of the models are provided below. 
 
 \begin{enumerate}[leftmargin=0cm]
-	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter, finetuned for each dataset.
+	\item \textbf{K-Nearest Neighbours (KNN) --} The KNN classifier is a non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the most common class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned.
 	
 	%As the only unsupervised algorithm used in this project, K-Means clustering partitions the set of unlabelled training data into K groups. K random cluster centres (centroids) are selected, then each data point is grouped together with the cluster at the nearest centroid. We use $K=2$ as we wish to divide the data into two groups. Although K-Means is intended to be a clustering algorithm, it can easilly be applied to classification problems if we assign the majority label to each cluster
 	
@@ -360,13 +351,26 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 
 
 \subsubsection{Deep Learning Models}
-Deep learning classifiers do not need to use hand-crafted features used in supervised classifiers. We use Binary Cross-Entropy loss.
-
-We augment the \textit{Amazon Reviews} dataset using a synonym replacement strategy.  An adjective or noun chosen at random from each snippet of text, and is substituted with a synonym so as not to alter the original meaning of the text. This procedure is repeated 
+Deep learning classifiers do not require the  hand-crafted features used in supervised classifiers, and are instead capable of learning higher-level features from dense vectors such as ElMo and GloVe. We focus on two categories of neural networks - Recurrent Neural Networks (RNN) and Convolutional Neural Networks (CNN). While it is beyond the scope of this paper to describe in detail each of the model architectures used in this project, we provide a brief explanation of the basic concepts involved in CNNs and RNNs. As we are performing binary classification, we use the Binary Cross-Entropy loss function.
 
 
 \paragraph{Recurrent Neural Networks --}
-In a Recurrent Neural Network (RNN), prior inputs are used to inform future outputs. As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. In a RNN, there is an additional hidden state which represents the context based on prior inputs, and is updated by inputs as they are fed through the network. This gives way to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN. In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
+As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. However, in a Recurrent Neural Network (RNN), there is an additional hidden state that is updated as inputs are fed through the network. This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing.
+
+
+
+
+
+ In a RNN, there is an additional hidden state which represents the context based on prior inputs. The hidden state is . This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
+
+In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
+
+\begin{enumerate}
+	\item \textbf{Vanilla Recurrent Neural Network -- }
+	\item \textbf{Vanilla Gated Recurrent Unit -- }
+	\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
+	\item Bidirectional Long Short-term Memory \textit{(BiLSTM)}
+\end{enumerate}
 
 RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
 
@@ -378,7 +382,6 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \begin{minipage}{0.35\textwidth}
 	\begin{figure}[H]
 		\begin{center}
-		\textbf{Figure -}: $m \times n$ feature vector\\
 		$
 		\begin{bmatrix}
 		w_{1,1} & w_{1,2} & ... & w_{1,N}\\
@@ -387,6 +390,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 		w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
 		\end{bmatrix}
 		$
+		\textbf{Figure -}: $m \times n$ feature vector\\
 	\end{center}
 	\end{figure}
 \end{minipage} \hfill
@@ -394,26 +398,66 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 	Each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence. This feature vector is used as input to the convolutional neural network. 
 \end{minipage}
 
-Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing a k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
+\noindent Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing k-tokens in the input sentence), producing a new sequence of features. The convolution filter is repeatedly applied to overlapping sections of the matrix, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector. Applying \textit{maximum pooling over time} produces a single output value following each convolution, such that the feature corresponding to a particular vector is the maximum activation in the feature map. Producing a fixed-size output matrix means that variable size sentences and variable size filters can be used to obtain features with the same output dimensions. This is especially useful for classification tasks, where the desired output is a fixed-sized vector indicating which class the input vector belongs to.
+
+\begin{enumerate}
+	\item Convolutional Neural Network (CNN)
+	\item Deep Convolutional Neural Network (DCNN)
+\end{enumerate}
+
+\hspace{-20pt}\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\includegraphics[width=1\textwidth]{Images/CNNarchNew.png}
+		\centering\textbf{(a)} CNN Architecture\\
+	\end{figure}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.6\textwidth}
+\begin{figure}[H]
+	\includegraphics[width=0.97\textwidth]{Images/DCNNarchNew.png}
+	\centering\textbf{(b)} Deep CNN Architecture\\
+\end{figure}
+\end{minipage}
+
+\begin{center}
+	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures
+\end{center}
+
+
+
 
 \subsection{Attention}
 \vspace{-4.2pt}
-\noindent We add an attention layer to our best performing lstm-based model. This allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} 
+\noindent Extending our binary classification solution to incorporate attention allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} We add an attention layer to our best performing lstm-based model. This allows us to 
 
-
+\newpage
 \section{Results}
 \subsection{Evaluation Method}
-\noindent This section discusses our approach to evaluating the successes and failures of the trained models. A simple approach is to use accuracy which refers to the proportion of data that is correctly labelled as either sarcastic or non-sarcastic. However, sarcasm is a minority class therefore on an unbalanced dataset we could achieve high accuracy by simply labelling every statement as non-sarcastic. In an attempt to mitigate against this, we instead form a conclusion based on the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we consider both measures separately, as well as in combination.
+\noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.
 
-\begin{align*}
-\mbox{precision} &= \frac{\mbox{true positives}}{\mbox{true positives + false positives}}   &  \mbox{recall} &= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}
-\end{align*}
+\hspace{-30pt}\begin{center}
+	\begin{minipage}{0.47\textwidth}
+		$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$\\
+	\end{minipage}
+	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
+		$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
+	\end{minipage}\\
+\end{center}
+\vspace{-20pt}
+\begin{center}
+	\begin{minipage}{0.47\textwidth}
+		$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
+	\end{minipage}
+	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
+		$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
+	\end{minipage}
+\end{center}
+\vspace{4pt}
 
-\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. \\
+\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately. We also use the Matthews correlation co-efficient (MCC). This is a balanced measure which only shows high scores if the true positive and negative rates are high, and if the false positive and negative rates are low - taking into account all four quadrants of a confusion matrix.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
-
-\subsection{Feature Analysis}
+\subsection{Analysis of Miscellaneous Features}
 \noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
 
 
@@ -453,233 +497,108 @@ Convolutional layers compute the dot product of a kernel vector of k weights wit
 \end{minipage}
 
 
-%\begin{figure}[htp]
-%	\centering
-%	\textbf{Figure -:} Mean proportion of tokens in each sentiment class
-%%	\includegraphics[width=.5\textwidth]{Images/NHSD_sentimentlabels.png}\hfill
-%	\includegraphics[width=.5\textwidth]{Images/SARC_sentimentlabels.png}\hfill
-%	\label{fig:figure3}
-%\end{figure}
-
-\subsection{Machine Learning Experimentation}
+\subsection{Binary Classification}
+\noindent We train each machine learning classifier independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo vectors. We also experiment with miscellaneous features, combining useful features with our best performing machine learning classifier on each dataset. Additionally, we train each deep learning model separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used to train our deep learning models, as training neural networks on very high dimensional data is computationally intractable. For both our machine learning and deep learning classifiers, we report only a subset of our most informative results, including the result of the best classifier. The precision, recall and $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing machine learning and deep learning models are highlighted for each dataset.\\
 
 
+\noindent \textbf{Experimental Settings for Machine Learning --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\\
 
-\noindent We train a range of classifiers independently on each of the three datasets, and provide the results of this experimentation in the following subsections. The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the score of the best-performing model is highlighted for clarity. Each classifier is trained on four types of vectors, Bag of Words, TF-IDF, GloVe and ElMo as outlined in the solution.\\
-
-We also experimented with an unsupervised model - K-Means clustering where the majority label of each cluster was assigned, however, the results were very poor.
-
-
-
-\noindent \textbf{Experimental Settings --} For the machine learning experiments, 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-nearest neighbor classifier, K = 5 was found to be the greatest balance between computational cost and noise mitigation.
-
-
-
-%\subsubsection{News Headlines for Sarcasm Detection}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.714    & 0.718 &   0.732 & 0.844\\
-		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
-		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
-		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
-		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{9cm}||p{2cm}|  }
-		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Logistic Regression + ElMo + Sentiment   & 0.846\\
-		Logistic Regression + ElMo + Punctuation & 0.847\\
-		Logistic Regression + ElMo + Topic   & 0.847\\
-		Logistic Regression + ElMo + Topic + Punctuation   & 0.847\\
-		\hline
-	\end{tabular}
-\end{center}
-
-
-%\subsubsection{Sarcasm Amazon Review Corpus}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		  & \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.736    & 0.775 &   0.700 & 0.800\\
-		Logistic Regression &   0.745 & 0.748   & 0.713 & \textbf{0.809}\\
-		Random Forest Classifier &0.525 & 0.487 &  0.669 & 0.727\\
-		Gaussian Naive Bayes  & 0.625  & 0.621 &  0.416 & 0.666\\
-		K-Nearest Neighbours & 0.476  & 0.607   & 0.561 & 0.685\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{9cm}||p{2cm}|}
-		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Logistic Regression + ElMo + Sentiment   & 0.830\\
-		Logistic Regression + ElMo + Punctuation & 0.809\\
-		Logistic Regression + ElMo + Topic   & 0.811\\
-		Logistic Regression + ElMo + Sentiment + Topic & 0.811\\
-		\hline
-	\end{tabular}
-\end{center}
-
-%\subsubsection{Pt\'a\v{c}ek et al. (2014) Dataset}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine   & 0.713    & 0.724 &   0.635 & 0.754\\
-		Logistic Regression &   0.742 & 0.748 & 0.630 & \textbf{0.762}\\
-		Random Forest Classifier &0.723 & 0.715 &  0.645 & 0.735\\
-		Gaussian Naive Bayes  & 0.681  & 0.675&  0.594 &0.684\\
-		K-Nearest Neighbours & 0.557  & 0.346   & 0.607 & 0.716\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{|p{9cm}||p{2cm}| }
-		\hline
-		\textbf{Model Architechture}&  \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Logistic Regression + TF-IDF + Sentiment   & 0.763\\
-		Logistic Regression + TF-IDF + Punctuation & 0.762\\
-		Logistic Regression + TF-IDF + Topic   & 0.763\\
-		Logistic Regression + TF-IDF + Sentiment + Topic & 0.764\\
-		\hline
-	\end{tabular}
-\end{center}
-
-
-
-%
-%\begin{center}
-%	\textbf{Figure -}: Results of Machine Learning Classifiers on the Sarcasm Amazon Review Corpus
-%\end{center}
-%\begin{center}
-%	\begin{tabular}{p{8cm}p{2cm}}
-%		\hline
-%		\textbf{Model architecture} & \textbf{$F_{1}$ Score}\\
-%		\hline\hline
-%		GloVe + Support Vector Machine & 0.739\\
-%		\hline
-%		GloVe + Logistic Regression & 0.730\\
-%		\hline
-%		GloVe + Random Forest Classifier & 0.644\\
-%%		\hline
-%		GloVe + Gaussian Na\"{i}ve Bayes & 0.415\\
-%		\hline
-%	\end{tabular}\\
-%\end{center}
-
-
-
-%This section should be between 2 to 3 pages in length.
-
-\newpage
-\subsection{Deep Learning Experimentation}
-\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as
-
-\subsubsection{Experimental Settings}
-The upper-bound on the number of epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+\noindent \textbf{Experimental Settings for Deep Learning--} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
 	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
 \end{enumerate}
 
-Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added. This is a modified version of the 
+Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
 
+
+\subsubsection{News Headlines Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Deep Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
 \end{center}
 
 \begin{center}
-	\begin{tabular}{|p{4.7cm}||p{1.2cm}|p{1.5cm}|}
+	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		CNN   & 0.823   & \\
-		LSTM &   0.865 & 0.\\
-		Bi-directional LSTM & 0.864 & 0.\\
-		Vanilla RNN &0.817 & 0.\\
-		Vanilla GRU &0.852 & 0.\\
+		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
+		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
+		Random Forest Classifier & ElMo  & 0.   & 0. & 0.797\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
+		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
+		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
+		LSTM & ElMo  & 0.   & 0. & 0.860\\
+		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
+		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
+		Deep CNN & ElMo & 0.   & 0. & 0.871\\
 		\hline
 	\end{tabular}
 \end{center}
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
-
+\subsubsection{Amazon Reviews Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Sarcasm Amazon Review Corpus}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		CNN   & 0.  & 0.\\
-		LSTM &   0. & 0.\\
-		Bi-directional LSTM &0. & 0.\\
+		Support Vector Machine & TF-IDF & 0.   & 0. & 0.775\\
+		K-Nearest Neighbours &  ElMo & 0.   & 0. & 0.685\\
+		Support Vector Machine & BOW  & 0.   & 0. & 0.736\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.809\\
+		Logistic Regression & ElMo + S + T & 0.   & 0. & \textbf{0.818}\\
+		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
+		CNN & GloVe  & 0.   & 0. & 0.827\\
+		Vanilla RNN & ElMo  & 0.   & 0. & 0.812\\
+		LSTM & GloVe  & 0.   & 0. & 0.838\\
+		Deep CNN & ElMo & 0.   & 0. & 0.860\\
+		Bidirectional LSTM & ElMo & 0.   & 0. & \textbf{0.862}\\
 		\hline
 	\end{tabular}
 \end{center}
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
 
-
+\subsubsection{Twitter Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Deep Learning\\ classifiers on the \textit{Pt\'a\v{c}ek et al. (2014) dataset}
+	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|  }
+	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		& \multicolumn{2}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{GloVe} & \textbf{ElMo}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		CNN   & 0.  & 0.\\
-		LSTM &   0. & 0.\\
-		Bi-directional LSTM &0. & 0.\\
+		Gaussian Naive Bayes & Bag of Words & 0.   & 0. & 0.681\\
+		Random Forest Classifier & GloVe  & 0.   & 0. & 0.645\\
+		Support Vector Machine & ElMo  & 0.   & 0. & 0.754\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.762\\
+		Logistic Regression & ElMo + S + T + P & 0.   & 0. & \textbf{0.790}\\
+		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
+		Vanilla RNN & ElMo  & 0.   & 0. & 0.817\\
+		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.822\\
+		CNN & ElMo  & 0.   & 0. & 0.832\\
+		Bidirectional LSTM & ElMo  & 0.   & 0. & \textbf{0.849}\\
+		Long Short-Term Memory & GloVe & 0.   & 0. & 0.841\\
 		\hline
 	\end{tabular}
 \end{center}
+\textit{*S} refers to sentiment features, \textit{T} refers to topic features and \textit{P} refers to punctuation features\\
+
+Interestingly, the Random Forest Classifier was the best performing model using GloVe vectors. GloVe performance was weak on this particular dataset, and this could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the embedding input.
 
 \newpage
 
