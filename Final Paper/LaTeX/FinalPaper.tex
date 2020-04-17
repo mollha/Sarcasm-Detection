@@ -508,7 +508,27 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \end{minipage}
 
 
-\subsection{Comparison of Machine Learning and Deep Learning Classification}
+\subsection{Binary Classification}
+\noindent Five classifiers are trained independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo.\\ %The $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing models are highlighted for each dataset, paired with each vectorisation approach.\\
+
+
+\noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.
+
+\noindent Each deep learning model is trained separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used as\\
+
+
+
+\noindent \textbf{Experimental Settings --} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+
+\begin{enumerate}
+	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
+	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
+\end{enumerate}
+
+Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
+
+
+
 \subsubsection{News Headlines Dataset}
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
@@ -517,7 +537,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \begin{center}
 	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		\textbf{Model Architechture}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
 		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
 		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
@@ -525,6 +545,8 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
 		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
 		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
 		LSTM & ElMo  & 0.   & 0. & 0.860\\
 		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
 		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
@@ -543,7 +565,7 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \begin{center}
 	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		\textbf{Model Architechture}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
 		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
 		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
@@ -551,6 +573,8 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
 		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
 		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
 		LSTM & ElMo  & 0.   & 0. & 0.860\\
 		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
 		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
@@ -560,69 +584,37 @@ A Convolutional Neural Network (CNN)\cite{lecun1998gradient} is a specialised fo
 \end{center}
 \textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
-\newpage
 
+\subsubsection{Twitter Dataset}
 \begin{center}
 	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
+	\begin{tabular}{ |c||c|c|c|c|}
 		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
+		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Support Vector Machine    & 0.714    & 0.718 &   0.732 & 0.844\\
-		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
-		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
-		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
-		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
+		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
+		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
+		Random Forest Classifier & ElMo  & 0.   & 0. & 0.797\\
+		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
+		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
+		\hline\hline
+		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline
+		LSTM & ElMo  & 0.   & 0. & 0.860\\
+		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
+		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
+		Deep CNN & ElMo & 0.   & 0. & 0.871\\
 		\hline
 	\end{tabular}
 \end{center}
-
-\newpage
-\subsubsection{News Headlines Dataset}
-
-\begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |p{4.7cm}||p{1.2cm}|p{1.5cm}|p{1.2cm}|p{1.2cm}|  }
-		\hline
-		& \multicolumn{4}{|c|}{\textbf{Vector}} \\
-		\hline
-		\textbf{Model Architechture}& \textbf{BOW} & \textbf{TF-IDF} & \textbf{GloVe} & \textbf{ElMo}\\
-		\hline\hline
-		Support Vector Machine    & 0.714    & 0.718 &   0.732 & 0.844\\
-		Logistic Regression &   0.721 & 0.712   & 0.732 & \textbf{0.846}\\
-		Random Forest Classifier &0.530 & 0.643 &  0.754 & 0.797\\
-		Gaussian Naive Bayes  & 0.662  & 0.649&  0.703 &0.640\\
-		K-Nearest Neighbours& 0.569  & 0.483   & 0.709 & 0.788\\
-		\hline
-	\end{tabular}
-\end{center}
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
 
 
 
-
-\newpage
-\begin{tabular}{|c||c|c|c||c|c|c|}
-	\hline
-	\multirow{3}{*}{\textbf{Model Architechture}} & \multicolumn{3}{c||}{\textbf{Bag Of Words}} & \multicolumn{3}{c|}{\textbf{TF-IDF}}\\
-	\cline{1-7}
-	& Recall & Precision & $F_1$ & News & Amazon & Twitter\\
-	\cline{1-7}
-	Support Vector Machine & 0.714 & 0.736 & 0.713 &\textbf{0.718} &\textbf{0.775} & 0.724\\
-	Logistic Regression & \textbf{0.721}& \textbf{0.745}& \textbf{0.750}&0.712 &0.748 & \textbf{0.748}\\
-	Random Forest Classifier &0.530 &0.525 & 0.723 &0.643 & 0.487 & 0.715\\
-	Gaussian Naive Bayes & 0.662& 0.625& 0.681 &0.649 &0.621 & 0.675\\
-	K-Nearest Neighbours & 0.569& 0.476& 0.557 & 0.483& 0.607 & 0.346\\
-	\hline
-\end{tabular}\\
 \subsection{Machine Learning Experimentation}
 
 %\begin{figure}[htp]

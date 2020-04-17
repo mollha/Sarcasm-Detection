@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  17 APR 2020 02:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  17 APR 2020 02:35
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -584,58 +584,63 @@ Overfull \hbox (19.90483pt too wide) in paragraph at lines 497--509
 []$[]$  $[]$ 
  []
 
-[15 <./Images/absolute_differences.png>] [16] [17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 613--626
+
+Underfull \hbox (badness 10000) in paragraph at lines 512--513
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--637
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 
  []
 
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 645--658
+[15 <./Images/absolute_differences.png>] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 628--629
+
+ []
+
+[17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 637--650
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 663--676
+Underfull \hbox (badness 10000) in paragraph at lines 655--668
 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 692--692
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 684--684
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
-[20]
+[19]
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 70
-9.
+1.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 705--718
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 697--710
 []$[]$  $[]$ 
  []
 
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 767--768
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 759--760
 
  []
 
-[22] (FinalPaper.bbl [23]
+[21] (FinalPaper.bbl [22]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[24]
+[23]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [25] (FinalPaper.aux)
+)) [24] (FinalPaper.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -666,9 +671,9 @@ utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
 /Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (25 pages, 488189 bytes).
+Output written on FinalPaper.pdf (24 pages, 487699 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
+ 144 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
