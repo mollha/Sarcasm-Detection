@@ -1,3 +1,4 @@
+import tensorflow as tf
 from keras.utils import CustomObjectScope
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,8 +24,7 @@ import keras.backend as K
 from keras.initializers import Constant
 from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef
-import tensorflow as tf
+from sklearn.metrics import f1_score
 import tensorflow_hub as hub
 import spacy
 
@@ -112,8 +112,33 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-def attention(inputs, attention_size=50, time_major=False, return_alphas=False):
-    import tensorflow as tf
+class AttentionLayer(Layer):
+    def __init__(self, **kwargs):
+        self.W = None
+        self.b = None
+        super(AttentionLayer, self).__init__(**kwargs)
+
+    def build(self, input_shape):
+        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
+        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
+        super(AttentionLayer, self).build(input_shape)
+
+    def call(self, x, mask=None):
+        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
+        at = K.softmax(et)
+        at = K.expand_dims(at, axis=-1)
+        output = x*at
+        # returns the context vector
+        return K.sum(output, axis=1)
+
+    def compute_output_shape(self, input_shape):
+        return input_shape[0], input_shape[-1]
+
+    def get_config(self):
+        return super(AttentionLayer, self).get_config()
+
+
+def attention(inputs, attention_size=50, time_major=False, return_alphas=True):
     """
     Attention mechanism layer which reduces RNN/Bi-RNN outputs with Attention vector.
     The idea was proposed in the article by Z. Yang et al., "Hierarchical Attention Networks
@@ -171,10 +196,9 @@ def attention(inputs, attention_size=50, time_major=False, return_alphas=False):
     initializer = tf.random_normal_initializer(stddev=0.1)
 
     # Trainable parameters
-    with tf.variable_scope(tf.get_variable_scope(), reuse=tf.compat.v1.AUTO_REUSE):
-        w_omega = tf.get_variable(name="w_omega", shape=[hidden_size, attention_size], initializer=initializer)
-        b_omega = tf.get_variable(name="b_omega", shape=[attention_size], initializer=initializer)
-        u_omega = tf.get_variable(name="u_omega", shape=[attention_size], initializer=initializer)
+    w_omega = tf.get_variable(name="w_omega", shape=[hidden_size, attention_size], initializer=initializer)
+    b_omega = tf.get_variable(name="b_omega", shape=[attention_size], initializer=initializer)
+    u_omega = tf.get_variable(name="u_omega", shape=[attention_size], initializer=initializer)
 
     with tf.name_scope('v'):
         # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
@@ -192,6 +216,7 @@ def attention(inputs, attention_size=50, time_major=False, return_alphas=False):
         return output
     else:
         return output, alphas
+
 
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
@@ -215,7 +240,7 @@ def get_length_limit(dataset_name: str) -> int:
 
 def get_batch_size(model_name: str) -> int:
     # set batch size to 1 for online learning in lstm
-    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32, 'attention-lstm': 32, 'dcnn': 32}
+    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32, 'attention-lstm': 32}
     return batch_sizes[model_name]
 
 
@@ -223,7 +248,7 @@ def get_custom_layers(model_name=None, vector_type=None):
     custom_layers = {}
 
     if model_name and 'attention' in model_name:
-        custom_layers['attention'] = attention
+        custom_layers['AttentionLayer'] = AttentionLayer
 
     if vector_type:
         if vector_type == 'elmo':
@@ -302,8 +327,7 @@ def vanilla_gru(model, shape, optimiser):
 ATTENTION_UNITS =50
 def lstm_with_attention(model, optimiser, seq_length):
     model.add(LSTM(seq_length, return_sequences=True))
-    with tf.name_scope('attention'):
-        model.add(Lambda(attention))
+    model.add(Lambda(attention))
     # with tf.name_scope('Attention_layer'):
     #     attention_output, alphas = attention(rnn_outputs, ATTENTION_UNITS, return_alphas=True)
     #     tf.summary.histogram('alphas', alphas)
@@ -435,29 +459,20 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = lstm_with_attention(model, new_adam, length_limit)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
-    elif model_name == 'dcnn':
-        model = deep_cnn_network(model, new_adam)
     elif model_name == 'cnn':
         model = cnn_network(model, new_adam)
     elif model_name == 'vanilla-rnn':
         model = vanilla_rnn(model, (max_batch_size, length_limit), new_adam)
     elif model_name == 'vanilla-gru':
         model = vanilla_gru(model, (len(s_data), length_limit), new_adam)
-    print(model.summary())
     return s_data, l_data, model
 
 
 def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     max_batch_size = get_batch_size(model_name)
     y_pred = trained_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
-    f1 = f1_score(np.array(testing_labels), np.array(y_pred))
-    precision = precision_score(np.array(testing_labels), np.array(y_pred))
-    recall = recall_score(np.array(testing_labels), np.array(y_pred))
-    mcc = matthews_corrcoef(np.array(testing_labels), np.array(y_pred))
-    print('F1 Score: ', f1)
-    print('Precision: ', precision)
-    print('Recall: ', recall)
-    print('MCC: ', mcc)
+    score = f1_score(np.array(testing_labels), np.array(y_pred))
+    print('F1 Score: ', score)
 
 
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
