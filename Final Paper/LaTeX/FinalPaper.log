@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  17 APR 2020 03:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  17 APR 2020 03:25
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -247,11 +247,7 @@ ite.sty"
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
-) (FinalPaper.aux
-
-LaTeX Warning: Label `Sarcasm Amazon Review Corpus' multiply defined.
-
-)
+) (FinalPaper.aux)
 \openout1 = `FinalPaper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
@@ -594,80 +590,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 517--518
 
  []
 
-[15 <./Images/absolute_differences.png>] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 627--640
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 645--658
-
- []
-
-[17]
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 674--674
-[]|\OT1/ptm/b/n/12 Sentiment| 
- []
-
-File: Images/absolute_differences.png Graphic file (type png)
-<use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 69
-1.
-(pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
-
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 687--700
-[]$[]$  $[]$ 
- []
-
-[18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 749--750
-
- []
-
-[20] (FinalPaper.bbl [21]
+[15 <./Images/absolute_differences.png>] [16] [17] (FinalPaper.bbl [18]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[22]
+[19]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [23] (FinalPaper.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+)) [20] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
  4697 strings out of 492452
  66968 string characters out of 3114457
- 144952 words of memory out of 3000000
+ 141911 words of memory out of 3000000
  8948 multiletter control sequences out of 15000+200000
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1394b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips
-/base/8r.enc}<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Password is house/AppData/Local
-/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cme
-x10.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is house/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Password is 
-house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pf
+{C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
+x8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pf
 b><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Password is house/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/U
-sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/
-utmb8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/urw/times/utmbi8a.pfb><C:/Users/Password is house/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Password is house/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (23 pages, 486170 bytes).
+lic/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
+sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
+assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on FinalPaper.pdf (20 pages, 477367 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
+ 132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
