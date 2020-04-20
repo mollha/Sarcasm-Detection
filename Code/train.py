@@ -60,20 +60,20 @@ if __name__ == '__main__':
     # ml_feature_list = ['sentiment', 'punctuation', 'topic_model']
     # run_ml(ml_model_list, ml_vector_list, dataset_list, ml_feature_list)
 
-    ml_model_list = ['log_reg']
-    ml_vector_list = ['elmo']
-
-    ml_feature_list = ['sentiment', 'topic_model']
-    run_ml(ml_model_list, ml_vector_list, dataset_list, ml_feature_list)
+    # ml_model_list = ['log_reg']
+    # ml_vector_list = ['elmo']
+    #
+    # ml_feature_list = ['sentiment', 'topic_model']
+    # run_ml(ml_model_list, ml_vector_list, dataset_list, ml_feature_list)
     #
     # dl_model_list = ['cnn', 'lstm', 'bi-lstm', 'vanilla-rnn', 'vanilla-gru']
     # dl_vector_list = ['glove', 'elmo']
     # run_dl(dl_model_list, dl_vector_list, dataset_list)
 
 # ---------------------------------------
-#     dl_model_list = ['lstm']
-#     dl_vector_list = ['glove']
-#     run_dl(dl_model_list, dl_vector_list, [1])
+    dl_model_list = ['attention-lstm']
+    dl_vector_list = ['glove']
+    run_dl(dl_model_list, dl_vector_list, [1])
 
     # dl_model_list = ['cnn']
     # dl_vector_list = ['elmo']

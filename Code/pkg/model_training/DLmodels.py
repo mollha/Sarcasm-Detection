@@ -1,30 +1,30 @@
-from keras.utils import CustomObjectScope
+import tensorflow as tf
+from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 from pathlib import Path
 from os.path import isfile
-from keras.engine import Layer
-from keras import activations, optimizers, initializers
+from tensorflow.keras.layers import Layer
+from tensorflow.keras import activations, optimizers, initializers
 from ..data_processing.augmentation import synonym_replacement
 from ..data_processing.helper import prepare_data, get_dataset_name
-from keras.preprocessing.sequence import pad_sequences
-from keras.models import load_model
-from keras.models import Sequential
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Dense, Lambda, dot, Activation, concatenate
-from keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
-    Bidirectional, LeakyReLU, MaxPooling1D, InputSpec
-from keras.callbacks import Callback
-from keras.layers import SimpleRNN, GRU
-from keras.layers.embeddings import Embedding
-import keras.backend as K
-from keras.initializers import Constant
-from keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.models import load_model, Model
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.layers import Dense, Lambda, dot, Activation, concatenate
+from tensorflow.keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
+    Bidirectional, LeakyReLU, MaxPooling1D, Input
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.layers import SimpleRNN, GRU
+from tensorflow.keras.layers import Embedding
+import tensorflow.keras.backend as K
+from tensorflow.keras.initializers import Constant
+from tensorflow.keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef
-import tensorflow as tf
 import tensorflow_hub as hub
 import spacy
 
@@ -125,9 +125,11 @@ class AttentionLayer(Layer):
 
     def call(self, x, mask=None):
         et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
-        at = K.softmax(et)
-        at = K.expand_dims(at, axis=-1)
-        output = x*at
+        at1 = K.softmax(et)
+        at2 = K.expand_dims(at1, axis=-1)
+        output = tf.math.multiply(x, at2)
+        #tf.map_fn(lambda i: i ** 2 if i > 0 else i, x)
+        #output = x*at2
         # returns the context vector
         return K.sum(output, axis=1)
 
@@ -242,16 +244,23 @@ def vanilla_gru(model, shape, optimiser):
                   metrics=['accuracy'])
     return model
 
-def lstm_with_attention(model, optimiser):
-    model.add(LSTM(60, return_sequences=True))
-    model.add(AttentionLayer())
-    model.add(Dropout(0.1))
-    model.add(Dense(50, activation="relu"))
-    model.add(Dropout(0.1))
-    model.add(Dense(1, activation="sigmoid"))
+
+def lstm_with_attention(embedding_layer, shape, optimiser):
+    inputs = Input(batch_shape=shape)
+    x = embedding_layer(inputs)
+    x = LSTM(60, return_sequences=True)(x)
+    x = AttentionLayer()(x)
+    x = Dropout(0.1)(x)
+    x = Dense(50, activation="relu")(x)
+    x = Dropout(0.1)(x)
+    outputs = Dense(1, activation="sigmoid")(x)
+
+    model = Model(inputs=inputs, outputs=outputs)
     model.compile(loss='binary_crossentropy',
+                  # run_eagerly=True,
                   optimizer=optimiser,
                   metrics=['accuracy'])
+    #model.run_eagerly = True
     return model
 
 
@@ -296,18 +305,19 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
 
 
 def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, dataset_name: str, vector_type: str, split: float, max_batch_size: int, limit: int):
+    number_of_batches = len(s_data) // (max_batch_size * (1 / split))
+    sarcasm_data = s_data[:int((number_of_batches * max_batch_size) / split)]
+    sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
+
     if vector_type == 'elmo':
-        number_of_batches = len(s_data) // (max_batch_size * (1/split))
-        sarcasm_data = s_data[:int((number_of_batches * max_batch_size) / split)]
-        sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
         text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")#, (max_batch_size, limit) # Input(batch_shape=(max_batch_size, limit))
 
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
-        tokenizer.fit_on_texts(s_data)
+        tokenizer.fit_on_texts(sarcasm_data)
         base_path = Path(__file__).parent
         path_to_dataset_root = "../datasets/" + dataset_name
 
@@ -315,9 +325,9 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
                 path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")), 'wb') as f:
             pickle.dump(tokenizer, f)
 
-        sequences = tokenizer.texts_to_sequences(s_data)
+        sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, s_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)#, (max_batch_size, limit) #Input(batch_shape=(max_batch_size, limit))
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -369,7 +379,8 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     if model_name == 'lstm':
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
-        model = lstm_with_attention(model, new_adam)
+        # use batch_shape instead of model
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
