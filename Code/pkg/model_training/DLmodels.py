@@ -128,8 +128,6 @@ class AttentionLayer(Layer):
         at1 = K.softmax(et)
         at2 = K.expand_dims(at1, axis=-1)
         output = tf.math.multiply(x, at2)
-        #tf.map_fn(lambda i: i ** 2 if i > 0 else i, x)
-        #output = x*at2
         # returns the context vector
         return at1, K.sum(output, axis=1)
 
@@ -296,8 +294,8 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
         tokeniser = pd.read_pickle((base_path / (
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
         # sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
-        sequences = tokeniser.texts_to_sequences([text]*get_batch_size(model_name))
-        tokens = tokeniser.sequences_to_texts(sequences)
+        sequences = tokeniser.texts_to_sequences([' '.join([t.text for t in nlp(text)])]*get_batch_size(model_name))
+        tokens = [t.text for t in nlp(text)]
         return tokens, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:
         raise ValueError('Only glove and elmo vectors supported')
@@ -398,7 +396,9 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     max_batch_size = get_batch_size(model_name)
     probabilities = trained_model.predict(x=np.array(testing_data), batch_size=max_batch_size)
     y_pred = np.where(probabilities > 0.5, 1, 0)
+    print(testing_labels)
     print(probabilities)
+    print(np.array(y_pred))
     print(y_pred)
     f1 = f1_score(np.array(testing_labels), np.array(y_pred))
     precision = precision_score(np.array(testing_labels), np.array(y_pred))
@@ -428,7 +428,7 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
 
     s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
     custom_layer = get_custom_layers(model_name, vector_type)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=False)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
 
     stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
     file_name = str(base_path / ('../trained_models/' + stem))

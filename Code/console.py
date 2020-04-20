@@ -1,9 +1,13 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from Code.pkg.model_training.DLmodels import prepare_pre_vectors, load_model_from_file, get_custom_layers
-from Code.pkg.vectors.create_vectors import ElMoVectorizer, GloVeVectorizer
-from Code.pkg.vectors.create_features import SentimentAnnotator, PunctuationAnnotator
+from pkg.model_training.DLmodels import prepare_pre_vectors, load_model_from_file, get_custom_layers
+from pkg.vectors.create_vectors import ElMoVectorizer, GloVeVectorizer
+from pkg.vectors.create_features import SentimentAnnotator, PunctuationAnnotator
+import matplotlib
+from matplotlib.colors import rgb2hex
+from matplotlib.cm import get_cmap
+import matplotlib.pyplot as plt
 from keras.utils import CustomObjectScope
 from keras.models import load_model
 from keras.layers import Activation
@@ -41,6 +45,24 @@ class Vectoriser:
         return list_of_vectors
 
 
+def colorise(token_list: list, color_array: list):
+    """
+    Given attention weights and tokens, visualise colour map
+    :param token_list: list of tokens (strings)
+    :param color_array: array of numbers between 0 and 1
+    :return:
+    """
+    cmap = get_cmap('Reds')
+    template = '<span class="barcode"; style="color: black; background-color: {}">{}</span>'
+    colored_string = ''
+    for t, color in zip(token_list, color_array):
+        # if negative, set to white
+        color_val = rgb2hex((1, 1, 1)) if color < 0 else rgb2hex(cmap(color)[:3])
+        print(color_val)
+        colored_string += template.format(color_val, '&nbsp' + t + '&nbsp')
+    return colored_string
+
+
 def get_fit_vectoriser(path_to_root: str, vector_type: str, features: list):
     vectorisers = [{'glove': GloVeVectorizer(), 'elmo': ElMoVectorizer()}[vector_type]] \
         if vector_type in {'glove', 'elmo'} else [pd.read_pickle(path_to_root + "/processed_data/vectorisers/" +
@@ -54,27 +76,50 @@ def get_fit_vectoriser(path_to_root: str, vector_type: str, features: list):
     return Vectoriser(vectorisers)
 
 
-def get_attention(text: str, trained_model):
-    tokens, sequence = prepare_pre_vectors(text, 'glove', 1, 'attention-lstm')
+def get_attention(text: str):
+    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection",
+                     "Datasets/ptacek"]
 
-    # print(trained_model.summary())
-    # print(len(sequence))
-    # print(len(sequence[0]))
+    # Choose a dataset from the list of valid data sets
+    dataset_number = 2
+    path_to_dataset_root = dataset_paths[dataset_number]
+    print('Selected dataset: ' + path_to_dataset_root[9:])
+
+    vector = 'glove'
+    feature_list = []
+    model_name = 'attention-lstm'
+
+
+    trained_model = get_trained_model(path_to_dataset_root, vector, feature_list, model_name, dataset_number)
+    # prediction = get_prediction('example string of text', model, dataset_number, model_name)
+    # ----------------------------------------------------------------------------------------
+
+
+    tokens, sequence = prepare_pre_vectors(text, 'glove', 2, 'attention-lstm')
 
     get_full_attention = K.function([trained_model.layers[0].input], [trained_model.layers[3].output])
-    print('Getting output from ', trained_model.layers[3].name)
+    print('Getting output from', trained_model.layers[3].name)
+
+
+
     attention_output = get_full_attention(sequence)  # 1 x 150
     attention_weights, context_vectors = attention_output.pop(0)
-
-    # print('\nAttention Weights\n')
-    # print(attention_weights)
+    print(attention_weights[0])
 
     attention_weights = attention_weights[0]
-    print('\nAttention Weights\n')
-    print(attention_weights)
+    #attention_weights = (attention_weights - attention_weights.min())/(attention_weights.max()-attention_weights.min())
 
-    # print('\nContext Vectors\n')
-    # print(context_vectors)
+    attention_weights = np.interp(attention_weights, (attention_weights.min(), attention_weights.max()), (-0.8, 0.8))
+
+    s = colorise(tokens, attention_weights[:len(tokens)])
+
+
+
+    attention_weights = attention_weights.clip(min=0)
+
+    # or simply save in an html file and open in browser
+    with open('colorise.html', 'w') as f:
+        f.write(s)
 
     list_array = attention_weights.tolist()
     tuple_list = []
@@ -82,12 +127,8 @@ def get_attention(text: str, trained_model):
         attention_val = list_array[val]
         token = tokens[val]
         tuple_list.append((attention_val, token))
-    print(tuple_list)
 
-    # print(get_full_attention([sequence]))
-
-    # sentence_word_embeddings = get_embedding_layer_output([sequence])
-    # get_attention_layer_output(array)
+    return s
 
 
 def get_prediction(text: str, trained_model, d_num, m_name):
@@ -124,7 +165,7 @@ if __name__ == "__main__":
                      "Datasets/ptacek"]
 
     # Choose a dataset from the list of valid data sets
-    dataset_number = 1
+    dataset_number = 2
     path_to_dataset_root = dataset_paths[dataset_number]
     print('Selected dataset: ' + path_to_dataset_root[9:])
 

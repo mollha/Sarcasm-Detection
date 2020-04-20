@@ -44,58 +44,23 @@ def run_dl(models: list, vectors: list, data_sets: list) -> None:
     for dataset in data_sets:  # 0 - AMAZON, 1 - NEWS, 2 - TWEETS
         for model in models:
             for vector in vectors:
-                get_dl_results(model, dataset, vector, set_size=10000)
+                get_dl_results(model, dataset, vector)
 # ---------------------------------------------------------------------
 
 
 if __name__ == '__main__':
     # --------------------------
-    dataset_list = [1]
+    model_list = ['attention-lstm']
+    vector_list = ['glove']
+    feature_list = []
+    dataset_list = [2]
     # --------------------------
 
-    # ml_model_list = ['svm', 'log_reg', 'rfc', 'n_bayes', 'k_means']
-    # ml_model_list = ['log_reg']
-    # # ml_vector_list = ['bag_of_words', 'tf_idf', 'glove', 'elmo']
+    # valid vector-types: 'bag_of_words', 'tf_idf', 'glove', 'elmo'
+    # valid feature-types: 'sentiment', 'punctuation', 'topic_model'
+    # valid ml models: 'svm', 'log_reg', 'rfc', 'n_bayes', 'knn'
+    # valid dl models: 'cnn', 'deep-cnn' 'lstm', 'bi-lstm', 'vanilla-rnn', 'vanilla-gru', 'attention-lstm'
 
-    # ml_feature_list = ['sentiment', 'punctuation', 'topic_model']
-    # run_ml(ml_model_list, ml_vector_list, dataset_list, ml_feature_list)
-
-    # ml_model_list = ['log_reg']
-    # ml_vector_list = ['elmo']
-    #
-    # ml_feature_list = ['sentiment', 'topic_model']
-    # run_ml(ml_model_list, ml_vector_list, dataset_list, ml_feature_list)
-    #
-    # dl_model_list = ['cnn', 'lstm', 'bi-lstm', 'vanilla-rnn', 'vanilla-gru']
-    # dl_vector_list = ['glove', 'elmo']
-    # run_dl(dl_model_list, dl_vector_list, dataset_list)
-
-# ---------------------------------------
-    dl_model_list = ['attention-lstm']
-    dl_vector_list = ['glove']
-    run_dl(dl_model_list, dl_vector_list, [1])
-
-    # dl_model_list = ['cnn']
-    # dl_vector_list = ['elmo']
-    # run_dl(dl_model_list, dl_vector_list, [2])
-
-    # dl_model_list = ['lstm']
-    # dl_vector_list = ['glove']
-    # run_dl(dl_model_list, dl_vector_list, [0])
-    #
-    # dl_model_list = ['bi-lstm']
-    # dl_vector_list = ['elmo']
-    # run_dl(dl_model_list, dl_vector_list, [1])
-    #
-    # dl_model_list = ['vanilla-rnn']
-    # dl_vector_list = ['elmo']
-    # run_dl(dl_model_list, dl_vector_list, [1])
-    #
-    # dl_model_list = ['vanilla-gru']
-    # dl_vector_list = ['elmo']
-    # run_dl(dl_model_list, dl_vector_list, [1])
-    # ------------------------------------
-    #
-    # dl_model_list = ['vanilla-gru']
-    # dl_vector_list = ['glove']
-    # run_dl(dl_model_list, dl_vector_list, [1])
+    # --------------------------
+    # run_ml(model_list, vector_list, dataset_list, feature_list)
+    run_dl(model_list, vector_list, dataset_list)

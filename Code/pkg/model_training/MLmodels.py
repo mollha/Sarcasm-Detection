@@ -81,7 +81,7 @@ def get_ml_results(model_name: str, vector_type: str, feature_list: list, datase
     file_name = str(base_path / stem)
     start = time.time()
     _, sarcasm_labels, sarcasm_data, _, _ = prepare_data(dataset_number, vector_type, feature_list)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(sarcasm_data, sarcasm_labels, test_size=split, shuffle=False)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(sarcasm_data, sarcasm_labels, test_size=split, shuffle=True)
 
     if isfile(file_name):
         print('Model with filename "' + stem + '" already exists - collecting results')
