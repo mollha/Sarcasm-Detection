@@ -295,7 +295,8 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
         base_path = Path(__file__).parent
         tokeniser = pd.read_pickle((base_path / (
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
-        sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
+        # sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
+        sequences = tokeniser.texts_to_sequences([text]*get_batch_size(model_name))
         tokens = tokeniser.sequences_to_texts(sequences)
         return tokens, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:

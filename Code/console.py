@@ -57,19 +57,29 @@ def get_fit_vectoriser(path_to_root: str, vector_type: str, features: list):
 def get_attention(text: str, trained_model):
     tokens, sequence = prepare_pre_vectors(text, 'glove', 1, 'attention-lstm')
 
+
     get_embedding_layer_output = K.function([trained_model.layers[0].input],
                                       [trained_model.layers[0].output])
     get_attention_layer_output = K.function([trained_model.layers[1].input],
                                             [trained_model.layers[2].output])
-    print(trained_model.summary())
+    # print(trained_model.summary())
+    # print(len(sequence))
+    # print(len(sequence[0]))
 
     get_full_attention = K.function([trained_model.layers[0].input], [trained_model.layers[3].output])
+    print(trained_model.layers[3].name)
+    attention_output = get_full_attention(sequence)  # 1 x 150
+    attention_weights, context_vectors = attention_output.pop(0)
 
-    array = get_full_attention(sequence)  # 1 x 150
+    print(attention_weights)
+    print(context_vectors)
+
+
     #attention_weights, array = array
     #print(attention_weights)
-    print(len(array))
-    list_array = array[0][0].tolist()
+
+    exit()
+    list_array = attention_weights.tolist()
     tuple_list = []
     for val in range(len(tokens)):
         attention_val = list_array[val]
