@@ -131,7 +131,7 @@ class AttentionLayer(Layer):
         #tf.map_fn(lambda i: i ** 2 if i > 0 else i, x)
         #output = x*at2
         # returns the context vector
-        return K.sum(output, axis=1)
+        return at1, K.sum(output, axis=1)
 
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[-1]
@@ -249,7 +249,7 @@ def lstm_with_attention(embedding_layer, shape, optimiser):
     inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
     x = LSTM(60, return_sequences=True)(x)
-    x = AttentionLayer()(x)
+    attention_weights, x = AttentionLayer()(x)
     x = Dropout(0.1)(x)
     x = Dense(50, activation="relu")(x)
     x = Dropout(0.1)(x)
