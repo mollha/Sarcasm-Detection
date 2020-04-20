@@ -257,10 +257,8 @@ def lstm_with_attention(embedding_layer, shape, optimiser):
 
     model = Model(inputs=inputs, outputs=outputs)
     model.compile(loss='binary_crossentropy',
-                  # run_eagerly=True,
                   optimizer=optimiser,
                   metrics=['accuracy'])
-    #model.run_eagerly = True
     return model
 
 
@@ -397,7 +395,10 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
 
 def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     max_batch_size = get_batch_size(model_name)
-    y_pred = trained_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
+    probabilities = trained_model.predict(x=np.array(testing_data), batch_size=max_batch_size)
+    y_pred = np.where(probabilities > 0.5, 1, 0)
+    print(probabilities)
+    print(y_pred)
     f1 = f1_score(np.array(testing_labels), np.array(y_pred))
     precision = precision_score(np.array(testing_labels), np.array(y_pred))
     recall = recall_score(np.array(testing_labels), np.array(y_pred))
