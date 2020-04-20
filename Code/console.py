@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from pkg.model_training.DLmodels import prepare_pre_vectors, load_model_from_file, get_custom_layers
-from pkg.vectors.create_vectors import ElMoVectorizer, GloVeVectorizer
-from pkg.vectors.create_features import SentimentAnnotator, PunctuationAnnotator
+from Code.pkg.model_training.DLmodels import prepare_pre_vectors, load_model_from_file, get_custom_layers
+from Code.pkg.vectors.create_vectors import ElMoVectorizer, GloVeVectorizer
+from Code.pkg.vectors.create_features import SentimentAnnotator, PunctuationAnnotator
 import matplotlib
 from matplotlib.colors import rgb2hex
 from matplotlib.cm import get_cmap
@@ -76,25 +76,7 @@ def get_fit_vectoriser(path_to_root: str, vector_type: str, features: list):
     return Vectoriser(vectorisers)
 
 
-def get_attention(text: str):
-    dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection",
-                     "Datasets/ptacek"]
-
-    # Choose a dataset from the list of valid data sets
-    dataset_number = 2
-    path_to_dataset_root = dataset_paths[dataset_number]
-    print('Selected dataset: ' + path_to_dataset_root[9:])
-
-    vector = 'glove'
-    feature_list = []
-    model_name = 'attention-lstm'
-
-
-    trained_model = get_trained_model(path_to_dataset_root, vector, feature_list, model_name, dataset_number)
-    # prediction = get_prediction('example string of text', model, dataset_number, model_name)
-    # ----------------------------------------------------------------------------------------
-
-
+def get_attention(text: str, trained_model):
     tokens, sequence = prepare_pre_vectors(text, 'glove', 2, 'attention-lstm')
 
     get_full_attention = K.function([trained_model.layers[0].input], [trained_model.layers[3].output])
