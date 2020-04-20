@@ -112,87 +112,30 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-def attention(inputs, attention_size=50, time_major=False, return_alphas=False):
-    import tensorflow as tf
-    """
-    Attention mechanism layer which reduces RNN/Bi-RNN outputs with Attention vector.
-    The idea was proposed in the article by Z. Yang et al., "Hierarchical Attention Networks
-     for Document Classification", 2016: http://www.aclweb.org/anthology/N16-1174.
-    Variables notation is also inherited from the article
+class AttentionLayer(Layer):
+    def __init__(self, **kwargs):
+        self.W = None
+        self.b = None
+        super(AttentionLayer, self).__init__(**kwargs)
 
-    Args:
-        inputs: The Attention inputs.
-            Matches outputs of RNN/Bi-RNN layer (not final state):
-                In case of RNN, this must be RNN outputs `Tensor`:
-                    If time_major == False (default), this must be a tensor of shape:
-                        `[batch_size, max_time, cell.output_size]`.
-                    If time_major == True, this must be a tensor of shape:
-                        `[max_time, batch_size, cell.output_size]`.
-                In case of Bidirectional RNN, this must be a tuple (outputs_fw, outputs_bw) containing the forward and
-                the backward RNN outputs `Tensor`.
-                    If time_major == False (default),
-                        outputs_fw is a `Tensor` shaped:
-                        `[batch_size, max_time, cell_fw.output_size]`
-                        and outputs_bw is a `Tensor` shaped:
-                        `[batch_size, max_time, cell_bw.output_size]`.
-                    If time_major == True,
-                        outputs_fw is a `Tensor` shaped:
-                        `[max_time, batch_size, cell_fw.output_size]`
-                        and outputs_bw is a `Tensor` shaped:
-                        `[max_time, batch_size, cell_bw.output_size]`.
-        attention_size: Linear size of the Attention weights.
-        time_major: The shape format of the `inputs` Tensors.
-            If true, these `Tensors` must be shaped `[max_time, batch_size, depth]`.
-            If false, these `Tensors` must be shaped `[batch_size, max_time, depth]`.
-            Using `time_major = True` is a bit more efficient because it avoids
-            transposes at the beginning and end of the RNN calculation.  However,
-            most TensorFlow data is batch-major, so by default this function
-            accepts input and emits output in batch-major form.
-        return_alphas: Whether to return attention coefficients variable along with layer's output.
-            Used for visualization purpose.
-    Returns:
-        The Attention output `Tensor`.
-        In case of RNN, this will be a `Tensor` shaped:
-            `[batch_size, cell.output_size]`.
-        In case of Bidirectional RNN, this will be a `Tensor` shaped:
-            `[batch_size, cell_fw.output_size + cell_bw.output_size]`.
-    """
+    def build(self, input_shape):
+        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
+        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
+        super(AttentionLayer, self).build(input_shape)
 
-    if isinstance(inputs, tuple):
-        # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
-        inputs = tf.concat(inputs, 2)
+    def call(self, x, mask=None):
+        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
+        at = K.softmax(et)
+        at = K.expand_dims(at, axis=-1)
+        output = x*at
+        # returns the context vector
+        return K.sum(output, axis=1)
 
-    if time_major:
-        # (T,B,D) => (B,T,D)
-        inputs = tf.transpose(inputs, [1, 0, 2])
+    def compute_output_shape(self, input_shape):
+        return input_shape[0], input_shape[-1]
 
-    hidden_size = inputs.shape[2].value  # D value - hidden size of the RNN layer
-
-    initializer = tf.random_normal_initializer(stddev=0.1)
-
-    # Trainable parameters
-    with tf.variable_scope(tf.get_variable_scope(), reuse=tf.compat.v1.AUTO_REUSE):
-        w_omega = tf.get_variable(name="w_omega", shape=[hidden_size, attention_size], initializer=initializer)
-        b_omega = tf.get_variable(name="b_omega", shape=[attention_size], initializer=initializer)
-        u_omega = tf.get_variable(name="u_omega", shape=[attention_size], initializer=initializer)
-
-    with tf.name_scope('v'):
-        # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
-        #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
-        v = tf.tanh(tf.tensordot(inputs, w_omega, axes=1) + b_omega)
-
-    # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
-    vu = tf.tensordot(v, u_omega, axes=1, name='vu')  # (B,T) shape
-    alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
-
-    # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
-    output = tf.reduce_sum(inputs * tf.expand_dims(alphas, -1), 1)
-
-    if not return_alphas:
-        return output
-    else:
-        return output, alphas
-
+    def get_config(self):
+        return super(AttentionLayer, self).get_config()
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
@@ -223,7 +166,7 @@ def get_custom_layers(model_name=None, vector_type=None):
     custom_layers = {}
 
     if model_name and 'attention' in model_name:
-        custom_layers['attention'] = attention
+        custom_layers['AttentionLayer'] = AttentionLayer
 
     if vector_type:
         if vector_type == 'elmo':
@@ -299,15 +242,9 @@ def vanilla_gru(model, shape, optimiser):
                   metrics=['accuracy'])
     return model
 
-ATTENTION_UNITS =50
-def lstm_with_attention(model, optimiser, seq_length):
-    model.add(LSTM(seq_length, return_sequences=True))
-    with tf.name_scope('attention'):
-        model.add(Lambda(attention))
-    # with tf.name_scope('Attention_layer'):
-    #     attention_output, alphas = attention(rnn_outputs, ATTENTION_UNITS, return_alphas=True)
-    #     tf.summary.histogram('alphas', alphas)
-    # model.add(AttentionLayer())
+def lstm_with_attention(model, optimiser):
+    model.add(LSTM(60, return_sequences=True))
+    model.add(AttentionLayer())
     model.add(Dropout(0.1))
     model.add(Dense(50, activation="relu"))
     model.add(Dropout(0.1))
@@ -432,7 +369,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     if model_name == 'lstm':
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
-        model = lstm_with_attention(model, new_adam, length_limit)
+        model = lstm_with_attention(model, new_adam)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
