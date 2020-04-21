@@ -6,6 +6,7 @@ import pandas as pd
 import pickle
 from pathlib import Path
 from os.path import isfile
+from tensorflow.python.keras.backend import set_session
 from tensorflow.keras.layers import Layer
 from tensorflow.keras import activations, optimizers, initializers
 from ..data_processing.augmentation import synonym_replacement
@@ -28,13 +29,97 @@ from sklearn.metrics import f1_score, precision_score, recall_score, matthews_co
 import tensorflow_hub as hub
 import spacy
 
-
-
 nlp = spacy.load('en_core_web_md')
-
 
 # ncc terminal
 # ssh -D 8080 -q -C -N kgxj22@mira.dur.ac.uk
+
+class NewAttentionLayer(Layer):
+    def __init__(self, **kwargs):
+        self.w_omega = None
+        self.b_omega = None
+        self.time_major = False
+        self.u_omega = None
+        super(NewAttentionLayer, self).__init__(**kwargs)
+
+    def build(self, input_shape):
+        attention_size = input_shape[1]
+        hidden_size = input_shape[2]  # D value - hidden size of the RNN layer
+        # removed hidden_size = inputs.shape[2].value
+
+        # Trainable parameters
+        self.w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
+        self.b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+        self.u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+        super(NewAttentionLayer, self).build(input_shape)
+
+    def call(self, x, mask=None):
+        if isinstance(x, tuple):
+            # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
+            inputs = tf.concat(x, 2)
+
+        if self.time_major:
+            # (T,B,D) => (B,T,D)
+            inputs = tf.transpose(x, [1, 0, 2])
+
+        with tf.name_scope('v'):
+            # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
+            #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
+            v = tf.tanh(tf.tensordot(x, self.w_omega, axes=1) + self.b_omega)
+
+        # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
+
+        vu = tf.tensordot(v, self.u_omega, axes=1, name='vu')  # (B,T) shape
+        alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
+
+        # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
+        output = tf.reduce_sum(x * tf.expand_dims(alphas, -1), 1)
+
+        return alphas, output
+
+    def compute_output_shape(self, input_shape):
+        return input_shape[0], input_shape[-1]
+
+    def get_config(self):
+        return super(NewAttentionLayer, self).get_config()
+
+# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
+# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
+# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
+def attention(inputs, attention_size=60, time_major=False, return_alphas=True):
+    if isinstance(inputs, tuple):
+        # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
+        inputs = tf.concat(inputs, 2)
+
+    if time_major:
+        # (T,B,D) => (B,T,D)
+        inputs = tf.transpose(inputs, [1, 0, 2])
+
+    hidden_size = inputs.shape[2]  # D value - hidden size of the RNN layer
+    # removed hidden_size = inputs.shape[2].value
+
+    # Trainable parameters
+    w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
+    b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+    u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+
+    with tf.name_scope('v'):
+        # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
+        #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
+        v = tf.tanh(tf.tensordot(inputs, w_omega, axes=1) + b_omega)
+
+    # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
+
+    vu = tf.tensordot(v, u_omega, axes=1, name='vu')  # (B,T) shape
+    alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
+
+    # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
+    output = tf.reduce_sum(inputs * tf.expand_dims(alphas, -1), 1)
+
+    if not return_alphas:
+        return output
+    else:
+        return alphas, output
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
@@ -165,8 +250,8 @@ def get_batch_size(model_name: str) -> int:
 def get_custom_layers(model_name=None, vector_type=None):
     custom_layers = {}
 
-    if model_name and 'attention' in model_name:
-        custom_layers['AttentionLayer'] = AttentionLayer
+    # if model_name and 'attention' in model_name:
+    #     custom_layers['AttentionLayer'] = AttentionLayer
 
     if vector_type:
         if vector_type == 'elmo':
@@ -243,11 +328,16 @@ def vanilla_gru(model, shape, optimiser):
     return model
 
 
-def lstm_with_attention(embedding_layer, shape, optimiser):
+def lstm_with_attention(embedding_layer, shape, length_limit, optimiser):
     inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
     x = LSTM(60, return_sequences=True)(x)
-    attention_weights, x = AttentionLayer()(x)
+    # attention_weights, x = AttentionLayer()(x)
+    # with tf.name_scope('Attention_layer'):
+    #     attention_weights, x = attention(x, length_limit, return_alphas=True)
+
+    attention_weights, x = NewAttentionLayer()(x)
+
     x = Dropout(0.1)(x)
     x = Dense(50, activation="relu")(x)
     x = Dropout(0.1)(x)
@@ -270,8 +360,6 @@ def cnn_network(model, optimiser):
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
     return model
-
-
 
 
 # -------------------------------------------- MAIN FUNCTIONS -----------------------------------------------
@@ -377,7 +465,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
         # use batch_shape instead of model
-        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), length_limit, new_adam)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
@@ -426,37 +514,40 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
     patience = 10
     max_batch_size = get_batch_size(model_name)
 
-    s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
-    custom_layer = get_custom_layers(model_name, vector_type)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
+    with tf.compat.v1.Session() as sess:
+        sess.run(tf.compat.v1.global_variables_initializer())
 
-    stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
-    file_name = str(base_path / ('../trained_models/' + stem))
+        s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
+        custom_layer = get_custom_layers(model_name, vector_type)
+        training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
 
-    if isfile(file_name):
-        print('Model with filename "' + stem + '" already exists - collecting results')
+        stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
+        file_name = str(base_path / ('../trained_models/' + stem))
+
+        if isfile(file_name):
+            print('Model with filename "' + stem + '" already exists - collecting results')
+            dl_model = load_model_from_file(file_name, custom_layer)
+            evaluate_model(model_name, dl_model, testing_data, testing_labels)
+            return
+
+        while True:
+            response = input('Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
+            if response in {'y', 'n'}:
+                if response == 'y':
+                    break
+                else:
+                    print('\nCancelling training...')
+                    return
+
+        # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
+        model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
+        model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
+                                    epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
         dl_model = load_model_from_file(file_name, custom_layer)
         evaluate_model(model_name, dl_model, testing_data, testing_labels)
-        return
 
-    while True:
-        response = input('Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
-        if response in {'y', 'n'}:
-            if response == 'y':
-                break
-            else:
-                print('\nCancelling training...')
-                return
-
-    # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
-    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
-    early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
-    model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
-                                epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
-
-    dl_model = load_model_from_file(file_name, custom_layer)
-    evaluate_model(model_name, dl_model, testing_data, testing_labels)
-
-    visualise_results(model_history, str(
-        base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
-# ---------------------------------------------------------------------------------------------------------------------
+        visualise_results(model_history, str(
+            base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
+    # ---------------------------------------------------------------------------------------------------------------------

@@ -53,7 +53,7 @@ if __name__ == '__main__':
     model_list = ['attention-lstm']
     vector_list = ['glove']
     feature_list = []
-    dataset_list = [2]
+    dataset_list = [1]
     # --------------------------
 
     # valid vector-types: 'bag_of_words', 'tf_idf', 'glove', 'elmo'
