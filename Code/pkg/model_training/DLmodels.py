@@ -34,13 +34,13 @@ nlp = spacy.load('en_core_web_md')
 # ncc terminal
 # ssh -D 8080 -q -C -N kgxj22@mira.dur.ac.uk
 
-class NewAttentionLayer(Layer):
+class AttentionLayer(Layer):
     def __init__(self, **kwargs):
         self.w_omega = None
         self.b_omega = None
         self.time_major = False
         self.u_omega = None
-        super(NewAttentionLayer, self).__init__(**kwargs)
+        super(AttentionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
         attention_size = input_shape[1]
@@ -51,7 +51,7 @@ class NewAttentionLayer(Layer):
         self.w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
         self.b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
         self.u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
-        super(NewAttentionLayer, self).build(input_shape)
+        super(AttentionLayer, self).build(input_shape)
 
     def call(self, x, mask=None):
         if isinstance(x, tuple):
@@ -81,11 +81,12 @@ class NewAttentionLayer(Layer):
         return input_shape[0], input_shape[-1]
 
     def get_config(self):
-        return super(NewAttentionLayer, self).get_config()
+        return super(AttentionLayer, self).get_config()
 
 # The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
 # https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
 # Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
+
 def attention(inputs, attention_size=60, time_major=False, return_alphas=True):
     if isinstance(inputs, tuple):
         # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
@@ -197,16 +198,16 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-class AttentionLayer(Layer):
+class OldAttentionLayer(Layer):
     def __init__(self, **kwargs):
         self.W = None
         self.b = None
-        super(AttentionLayer, self).__init__(**kwargs)
+        super(OldAttentionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
         self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
-        super(AttentionLayer, self).build(input_shape)
+        super(OldAttentionLayer, self).build(input_shape)
 
     def call(self, x, mask=None):
         et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
@@ -220,7 +221,7 @@ class AttentionLayer(Layer):
         return input_shape[0], input_shape[-1]
 
     def get_config(self):
-        return super(AttentionLayer, self).get_config()
+        return super(OldAttentionLayer, self).get_config()
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
@@ -250,8 +251,8 @@ def get_batch_size(model_name: str) -> int:
 def get_custom_layers(model_name=None, vector_type=None):
     custom_layers = {}
 
-    # if model_name and 'attention' in model_name:
-    #     custom_layers['AttentionLayer'] = AttentionLayer
+    if model_name and 'attention' in model_name:
+        custom_layers['AttentionLayer'] = AttentionLayer
 
     if vector_type:
         if vector_type == 'elmo':
@@ -336,7 +337,7 @@ def lstm_with_attention(embedding_layer, shape, length_limit, optimiser):
     # with tf.name_scope('Attention_layer'):
     #     attention_weights, x = attention(x, length_limit, return_alphas=True)
 
-    attention_weights, x = NewAttentionLayer()(x)
+    attention_weights, x = AttentionLayer()(x)
 
     x = Dropout(0.1)(x)
     x = Dense(50, activation="relu")(x)
