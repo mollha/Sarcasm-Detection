@@ -48,8 +48,8 @@ class AttentionLayer(Layer):
         super(AttentionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        attention_size = input_shape[1]
-        hidden_size = input_shape[2]  # D value - hidden size of the RNN layer
+        attention_size = int(input_shape[1])
+        hidden_size = int(input_shape[2])  # D value - hidden size of the RNN layer
         # removed hidden_size = inputs.shape[2].value
 
         # Trainable parameters
@@ -295,16 +295,11 @@ def vanilla_gru(model, shape, optimiser):
     return model
 
 
-def lstm_with_attention(embedding_layer, shape, length_limit, optimiser):
+def lstm_with_attention(embedding_layer, shape, optimiser):
     inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
     x = LSTM(60, return_sequences=True)(x)
-    # attention_weights, x = AttentionLayer()(x)
-    # with tf.name_scope('Attention_layer'):
-    #     attention_weights, x = attention(x, length_limit, return_alphas=True)
-
     attention_weights, x = AttentionLayer()(x)
-
     x = Dropout(0.1)(x)
     x = Dense(50, activation="relu")(x)
     x = Dropout(0.1)(x)
@@ -331,27 +326,26 @@ def cnn_network(model, optimiser):
 
 # -------------------------------------------- MAIN FUNCTIONS -----------------------------------------------
 def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_name: str):
+    token_list = [t.text for t in nlp(text)]
+    split_text = ' '.join(token_list)
+
     dataset_name = get_dataset_name(dataset_num)
     length_limit = get_length_limit(dataset_name)
 
     if vector_type == 'elmo':
-        padded = pad_string(text.split(), length_limit)
-        return np.ndarray(padded)
-
-        # max_batch_size = get_batch_size(model_name)
-        # padded_df = pd.DataFrame([padded for _ in range(max_batch_size)])
-        # return padded_df.to_numpy()
+        text = pd.DataFrame([pad_string(token_list, length_limit)]*get_batch_size(model_name))
+        text = text.replace({None: ""})
+        return text.to_numpy()
 
     elif vector_type == 'glove':
         path_to_dataset_root = "../datasets/" + dataset_name
-
         base_path = Path(__file__).parent
         tokeniser = pd.read_pickle((base_path / (
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
-        # sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
-        sequences = tokeniser.texts_to_sequences([' '.join([t.text for t in nlp(text)])]*get_batch_size(model_name))
-        tokens = [t.text for t in nlp(text)]
-        return tokens, pad_sequences(sequences, maxlen=length_limit, padding='post')
+
+        sequences = tokeniser.texts_to_sequences([split_text]*get_batch_size(model_name))
+        token_list = [t.text for t in nlp(tokeniser.sequences_to_texts(sequences)[0])]
+        return token_list, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:
         raise ValueError('Only glove and elmo vectors supported')
 
@@ -368,7 +362,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
         return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")#, (max_batch_size, limit) # Input(batch_shape=(max_batch_size, limit))
 
     elif vector_type == 'glove':
-        tokenizer = Tokenizer()
+        tokenizer = Tokenizer(filters='')
         tokenizer.fit_on_texts(sarcasm_data)
         base_path = Path(__file__).parent
         path_to_dataset_root = "../datasets/" + dataset_name
@@ -432,7 +426,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
         # use batch_shape instead of model
-        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), length_limit, new_adam)
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
