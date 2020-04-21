@@ -34,6 +34,11 @@ nlp = spacy.load('en_core_web_md')
 # ncc terminal
 # ssh -D 8080 -q -C -N kgxj22@mira.dur.ac.uk
 
+
+# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
+# Adaptations were made to transform this function into an AttentionLayer
+# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
+# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
 class AttentionLayer(Layer):
     def __init__(self, **kwargs):
         self.w_omega = None
@@ -82,45 +87,6 @@ class AttentionLayer(Layer):
 
     def get_config(self):
         return super(AttentionLayer, self).get_config()
-
-# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
-# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
-# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
-
-def attention(inputs, attention_size=60, time_major=False, return_alphas=True):
-    if isinstance(inputs, tuple):
-        # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
-        inputs = tf.concat(inputs, 2)
-
-    if time_major:
-        # (T,B,D) => (B,T,D)
-        inputs = tf.transpose(inputs, [1, 0, 2])
-
-    hidden_size = inputs.shape[2]  # D value - hidden size of the RNN layer
-    # removed hidden_size = inputs.shape[2].value
-
-    # Trainable parameters
-    w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
-    b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
-    u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
-
-    with tf.name_scope('v'):
-        # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
-        #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
-        v = tf.tanh(tf.tensordot(inputs, w_omega, axes=1) + b_omega)
-
-    # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
-
-    vu = tf.tensordot(v, u_omega, axes=1, name='vu')  # (B,T) shape
-    alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
-
-    # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
-    output = tf.reduce_sum(inputs * tf.expand_dims(alphas, -1), 1)
-
-    if not return_alphas:
-        return output
-    else:
-        return alphas, output
 
 
 # ---------------------------- Create Embedding Layer Classes ----------------------------
