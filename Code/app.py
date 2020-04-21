@@ -1,21 +1,10 @@
-from console import get_attention, get_trained_model
+import sys
+from warnings import filterwarnings; filterwarnings('ignore')
+import pathlib; base_path = pathlib.Path(__file__).parent.parent.resolve(); sys.path.insert(1, str(base_path))
+from Code.console import get_attention, get_trained_model
 from flask import Flask, render_template, request, jsonify, redirect
 
-app = Flask(__name__, template_folder='templates')
-
-dataset_paths = ["Datasets/Sarcasm_Amazon_Review_Corpus", "Datasets/news-headlines-dataset-for-sarcasm-detection",
-                 "Datasets/ptacek"]
-
-# Choose a dataset from the list of valid data sets
-dataset_number = 2
-path_to_dataset_root = dataset_paths[dataset_number]
-print('Selected dataset: ' + path_to_dataset_root[9:])
-
-vector = 'glove'
-feature_list = []
-model_name = 'attention-lstm'
-
-model = get_trained_model(path_to_dataset_root, vector, feature_list, model_name, dataset_number)
+app = Flask(__name__, template_folder='static')
 
 @app.route('/')
 def login():
@@ -29,12 +18,16 @@ def login():
 @app.route('/attention', methods=['GET'])
 def attention():
     print('here')
-    text = request.args.get('main_text')
+    print(request.args)
+    text = request.args['text']
     print(text)
-    print(get_attention(text, model))
-    attention_map = get_attention(text, model)
-    return attention_map
-    #return render_template("index.html", data=attention_map)
+
+    if text is not None:
+        print(text)
+        print(get_attention(text))
+        attention_map = get_attention(text)
+        return attention_map
+        #return render_template("index.html", data=attention_map)
 
 
 
