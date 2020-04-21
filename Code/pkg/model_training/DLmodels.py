@@ -1,30 +1,30 @@
-from keras.utils import CustomObjectScope
+import tensorflow as tf
+from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 from pathlib import Path
 from os.path import isfile
-from keras.engine import Layer
-from keras import activations, optimizers, initializers
+from tensorflow.keras.layers import Layer
+from tensorflow.keras import activations, optimizers, initializers
 from ..data_processing.augmentation import synonym_replacement
 from ..data_processing.helper import prepare_data, get_dataset_name
-from keras.preprocessing.sequence import pad_sequences
-from keras.models import load_model
-from keras.models import Sequential
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Dense, Lambda, dot, Activation, concatenate
-from keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
-    Bidirectional, LeakyReLU, MaxPooling1D, InputSpec
-from keras.callbacks import Callback
-from keras.layers import SimpleRNN, GRU
-from keras.layers.embeddings import Embedding
-import keras.backend as K
-from keras.initializers import Constant
-from keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.models import load_model, Model
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.layers import Dense, Lambda, dot, Activation, concatenate
+from tensorflow.keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
+    Bidirectional, LeakyReLU, MaxPooling1D, Input
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.layers import SimpleRNN, GRU
+from tensorflow.keras.layers import Embedding
+import tensorflow.keras.backend as K
+from tensorflow.keras.initializers import Constant
+from tensorflow.keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef
-import tensorflow as tf
 import tensorflow_hub as hub
 import spacy
 
@@ -112,87 +112,30 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-def attention(inputs, attention_size=50, time_major=False, return_alphas=False):
-    import tensorflow as tf
-    """
-    Attention mechanism layer which reduces RNN/Bi-RNN outputs with Attention vector.
-    The idea was proposed in the article by Z. Yang et al., "Hierarchical Attention Networks
-     for Document Classification", 2016: http://www.aclweb.org/anthology/N16-1174.
-    Variables notation is also inherited from the article
+class AttentionLayer(Layer):
+    def __init__(self, **kwargs):
+        self.W = None
+        self.b = None
+        super(AttentionLayer, self).__init__(**kwargs)
 
-    Args:
-        inputs: The Attention inputs.
-            Matches outputs of RNN/Bi-RNN layer (not final state):
-                In case of RNN, this must be RNN outputs `Tensor`:
-                    If time_major == False (default), this must be a tensor of shape:
-                        `[batch_size, max_time, cell.output_size]`.
-                    If time_major == True, this must be a tensor of shape:
-                        `[max_time, batch_size, cell.output_size]`.
-                In case of Bidirectional RNN, this must be a tuple (outputs_fw, outputs_bw) containing the forward and
-                the backward RNN outputs `Tensor`.
-                    If time_major == False (default),
-                        outputs_fw is a `Tensor` shaped:
-                        `[batch_size, max_time, cell_fw.output_size]`
-                        and outputs_bw is a `Tensor` shaped:
-                        `[batch_size, max_time, cell_bw.output_size]`.
-                    If time_major == True,
-                        outputs_fw is a `Tensor` shaped:
-                        `[max_time, batch_size, cell_fw.output_size]`
-                        and outputs_bw is a `Tensor` shaped:
-                        `[max_time, batch_size, cell_bw.output_size]`.
-        attention_size: Linear size of the Attention weights.
-        time_major: The shape format of the `inputs` Tensors.
-            If true, these `Tensors` must be shaped `[max_time, batch_size, depth]`.
-            If false, these `Tensors` must be shaped `[batch_size, max_time, depth]`.
-            Using `time_major = True` is a bit more efficient because it avoids
-            transposes at the beginning and end of the RNN calculation.  However,
-            most TensorFlow data is batch-major, so by default this function
-            accepts input and emits output in batch-major form.
-        return_alphas: Whether to return attention coefficients variable along with layer's output.
-            Used for visualization purpose.
-    Returns:
-        The Attention output `Tensor`.
-        In case of RNN, this will be a `Tensor` shaped:
-            `[batch_size, cell.output_size]`.
-        In case of Bidirectional RNN, this will be a `Tensor` shaped:
-            `[batch_size, cell_fw.output_size + cell_bw.output_size]`.
-    """
+    def build(self, input_shape):
+        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
+        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
+        super(AttentionLayer, self).build(input_shape)
 
-    if isinstance(inputs, tuple):
-        # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
-        inputs = tf.concat(inputs, 2)
+    def call(self, x, mask=None):
+        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
+        at1 = K.softmax(et)
+        at2 = K.expand_dims(at1, axis=-1)
+        output = tf.math.multiply(x, at2)
+        # returns the context vector
+        return at1, K.sum(output, axis=1)
 
-    if time_major:
-        # (T,B,D) => (B,T,D)
-        inputs = tf.transpose(inputs, [1, 0, 2])
+    def compute_output_shape(self, input_shape):
+        return input_shape[0], input_shape[-1]
 
-    hidden_size = inputs.shape[2].value  # D value - hidden size of the RNN layer
-
-    initializer = tf.random_normal_initializer(stddev=0.1)
-
-    # Trainable parameters
-    with tf.variable_scope(tf.get_variable_scope(), reuse=tf.compat.v1.AUTO_REUSE):
-        w_omega = tf.get_variable(name="w_omega", shape=[hidden_size, attention_size], initializer=initializer)
-        b_omega = tf.get_variable(name="b_omega", shape=[attention_size], initializer=initializer)
-        u_omega = tf.get_variable(name="u_omega", shape=[attention_size], initializer=initializer)
-
-    with tf.name_scope('v'):
-        # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
-        #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
-        v = tf.tanh(tf.tensordot(inputs, w_omega, axes=1) + b_omega)
-
-    # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
-    vu = tf.tensordot(v, u_omega, axes=1, name='vu')  # (B,T) shape
-    alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
-
-    # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
-    output = tf.reduce_sum(inputs * tf.expand_dims(alphas, -1), 1)
-
-    if not return_alphas:
-        return output
-    else:
-        return output, alphas
-
+    def get_config(self):
+        return super(AttentionLayer, self).get_config()
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
@@ -223,7 +166,7 @@ def get_custom_layers(model_name=None, vector_type=None):
     custom_layers = {}
 
     if model_name and 'attention' in model_name:
-        custom_layers['attention'] = attention
+        custom_layers['AttentionLayer'] = AttentionLayer
 
     if vector_type:
         if vector_type == 'elmo':
@@ -299,19 +242,18 @@ def vanilla_gru(model, shape, optimiser):
                   metrics=['accuracy'])
     return model
 
-ATTENTION_UNITS =50
-def lstm_with_attention(model, optimiser, seq_length):
-    model.add(LSTM(seq_length, return_sequences=True))
-    with tf.name_scope('attention'):
-        model.add(Lambda(attention))
-    # with tf.name_scope('Attention_layer'):
-    #     attention_output, alphas = attention(rnn_outputs, ATTENTION_UNITS, return_alphas=True)
-    #     tf.summary.histogram('alphas', alphas)
-    # model.add(AttentionLayer())
-    model.add(Dropout(0.1))
-    model.add(Dense(50, activation="relu"))
-    model.add(Dropout(0.1))
-    model.add(Dense(1, activation="sigmoid"))
+
+def lstm_with_attention(embedding_layer, shape, optimiser):
+    inputs = Input(batch_shape=shape)
+    x = embedding_layer(inputs)
+    x = LSTM(60, return_sequences=True)(x)
+    attention_weights, x = AttentionLayer()(x)
+    x = Dropout(0.1)(x)
+    x = Dense(50, activation="relu")(x)
+    x = Dropout(0.1)(x)
+    outputs = Dense(1, activation="sigmoid")(x)
+
+    model = Model(inputs=inputs, outputs=outputs)
     model.compile(loss='binary_crossentropy',
                   optimizer=optimiser,
                   metrics=['accuracy'])
@@ -351,26 +293,28 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
         base_path = Path(__file__).parent
         tokeniser = pd.read_pickle((base_path / (
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
-        sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
-        tokens = tokeniser.sequences_to_texts(sequences)
+        # sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
+        sequences = tokeniser.texts_to_sequences([' '.join([t.text for t in nlp(text)])]*get_batch_size(model_name))
+        tokens = [t.text for t in nlp(text)]
         return tokens, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:
         raise ValueError('Only glove and elmo vectors supported')
 
 
 def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, dataset_name: str, vector_type: str, split: float, max_batch_size: int, limit: int):
+    number_of_batches = len(s_data) // (max_batch_size * (1 / split))
+    sarcasm_data = s_data[:int((number_of_batches * max_batch_size) / split)]
+    sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
+
     if vector_type == 'elmo':
-        number_of_batches = len(s_data) // (max_batch_size * (1/split))
-        sarcasm_data = s_data[:int((number_of_batches * max_batch_size) / split)]
-        sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
         text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")#, (max_batch_size, limit) # Input(batch_shape=(max_batch_size, limit))
 
     elif vector_type == 'glove':
         tokenizer = Tokenizer()
-        tokenizer.fit_on_texts(s_data)
+        tokenizer.fit_on_texts(sarcasm_data)
         base_path = Path(__file__).parent
         path_to_dataset_root = "../datasets/" + dataset_name
 
@@ -378,9 +322,9 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
                 path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")), 'wb') as f:
             pickle.dump(tokenizer, f)
 
-        sequences = tokenizer.texts_to_sequences(s_data)
+        sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, s_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)#, (max_batch_size, limit) #Input(batch_shape=(max_batch_size, limit))
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -432,7 +376,8 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     if model_name == 'lstm':
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
-        model = lstm_with_attention(model, new_adam, length_limit)
+        # use batch_shape instead of model
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
@@ -449,7 +394,12 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
 
 def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     max_batch_size = get_batch_size(model_name)
-    y_pred = trained_model.predict_classes(x=np.array(testing_data), batch_size=max_batch_size)
+    probabilities = trained_model.predict(x=np.array(testing_data), batch_size=max_batch_size)
+    y_pred = np.where(probabilities > 0.5, 1, 0)
+    print(testing_labels)
+    print(probabilities)
+    print(np.array(y_pred))
+    print(y_pred)
     f1 = f1_score(np.array(testing_labels), np.array(y_pred))
     precision = precision_score(np.array(testing_labels), np.array(y_pred))
     recall = recall_score(np.array(testing_labels), np.array(y_pred))
@@ -478,7 +428,7 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
 
     s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
     custom_layer = get_custom_layers(model_name, vector_type)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=False)
+    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
 
     stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
     file_name = str(base_path / ('../trained_models/' + stem))
