@@ -172,7 +172,6 @@ CNNs have been previously used in sarcasm detection. For example, \textit{Poria 
 In our solution, high quality datasets are first collected and pre-processed. During feature extraction, the textual training data is transformed into numerical vectors and these features are used to train a classification model. The trained classifier is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
 
 
-
 \begin{center}
 	\textbf{Figure \_:} Overview of the solution
 \end{center}
@@ -187,7 +186,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
 
 \subsection{Datasets}
-\vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This includes the number of instances in the dataset, the average number of tokens per instance and a benchmark score where the dataset was used in the original paper to train one or more classifiers. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. \\
+\vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This includes the number of instances in the dataset, the average number of tokens per instance and a benchmark score where the dataset was used in the original paper to train one or more classifiers. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media.
 
 \begin{enumerate}[leftmargin=0cm]
 	\item \textbf{News Headlines Dataset For Sarcasm Detection} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnotemark[3]\footnotetext[3]{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnotemark[4]\footnotetext[4]{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.
@@ -535,22 +534,27 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\hline
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Random Forest Classifier & GloVe  & 0.   & 0. & 0.754\\
-		Support Vector Machine & TF-IDF  & 0.   & 0. & 0.718\\
-		Random Forest Classifier & ElMo  & 0.   & 0. & 0.797\\
-		Logistic Regression & ElMo  & 0.   & 0. & 0.846\\
-		Logistic Regression & ElMo + S + T & 0.   & 0. & 0.847\\
+		Random Forest Classifier & GloVe  & 0.774   & 0.735 & 0.754\\
+		Support Vector Machine & TF-IDF  & 0.688   & 0.751 & 0.718\\
+		Random Forest Classifier & ElMo  & 0.801   & 0.793 & 0.797\\
+		Logistic Regression & ElMo  & 0.840   & 0.852 & 0.846\\
+		Logistic Regression & ElMo + S + T & 0.843   & 0.851 & 0.847\\
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		LSTM & ElMo  & 0.   & 0. & 0.860\\
-		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.864\\
-		Vanilla GRU & ElMo  & 0.   & 0. & 0.883\\
-		Deep CNN & ElMo & 0.   & 0. & 0.871\\
+		LSTM & ElMo  & 0.843   & 0.878 & 0.860\\
+		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
+		Vanilla GRU & ElMo  & 0.889   & 0.877 & 0.883\\
+		Deep CNN & ElMo & 0.873   & 0.869 & 0.871\\
 		\hline
 	\end{tabular}
 \end{center}
 \textit{*S} refers to sentiment features and \textit{T} refers to topic features
+
+The table above
+Deep learning models routinely outperform Machine learning models.
+Logistic regression with ElMo vectors was the best performing machine learning model, and a slight improvement of 0.1%
+
 
 \subsubsection{Amazon Reviews Dataset}
 \begin{center}
@@ -562,19 +566,19 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\hline
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Support Vector Machine & TF-IDF & 0.   & 0. & 0.775\\
-		K-Nearest Neighbours &  ElMo & 0.   & 0. & 0.685\\
-		Support Vector Machine & BOW  & 0.   & 0. & 0.736\\
-		Logistic Regression & ElMo  & 0.   & 0. & 0.809\\
-		Logistic Regression & ElMo + S + T & 0.   & 0. & \textbf{0.818}\\
+		Support Vector Machine & TF-IDF & 0.679   & 0.903 & 0.775\\
+		K-Nearest Neighbours &  ElMo & 0.742   & 0.636 & 0.685\\
+		Support Vector Machine & BOW  & 0.710   & 0.764 & 0.736\\
+		Logistic Regression & ElMo  & 0.799   & 0.819 & 0.809\\
+		Logistic Regression & ElMo + S + T & 0.806	& 0.830 & \textbf{0.818}\\
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		CNN & GloVe  & 0.   & 0. & 0.827\\
-		Vanilla RNN & ElMo  & 0.   & 0. & 0.812\\
-		LSTM & GloVe  & 0.   & 0. & 0.838\\
-		Deep CNN & ElMo & 0.   & 0. & 0.860\\
-		Bidirectional LSTM & ElMo & 0.   & 0. & \textbf{0.862}\\
+		CNN & GloVe  & 0.833 & 0.821 & 0.827\\
+		Vanilla RNN & ElMo  & 0.814   & 0.810 & 0.812\\
+		LSTM & GloVe  & 0.835   & 0.841 & 0.838\\
+		Deep CNN & ElMo & 0.869   & 0.851 & 0.860\\
+		Bidirectional LSTM & ElMo & 0.859   & 0.865 & \textbf{0.862}\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -591,19 +595,19 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\hline
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Gaussian Na\"{i}ve Bayes & Bag of Words & 0.   & 0. & 0.681\\
-		Random Forest Classifier & GloVe  & 0.   & 0. & 0.645\\
-		Support Vector Machine & ElMo  & 0.   & 0. & 0.754\\
-		Logistic Regression & ElMo  & 0.   & 0. & 0.762\\
-		Logistic Regression & ElMo + S + T + P & 0.   & 0. & \textbf{0.790}\\
+		Gaussian Na\"{i}ve Bayes & Bag of Words & 0.677 & 0.685 & 0.681\\
+		Random Forest Classifier & GloVe  & 0.669   & 0.623 & 0.645\\
+		Support Vector Machine & ElMo  & 0.722 & 0.789 & 0.754\\
+		Logistic Regression & ElMo  & 0.758 & 0.766 & 0.762\\
+		Logistic Regression & ElMo + S + T + P & 0.794 & 0.786 & \textbf{0.790}\\
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		Vanilla RNN & ElMo  & 0.   & 0. & 0.817\\
-		Bidirectional LSTM & GloVe  & 0.   & 0. & 0.822\\
-		CNN & ElMo  & 0.   & 0. & 0.832\\
-		Bidirectional LSTM & ElMo  & 0.   & 0. & \textbf{0.849}\\
-		Long Short-Term Memory & GloVe & 0.   & 0. & 0.841\\
+		Vanilla RNN & ElMo  & 0.834   & 0.801 & 0.817\\
+		Bidirectional LSTM & GloVe  & 0.829 & 0.815 & 0.822\\
+		CNN & ElMo  & 0.851   & 0.814 & 0.832\\
+		Bidirectional LSTM & ElMo  & 0.847   & 0.851 & \textbf{0.849}\\
+		Long Short-Term Memory & GloVe & 0.837   & 0.845 & 0.841\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -611,7 +615,14 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 
 Interestingly, the Random Forest Classifier was the best performing model using GloVe vectors. GloVe performance was weak on this particular dataset, and this could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the embedding input.
 
+
+
 \newpage
+
+\subsubsection{Cross-Dataset Evaluation}
+Given that the following model performed best, trained separately on all three datasets. We evaluate which of these models had the best performance on the other two datasets - this gives us an indication of which model is more likely to generalise to unseen data in multiple forms of media (i.e. which model is most adaptable, therefore the most suitable to be used in our tool)
+
+
 
 
 \section{Evaluation}
