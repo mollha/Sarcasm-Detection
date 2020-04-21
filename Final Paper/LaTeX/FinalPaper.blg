@@ -1,9 +1,13 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: FinalPaper.aux
 The style file: plain.bst
 Database file #1: FinalPaper.bib
-Repeated entry---line 252 of file FinalPaper.bib
+Repeated entry---line 262 of file FinalPaper.bib
  : @article{misra2019sarcasm
  :                          ,
 I'm skipping whatever remains of this entry
+Repeated entry---line 325 of file FinalPaper.bib
+ : @inproceedings{veale2010detecting
+ :                                  ,
+I'm skipping whatever remains of this entry
 Warning--empty journal in liebrecht2013perfect
-(There was 1 error message)
+(There were 2 error messages)
