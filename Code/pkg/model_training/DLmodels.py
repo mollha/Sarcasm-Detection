@@ -338,7 +338,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
         text = text.replace({None: ""})
         text = text.to_numpy()
         print(text)
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), dtype=tf.string)
+        return text, sarcasm_labels, Input(dtype=tf.string, batch_shape=(max_batch_size, limit)), ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), dtype=tf.string)
 
     elif vector_type == 'glove':
         tokenizer = Tokenizer(filters='')
@@ -352,7 +352,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
 
         sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)
+        return padded_data, sarcasm_labels, Input(batch_shape=(max_batch_size, limit)), GloveEmbeddingLayer(tokenizer.word_index, limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -383,7 +383,6 @@ def visualise_results(history, file_name):
     plt.show()
 
 
-
 def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
     max_batch_size = get_batch_size(model_name)
     length_limit = get_length_limit(dataset_name)
@@ -394,13 +393,12 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     # if i remove the overall sentiment from the 6-dimensional vector, we could mimic the behaviour
     # e.g. [0 0 0 0 1] for each word, when averaging embeddings will be very similar
 
-    s_data, l_data, e_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
+    s_data, l_data, input_layer, e_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
                                                                       split, max_batch_size, length_limit)
 
-    new_adam = optimizers.Adam() # lr=0.0001, decay=0.001
+    new_adam = optimizers.Adam()  # lr=0.0001, decay=0.001
     model = Sequential()
-
-    model.add(Input(dtype=tf.string, batch_shape=(max_batch_size, length_limit)))
+    model.add(input_layer)
 
     e_layer.trainable = False
     model.add(e_layer)
