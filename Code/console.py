@@ -1,3 +1,4 @@
+from warnings import filterwarnings; filterwarnings('ignore')
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -32,21 +33,23 @@ def colorise(token_list: list, color_array: list):
     # save in html file and open in browser
     with open('colorise.html', 'w') as f:
         f.write(colored_string)
+    print('A visualisation is now available at colorise.html')
     return colored_string
 
 
-def get_attention(text: str):
-    trained_model = get_trained_model()
+def get_attention(text: str, trained_model):
     tokens, sequence = prepare_pre_vectors(text, 'glove', 2, 'attention-lstm')
 
     get_full_attention = K.function([trained_model.layers[0].input], [trained_model.layers[3].output])
     attention_output = get_full_attention(sequence)  # 1 x 150
     attention_weights, context_vectors = attention_output.pop(0)
     attention_weights = attention_weights[0]
+    #print(attention_weights)
+    #print(attention_weights.shape)
     #attention_weights = (attention_weights - attention_weights.min())/(attention_weights.max()-attention_weights.min())
 
-    attention_weights = np.interp(attention_weights, (attention_weights.min(), attention_weights.max()), (-0.8, 0.8))
-    attention_weights = attention_weights.clip(min=0)
+    attention_weights = np.interp(attention_weights, (attention_weights.min(), attention_weights.max()), (attention_weights.min()/2, attention_weights.max()*2))
+    #attention_weights = attention_weights.clip(min=0)
 
     # TODO remove this at the end
     list_array = attention_weights.tolist()
@@ -68,7 +71,7 @@ def get_prediction(text: str, trained_model, d_num, m_name):
 def get_trained_model():
     base_path = Path(__file__).parent
     model_name = 'attention-lstm'
-    dataset_number = 2
+    dataset_number = 1
     vector_type = 'glove'
 
     file_name = str(base_path / (

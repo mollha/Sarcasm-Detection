@@ -1,3 +1,4 @@
+from warnings import filterwarnings; filterwarnings('ignore')
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
@@ -6,6 +7,7 @@ import pandas as pd
 import pickle
 from pathlib import Path
 from os.path import isfile
+from tensorflow.python.keras.backend import set_session
 from tensorflow.keras.layers import Layer
 from tensorflow.keras import activations, optimizers, initializers
 from ..data_processing.augmentation import synonym_replacement
@@ -28,10 +30,7 @@ from sklearn.metrics import f1_score, precision_score, recall_score, matthews_co
 import tensorflow_hub as hub
 import spacy
 
-
-
 nlp = spacy.load('en_core_web_md')
-
 
 # ncc terminal
 # ssh -D 8080 -q -C -N kgxj22@mira.dur.ac.uk
@@ -53,7 +52,7 @@ class ElmoEmbeddingLayer(Layer):
         self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
                                name="{}_module".format(self.name))
 
-        self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
+        self._trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
 
         super(ElmoEmbeddingLayer, self).build(input_shape)
 
@@ -112,24 +111,52 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
+# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
+# Adaptations were made to transform this function into an AttentionLayer
+# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
+# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
 class AttentionLayer(Layer):
     def __init__(self, **kwargs):
-        self.W = None
-        self.b = None
+        self.w_omega = None
+        self.b_omega = None
+        self.time_major = False
+        self.u_omega = None
         super(AttentionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
-        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
+        attention_size = int(input_shape[1])
+        hidden_size = int(input_shape[2])  # D value - hidden size of the RNN layer
+        # removed hidden_size = inputs.shape[2].value
+
+        # Trainable parameters
+        self.w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
+        self.b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+        self.u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
         super(AttentionLayer, self).build(input_shape)
 
     def call(self, x, mask=None):
-        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
-        at1 = K.softmax(et)
-        at2 = K.expand_dims(at1, axis=-1)
-        output = tf.math.multiply(x, at2)
-        # returns the context vector
-        return at1, K.sum(output, axis=1)
+        if isinstance(x, tuple):
+            # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
+            inputs = tf.concat(x, 2)
+
+        if self.time_major:
+            # (T,B,D) => (B,T,D)
+            inputs = tf.transpose(x, [1, 0, 2])
+
+        with tf.name_scope('v'):
+            # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
+            #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
+            v = tf.tanh(tf.tensordot(x, self.w_omega, axes=1) + self.b_omega)
+
+        # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
+
+        vu = tf.tensordot(v, self.u_omega, axes=1, name='vu')  # (B,T) shape
+        alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
+
+        # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
+        output = tf.reduce_sum(x * tf.expand_dims(alphas, -1), 1)
+
+        return alphas, output
 
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[-1]
@@ -243,8 +270,11 @@ def vanilla_gru(model, shape, optimiser):
     return model
 
 
-def lstm_with_attention(embedding_layer, shape, optimiser):
-    inputs = Input(batch_shape=shape)
+def lstm_with_attention(embedding_layer, shape, optimiser, vector_type):
+    if vector_type == 'elmo':
+        inputs = Input(batch_shape=shape, dtype=tf.string)
+    else:
+        inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
     x = LSTM(60, return_sequences=True)(x)
     attention_weights, x = AttentionLayer()(x)
@@ -272,31 +302,28 @@ def cnn_network(model, optimiser):
     return model
 
 
-
-
 # -------------------------------------------- MAIN FUNCTIONS -----------------------------------------------
 def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_name: str):
+    token_list = [t.text for t in nlp(text)]
+    split_text = ' '.join(token_list)
+
     dataset_name = get_dataset_name(dataset_num)
     length_limit = get_length_limit(dataset_name)
 
     if vector_type == 'elmo':
-        padded = pad_string(text.split(), length_limit)
-        return np.ndarray(padded)
-
-        # max_batch_size = get_batch_size(model_name)
-        # padded_df = pd.DataFrame([padded for _ in range(max_batch_size)])
-        # return padded_df.to_numpy()
+        text = pd.DataFrame([pad_string(token_list, length_limit)]*get_batch_size(model_name))
+        text = text.replace({None: ""})
+        return token_list, text.to_numpy()
 
     elif vector_type == 'glove':
         path_to_dataset_root = "../datasets/" + dataset_name
-
         base_path = Path(__file__).parent
         tokeniser = pd.read_pickle((base_path / (
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
-        # sequences = tokeniser.texts_to_sequences([t.text for t in nlp(text)])
-        sequences = tokeniser.texts_to_sequences([' '.join([t.text for t in nlp(text)])]*get_batch_size(model_name))
-        tokens = [t.text for t in nlp(text)]
-        return tokens, pad_sequences(sequences, maxlen=length_limit, padding='post')
+
+        sequences = tokeniser.texts_to_sequences([split_text]*get_batch_size(model_name))
+        token_list = [t.text for t in nlp(tokeniser.sequences_to_texts(sequences)[0])]
+        return token_list, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:
         raise ValueError('Only glove and elmo vectors supported')
 
@@ -310,10 +337,11 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
         text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")#, (max_batch_size, limit) # Input(batch_shape=(max_batch_size, limit))
+        print(text)
+        return text, sarcasm_labels, Input(dtype=tf.string, batch_shape=(max_batch_size, limit)), ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), dtype=tf.string)
 
     elif vector_type == 'glove':
-        tokenizer = Tokenizer()
+        tokenizer = Tokenizer(filters='')
         tokenizer.fit_on_texts(sarcasm_data)
         base_path = Path(__file__).parent
         path_to_dataset_root = "../datasets/" + dataset_name
@@ -324,7 +352,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
 
         sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)#, (max_batch_size, limit) #Input(batch_shape=(max_batch_size, limit))
+        return padded_data, sarcasm_labels, Input(batch_shape=(max_batch_size, limit)), GloveEmbeddingLayer(tokenizer.word_index, limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -355,7 +383,6 @@ def visualise_results(history, file_name):
     plt.show()
 
 
-
 def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarcasm_labels: pd.Series, vector_type: str, split: float):
     max_batch_size = get_batch_size(model_name)
     length_limit = get_length_limit(dataset_name)
@@ -366,18 +393,20 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     # if i remove the overall sentiment from the 6-dimensional vector, we could mimic the behaviour
     # e.g. [0 0 0 0 1] for each word, when averaging embeddings will be very similar
 
-    s_data, l_data, e_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
+    s_data, l_data, input_layer, e_layer = prepare_vector_embedding_layer(sarcasm_data, sarcasm_labels, dataset_name, vector_type,
                                                                       split, max_batch_size, length_limit)
 
-    new_adam = optimizers.Adam() # lr=0.0001, decay=0.001
+    new_adam = optimizers.Adam()  # lr=0.0001, decay=0.001
     model = Sequential()
+    model.add(input_layer)
+
     e_layer.trainable = False
     model.add(e_layer)
     if model_name == 'lstm':
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
         # use batch_shape instead of model
-        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
@@ -426,37 +455,41 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
     patience = 10
     max_batch_size = get_batch_size(model_name)
 
-    s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
-    custom_layer = get_custom_layers(model_name, vector_type)
-    training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
+    with tf.compat.v1.Session() as sess:
+        s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
+        sess.run(tf.compat.v1.global_variables_initializer())
+        sess.run(tf.compat.v1.tables_initializer())
 
-    stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
-    file_name = str(base_path / ('../trained_models/' + stem))
+        custom_layer = get_custom_layers(model_name, vector_type)
+        training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
 
-    if isfile(file_name):
-        print('Model with filename "' + stem + '" already exists - collecting results')
+        stem = model_name + '_with_' + vector_type + '_on_' + str(dataset_number) + '.h5'
+        file_name = str(base_path / ('../trained_models/' + stem))
+
+        if isfile(file_name):
+            print('Model with filename "' + stem + '" already exists - collecting results')
+            dl_model = load_model_from_file(file_name, custom_layer)
+            evaluate_model(model_name, dl_model, testing_data, testing_labels)
+            return
+
+        while True:
+            response = input('Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
+            if response in {'y', 'n'}:
+                if response == 'y':
+                    break
+                else:
+                    print('\nCancelling training...')
+                    return
+
+        # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
+        model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
+        model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
+                                    epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+
         dl_model = load_model_from_file(file_name, custom_layer)
         evaluate_model(model_name, dl_model, testing_data, testing_labels)
-        return
 
-    while True:
-        response = input('Model with filename "' + stem + '" not found: would you like to train one? y / n\n').lower().strip()
-        if response in {'y', 'n'}:
-            if response == 'y':
-                break
-            else:
-                print('\nCancelling training...')
-                return
-
-    # training_data, training_labels = repeat_positive_samples(training_data, training_labels, 0.5)
-    model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
-    early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
-    model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
-                                epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
-
-    dl_model = load_model_from_file(file_name, custom_layer)
-    evaluate_model(model_name, dl_model, testing_data, testing_labels)
-
-    visualise_results(model_history, str(
-        base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
-# ---------------------------------------------------------------------------------------------------------------------
+        visualise_results(model_history, str(
+            base_path / ('../training_images/' + model_name + '_with_' + vector_type + '_on_' + str(dataset_number))))
+    # ---------------------------------------------------------------------------------------------------------------------
