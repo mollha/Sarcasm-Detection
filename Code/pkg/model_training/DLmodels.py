@@ -270,10 +270,12 @@ def vanilla_gru(model, shape, optimiser):
     return model
 
 
-def lstm_with_attention(embedding_layer, shape, optimiser):
-    inputs = Input(batch_shape=shape)
+def lstm_with_attention(embedding_layer, shape, optimiser, vector_type):
+    if vector_type == 'elmo':
+        inputs = Input(batch_shape=shape, dtype=tf.string)
+    else:
+        inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
-    print(x)
     x = LSTM(60, return_sequences=True)(x)
     attention_weights, x = AttentionLayer()(x)
     x = Dropout(0.1)(x)
@@ -406,7 +408,7 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = lstm_network(model, new_adam)
     elif model_name == 'attention-lstm':
         # use batch_shape instead of model
-        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam)
+        model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
