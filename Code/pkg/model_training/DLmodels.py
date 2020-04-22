@@ -1,3 +1,4 @@
+from warnings import filterwarnings; filterwarnings('ignore')
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
@@ -105,7 +106,7 @@ class ElmoEmbeddingLayer(Layer):
         self.elmo = hub.Module('https://tfhub.dev/google/elmo/2', trainable=self.trainable,
                                name="{}_module".format(self.name))
 
-        self.trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
+        self._trainable_weights += tf.compat.v1.trainable_variables(scope="^{}_module/.*".format(self.name))
 
         super(ElmoEmbeddingLayer, self).build(input_shape)
 
@@ -335,7 +336,7 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
     if vector_type == 'elmo':
         text = pd.DataFrame([pad_string(token_list, length_limit)]*get_batch_size(model_name))
         text = text.replace({None: ""})
-        return text.to_numpy()
+        return token_list, text.to_numpy()
 
     elif vector_type == 'glove':
         path_to_dataset_root = "../datasets/" + dataset_name

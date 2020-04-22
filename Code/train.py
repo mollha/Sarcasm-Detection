@@ -50,10 +50,10 @@ def run_dl(models: list, vectors: list, data_sets: list) -> None:
 
 if __name__ == '__main__':
     # --------------------------
-    model_list = ['dcnn']
-    vector_list = ['glove']
+    model_list = ['attention-lstm']
+    vector_list = ['lstm']
     feature_list = []
-    dataset_list = [1]
+    dataset_list = [2]
     # --------------------------
 
     # valid vector-types: 'bag_of_words', 'tf_idf', 'glove', 'elmo'
