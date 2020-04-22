@@ -36,60 +36,6 @@ nlp = spacy.load('en_core_web_md')
 # ssh -D 8080 -q -C -N kgxj22@mira.dur.ac.uk
 
 
-# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
-# Adaptations were made to transform this function into an AttentionLayer
-# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
-# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
-class AttentionLayer(Layer):
-    def __init__(self, **kwargs):
-        self.w_omega = None
-        self.b_omega = None
-        self.time_major = False
-        self.u_omega = None
-        super(AttentionLayer, self).__init__(**kwargs)
-
-    def build(self, input_shape):
-        attention_size = int(input_shape[1])
-        hidden_size = int(input_shape[2])  # D value - hidden size of the RNN layer
-        # removed hidden_size = inputs.shape[2].value
-
-        # Trainable parameters
-        self.w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
-        self.b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
-        self.u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
-        super(AttentionLayer, self).build(input_shape)
-
-    def call(self, x, mask=None):
-        if isinstance(x, tuple):
-            # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
-            inputs = tf.concat(x, 2)
-
-        if self.time_major:
-            # (T,B,D) => (B,T,D)
-            inputs = tf.transpose(x, [1, 0, 2])
-
-        with tf.name_scope('v'):
-            # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
-            #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
-            v = tf.tanh(tf.tensordot(x, self.w_omega, axes=1) + self.b_omega)
-
-        # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
-
-        vu = tf.tensordot(v, self.u_omega, axes=1, name='vu')  # (B,T) shape
-        alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
-
-        # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
-        output = tf.reduce_sum(x * tf.expand_dims(alphas, -1), 1)
-
-        return alphas, output
-
-    def compute_output_shape(self, input_shape):
-        return input_shape[0], input_shape[-1]
-
-    def get_config(self):
-        return super(AttentionLayer, self).get_config()
-
-
 # ---------------------------- Create Embedding Layer Classes ----------------------------
 class ElmoEmbeddingLayer(Layer):
 
@@ -165,30 +111,58 @@ class GloveEmbeddingLayer(Embedding):
         return embedding_matrix
 
 
-class OldAttentionLayer(Layer):
+# The base code of the following attention mechanism is Copyright (c) 2017 to Ilya Ivanov - permission is granted under MIT Licence
+# Adaptations were made to transform this function into an AttentionLayer
+# https://github.com/ilivans/tf-rnn-attention/blob/master/attention.py
+# Proposed by Yang et al. in "Hierarchical Attention Networks for Document Classification" (2016)
+class AttentionLayer(Layer):
     def __init__(self, **kwargs):
-        self.W = None
-        self.b = None
-        super(OldAttentionLayer, self).__init__(**kwargs)
+        self.w_omega = None
+        self.b_omega = None
+        self.time_major = False
+        self.u_omega = None
+        super(AttentionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1), initializer="normal")
-        self.b = self.add_weight(name="att_bias", shape=(input_shape[1], 1), initializer="zeros")
-        super(OldAttentionLayer, self).build(input_shape)
+        attention_size = int(input_shape[1])
+        hidden_size = int(input_shape[2])  # D value - hidden size of the RNN layer
+        # removed hidden_size = inputs.shape[2].value
+
+        # Trainable parameters
+        self.w_omega = tf.Variable(K.random_normal([hidden_size, attention_size], stddev=0.1))
+        self.b_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+        self.u_omega = tf.Variable(K.random_normal([attention_size], stddev=0.1))
+        super(AttentionLayer, self).build(input_shape)
 
     def call(self, x, mask=None):
-        et = K.squeeze(K.tanh(K.dot(x, self.W)+self.b), axis=-1)
-        at1 = K.softmax(et)
-        at2 = K.expand_dims(at1, axis=-1)
-        output = tf.math.multiply(x, at2)
-        # returns the context vector
-        return at1, K.sum(output, axis=1)
+        if isinstance(x, tuple):
+            # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
+            inputs = tf.concat(x, 2)
+
+        if self.time_major:
+            # (T,B,D) => (B,T,D)
+            inputs = tf.transpose(x, [1, 0, 2])
+
+        with tf.name_scope('v'):
+            # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
+            #  the shape of `v` is (B,T,D)*(D,A)=(B,T,A), where A=attention_size
+            v = tf.tanh(tf.tensordot(x, self.w_omega, axes=1) + self.b_omega)
+
+        # For each of the timestamps its vector of size A from `v` is reduced with `u` vector
+
+        vu = tf.tensordot(v, self.u_omega, axes=1, name='vu')  # (B,T) shape
+        alphas = tf.nn.softmax(vu, name='alphas')  # (B,T) shape
+
+        # Output of (Bi-)RNN is reduced with attention vector; the result has (B,D) shape
+        output = tf.reduce_sum(x * tf.expand_dims(alphas, -1), 1)
+
+        return alphas, output
 
     def compute_output_shape(self, input_shape):
         return input_shape[0], input_shape[-1]
 
     def get_config(self):
-        return super(OldAttentionLayer, self).get_config()
+        return super(AttentionLayer, self).get_config()
 
 # ----------------------------------------------- HELPER FUNCTIONS -----------------------------------------------------
 def pad_string(tokens: list, limit: int) -> list:
@@ -299,6 +273,7 @@ def vanilla_gru(model, shape, optimiser):
 def lstm_with_attention(embedding_layer, shape, optimiser):
     inputs = Input(batch_shape=shape)
     x = embedding_layer(inputs)
+    print(x)
     x = LSTM(60, return_sequences=True)(x)
     attention_weights, x = AttentionLayer()(x)
     x = Dropout(0.1)(x)
@@ -360,7 +335,8 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
         text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
-        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), input_dtype="string")#, (max_batch_size, limit) # Input(batch_shape=(max_batch_size, limit))
+        print(text)
+        return text, sarcasm_labels, ElmoEmbeddingLayer(batch_input_shape=(max_batch_size, limit), dtype=tf.string)
 
     elif vector_type == 'glove':
         tokenizer = Tokenizer(filters='')
@@ -374,7 +350,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
 
         sequences = tokenizer.texts_to_sequences(sarcasm_data)
         padded_data = pad_sequences(sequences, maxlen=limit, padding='post')
-        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)#, (max_batch_size, limit) #Input(batch_shape=(max_batch_size, limit))
+        return padded_data, sarcasm_labels, GloveEmbeddingLayer(tokenizer.word_index, limit)
     else:
         raise TypeError('Vector type must be "elmo" or "glove"')
 
@@ -421,6 +397,9 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
 
     new_adam = optimizers.Adam() # lr=0.0001, decay=0.001
     model = Sequential()
+
+    model.add(Input(dtype=tf.string, batch_shape=(max_batch_size, length_limit)))
+
     e_layer.trainable = False
     model.add(e_layer)
     if model_name == 'lstm':
@@ -477,9 +456,10 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
     max_batch_size = get_batch_size(model_name)
 
     with tf.compat.v1.Session() as sess:
-        sess.run(tf.compat.v1.global_variables_initializer())
-
         s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
+        sess.run(tf.compat.v1.global_variables_initializer())
+        sess.run(tf.compat.v1.tables_initializer())
+
         custom_layer = get_custom_layers(model_name, vector_type)
         training_data, testing_data, training_labels, testing_labels = train_test_split(s_data, l_data, test_size=split, shuffle=True)
 
