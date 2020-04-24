@@ -50,17 +50,15 @@ def run_dl(models: list, vectors: list, data_sets: list) -> None:
 
 if __name__ == '__main__':
     # --------------------------
-    model_list = ['attention-lstm']
-    vector_list = ['elmo']
+    model_list = ['attention-bi-gru']
+    vector_list = ['glove']
     feature_list = []
-    dataset_list = [2]
+    dataset_list = [1]
     # --------------------------
-
     # valid vector-types: 'bag_of_words', 'tf_idf', 'glove', 'elmo'
     # valid feature-types: 'sentiment', 'punctuation', 'topic_model'
-    # valid ml models: 'svm', 'log_reg', 'rfc', 'n_bayes', 'knn'
+    # valid ml models: 'svm', 'gru', 'log_reg', 'rfc', 'n_bayes', 'knn'
     # valid dl models: 'cnn', 'dcnn' 'lstm', 'bi-lstm', 'vanilla-rnn', 'vanilla-gru', 'attention-lstm'
-
     # --------------------------
     # run_ml(model_list, vector_list, dataset_list, feature_list)
     run_dl(model_list, vector_list, dataset_list)
