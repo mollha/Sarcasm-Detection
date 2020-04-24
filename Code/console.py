@@ -25,24 +25,33 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
     """
     cmap = get_cmap('Reds')
     template = '<span class="barcode"; style="color: black; background-color: {}">{}</span>'
-    colored_string = ''
+    colored_string = '<div style="max-width: 300px; overflow: auto;">'
     for t, color in zip(token_list, color_array):
         # if negative, set to white
         color_val = rgb2hex((1, 1, 1)) if color < 0 else rgb2hex(cmap(color)[:3])
         colored_string += template.format(color_val, '&nbsp' + t + '&nbsp')
 
+    colored_string += '</div>'
+
     if prediction:
         prediction *= 100
         tick_marks = '<datalist style="display: block" id="tickmarks"><option value="0" label="Non-Sarcastic"></option><option value="50" label="Neutral"></option><option value="100" label="Sarcastic"></option></datalist>'
-        prediction_template = '<div class ="slidecontainer", style="{}"> <input type = "range" min = "0" max = "100" value = "{}" style="{}" class ="slider" id="myRange" list="tickmarks" ></div>'
+        prediction_template = '<div style="background-color: grey; width: 300px; height: 50px;"><div class ="slidecontainer", style="{}"> <input type = "range" min = "0" max = "100" value = "{}" style="{}" class ="slider" id="myRange" list="tickmarks" ></div></div>'
         style = '<style>.slider::-webkit-slider-thumb {-webkit-appearance: none; border-radius: 50%; appearance: none; width: 100%;' \
                  ' height: 5px; background: #f0f0f0; cursor: default;}</style>'
-        outer_css = '-webkit-appearance: none; width: 200px; margin-top: 10px; 	background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
+        outer_css = '-webkit-appearance: none; width: 280px; margin-top: 10px; margin-left: 10px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
         inner_css = '-webkit-appearance: none; height: 2px; width: 5px; outline: none;'
+        script = "<script>" \
+                 "document.addEventListener('DOMContentLoaded', (event) => {\
+                 var slider = document.getElementById('myRange');\
+                 slider.value=parseInt(document.getElementById('myRange').value);});" \
+                 "</script>"
 
         colored_string += style
         #colored_string += tick_marks
         colored_string += prediction_template.format(outer_css, prediction, inner_css)
+        colored_string += '<span> Prediction score: ' + str(round(prediction, 2)) + '%</span>'
+        colored_string += script
 
     # save in html file and open in browser
     with open('colorise.html', 'w') as f:
