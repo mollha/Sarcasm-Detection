@@ -418,10 +418,9 @@ RNNs use feedback loops to process sequential data
 gradient-based learning, where 
 This creates a form of memory, as it allows information to persist in the network.\\
 
-\noindent RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, RNNs are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. When the gradient with respect to the earliest layers becomes negligible, as do the updates made to network weights; hence, the learning process may become unstable and the network will have a short term memory.\\
+\noindent RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, RNNs are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. This is where the gradient with respect to the earliest layers becomes negligible; as do the updates made to their weights. The learning process may become unstable and the network will have a short-term memory.\\
 
-
-LSTMs and GRUs have internal mechanisms known as gates.
+LSTMs and GRUs have internal mechanisms known as gates, and can overcome the pitfall of short-term memory.
 
 A directed cycle is formed within an RNN whereby former outputs are input back into a hidden unit. 
 
@@ -446,21 +445,54 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 
 \subsection{Attention}
 \vspace{-4.2pt}
-\noindent Extending our binary classification solution to incorporate attention allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} We add an attention mechanism, allowing us to localise sarcasm within a given snippet. 
+\noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions, such as the text surrounding key words or phrases. This is known as \textit{human visual attention} and has been well studied by psychologists; however, we can incorporate a similar attention mechanism into our recurrent deep learning models. This provides insight into which tokens contribute more or less in classification decisions. Additionally, incorporating an attention mechnism can lead to better classification performance. Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-8pt}
 
-We use a bidirectional LSTM which concatenates the left and right LSTMs
+\noindent We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words that are taken out of context. The meaning of words depends on the context in which they are found; hence, harnessing as much context as possible is key to informing classification decisions and producing meaningful attention visualisations. We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
 
 
+\hspace{-17pt}\begin{minipage}{0.6\textwidth}
+	 Finally, the output sequences are passed through our attention layer, which returns a context vector and attention weights. We can visualise our attention weights by projecting them into a colourspace and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
+\end{minipage}
+\hspace{0pt}
+\begin{minipage}{0.35\textwidth}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
+		\textbf{Figure -:} Absolute differences\\
+	\end{center}
+\end{figure}
+\end{minipage}
+
+
+
+
+
+
+%Additionally, we use a bidirectional model so as to account for both the left and right contexts of words. 
+
+
+
+%We use a bidirectional GRU and concatenate the output sequences from both GRUs. 
+
+
+This paper considers that documents have a hierarchical structure
+
+
+The intuition behind this is such that not all components of text are equally relevant for indicating sarcasm or not sarcasm. 
+
+
+We implement the attention mechanism described in  Yang et al. (2016) \cite{yang2016hierarchical} in the form of an Attention layer. This is an intermediate layer placed after the bidirectional LSTM layer in our model.
+
+In Yang et al. 2016, they used two sentence-level and word-level attention
+
+Visualising the output of our attention layer shows that the model places more emphasis on qualitatively informative tokens.
 
 The attention mechnism has played a fundamental role in recent deep learning research, fuelling powerful language models such as BERT. 
 
 LSTMs capture long-term dependcies, more so than a RNN. 
 An Attention mechanism attributes more importance to a subset of the input words.
 
-The attention mechanism is capable of improving our classification results, as well as providing us with additional context of which words are more important in sarcasm detection.
-
 Bahdanau et al. (2015) suggested that a context vector takes into account all of the input words, assigning relative importance to some more than others.
-We add the Bahdanau Attention layer after the LSTM layer in our LSTM model. 
 
 We take the dot produce of weights and inputs and add our bias terms. 
 We then apply a tanh activation and softmax gives the alignment scores.
