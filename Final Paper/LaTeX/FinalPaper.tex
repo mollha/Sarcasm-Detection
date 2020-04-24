@@ -282,7 +282,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 
 \begin{minipage}{0.3\textwidth}
 	 	\begin{center}
-		\hspace{-1.5cm}\includegraphics[width=1.2\textwidth]{Images/elmo_diagram.png}\\
+		\hspace{-1.5cm}\includegraphics[width=1.2\textwidth]{Images/elmo_diagram2.png}\\
 		\hspace{-1cm}\textbf{Figure -:} ElMo model pipeline\\
 		\label{ElMo Model}
 	\end{center}
@@ -338,7 +338,7 @@ While deep learning algorithms are able to extract useful higher-level features 
 
 
 
-\subsection{Classification}
+\subsection{Binary Classification}
 \noindent 
 In this section, we describe the machine-learning and deep-learning classification models that are used in this project. These algorithms are trained a set of rich features as outlined in the previous section.\vspace{-3pt}
 
@@ -407,23 +407,32 @@ Deep learning classifiers do not require the  hand-crafted features used in supe
 	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures
 \end{center}
 
-
-\paragraph{Recurrent Neural Networks --}
-As in all neural networks, input vectors are modified by weighted nodes as they travel through the network. However, in a Recurrent Neural Network (RNN), there is an additional hidden state that is updated as inputs are fed through the network. This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing.
+\noindent \textbf{Recurrent Neural Networks (RNN)} 
 
 
+outputs from previous time steps are re-introduced into the network
+
+contain an additional hidden state that is updated as inputs are fed through the network.
+
+RNNs use feedback loops to process sequential data
+gradient-based learning, where 
+This creates a form of memory, as it allows information to persist in the network.\\
+
+\noindent RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, RNNs are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. When the gradient with respect to the earliest layers becomes negligible, as do the updates made to network weights; hence, the learning process may become unstable and the network will have a short term memory.\\
 
 
+LSTMs and GRUs have internal mechanisms known as gates.
 
- In a RNN, there is an additional hidden state which represents the context based on prior inputs. The hidden state is . This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
+A directed cycle is formed within an RNN whereby former outputs are input back into a hidden unit. 
 
-In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies.\\
+This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
+
+In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies. We implement a Vanilla RNN as a baseline against which to compare our more advanced RNN models, as well as three additional models as described below:
 
 \begin{enumerate}
-	\item \textbf{Vanilla Recurrent Neural Network -- }
-	\item \textbf{Vanilla Gated Recurrent Unit -- }
+	\item \textbf{Gated Recurrent Unit -- }
 	\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
-	\item Bidirectional Long Short-term Memory \textit{(BiLSTM)}
+	\item \textbf{Bidirectional Long Short-term Memory \textit{(BiLSTM)}} -- Uses two LSTMs and concatenates their output sequences, where one is trained on reversed input sequences and the other is trained on the original input sequences. This allows context to be captured from both directions, and can lead to improved predictions.
 \end{enumerate}
 
 RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
@@ -438,6 +447,9 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 \subsection{Attention}
 \vspace{-4.2pt}
 \noindent Extending our binary classification solution to incorporate attention allows us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} We add an attention mechanism, allowing us to localise sarcasm within a given snippet. 
+
+We use a bidirectional LSTM which concatenates the left and right LSTMs
+
 
 
 The attention mechnism has played a fundamental role in recent deep learning research, fuelling powerful language models such as BERT. 
@@ -562,7 +574,7 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\hline
 		LSTM & ElMo  & 0.843   & 0.878 & 0.860\\
 		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
-		Vanilla GRU & ElMo  & 0.889   & 0.877 & 0.883\\
+		GRU & ElMo  & 0.889   & 0.877 & 0.883\\
 		Deep CNN & ElMo & 0.873   & 0.869 & 0.871\\
 		\hline
 	\end{tabular}
@@ -572,6 +584,8 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 The table above
 Deep learning models routinely outperform Machine learning models.
 Logistic regression with ElMo vectors was the best performing machine learning model, and a slight improvement of 0.1%
+
+Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
 
 
 \subsubsection{Amazon Reviews Dataset}
