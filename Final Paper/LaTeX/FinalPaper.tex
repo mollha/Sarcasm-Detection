@@ -190,11 +190,11 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \vspace{-4.2pt}\noindent We utilise three publically available datasets, and a statistical analysis of their properties is provided in \textit{figure \_}. This includes the number of instances in the dataset, the average number of tokens per instance and a benchmark score where the dataset was used in the original paper to train one or more classifiers. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media.
 
 \begin{enumerate}[leftmargin=0cm]
-	\item \textbf{News Headlines Dataset For Sarcasm Detection} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnotemark[3]\footnotetext[3]{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnotemark[4]\footnotetext[4]{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.
+	\item \textbf{News Headlines} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnotemark[3]\footnotetext[3]{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnotemark[4]\footnotetext[4]{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.
 	
-	\item \textbf{Sarcasm Amazon Review Corpus} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. This dataset was not used by its compilers for classification, hence there is no score available for comparison.
+	\item \textbf{Amazon Reviews} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. This dataset was not used by its compilers for classification, hence there is no score available for comparison.
 	
-	\item \textbf{Pt\'a\v{c}ek et al. (2014)} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
+	\item \textbf{Twitter Data} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
 \end{enumerate}
 
 % For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
@@ -348,9 +348,9 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 \begin{enumerate}
 	\item \textbf{Na\"{i}ve Bayes Classifier --} A group of probabilistic models that use Bayes theorem to make predictions; variations include Multinomial, Bernoulli and Gaussian Na\"{i}ve Bayes. The na\"{i}ve assumption that all features are independent of one another allows an estimate of ${P(Sarcastic \text{ }| \text{ }x)}$ (i.e. probability that a statement is sarcastic, given its feature vector, x) to be made using Bayes theorem.\vspace{-3pt}
 	
-	\item \textbf{K-Nearest Neighbours (KNN) --} A non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the majority class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned.\vspace{-3pt}
+	\item \textbf{K-Nearest Neighbours (KNN) --} A non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the majority class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned. We found that k=5 achieved the optimal balance between the computational cost of a large number of neighbours and increased noise and bias associated with small values of k.\vspace{-3pt}
 	
-	\item \textbf{Support Vector Machine (SVM) --} Uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data.\vspace{-3pt}
+	\item \textbf{Support Vector Machine (SVM) --} Uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data. Our SVM uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\vspace{-3pt}
 
 	\item \textbf{Logistic Regression --} Models a binary dependent variable by finding a relationship between features and the likelihood that they belong to either class. It is a more advanced approach than linear regression, which aims to model data using a linear equation.\vspace{-3pt}
 
@@ -447,18 +447,18 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 \vspace{-4.2pt}
 \noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions, such as the text surrounding key words or phrases. This is known as \textit{human visual attention} and has been well studied by psychologists; however, we can incorporate a similar attention mechanism into our recurrent deep learning models. This provides insight into which tokens contribute more or less in classification decisions. Additionally, incorporating an attention mechnism can lead to better classification performance. Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-8pt}
 
-\noindent We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words that are taken out of context. The meaning of words depends on the context in which they are found; hence, harnessing as much context as possible is key to informing classification decisions and producing meaningful attention visualisations. We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
+\noindent We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words that are taken out of context. The meaning of words depends on the context in which they are found; hence, harnessing as much context as possible is key to informing classification decisions and producing meaningful attention visualisations. We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\vspace{-8pt}
 
 
 \hspace{-17pt}\begin{minipage}{0.6\textwidth}
-	 Finally, the output sequences are passed through our attention layer, which returns a context vector and attention weights. We can visualise our attention weights by projecting them into a colourspace and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
+	 Output sequences from the bidirectional GRU are passed through our attention layer, which returns a context vector and attention weights. We can visualise our attention weights by projecting them into a colourspace and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
 \end{minipage}
 \hspace{0pt}
-\begin{minipage}{0.35\textwidth}
+\begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
-		\textbf{Figure -:} Absolute differences\\
+		\textbf{Figure -:} Visualisation of attention weights\\
 	\end{center}
 \end{figure}
 \end{minipage}
@@ -570,12 +570,11 @@ This attention mechanism uses all previous hidden states of the LSTM
 
 
 \subsection{Binary Classification}
-\noindent We train each machine learning classifier independently on each of our datasets, vectorised using Bag of Words, TF-IDF, GloVe and ElMo vectors. We also experiment with miscellaneous features, combining useful features with our best performing machine learning classifier on each dataset. Additionally, we train each deep learning model separately on each of the three datasets, using glove vectors and elmo vectors. Sparse feature representations such as tf-idf and bag of words are not used to train our deep learning models, as training neural networks on very high dimensional data is computationally intractable. For both our machine learning and deep learning classifiers, we report only a subset of our most informative results, including the result of the best classifier. The precision, recall and $F_{1}$ scores of the trained models are provided to 3 significant figures, and the scores of the best-performing machine learning and deep learning models are highlighted for each dataset.\\
+\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our three datasets. We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task. We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional  sparse features. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\
 
+\noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set for each of the five folds. \\
 
-\noindent \textbf{Experimental Settings for Machine Learning --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 80\% of data to the training set, and the remaining 20\% to the testing set for each of the five folds. For the K-Nearest Neighbours algorithm, the hyperparameter k is set to 5, as this is found to be a good balance between the computational cost of a large amount of neighbours and increased noise and bias associated with small values of k. Our Support Vector Machine uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\\
-
-\noindent \textbf{Experimental Settings for Deep Learning--} The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+\noindent The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
@@ -585,10 +584,8 @@ This attention mechanism uses all previous hidden states of the LSTM
 Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
 
-
-\subsubsection{News Headlines Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+	\textbf{Table -}: Classification results on the \textit{News Headlines} dataset
 \end{center}
 
 \begin{center}
@@ -611,18 +608,15 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 		\hline
 	\end{tabular}
 \end{center}
-\textit{*S} refers to sentiment features and \textit{T} refers to topic features
+\textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-10pt}
 
-The table above
-Deep learning models routinely outperform Machine learning models.
-Logistic regression with ElMo vectors was the best performing machine learning model, and a slight improvement of 0.1%
+\noindent Deep learning models routinely outperform Machine learning models.
+Logistic regression trained on ElMo with sentiment and topic features was the machine learning model with the highest $F_1$ score, and a slight improvement of 0.1\%. The Random Forest Classifier was the next best model architecture on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. 
 
 Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
 
-
-\subsubsection{Amazon Reviews Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+	\textbf{Table -}: Classification results on the \textit{Amazon Reviews} dataset
 \end{center}
 
 \begin{center}
@@ -648,10 +642,8 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 \end{center}
 \textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
-
-\subsubsection{Twitter Dataset}
 \begin{center}
-	\textbf{Figure -}: $F_1$ scores of Machine Learning classifiers on the \\\textit{News Headlines for Sarcasm Detection} dataset
+	\textbf{Table -}: Classification results on the \textit{Twitter} dataset
 \end{center}
 
 \begin{center}
