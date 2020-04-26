@@ -503,9 +503,9 @@ This attention mechanism uses all previous hidden states of the LSTM
 
 
 \newpage
-\section{Results}
-\subsection{Evaluation Method}
-\noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.
+\section{Results}\vspace{-5pt}
+\subsection{Evaluation Method}\vspace{-5pt}
+\noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.\vspace{-10pt}
 
 \hspace{-30pt}\begin{center}
 	\begin{minipage}{0.47\textwidth}
@@ -524,78 +524,65 @@ This attention mechanism uses all previous hidden states of the LSTM
 		$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
 	\end{minipage}
 \end{center}
-\vspace{4pt}
 
-\noindent In the domain of sarcasm detection, precision refers to the proportion of the classified-sarcastic data that is \textit{truly sarcastic} i.e.\ how many of the positives are true positives, and recall describes the proportion of the truly sarcastic data in the corpus that is \textit{classified} as such i.e.\ how many true positives are labelled as positives. We mostly use the $F_{1}$ score i.e.\ the harmonic mean of precision and recall, where scores range from 0 (worst) to 1 (best). This metric has faced some criticism for giving equal weight to both precision and recall \cite{hand2018note}, therefore we also consider these measures separately. We also use the Matthews correlation co-efficient (MCC). This is a balanced measure which only shows high scores if the true positive and negative rates are high, and if the false positive and negative rates are low - taking into account all four quadrants of a confusion matrix.
+\noindent Precision refers to the proportion of classified-sarcastic data that is \textit{truly sarcastic} (how many positives are true positives), and recall describes the proportion of the truly sarcastic data that is classified as such (how many true positives are labelled as positives). We also use the harmonic mean of precision and recall ($F_{1}$ score), however this metric has faced some criticism for giving equal weight to precision and recall \cite{hand2018note}, therefore we also consider these measures separately. The Matthews Correlation Co-efficient (MCC) is a balanced measure which shows high scores if the true positive and negative rates are high and if the false positive and negative rates are low.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
-\subsection{Analysis of Miscellaneous Features}
-\noindent We analyse the effectiveness of the hand-crafted features, sentiment, punctuation and topic modelling, on each of the three datasets. As the feature vectors are small, we use logistic regression for this task. We train three logistic regressors (one for each dataset) separately, using each feature type in isolation, then use 5-fold cross-validation to compute the $F_1$ scores of the trained models. This enables us to assess whether these features alone are indicative of sarcasm in different media types. We deem scores above 0.5 to be indicative of useful features, particularly for scores significantly greater than this baseline.
+\subsection{Analysis of Miscellaneous Features}\vspace{-5pt}
+\noindent We analyse the effectiveness of sentiment, punctuation and topic modelling features on each of our training datasets by training logistic regression models using these features in isolation - N.B.\ logistic regression is used as these feature vectors are small. We use 5-fold cross-validation to compute the $F_1$ scores of these models. A classifier that predicts classes randomly can achieve an $F_1$ score of 0.5 on a balanced dataset - hence, we consider models achieving greater than 0.5 to be indicative of useful training features.\vspace{-15pt}
 
 
-\begin{center}
-	\textbf{Figure -}: $F_1$ score of logistic regression models trained on hand-crafted features
-\end{center}
-
-\begin{center}
-	\begin{tabular}{|c|c|c|} 
-		\hline
-		\textbf{Feature} & \textbf{News Headlines} & \textbf{Twitter Data}\\ [0.4ex] 
-		\hline
-		Sentiment & 0.516 & 0.593\\ 
-		\hline
-		Punctuation & 0.344 & 0.611\\
-		\hline
-		Topic & 0.525& 0.530\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{|c|c|c|c|} 
-		\hline
-		\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
-		\hline
-		News Headlines & 0.516 & 0.344 & 0.525\\ 
-		\hline
-		Twitter Data & 0.593 & 0.611 & 0.530\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
-
-\begin{minipage}{0.4\textwidth}
-	\begin{figure}[H]
-		\begin{center}
-			\textbf{Figure -:} Absolute differences\\
-			\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
-			\label{Sarcasm Amazon Review Corpus}
-		\end{center}
-	\end{figure}
-\end{minipage} \hfill
-\begin{minipage}{0.6\textwidth}
-	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
+\hspace{-20pt}\begin{minipage}{0.55\textwidth}
+	\begin{center}
+		\textbf{Table -}: $F_1$ score of logistic regression models \\trained on hand-crafted features
+	\end{center}\vspace{-20pt}
+	
+	\begin{center}
+		\begin{tabular}{|c||c|c|} 
+			\hline
+			\textbf{Feature} & \textbf{News Headlines} & \textbf{Twitter Data}\\ [0.4ex] 
+			\hline
+			Sentiment & 0.516 & 0.593\\ 
+			\hline
+			Punctuation & 0.344 & 0.611\\
+			\hline
+			Topic & 0.525& 0.530\\
+			\hline
+		\end{tabular}
+	\end{center}
 \end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{Images/absolute_differences.png}\\
+		\textbf{Figure -:} Absolute differences\\
+	\end{center}
+\end{figure}
+\end{minipage}\vspace{-5pt}
 
+\noindent All three categories of features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets. Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic. This enables us to assess whether these features alone are indicative of sarcasm in different media types.
+
+%\noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
+
+For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 
 \subsection{Binary Classification}\vspace{-5pt}
 \noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
 
-\noindent \textbf{Experimental Settings --} We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task.\ 5-fold cross validation was employed to ensure reproducability and consistency of results.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-5pt}
+\noindent \textbf{Experimental Settings --} We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task.\ 5-fold cross validation was employed to ensure reproducability and consistency of results.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-4pt}
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining - this is used to determine the appropriate number of epochs.\vspace{-8pt}
 	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training i.e.\ the model with the lowest validation loss.
-\end{enumerate}\vspace{-5pt}
+\end{enumerate}\vspace{-4pt}
 
-\noindent Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The number of epochs for which no improvement in validation loss is seen (\textit{patience}) is set to 10. Setting the patience too low can hamper a model that plateaus for a while before improving again. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set. \\
+\noindent Model performance peaks early in the training process for all of our models, although there is some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The number of epochs for which no improvement in validation loss is seen (\textit{patience}) is set to 10. Setting the patience too low can hamper a model that plateaus for a while before improving again. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set.
 
 
 
 %Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
-
+\subsubsection{News Headlines Dataset}
 \begin{center}
 	\textbf{Table -}: Classification results on the \textit{News Headlines} dataset
 \end{center}
@@ -627,6 +614,8 @@ Logistic regression trained on ElMo with sentiment and topic features was the ma
 
 Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
 
+\subsubsection{Twitter Dataset}
+
 \begin{center}
 	\textbf{Table -}: Classification results on the \textit{Twitter} dataset
 \end{center}
@@ -656,16 +645,34 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 
 Interestingly, the Random Forest Classifier was the best performing model using GloVe vectors. GloVe performance was weak on this particular dataset, and this could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the embedding input.
 
-
-
-\newpage
-
 \subsubsection{Cross-Dataset Evaluation}
 Given that the following model performed best, trained separately on all three datasets. We evaluate which of these models had the best performance on the other two datasets - this gives us an indication of which model is more likely to generalise to unseen data in multiple forms of media (i.e. which model is most adaptable, therefore the most suitable to be used in our tool)
 
+\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.75\textwidth]{Images/cm1.png}\\
+			(a) Trained on News Headlines\\
+		\end{center}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.75\textwidth]{Images/cm1.png}\\
+			(b) Trained on Twitter Data\\
+		\end{center}
+	\end{figure}
+\end{minipage}\vspace{-15pt}
+
+\begin{center}
+	\textbf{Figure -}: Confusion Matrices of models evaluated on Amazon Reviews
+\end{center}
 
 
 
+
+\newpage
 \section{Evaluation}
 In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
 
