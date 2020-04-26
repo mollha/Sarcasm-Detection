@@ -569,19 +569,21 @@ This attention mechanism uses all previous hidden states of the LSTM
 \end{minipage}
 
 
-\subsection{Binary Classification}
-\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our three datasets. We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task. We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional  sparse features. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\
+\subsection{Binary Classification}\vspace{-5pt}
+\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
 
-\noindent \textbf{Experimental Settings --} 5-fold cross validation was employed to ensure reproducability and consistency of results. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set for each of the five folds. \\
-
-\noindent The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the Early Stopping callback function. Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The patience is set to 20, and this is the number of epochs for which no improvement can be seen before the training is prematurely terminated. However, setting the patience too low can hamper a model that plateaus for a while before continuing to improve.
+\noindent \textbf{Experimental Settings --} We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task.\ 5-fold cross validation was employed to ensure reproducability and consistency of results.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-5pt}
 
 \begin{enumerate}
-	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining, using thins to determine the appropriate number of epochs.
-	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training; the model with the lowest validation loss.
-\end{enumerate}
+	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining - this is used to determine the appropriate number of epochs.\vspace{-8pt}
+	\item \textbf{Model Checkpointing --} We track and save the weights of the best performing model during training i.e.\ the model with the lowest validation loss.
+\end{enumerate}\vspace{-5pt}
 
-Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
+\noindent Preliminary experimentation showed that model performance peaked early in the training process for all models, although there was some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The number of epochs for which no improvement in validation loss is seen (\textit{patience}) is set to 10. Setting the patience too low can hamper a model that plateaus for a while before improving again. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set. \\
+
+
+
+%Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
 
 \begin{center}
@@ -614,33 +616,6 @@ Preliminary experimentation showed that the training process on the Sarcasm Amaz
 Logistic regression trained on ElMo with sentiment and topic features was the machine learning model with the highest $F_1$ score, and a slight improvement of 0.1\%. The Random Forest Classifier was the next best model architecture on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. 
 
 Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
-
-\begin{center}
-	\textbf{Table -}: Classification results on the \textit{Amazon Reviews} dataset
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |c||c|c|c|c|}
-		\hline
-		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Support Vector Machine & TF-IDF & 0.679   & 0.903 & 0.775\\
-		K-Nearest Neighbours &  ElMo & 0.742   & 0.636 & 0.685\\
-		Support Vector Machine & BOW  & 0.710   & 0.764 & 0.736\\
-		Logistic Regression & ElMo  & 0.799   & 0.819 & 0.809\\
-		Logistic Regression & ElMo + S + T & 0.806	& 0.830 & \textbf{0.818}\\
-		\hline\hline
-		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
-		\hline
-		CNN & GloVe  & 0.833 & 0.821 & 0.827\\
-		Vanilla RNN & ElMo  & 0.814   & 0.810 & 0.812\\
-		LSTM & GloVe  & 0.835   & 0.841 & 0.838\\
-		Deep CNN & ElMo & 0.869   & 0.851 & 0.860\\
-		Bidirectional LSTM & ElMo & 0.859   & 0.865 & \textbf{0.862}\\
-		\hline
-	\end{tabular}
-\end{center}
-\textit{*S} refers to sentiment features and \textit{T} refers to topic features
 
 \begin{center}
 	\textbf{Table -}: Classification results on the \textit{Twitter} dataset
