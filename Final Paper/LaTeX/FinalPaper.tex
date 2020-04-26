@@ -538,17 +538,27 @@ This attention mechanism uses all previous hidden states of the LSTM
 \end{center}
 
 \begin{center}
-	\begin{tabular}{|p{7cm}|p{1.8cm}|p{2.6cm}|p{1.6cm}|} 
+	\begin{tabular}{|c|c|c|} 
 		\hline
-		& \multicolumn{3}{|c|}{\textbf{Feature Type}} \\
+		\textbf{Feature} & \textbf{News Headlines} & \textbf{Twitter Data}\\ [0.4ex] 
+		\hline
+		Sentiment & 0.516 & 0.593\\ 
+		\hline
+		Punctuation & 0.344 & 0.611\\
+		\hline
+		Topic & 0.525& 0.530\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|} 
 		\hline
 		\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
-		\hline\hline
-		News Headlines for Sarcasm Detection & 0.516 & 0.344 & 0.525\\ 
 		\hline
-		Sarcasm Amazon Review Corpus & 0.685 & 0.394 & 0.520\\ 
+		News Headlines & 0.516 & 0.344 & 0.525\\ 
 		\hline
-		Pt\'a\v{c}ek et al. (2014) & 0.593 & 0.611 & 0.530\\
+		Twitter Data & 0.593 & 0.611 & 0.530\\
 		\hline
 	\end{tabular}
 \end{center}
