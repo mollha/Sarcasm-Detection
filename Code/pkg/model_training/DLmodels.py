@@ -137,11 +137,11 @@ class AttentionLayer(Layer):
     def call(self, x, mask=None):
         if isinstance(x, tuple):
             # In case of Bi-RNN, concatenate the forward and the backward RNN outputs.
-            inputs = tf.concat(x, 2)
+            x = tf.concat(x, 2)
 
         if self.time_major:
             # (T,B,D) => (B,T,D)
-            inputs = tf.transpose(x, [1, 0, 2])
+            x = tf.transpose(x, [1, 0, 2])
 
         with tf.name_scope('v'):
             # Applying fully connected layer with non-linear activation to each of the B*T timestamps;
@@ -185,7 +185,9 @@ def get_length_limit(dataset_name: str) -> int:
 
 def get_batch_size(model_name: str) -> int:
     # set batch size to 1 for online learning in lstm
-    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32, 'vanilla-gru': 32, 'attention-lstm': 32, 'dcnn': 32}
+    batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32,
+                   'gru': 32, 'attention-lstm': 32, 'dcnn': 32,
+                   "attention-bi-lstm": 32, "attention-bi-gru": 32}
     return batch_sizes[model_name]
 
 
@@ -203,9 +205,21 @@ def get_custom_layers(model_name=None, vector_type=None):
     return custom_layers
 
 
+def initialize_uninitialized(sess):
+    global_vars = tf.compat.v1.global_variables()
+    is_not_initialized = sess.run([tf.compat.v1.is_variable_initialized(var) for var in global_vars])
+    not_initialized_vars = [v for (v, f) in zip(global_vars, is_not_initialized) if not f]
+    # print([str(i.name) for i in not_initialized_vars]) # only for testing
+    if len(not_initialized_vars):
+        sess.run(tf.compat.v1.variables_initializer(not_initialized_vars))
+
+
 def load_model_from_file(filename: str, custom_layers: dict):
+    session = tf.compat.v1.keras.backend.get_session()
+
     with CustomObjectScope(custom_layers):
         model = load_model(filename)
+        initialize_uninitialized(session)
     return model
 
 
@@ -260,7 +274,7 @@ def vanilla_rnn(model, shape, optimiser):
     return model
 
 
-def vanilla_gru(model, shape, optimiser):
+def gru_network(model, shape, optimiser):
     model.add(GRU(50, batch_input_shape=shape, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     model.add(Dense(1, activation='sigmoid'))
@@ -281,6 +295,41 @@ def lstm_with_attention(embedding_layer, shape, optimiser, vector_type):
     x = Dropout(0.1)(x)
     x = Dense(50, activation="relu")(x)
     x = Dropout(0.1)(x)
+    outputs = Dense(1, activation="sigmoid")(x)
+
+    model = Model(inputs=inputs, outputs=outputs)
+    model.compile(loss='binary_crossentropy',
+                  optimizer=optimiser,
+                  metrics=['accuracy'])
+    return model
+
+
+def bidirectional_lstm_with_attention(embedding_layer, shape, optimiser, vector_type):
+    if vector_type == 'elmo':
+        inputs = Input(batch_shape=shape, dtype=tf.string)
+    else:
+        inputs = Input(batch_shape=shape)
+    x = embedding_layer(inputs)
+    x = Bidirectional(LSTM(64, return_sequences=True))(x)
+    attention_weights, x = AttentionLayer()(x)
+    x = Dropout(0.5)(x)
+    outputs = Dense(1, activation="sigmoid")(x)
+
+    model = Model(inputs=inputs, outputs=outputs)
+    model.compile(loss='binary_crossentropy',
+                  optimizer=optimiser,
+                  metrics=['accuracy'])
+    return model
+
+def bidirectional_gru_with_attention(embedding_layer, shape, optimiser, vector_type):
+    if vector_type == 'elmo':
+        inputs = Input(batch_shape=shape, dtype=tf.string)
+    else:
+        inputs = Input(batch_shape=shape)
+    x = embedding_layer(inputs)
+    x = Bidirectional(GRU(50, batch_input_shape=shape, return_sequences=True))(x)
+    attention_weights, x = AttentionLayer()(x)
+    x = Dropout(0.5)(x)
     outputs = Dense(1, activation="sigmoid")(x)
 
     model = Model(inputs=inputs, outputs=outputs)
@@ -322,7 +371,7 @@ def prepare_pre_vectors(text: str, vector_type: str, dataset_num: int, model_nam
                     path_to_dataset_root + "/processed_data/Tokenisers/" + vector_type + "_tokeniser.pckl")).resolve())
 
         sequences = tokeniser.texts_to_sequences([split_text]*get_batch_size(model_name))
-        token_list = [t.text for t in nlp(tokeniser.sequences_to_texts(sequences)[0])]
+        # token_list = [t.text for t in nlp(tokeniser.sequences_to_texts(sequences)[0])]
         return token_list, pad_sequences(sequences, maxlen=length_limit, padding='post')
     else:
         raise ValueError('Only glove and elmo vectors supported')
@@ -334,7 +383,7 @@ def prepare_vector_embedding_layer(s_data: pd.Series, s_labels: pd.Series, datas
     sarcasm_labels = s_labels[:int((number_of_batches * max_batch_size) / split)]
 
     if vector_type == 'elmo':
-        text = pd.DataFrame([pad_string(t.split(), limit) for t in sarcasm_data])
+        text = pd.DataFrame([pad_string([x.text for x in nlp(t)], limit) for t in sarcasm_data])
         text = text.replace({None: ""})
         text = text.to_numpy()
         print(text)
@@ -407,6 +456,9 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
     elif model_name == 'attention-lstm':
         # use batch_shape instead of model
         model = lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
+    elif model_name == 'attention-bi-lstm':
+        # use batch_shape instead of model
+        model = bidirectional_lstm_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
     elif model_name == 'bi-lstm':
         model = bidirectional_lstm_network(model, new_adam)
     elif model_name == 'dcnn':
@@ -415,8 +467,10 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = cnn_network(model, new_adam)
     elif model_name == 'vanilla-rnn':
         model = vanilla_rnn(model, (max_batch_size, length_limit), new_adam)
-    elif model_name == 'vanilla-gru':
-        model = vanilla_gru(model, (len(s_data), length_limit), new_adam)
+    elif model_name == 'gru':
+        model = gru_network(model, (len(s_data), length_limit), new_adam)
+    elif model_name == 'attention-bi-gru':
+        model = bidirectional_gru_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
     print(model.summary())
     return s_data, l_data, model
 
@@ -457,6 +511,7 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
 
     with tf.compat.v1.Session() as sess:
         s_data, l_data, dl_model = get_model(model_name, dataset_name, clean_data, sarcasm_labels, vector_type, split)
+        graph = tf.compat.v1.get_default_graph()
         sess.run(tf.compat.v1.global_variables_initializer())
         sess.run(tf.compat.v1.tables_initializer())
 
