@@ -147,7 +147,7 @@ In \textit{Poria et al. (2017)} \cite{poria2016deeper}, cited as the first study
 
 CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
 
-\subsection{Attention Mechanisms}\vspace{-10pt}
+\subsection{Attention Mechanism}\vspace{-10pt}
 One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm.
 
 
@@ -338,9 +338,8 @@ While deep learning algorithms are able to extract useful higher-level features 
 
 
 
-\subsection{Binary Classification}
-\noindent 
-In this section, we describe the machine-learning and deep-learning classification models that are used in this project. These algorithms are trained a set of rich features as outlined in the previous section.\vspace{-3pt}
+\subsection{Binary Classification}\vspace{-5pt}
+\noindent In this section, we describe the machine learning and deep learning classifiers used in this project. These algorithms are trained on a set of rich features. For example, our machine learning classifiers are trained on Bag of Words, TF-IDF, GloVe and ElMo vectors, and we experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\vspace{-5pt}
 
 \subsubsection{Machine Learning Models}
 We experiment with five candidate machine learning classifiers, evaluating each of them when trained on four types of features. Each of these supervised models performs binary classification, where unseen samples are predicted to be sarcastic or non-sarcastic. Brief descriptions of the models are provided below in the context of our specific binary classification problem. \vspace{-3pt}
@@ -569,7 +568,7 @@ For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a g
 \subsection{Binary Classification}\vspace{-5pt}
 \noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
 
-\noindent \textbf{Experimental Settings --} We train each machine learning classifier on Bag of Words, TF-IDF, GloVe and ElMo vectors, and experiment with concatenating miscellaneous features where they have been proven to be informative in our binary classification task.\ 5-fold cross validation was employed to ensure reproducability and consistency of results.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-4pt}
+\noindent \textbf{Experimental Settings --} For our machine learning experimentation, 5-fold cross validation is employed to ensure reproducability and consistency of results. However, it is infeasible to apply the same approach to our deep learning experimentation, as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-4pt}
 
 \begin{enumerate}
 	\item \textbf{Early stopping --} Training is interrupted when the validation loss stops declining - this is used to determine the appropriate number of epochs.\vspace{-8pt}
