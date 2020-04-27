@@ -692,66 +692,43 @@ Given that the following model performed best, trained separately on all three d
 
 \newpage
 \section{Evaluation}
-In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
+\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
+
+\subsection{Solution Strengths}\vspace{-10pt}
+\noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiments, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features.\\
+
+% use word exemplary
 
 \noindent The \textbf{research questions} guiding this project are as follows --\\
 \indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
 \indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
-\subsection{Solution Strengths}
 
+
+
+
+\subsection{Solution Limitations}\vspace{-10pt}
+It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
 Can handcrafted sentiment features improve sarcasm predictions?
 
-We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions, such as "\textit{i love working weekends! \#not}".
-
-
-
-As these scores exceed 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions. 
-
+Our deep learning architectures do not explicitly consider sentiment as a predictor of sarcasm.
 
 However, there is evidence to suggest that sentiment features 
 are no more informative than conventional lexical features - two key findings were noted. Firstly,  
 
-
-
-
-
-\ Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions. Secondly, 
-
-we hypothesise that 
-
-Secondly, conventional punctuation features 
-
-We found that sentiment features can be useful predictors of sarcasm when extracted from Twitter data, as a logistic regression model trained on these features achieved an $F_1$ score of 0.593. While sentiment features were less informative when extracted from News headlines, the logistic regression model trained on these features achieved 0.516 - 1.6\% greater than the average expected score of a na\"{i}ve model which classifies with apparent randomness.
-
 ; however, sentiment features extracted from News Headlines showed poor performance in comparison. 
-
-
- below the expected standard (0.5) of a naive classifier whene. As such, we consider sentiment features 
-
-
-% they performed below the expected standard (0.5) of a non-sophisticated model that classifies a balanced dataset with apparent randomness.
-
-more conventional punctuation features were  
 
 \textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
 
 
-
-
-
-\subsection{Solution Limitations}
-It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
-
-Our deep learning architectures do not explicitly consider sentiment as a predictor of sarcasm.
-
-
-\subsection{Lessons learnt}
+\subsection{Lessons learnt}\vspace{-10pt}
 We learned that 
 
 
-\subsection{Project organisation and approach}
+\subsection{Project organisation and approach}\vspace{-10pt}
 
 
 
