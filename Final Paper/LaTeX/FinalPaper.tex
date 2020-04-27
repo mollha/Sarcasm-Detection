@@ -420,6 +420,17 @@ The hidden / internal state of an lstm is used in processing the input sequences
 
 The hidden state contains its own set of biases and weights. \\
 
+\hspace{-20pt}\begin{minipage}{0.4\textwidth}
+	Example text
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.6\textwidth}
+	\begin{figure}[H]
+		\includegraphics[width=0.9\textwidth]{Images/RNN_diagram1.png}\\
+		\centering\textbf{Figure -}: RNN Cell
+	\end{figure}
+\end{minipage}\\
+
 \noindent In an RNN, feedback loops are used to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. However, RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
 
 Variations of the vanilla RNN such as Long Short-Term Memory models (LSTM) and Gated Recurrent Units (GRU) use internal mechanisms, known as gates, which allow them to overcome the issue of short-term memory. In addition to vanilla RNNs, we experiment with LSTMs and GRUs (as well as their bidirectional counterparts) to analyse their effectiveness in sarcasm detection. We provide a brief description of these variants below.
@@ -433,7 +444,6 @@ Variations of the vanilla RNN such as Long Short-Term Memory models (LSTM) and G
 \begin{enumerate}
 	\item \textbf{Gated Recurrent Unit -- }
 	\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
-	\item \textbf{Bidirectional Long Short-term Memory \textit{(BiLSTM)}} -- 
 \end{enumerate}
 
 In addition to our GRU and LSTM models, we experiment with the bidirectional variants of GRUs and LSTMs. Bidirectional models concatenate the output sequences of two recurrent layers, where one is trained on reversed input sequences and the other is trained on the original input sequences. This allows context to be captured from both directions, and can lead to improved predictions.
