@@ -275,7 +275,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 
 %To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
 
-\noindent \textbf{Contextualised Word Embedding --} Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that ELMo markedly improved the state-of-the-art in a number of NLP tasks.\\
+\noindent \textbf{Contextualised Word Embedding --} Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that ELMo markedly improved the state-of-the-art in a number of NLP tasks.\\\vspace{-10pt}
 
 \begin{minipage}{0.3\textwidth}
 	 	\begin{center}
@@ -452,7 +452,7 @@ We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016h
 \begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
+		\includegraphics[width=0.7\textwidth]{Images/absolute_differences.png}
 		\textbf{Figure -:} Visualisation of attention weights\\
 	\end{center}
 \end{figure}
@@ -694,13 +694,41 @@ Given that the following model performed best, trained separately on all three d
 \section{Evaluation}
 In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
 
+\noindent The \textbf{research questions} guiding this project are as follows --\\
+\indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
+\indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
+\indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
+
 \subsection{Solution Strengths}
-We found that sentiment features can be useful predictors of sarcasm in \textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
+
+Can handcrafted sentiment features improve sarcasm predictions?
+
+From our experiments with sentiment features, two key findings were noted. Firstly,  sentiment features were found to be objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. This indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness.\ Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+Secondly, conventional punctuation features 
+
+We found that sentiment features can be useful predictors of sarcasm when extracted from Twitter data, as a logistic regression model trained on these features achieved an $F_1$ score of 0.593. While sentiment features were less informative when extracted from News headlines, the logistic regression model trained on these features achieved 0.516 - 1.6\% greater than the average expected score of a na\"{i}ve model which classifies with apparent randomness.
+
+; however, sentiment features extracted from News Headlines showed poor performance in comparison. 
+
+
+ below the expected standard (0.5) of a naive classifier whene. As such, we consider sentiment features 
+
+
+% they performed below the expected standard (0.5) of a non-sophisticated model that classifies a balanced dataset with apparent randomness.
+
+more conventional punctuation features were  
+
+\textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
+
+
 
 
 
 \subsection{Solution Limitations}
 It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
+
+Our deep learning architectures do not explicitly consider sentiment as a predictor of sarcasm.
 
 
 \subsection{Lessons learnt}
