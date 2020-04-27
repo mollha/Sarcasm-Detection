@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 APR 2020 16:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 APR 2020 18:16
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -525,92 +525,87 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 388--401
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 421--422
+Underfull \hbox (badness 1406) in paragraph at lines 410--411
+\OT1/ptm/m/n/12 out-puts from pre-vi-ous time steps con-tinue to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
 
  []
 
 <Images/RNN_diagram1.png, id=58, 856.3995pt x 356.532pt>
 File: Images/RNN_diagram1.png Graphic file (type png)
 <use Images/RNN_diagram1.png>
-Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 429.
-(pdftex.def)             Requested size: 249.01204pt x 103.66364pt.
-
-Overfull \hbox (12.18486pt too wide) in paragraph at lines 423--433
-[] $[]$   $[]$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 423--433
-
- []
-
+Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 416.
+(pdftex.def)             Requested size: 197.1319pt x 82.0659pt.
 [13 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
 .png>]
-Underfull \hbox (badness 1303) in paragraph at lines 459--460
+Underfull \hbox (badness 1303) in paragraph at lines 446--447
 \OT1/ptm/m/n/12 through our at-ten-tion layer, which re-turns a con-text
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 459--460
+Underfull \hbox (badness 1019) in paragraph at lines 446--447
 \OT1/ptm/m/n/12 vec-tor and at-ten-tion weights. We can vi-su-alise our
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--460
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 
  []
 
 <Images/absolute_differences.png, id=65, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 46
-5.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 45
+2.
 (pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
 
-Overfull \hbox (5.18486pt too wide) in paragraph at lines 458--470
+Overfull \hbox (5.18486pt too wide) in paragraph at lines 445--457
 [] $[]$   $[]$ 
  []
 
 [14 <./Images/absolute_differences.png>] [15]
-Underfull \hbox (badness 10000) in paragraph at lines 517--518
+Underfull \hbox (badness 10000) in paragraph at lines 504--505
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 520--521
+Underfull \hbox (badness 10000) in paragraph at lines 507--508
 
  []
 
 
-Overfull \hbox (18.94879pt too wide) in paragraph at lines 529--530
+Overfull \hbox (18.94879pt too wide) in paragraph at lines 516--517
 []$\OML/cmm/m/it/12 MCC \OT1/cmr/m/n/12 = []$ 
  []
 
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
-Package pdftex.def Info: Images/absolute_differences.png  used on input line 56
-2.
+Package pdftex.def Info: Images/absolute_differences.png  used on input line 54
+9.
 (pdftex.def)             Requested size: 138.33745pt x 103.752pt.
 [16]
-Overfull \hbox (0.2755pt too wide) in paragraph at lines 618--620
+Overfull \hbox (0.2755pt too wide) in paragraph at lines 605--607
 \OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
 ng mod-els. Lo-gis-tic re-gres-sion trained
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 650--651
+Underfull \hbox (badness 10000) in paragraph at lines 637--638
 
  []
 
 <Images/cm1.png, id=82, 431.81325pt x 299.9205pt>
 File: Images/cm1.png Graphic file (type png)
 <use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 660.
+Package pdftex.def Info: Images/cm1.png  used on input line 647.
 (pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
 <Images/cm2.png, id=83, 431.81325pt x 296.90926pt>
 File: Images/cm2.png Graphic file (type png)
 <use Images/cm2.png>
-Package pdftex.def Info: Images/cm2.png  used on input line 668.
+Package pdftex.def Info: Images/cm2.png  used on input line 655.
 (pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
 [18 <./Images/cm1.png> <./Images/cm2.png>] [19] (FinalPaper.bbl [20]
 Underfull \hbox (badness 1048) in paragraph at lines 98--102
@@ -650,7 +645,7 @@ ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
 assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on FinalPaper.pdf (22 pages, 554974 bytes).
+Output written on FinalPaper.pdf (22 pages, 555349 bytes).
 PDF statistics:
  144 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

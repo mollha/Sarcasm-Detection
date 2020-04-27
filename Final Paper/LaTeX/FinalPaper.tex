@@ -400,40 +400,27 @@ We implement two convolutional neural networks and present their architectures i
 \end{minipage}\\\vspace{-7pt}
 
 \begin{center}
-	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures
+	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures\\
 \end{center}
 
-\noindent \textbf{Recurrent Neural Networks (RNN)} 
 
+\noindent \textbf{Recurrent Neural Networks (RNN)} use feedback loops to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. RNNs maintain an additional hidden state, \textit{h}, containing its own set of biases and weights.\vspace{5pt}
 
-
-outputs from previous time steps are re-introduced into the network
-
-contain an additional hidden state that is updated as inputs are fed through the network.
-
-
-
-RNNs are particularly adept at processing sequential data
-
-
-The hidden / internal state of an lstm is used in processing the input sequences.
-
-The hidden state contains its own set of biases and weights. \\
-
-\hspace{-20pt}\begin{minipage}{0.4\textwidth}
-	Example text
+\hspace{-20pt}\begin{minipage}{0.52\textwidth}	
+	 We can unroll this loop (\textit{figure \_}) to reveal how outputs from previous time steps continue to propagate through the network.\ RNNs take an input sequence, denoted by \textit{x}, and return an output sequence, denoted by \textit{y}, which is a function of x and the hidden state.\ This hidden state is updated as inputs are fed through the network.\\
 \end{minipage}
 \hspace{10pt}
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.45\textwidth}
+	\vspace{-25pt}
 	\begin{figure}[H]
-		\includegraphics[width=0.9\textwidth]{Images/RNN_diagram1.png}\\
+		\includegraphics[width=0.95\textwidth]{Images/RNN_diagram1.png}\\
 		\centering\textbf{Figure -}: RNN Cell
 	\end{figure}
-\end{minipage}\\
+\end{minipage}\\\vspace{-8pt}
 
-\noindent In an RNN, feedback loops are used to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. However, RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
+\noindent RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
 
-Variations of the vanilla RNN such as Long Short-Term Memory models (LSTM) and Gated Recurrent Units (GRU) use internal mechanisms, known as gates, which allow them to overcome the issue of short-term memory. In addition to vanilla RNNs, we experiment with LSTMs and GRUs (as well as their bidirectional counterparts) to analyse their effectiveness in sarcasm detection. We provide a brief description of these variants below.
+Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} and \textit{Gated Recurrent Units (GRU)} use internal mechanisms, known as gates, which allow them to overcome the issue of short-term memory. We implement a Vanilla RNN as a baseline against which to compare our more advanced RNN models, providing a brief description of these below.
 
 %A directed cycle is formed within an RNN whereby former outputs are input back into a hidden unit. This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
 
