@@ -703,7 +703,23 @@ In the following section, we analyse the effectiveness of the solution, discussi
 
 Can handcrafted sentiment features improve sarcasm predictions?
 
-From our experiments with sentiment features, two key findings were noted. Firstly,  sentiment features were found to be objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. This indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness.\ Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions, such as "\textit{i love working weekends! \#not}".
+
+
+
+As these scores exceed 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions. 
+
+
+However, there is evidence to suggest that sentiment features 
+are no more informative than conventional lexical features - two key findings were noted. Firstly,  
+
+
+
+
+
+\ Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions. Secondly, 
+
+we hypothesise that 
 
 Secondly, conventional punctuation features 
 
