@@ -192,9 +192,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 \begin{enumerate}[leftmargin=0cm]
 	\item \textbf{News Headlines} - \textit{Misra et al. (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnotemark[3]\footnotetext[3]{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnotemark[4]\footnotetext[4]{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al. (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.
 	
-	\item \textbf{Amazon Reviews} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. This dataset was not used by its compilers for classification, hence there is no score available for comparison.
-	
 	\item \textbf{Twitter Data} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. This dataset is messy, as sarcastic instances are those that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al. (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
+	
+	\item \textbf{Amazon Reviews} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. This dataset was not used by its compilers for classification, hence there is no score available for comparison.
 \end{enumerate}
 
 % For example, we avoid using datasets containing tweet ids, whereby the original tweet must be scraped using the Twitter API. A small portion of the original tweets are no longer available on twitter, therefore this does not make for a fair comparison between our results and the results of the source study.
@@ -209,9 +209,9 @@ In terms of \textit{classification}, we implement most of the machine learning a
 		\hline
 		News Headlines & 28619 & \begin{tabular}{c@{}@{}@{}} pos: 47.6\% \\ neg: 52.4\% \end{tabular} &  11.2 & 0.897\\
 		\hline
-		Amazon Reviews & 1254 & \begin{tabular}{c@{}@{}@{}} pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 & N/A \\
-		\midrule
 		Twitter Data & 17280 & \begin{tabular}{c@{}@{}@{}} pos: 50.4\% \\ neg: 49.6\% \end{tabular} &  19.8 & 0.947 \\
+		\midrule
+		Amazon Reviews & 1254 & \begin{tabular}{c@{}@{}@{}} pos: 34.9\% \\ neg: 65.1\% \end{tabular} &  276.4 & N/A \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -241,9 +241,9 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 		\hline
 		News Headlines & \hspace{20pt}97.71\% & \hspace{20pt}97.71\%\\
 		\hline
-		Amazon Reviews & \hspace{20pt}83.17\% & \hspace{20pt}98.22\%\\
-		\hline
 		Twitter Data & \hspace{20pt}89.62\% & \hspace{20pt}96.43\%\\
+		\hline
+		Amazon Reviews & \hspace{20pt}83.17\% & \hspace{20pt}98.22\%\\
 		\hline
 	\end{tabular}\\
 \end{center}
@@ -384,9 +384,9 @@ Deep learning classifiers do not require the  hand-crafted features used in supe
 \end{minipage}\vspace{-5pt}
 
 %Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing k-tokens in the input sentence), producing a new sequence of features.
-\noindent The characterising feature of a CNN is the convolutional layer, where filters are applied to feature vectors using the mathematical operation of convolution, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector (\textit{maximum pooling over time}) to produce a single output value. This is especially useful for classification tasks, where the desired output is a fixed-sized vector representing a class. Due to the high speed of the convolution operation, many convolutional layers can be used in a single network without excessivly slowing the training process.\\\vspace{-8pt}
+\noindent The characterising feature of a CNN is the convolutional layer, where filters are applied to feature vectors using the mathematical operation of convolution, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector (\textit{maximum pooling over time}) to produce a single output value. This is especially useful for classification tasks, where the desired output is a fixed-sized vector representing a class. Due to the high speed of the convolution operation, many convolutional layers can be used in a single network without excessivly slowing the training process.
 
-\noindent We implement two convolutional neural networks and present their architectures in \textit{figure \_} and \textit{figure \_}. We refer to one as a simple CNN as it contains only one convolutional layer, and to the other as a deep CNN as we incorporate three convolutional layers. With over 1.7 million trainable parameters, our deep CNN is more computationally complex and is slower to train than our simple CNN, which contains approximately 140 thousand trainable parameters. Both networks take an $N \times L$-dimensonal vector, where N is the length of each token vector, and L is the number of tokens in the snippet.\vspace{-16pt}
+We implement two convolutional neural networks and present their architectures in \textit{figure \_} and \textit{figure \_}. We refer to one as a simple CNN as it contains only one convolutional layer, and to the other as a deep CNN as we incorporate three convolutional layers. With over 1.7 million trainable parameters, our deep CNN is more computationally complex and is slower to train than our simple CNN, which contains approximately 140 thousand trainable parameters. Both networks take an $N \times L$-dimensonal vector, where N is the length of each token vector, and L is the number of tokens in the snippet.\vspace{-16pt}
 
 \hspace{-20pt}\begin{minipage}{0.4\textwidth}
 	\begin{figure}[H]
@@ -444,9 +444,9 @@ RNNs have been successfully applied to language-related tasks. Often, we may req
 
 \subsection{Attention}
 \vspace{-4.2pt}
-\noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions, such as the text surrounding key words or phrases. This is known as \textit{human visual attention} and has been well studied by psychologists; however, we can incorporate a similar attention mechanism into our recurrent deep learning models. This provides insight into which tokens contribute more or less in classification decisions. Additionally, incorporating an attention mechnism can lead to better classification performance. Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-8pt}
+\noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions, such as the text surrounding key words or phrases. This is known as \textit{human visual attention} and has been well studied by psychologists; however, we can incorporate a similar attention mechanism into our recurrent deep learning models. This provides insight into which tokens contribute more or less in classification decisions. Additionally, incorporating an attention mechnism can lead to better classification performance. Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}
 
-\noindent We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words that are taken out of context. The meaning of words depends on the context in which they are found; hence, harnessing as much context as possible is key to informing classification decisions and producing meaningful attention visualisations. We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\vspace{-8pt}
+We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words that are taken out of context. The meaning of words depends on the context in which they are found; hence, harnessing as much context as possible is key to informing classification decisions and producing meaningful attention visualisations. We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\vspace{-8pt}
 
 
 \hspace{-17pt}\begin{minipage}{0.6\textwidth}
@@ -595,14 +595,15 @@ For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a g
 		Support Vector Machine & TF-IDF  & 0.688   & 0.751 & 0.718\\
 		Random Forest Classifier & ElMo  & 0.801   & 0.793 & 0.797\\
 		Logistic Regression & ElMo  & 0.840   & 0.852 & 0.846\\
-		Logistic Regression & ElMo + S + T & 0.843   & 0.851 & 0.847\\
+		Logistic Regression & ElMo $\cdot$ S $\cdot$ T & \textbf{0.848}   & \textbf{0.854} & \textbf{0.851}\\
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		LSTM & ElMo  & 0.843   & 0.878 & 0.860\\
+		CNN & GloVe  & 0.818 & 0.806 & 0.812\\
+		LSTM & ElMo  & 0.843   & \textbf{0.878} & 0.860\\
 		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
-		GRU & ElMo  & 0.889   & 0.877 & 0.883\\
 		Deep CNN & ElMo & 0.873   & 0.869 & 0.871\\
+		Bidirectional GRU & ElMo  & \textbf{0.889}   & 0.877 & \textbf{0.883}\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -626,16 +627,16 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 		\hline\hline
 		Gaussian Na\"{i}ve Bayes & Bag of Words & 0.677 & 0.685 & 0.681\\
 		Random Forest Classifier & GloVe  & 0.669   & 0.623 & 0.645\\
-		Support Vector Machine & ElMo  & 0.722 & 0.789 & 0.754\\
+		Support Vector Machine & ElMo  & 0.722 & \textbf{0.789} & 0.754\\
 		Logistic Regression & ElMo  & 0.758 & 0.766 & 0.762\\
-		Logistic Regression & ElMo + S + T + P & 0.794 & 0.786 & \textbf{0.790}\\
+		Logistic Regression & ElMo $\cdot$ S $\cdot$ T $\cdot$ P & \textbf{0.794} & 0.786 & \textbf{0.790}\\
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
 		Vanilla RNN & ElMo  & 0.834   & 0.801 & 0.817\\
 		Bidirectional LSTM & GloVe  & 0.829 & 0.815 & 0.822\\
-		CNN & ElMo  & 0.851   & 0.814 & 0.832\\
-		Bidirectional LSTM & ElMo  & 0.847   & 0.851 & \textbf{0.849}\\
+		CNN & ElMo  & \textbf{0.851}   & 0.814 & 0.832\\
+		Bidirectional LSTM & ElMo  & 0.847   & \textbf{0.851} & \textbf{0.849}\\
 		Long Short-Term Memory & GloVe & 0.837   & 0.845 & 0.841\\
 		\hline
 	\end{tabular}
@@ -669,7 +670,29 @@ Given that the following model performed best, trained separately on all three d
 \end{center}
 
 
-\subsection{Attention Mechanism}
+\subsection{Attention Mechanism}\vspace{-5pt}
+\noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.
+
+\begin{center}
+	\textbf{Table -}: Comparison of classification results with and without Attention
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ |c||c|c|c|}
+		\hline
+		\textbf{Model} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\hline\hline
+		Bidirectional GRU & 0.889 & 0.877 & 0.883\\
+		\hline
+		Bidirectional GRU with Attention & 0.889   & 0.877 & 0.883\\
+		\hline
+	\end{tabular}
+\end{center}
+
+
+
+
+
 
 
 
