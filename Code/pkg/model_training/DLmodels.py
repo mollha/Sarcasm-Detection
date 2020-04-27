@@ -26,7 +26,7 @@ import tensorflow.keras.backend as K
 from tensorflow.keras.initializers import Constant
 from tensorflow.keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef
+from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef, confusion_matrix
 import tensorflow_hub as hub
 import spacy
 
@@ -186,7 +186,7 @@ def get_length_limit(dataset_name: str) -> int:
 def get_batch_size(model_name: str) -> int:
     # set batch size to 1 for online learning in lstm
     batch_sizes = {'lstm': 32, 'bi-lstm': 32, 'cnn': 32, 'vanilla-rnn': 32,
-                   'gru': 32, 'attention-lstm': 32, 'dcnn': 32,
+                   'gru': 32, 'attention-lstm': 32, 'dcnn': 32, 'bi-gru':32,
                    "attention-bi-lstm": 32, "attention-bi-gru": 32}
     return batch_sizes[model_name]
 
@@ -276,6 +276,15 @@ def vanilla_rnn(model, shape, optimiser):
 
 def gru_network(model, shape, optimiser):
     model.add(GRU(50, batch_input_shape=shape, return_sequences=True))
+    model.add(GlobalMaxPooling1D())
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer=optimiser,
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    return model
+
+def bidirectional_gru_network(model, shape, optimiser):
+    model.add(Bidirectional(GRU(50, batch_input_shape=shape, return_sequences=True)))
     model.add(GlobalMaxPooling1D())
     model.add(Dense(1, activation='sigmoid'))
     model.compile(optimizer=optimiser,
@@ -469,6 +478,8 @@ def get_model(model_name: str, dataset_name: str, sarcasm_data: pd.Series, sarca
         model = vanilla_rnn(model, (max_batch_size, length_limit), new_adam)
     elif model_name == 'gru':
         model = gru_network(model, (len(s_data), length_limit), new_adam)
+    elif model_name == 'bi-gru':
+        model = bidirectional_gru_network(model, (max_batch_size, length_limit), new_adam)
     elif model_name == 'attention-bi-gru':
         model = bidirectional_gru_with_attention(e_layer, (max_batch_size, length_limit), new_adam, vector_type)
     print(model.summary())
@@ -491,6 +502,12 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     print('Precision: ', precision)
     print('Recall: ', recall)
     print('MCC: ', mcc)
+    tn, fp, fn, tp = confusion_matrix(np.array(testing_labels), np.array(y_pred)).ravel()
+    print('True Positives: ' + str(tp))
+    print('True Negatives: ' + str(tn))
+    print('False Positives: ' + str(fp))
+    print('False Negatives: ' + str(fn))
+
 
 
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
