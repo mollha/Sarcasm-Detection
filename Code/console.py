@@ -1,3 +1,5 @@
+import sys
+import pathlib; base_path = pathlib.Path(__file__).parent.parent.resolve(); sys.path.insert(1, str(base_path))
 from warnings import filterwarnings; filterwarnings('ignore')
 import numpy as np
 from pathlib import Path
@@ -26,18 +28,18 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
 
     colored_string += '</div>'
 
-    if prediction:
+    if prediction is not None:
         prediction_template = '<div class ="slidecontainer", style="{}"> <input type = "range" min = "0" max = "100" value = "{}" style="{}" class ="slider" id="myRange"></div>'
         style = '<style>.slider::-webkit-slider-thumb {-webkit-appearance: none; border-radius: 0%; appearance: none; width: 0.7px; background: #000000; height: 6px; cursor: default;}</style>'
         outer_css = '-webkit-appearance: none; width: 171px; margin-left: 2px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
         inner_css = '-webkit-appearance: none; height: 2px; width: 0px; outline: none; margin-left: {}px;'
         labels = '<div style="margin-left: 0px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: left;"><label style = "font-size: 4px;">▲ </label><br><label style = "font-size: 2.5px;">NON-SARCASTIC</label>' \
-        '</div><div style = "margin-left: 58px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px;"> NEUTRAL </label>'\
-        '</div><div style = "margin-left: 69px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
+        '</div><div style = "margin-left: 60.35px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px;"> NEUTRAL </label>'\
+        '</div><div style = "margin-left: 66px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
         'SARCASTIC&nbsp; </label></div>'
 
         colored_string += style
-        colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</p>'
+        colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom: 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</p>'
         colored_string += prediction_template.format(outer_css, prediction, inner_css.format(170 * prediction))
         colored_string += labels
 
