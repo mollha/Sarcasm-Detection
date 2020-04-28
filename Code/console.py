@@ -90,7 +90,7 @@ if __name__ == "__main__":
         sentence = input('\nEnter Text: ')
         cleaned_sentence = dc.data_cleaning(sentence)
         prediction_value, _ = get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
-        print('Prediction: ', prediction)
+        print('Prediction: ', prediction_value)
         if prediction_value > 0.6:
             print('Class label: Sarcastic')
         elif prediction_value < 0.4:
@@ -98,10 +98,13 @@ if __name__ == "__main__":
         else:
             print('Class label: Neutral')
 
-        c = input('\nContinue? y / n \n').strip().lower()
-        if c in {'y', 'n'}:
-            if c == 'n':
+        while True:
+            content = input('\nContinue? y / n \n').strip().lower()
+            if content in {'y', 'n'}:
                 break
-        else:
-            print('Invalid input - press "y" to continue, or "n" to exit')
+            else:
+                print('Invalid input - press "y" to continue, or "n" to exit')
+
+        if content == 'n':
+            break
 
