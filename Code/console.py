@@ -63,10 +63,9 @@ def get_prediction(text: str, trained_model, v_type: str, m_name: str, d_num: in
     embedding_output = get_full_embeddings(sequence)
     attention_output = get_attention_from_embedding(embedding_output)
     prediction = np.mean(get_prediction_from_embedding(embedding_output))
-    print('Prediction: ', prediction)
     attention_weights, context_vectors = attention_output.pop(0)
     attention_weights = attention_weights[0]
-    return visualise(tokens, attention_weights[:len(tokens)], prediction)
+    return prediction, visualise(tokens, attention_weights[:len(tokens)], prediction)
 
 
 def get_trained_model(v_type: str, m_name: str, d_num: int):
@@ -88,10 +87,21 @@ if __name__ == "__main__":
     model = get_trained_model(vector_type, model_name, dataset_number)
 
     while True:
-        sentence = input('Type sentence:\n')
+        sentence = input('\nEnter Text: ')
         cleaned_sentence = dc.data_cleaning(sentence)
-        get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
+        prediction_value, _ = get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
+        print('Prediction: ', prediction)
+        if prediction_value > 0.6:
+            print('Class label: Sarcastic')
+        elif prediction_value < 0.4:
+            print('Class label: Non-Sarcastic')
+        else:
+            print('Class label: Neutral')
 
-        c = input('Continue? y / n\n')
-        if c == 'n':
-            break
+        c = input('\nContinue? y / n \n').strip().lower()
+        if c in {'y', 'n'}:
+            if c == 'n':
+                break
+        else:
+            print('Invalid input - press "y" to continue, or "n" to exit')
+
