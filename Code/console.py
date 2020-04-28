@@ -38,8 +38,12 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
         '</div><div style = "margin-left: 66px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
         'SARCASTIC&nbsp; </label></div>'
 
+        prediction_score = str(round(prediction, 2))
+        if len(prediction_score) == 3:
+            prediction_score += '0'
+
         colored_string += style
-        colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom: 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</p>'
+        colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom: 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + prediction_score + '</p>'
         colored_string += prediction_template.format(outer_css, prediction, inner_css.format(170 * prediction))
         colored_string += labels
 
