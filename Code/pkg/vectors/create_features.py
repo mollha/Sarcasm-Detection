@@ -1,3 +1,4 @@
+from warnings import filterwarnings; filterwarnings('ignore')
 from pycorenlp import StanfordCoreNLP
 import numpy as np
 import pandas as pd

@@ -1,10 +1,10 @@
 import sys
+import os; os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # disable tensorflow warnings
 import pathlib; base_path = pathlib.Path(__file__).parent.parent.resolve(); sys.path.insert(1, str(base_path))
-from warnings import filterwarnings; filterwarnings('ignore')
 import numpy as np
 from pathlib import Path
-from Code.pkg.model_training.DLmodels import prepare_pre_vectors, load_model_from_file, get_custom_layers
-from Code.pkg.data_processing.cleaning import data_cleaning
+import pkg.model_training.DLmodels as tr
+import pkg.data_processing.cleaning as dc
 from matplotlib.colors import rgb2hex
 from matplotlib.cm import get_cmap
 import keras.backend as K
@@ -55,7 +55,7 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
 
 
 def get_prediction(text: str, trained_model, v_type: str, m_name: str, d_num: int):
-    tokens, sequence = prepare_pre_vectors(text, v_type, d_num, m_name)
+    tokens, sequence = tr.prepare_pre_vectors(text, v_type, d_num, m_name)
     get_full_embeddings = K.function([trained_model.layers[0].input], [trained_model.layers[1].output])
     get_attention_from_embedding = K.function([trained_model.layers[2].input], [trained_model.layers[3].output])
     get_prediction_from_embedding = K.function([trained_model.layers[2].input], [trained_model.layers[5].output])
@@ -74,8 +74,8 @@ def get_trained_model(v_type: str, m_name: str, d_num: int):
 
     file_name = str(base_path / (
                 'pkg/trained_models/' + m_name + '_with_' + v_type + '_on_' + str(d_num) + '.h5'))
-    custom_layers = get_custom_layers(m_name, v_type)
-    trained_model = load_model_from_file(file_name, custom_layers)
+    custom_layers = tr.get_custom_layers(m_name, v_type)
+    trained_model = tr.load_model_from_file(file_name, custom_layers)
     trained_model._make_predict_function()
     return trained_model
 
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     while True:
         sentence = input('Type sentence:\n')
-        cleaned_sentence = data_cleaning(sentence)
+        cleaned_sentence = dc.data_cleaning(sentence)
         get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
 
         c = input('Continue? y / n\n')

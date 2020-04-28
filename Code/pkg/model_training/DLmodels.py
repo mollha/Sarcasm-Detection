@@ -1,4 +1,4 @@
-from warnings import filterwarnings; filterwarnings('ignore')
+import os; os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # disable tensorflow warnings
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
@@ -25,6 +25,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score, matthews_corrcoef, confusion_matrix
 import tensorflow_hub as hub
 import spacy
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 nlp = spacy.load('en_core_web_md')
 
