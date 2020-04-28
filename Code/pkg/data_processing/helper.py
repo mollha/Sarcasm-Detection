@@ -11,7 +11,6 @@ from pathlib import Path
 nlp = spacy.load('en_core_web_md')
 
 
-
 def get_clean_data_col(data_frame: pd.DataFrame, path_to_dataset_root: str, re_clean: bool) -> pd.DataFrame:
     base_path = Path(__file__).parent
 

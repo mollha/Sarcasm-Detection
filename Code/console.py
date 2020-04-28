@@ -32,15 +32,14 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
         outer_css = '-webkit-appearance: none; width: 171px; margin-left: 2px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
         inner_css = '-webkit-appearance: none; height: 2px; width: 0px; outline: none; margin-left: {}px;'
         labels = '<div style="margin-left: 0px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: left;"><label style = "font-size: 4px;">▲ </label><br><label style = "font-size: 2.5px;">NON-SARCASTIC</label>' \
-        '</div><div style = "margin-left: 63px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px;"> NEUTRAL </label>'\
-        '</div><div style = "margin-left: 73px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
+        '</div><div style = "margin-left: 58px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px;"> NEUTRAL </label>'\
+        '</div><div style = "margin-left: 69px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
         'SARCASTIC&nbsp; </label></div>'
 
         colored_string += style
-        colored_string += '<span style="font-size: 6px; margin-top: 10px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</span>'
+        colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</p>'
         colored_string += prediction_template.format(outer_css, prediction, inner_css.format(170 * prediction))
         colored_string += labels
-
 
     # save in html file and open in browser
     with open('colorise.html', 'w', encoding="utf-8") as f:
@@ -59,29 +58,8 @@ def get_prediction(text: str, trained_model, v_type: str, m_name: str, d_num: in
     attention_output = get_attention_from_embedding(embedding_output)
     prediction = np.mean(get_prediction_from_embedding(embedding_output))
     print('Prediction: ', prediction)
-
-
-    # attention_output = get_full_attention(sequence)  # 1 x 150
     attention_weights, context_vectors = attention_output.pop(0)
     attention_weights = attention_weights[0]
-
-    # attention_weights = np.clip(attention_weights, np.min(attention_weights), np.quantile(attention_weights, 0.98))
-
-
-    #print(attention_weights.shape)
-    # attention_weights = (attention_weights - attention_weights.min())/(attention_weights.max()-attention_weights.min())
-    #attention_weights = np.interp(attention_weights, (attention_weights.min(), attention_weights.max()), (attention_weights.min(), min(0.8, attention_weights.max()*20)))
-    print(attention_weights)
-    #attention_weights = np.interp(attention_weights, (attention_weights.min(), attention_weights.max()), (attention_weights.min()/2, attention_weights.max()/2))
-    #attention_weights = attention_weights.clip(min=0)
-
-    # TODO remove this at the end
-    list_array = attention_weights.tolist()
-    tuple_list = []
-    for val in range(len(tokens)):
-        attention_val = list_array[val]
-        token = tokens[val]
-        tuple_list.append((attention_val, token))
     return visualise(tokens, attention_weights[:len(tokens)], prediction)
 
 
