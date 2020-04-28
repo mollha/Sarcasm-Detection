@@ -8,17 +8,14 @@ import pickle
 from pathlib import Path
 from os.path import isfile
 from tensorflow.keras.layers import Layer
-from tensorflow.keras import activations, optimizers, initializers
-from ..data_processing.augmentation import synonym_replacement
+from tensorflow.keras import optimizers
 from ..data_processing.helper import prepare_data, get_dataset_name
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model, Model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import Dense, Lambda, dot, Activation, concatenate
 from tensorflow.keras.layers import LSTM, Conv1D, Flatten, Dense, Dropout, GlobalMaxPooling1D, \
-    Bidirectional, LeakyReLU, MaxPooling1D, Input
-from tensorflow.keras.callbacks import Callback
+    Bidirectional, MaxPooling1D, Input
 from tensorflow.keras.layers import SimpleRNN, GRU
 from tensorflow.keras.layers import Embedding
 import tensorflow.keras.backend as K
@@ -512,11 +509,6 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
     base_path = Path(__file__).parent
     dataset_name, sarcasm_labels, _, clean_data, _ = prepare_data(dataset_number, vector_type, [], set_size)
-
-    # --------------- Access augmented data if using Amazon review corpus ----------------
-    # if dataset_number == 0:
-    #     target_length = set_size if set_size is not None else 15000
-    #     clean_data, sarcasm_labels = synonym_replacement(dataset_name, clean_data, sarcasm_labels, target_length)
 
     print('Training ' + model_name.upper() + ' using ' + vector_type + ' vectors.')
     print('Dataset size: ' + str(len(clean_data)) + '\n')

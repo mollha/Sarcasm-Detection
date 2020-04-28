@@ -31,9 +31,9 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
         style = '<style>.slider::-webkit-slider-thumb {-webkit-appearance: none; border-radius: 0%; appearance: none; width: 0.7px; background: #000000; height: 6px; cursor: default;}</style>'
         outer_css = '-webkit-appearance: none; width: 171px; margin-left: 2px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
         inner_css = '-webkit-appearance: none; height: 2px; width: 0px; outline: none; margin-left: {}px;'
-        labels = '<div style="margin-left: 0px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: left;"><label style = "font-size: 5px;">▲ </label><br><label style = "font-size: 3px;">NON-SARCASTIC</label>' \
-        '</div><div style = "margin-left: 63px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 5px;">▲ </label> <br> <label style = "font-size: 3px;"> NEUTRAL </label>'\
-        '</div><div style = "margin-left: 73px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 5px;">▲ </label> <br> <label style = "font-size: 3px; text-align: center;">' \
+        labels = '<div style="margin-left: 0px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: left;"><label style = "font-size: 4px;">▲ </label><br><label style = "font-size: 2.5px;">NON-SARCASTIC</label>' \
+        '</div><div style = "margin-left: 63px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px;"> NEUTRAL </label>'\
+        '</div><div style = "margin-left: 73px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
         'SARCASTIC&nbsp; </label></div>'
 
         colored_string += style
