@@ -172,13 +172,10 @@ One particularly interesting technique is the \textit{Hierarchical Attention Net
 
 In our solution, high quality datasets are first collected and pre-processed. During feature extraction, the textual training data is transformed into numerical vectors and these features are used to train a classification model. The trained classifier is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
 
-
-\begin{center}
-	\textbf{Figure \_:} Overview of the solution
-\end{center}
 \begin{center}
 	\includegraphics[width=0.8\textwidth]{Images/modelpipeline2.png}
-	\label{Model Pipeline}
+	\label{Model Pipeline}\\
+	\textbf{Figure 1:} Overview of the solution
 \end{center}
 
 \subsection{Implementation Tools}
@@ -201,7 +198,7 @@ In terms of \textit{classification}, we implement most of the machine learning a
 
 
 \begin{center}
-	\textbf{Figure -}: Statistical breakdown of the datasets used in this project \\
+	\textbf{Table 2}: Statistical breakdown of the datasets used in this project \\
 	\vspace{3pt}
 	\begin{tabular}{P{3.3cm}P{2.6cm}P{2.5cm}P{2.2cm}P{3.4cm}}
 		\hline
@@ -233,7 +230,7 @@ On Twitter, users can include hyperlinks and references to other users in their 
 Punctuation is removed and text is transformed to lowercase in order to reduce sparsity induced by the optional inclusion of punctuation and variations in letter capitalisation. This ensures that are fewer representations of the same word, as tokens such as \textit{'CAN'T'}, \textit{'can't'}, and \textit{'Cant'} are all mapped to the same single token - 'cant'. However, punctuation and capitalisation can be used for emphasis, which may in turn be indicative of sarcasm. Hence, we re-introduce this meaning in the form of additional lexical features using a procedure outlined in the feature extraction section. Finally, we remove numbers and stopwords, such as \textit{'the'}, \textit{'in'} and \textit{'an'}, as they provide little additional meaning to a sentence despite the number of times they occur.
 
 \begin{center}
-	\textbf{Figure -}:  Proportion of tokens represented in the GloVe dictionary\\
+	\textbf{Table 3}:  Proportion of tokens represented in the GloVe dictionary\\
 	\vspace{4pt}
 	\begin{tabular}{p{3cm}||p{3cm}p{3cm}}
 		\hline
@@ -267,7 +264,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 	\vspace{-10pt}
 	\begin{center}
 		\hspace{-1cm}\includegraphics[width=1.05\textwidth]{Images/outside1.png}\\
-		\hspace{-1cm}\textbf{Figure -:} GloVe substructure\footnotemark[5]\\
+		\hspace{-1cm}\textbf{Figure 2:} GloVe substructure\footnotemark[5]\\
 		\label{Glove Model}
 	\end{center}
 \end{minipage} \hfill
@@ -278,12 +275,12 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 
 %To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
 
-\noindent \textbf{Contextualised Word Embedding --} Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that ELMo markedly improved the state-of-the-art in a number of NLP tasks.\\
+\noindent \textbf{Contextualised Word Embedding --} Peters et al\ (2018) \cite{peters2018deep} introduced the \textit{ELMo} model, and showed that ELMo markedly improved the state-of-the-art in a number of NLP tasks.\\\vspace{-10pt}
 
 \begin{minipage}{0.3\textwidth}
 	 	\begin{center}
 		\hspace{-1.5cm}\includegraphics[width=1.2\textwidth]{Images/elmo_diagram2.png}\\
-		\hspace{-1cm}\textbf{Figure -:} ElMo model pipeline\\
+		\hspace{-1cm}\textbf{Figure 3:} ElMo model pipeline\\
 		\label{ElMo Model}
 	\end{center}
 \end{minipage} \hfill
@@ -361,7 +358,7 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 \subsubsection{Deep Learning Models}
 Deep learning classifiers do not require the  hand-crafted features used in supervised classifiers, and are instead capable of learning higher-level features from dense vectors such as ElMo and GloVe. We focus on two categories of neural networks - Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN). While it is beyond the scope of this paper to describe in detail the concepts involved in CNNs and RNNs, we provide a brief explanation below. As we are performing binary classification, we use the Binary Cross-Entropy loss function.\\\vspace{-5pt}
 
-\noindent \textbf{Convolutional Neural Networks (CNN)}\cite{lecun1998gradient} were popularised for their applications in computer vision and were designed to be used with image data \cite{krizhevsky2012imagenet}; however, they can be adapted for text-based classification tasks by replicating the two-dimensional structure of images (\textit{figure \_}).\vspace{-5pt}
+\noindent \textbf{Convolutional Neural Networks (CNN)}\cite{lecun1998gradient} were popularised for their applications in computer vision and were designed to be used with image data \cite{krizhevsky2012imagenet}; however, they can be adapted for text-based classification tasks by replicating the two-dimensional structure of images (\textit{figure 4}).\vspace{-5pt}
 %CNNs include a variable number of convolutional layers with non-linear activations - they typically have fewer layers than other neural networks, where each layer applies dfferent filters and combines their result. 
 
 \hspace{-20pt}\begin{minipage}{0.35\textwidth}
@@ -374,7 +371,7 @@ Deep learning classifiers do not require the  hand-crafted features used in supe
 			w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
 			\end{bmatrix}
 			$\vspace{5pt}
-			\textbf{Figure -}: $m \times n$ feature vector\\
+			\textbf{Figure 4}: $m \times n$ feature vector\\
 		\end{center}
 	\end{figure}
 \end{minipage} \hfill
@@ -386,7 +383,7 @@ Deep learning classifiers do not require the  hand-crafted features used in supe
 %Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing k-tokens in the input sentence), producing a new sequence of features.
 \noindent The characterising feature of a CNN is the convolutional layer, where filters are applied to feature vectors using the mathematical operation of convolution, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector (\textit{maximum pooling over time}) to produce a single output value. This is especially useful for classification tasks, where the desired output is a fixed-sized vector representing a class. Due to the high speed of the convolution operation, many convolutional layers can be used in a single network without excessivly slowing the training process.
 
-We implement two convolutional neural networks and present their architectures in \textit{figure \_} and \textit{figure \_}. We refer to one as a simple CNN as it contains only one convolutional layer, and to the other as a deep CNN as we incorporate three convolutional layers. With over 1.7 million trainable parameters, our deep CNN is more computationally complex and is slower to train than our simple CNN, which contains approximately 140 thousand trainable parameters. Both networks take an $N \times L$-dimensonal vector, where N is the length of each token vector, and L is the number of tokens in the snippet.\vspace{-16pt}
+We implement two convolutional neural networks and present their architectures in \textit{figure 5}. We refer to one as a simple CNN as it contains only one convolutional layer, and to the other as a deep CNN as we incorporate three convolutional layers. With over 1.7 million trainable parameters, our deep CNN is more computationally complex and is slower to train than our simple CNN, which contains approximately 140 thousand trainable parameters. Both networks take an $N \times L$-dimensonal vector, where N is the length of each token vector, and L is the number of tokens in the snippet.\vspace{-16pt}
 
 \hspace{-20pt}\begin{minipage}{0.4\textwidth}
 	\begin{figure}[H]
@@ -403,44 +400,43 @@ We implement two convolutional neural networks and present their architectures i
 \end{minipage}\\\vspace{-7pt}
 
 \begin{center}
-	\textbf{Figure -}: Illustration of Convolutional Neural Network Architectures
+	\textbf{Figure 5}: Illustration of Convolutional Neural Network Architectures\\
 \end{center}
 
-\noindent \textbf{Recurrent Neural Networks (RNN)} 
 
+\noindent \textbf{Recurrent Neural Networks (RNN)} use feedback loops to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. RNNs maintain an additional hidden state, \textit{h}, containing its own set of biases and weights.\vspace{5pt}
 
-outputs from previous time steps are re-introduced into the network
+\hspace{-20pt}\begin{minipage}{0.6\textwidth}	
+	 We can unroll this loop (\textit{figure 6}) to reveal how outputs from previous time steps continue to propagate through the network.\ RNNs take an input sequence, denoted by \textit{x}, and return an output sequence, denoted by \textit{y}, which is a function of x and the hidden state.\ This hidden state is updated as inputs are fed through the network.\\
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.4\textwidth}
+	\vspace{-40pt}
+	\begin{figure}[H]
+		\includegraphics[width=1\textwidth]{Images/RNN_diagram1.png}\\
+		\centering\textbf{Figure 6}: Illustration of RNN Cell
+	\end{figure}
+\end{minipage}\\\vspace{-10pt}
 
-contain an additional hidden state that is updated as inputs are fed through the network.
+\noindent RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
 
-RNNs use feedback loops to process sequential data
-gradient-based learning, where 
-This creates a form of memory, as it allows information to persist in the network.\\
+Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \cite{hochreiter1997long} and \textit{Gated Recurrent Units (GRU)}\cite{cho2014learning} use internal mechanisms, known as gates, which allow them to overcome the issue of short-term memory by controlling how much information is forgotten or allowed to pass through to the output. We implement an LSTM and GRU (as well as their bidirectional variants), comparing their performance against that of a standard RNN. Bidirectional models concatenate the output sequences of two recurrent layers, where one is trained on reversed input sequences and the other is trained on the original input sequences. This allows context to be captured from both directions, and can lead to improved predictions.
 
-\noindent RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, RNNs are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. This is where the gradient with respect to the earliest layers becomes negligible; as do the updates made to their weights. The learning process may become unstable and the network will have a short-term memory.\\
+%A directed cycle is formed within an RNN whereby former outputs are input back into a hidden unit. This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
 
-LSTMs and GRUs have internal mechanisms known as gates, and can overcome the pitfall of short-term memory.
+%In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies. We implement a Vanilla RNN as a baseline against which to compare our more advanced RNN models, as well as three additional models as described below:
 
-A directed cycle is formed within an RNN whereby former outputs are input back into a hidden unit. 
+% RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
 
-This hidden state represents the context based on prior inputs, giving rise to the \textit{temporal dimension} in RNNs which allows them to take into account time and sequencing. This leads to the interesting property that the same input could produce a different output depending on the previous inputs given to the RNN.
-
-In a vanilla RNN, the input and hidden state are simply propagated through a single tanh layer. However in a Long Short Term Memory model (LSTM), three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies. We implement a Vanilla RNN as a baseline against which to compare our more advanced RNN models, as well as three additional models as described below:
-
-\begin{enumerate}
-	\item \textbf{Gated Recurrent Unit -- }
-	\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
-	\item \textbf{Bidirectional Long Short-term Memory \textit{(BiLSTM)}} -- Uses two LSTMs and concatenates their output sequences, where one is trained on reversed input sequences and the other is trained on the original input sequences. This allows context to be captured from both directions, and can lead to improved predictions.
-\end{enumerate}
-
-RNNs have been successfully applied to language-related tasks. Often, we may require more context than just the most recent surrounding text. The gap between the most relevant information needed to form a prediction can be very wide, if the relevent contextual information was given at the beginning of the paragraph. LSTMs are especially suited to processing sequential, or time-series, information such as text. This is due to the fact that RNNs have a 'memory', in that the input to the current step is the output from the previous step. However, they suffer from the vanishing gradient problem. This is where gradient values get smaller as it backtracks through lower layers, making it harder for the network to update weights and causing calculations to take longer. Recurrent Neural Networks are not very good at remembering long term dependencies, therefore in this instance we can use \textit{Long short-term memory (LSTM)} models \cite{hochreiter1997long} instead which are more effective at preserving long term dependencies.
-
-
-
-
-
-
-
+%\begin{enumerate}
+	%\item \textbf{Gated Recurrent Unit -- } Introduced in Cho et al.\ (2014) \cite{cho2014learning}, GRUs use an update gate and a reset gate to determine how much information from earlier time steps needs to be passed to successive time steps and how much should be forgotten.
+	
+	%The reset gate is used to 
+	
+	%\item \textbf{Long Short-term Memory \textit{(LSTM)} -- } They use \textit{input}, \textit{output} and \textit{forget} gates 
+	
+	%three gates are introduced, as well as a cell state, allowing an LSTM to better preserve long-term dependencies
+%\end{enumerate}
 
 \subsection{Attention}
 \vspace{-4.2pt}
@@ -456,7 +452,7 @@ We employ the attention mechnism outlined in Yang et al.\ (2016) \cite{yang2016h
 \begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{Images/absolute_differences.png}
+		\includegraphics[width=0.7\textwidth]{Images/absolute_differences.png}
 		\textbf{Figure -:} Visualisation of attention weights\\
 	\end{center}
 \end{figure}
@@ -600,10 +596,10 @@ For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a g
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
 		CNN & GloVe  & 0.818 & 0.806 & 0.812\\
-		LSTM & ElMo  & 0.843   & \textbf{0.878} & 0.860\\
+		LSTM & ElMo  & 0.843   & 0.878 & 0.860\\
 		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
 		Deep CNN & ElMo & 0.873   & 0.869 & 0.871\\
-		Bidirectional GRU & ElMo  & \textbf{0.889}   & 0.877 & \textbf{0.883}\\
+		Bidirectional GRU & ElMo  & \textbf{0.888}   & \textbf{0.901} & \textbf{0.875}\\
 		\hline
 	\end{tabular}
 \end{center}
@@ -659,7 +655,7 @@ Given that the following model performed best, trained separately on all three d
 \begin{minipage}{0.4\textwidth}
 	\begin{figure}[H]
 		\begin{center}
-			\includegraphics[width=0.75\textwidth]{Images/cm1.png}\\
+			\includegraphics[width=0.75\textwidth]{Images/cm2.png}\\
 			(b) Trained on Twitter Data\\
 		\end{center}
 	\end{figure}
@@ -682,38 +678,59 @@ Given that the following model performed best, trained separately on all three d
 		\hline
 		\textbf{Model} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Bidirectional GRU & 0.889 & 0.877 & 0.883\\
+		Bidirectional GRU & 0.888 & 0.901 & 0.875\\
 		\hline
-		Bidirectional GRU with Attention & 0.889   & 0.877 & 0.883\\
+		Bidirectional GRU with Attention & 0.899   & 0.917 & 0.883\\
 		\hline
 	\end{tabular}
 \end{center}
 
-
-
-
+\noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.
 
 
 
 
 \newpage
 \section{Evaluation}
-In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
+\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
 
-\subsection{Solution Strengths}
-We found that sentiment features can be useful predictors of sarcasm in \textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
+\subsection{Solution Strengths}\vspace{-10pt}
+\noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiments, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features.
+
+We integrate an Attention layer into a bidirectional GRU and incorporate a mechanism for visualising the attention weights in order to highlight the tokens correlating more to sarcastic and non-sarcastic labels.\\
+
+% use word exemplary
+
+\noindent The \textbf{research questions} guiding this project are as follows --\\
+\indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
+\indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
+\indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
 
 
-\subsection{Solution Limitations}
+
+
+\subsection{Solution Limitations}\vspace{-10pt}
 It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
+Can handcrafted sentiment features improve sarcasm predictions?
+
+Our deep learning architectures do not explicitly consider sentiment as a predictor of sarcasm.
+
+However, there is evidence to suggest that sentiment features 
+are no more informative than conventional lexical features - two key findings were noted. Firstly,  
+
+; however, sentiment features extracted from News Headlines showed poor performance in comparison. 
+
+\textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
 
 
-\subsection{Lessons learnt}
+\subsection{Lessons learnt}\vspace{-10pt}
 We learned that 
 
 
-\subsection{Project organisation and approach}
+\subsection{Project organisation and approach}\vspace{-10pt}
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 APR 2020 02:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 APR 2020 20:41
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -370,141 +370,136 @@ Underfull \hbox (badness 10000) in paragraph at lines 148--149
 <Images/modelpipeline2.png, id=23, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
-Package pdftex.def Info: Images/modelpipeline2.png  used on input line 180.
+Package pdftex.def Info: Images/modelpipeline2.png  used on input line 176.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
  [6 <./Images/modelpipeline2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 219--220
+Underfull \hbox (badness 10000) in paragraph at lines 216--217
 
  []
 
 [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 262--263
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--265
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
 
  []
 
 <Images/outside1.png, id=36, 659.53966pt x 513.78505pt>
 File: Images/outside1.png Graphic file (type png)
 <use Images/outside1.png>
-Package pdftex.def Info: Images/outside1.png  used on input line 269.
+Package pdftex.def Info: Images/outside1.png  used on input line 266.
 (pdftex.def)             Requested size: 145.25842pt x 113.15065pt.
 
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-34.def"
 File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
 )
-Underfull \hbox (badness 10000) in paragraph at lines 275--276
+Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
  []
 
 
-Overfull \hbox (1.46265pt too wide) in paragraph at lines 266--278
+Overfull \hbox (1.46265pt too wide) in paragraph at lines 263--275
 []$[]$  $[]$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
-
  []
 
 [9 <./Images/outside1.png>]
 <Images/elmo_diagram2.png, id=43, 546.24075pt x 417.9615pt>
 File: Images/elmo_diagram2.png Graphic file (type png)
 <use Images/elmo_diagram2.png>
-Package pdftex.def Info: Images/elmo_diagram2.png  used on input line 285.
+Package pdftex.def Info: Images/elmo_diagram2.png  used on input line 282.
 (pdftex.def)             Requested size: 166.00871pt x 127.02206pt.
 
-Overfull \hbox (1.46265pt too wide) in paragraph at lines 283--293
+Overfull \hbox (1.46265pt too wide) in paragraph at lines 280--290
 []$[]$  $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 283--293
+Underfull \hbox (badness 10000) in paragraph at lines 280--290
 
  []
 
 
-Overfull \hbox (3.35202pt too wide) in paragraph at lines 315--315
+Overfull \hbox (3.35202pt too wide) in paragraph at lines 312--312
 []|\OT1/ptm/b/n/12 love| 
  []
 
 
-Overfull \hbox (5.99617pt too wide) in paragraph at lines 315--315
+Overfull \hbox (5.99617pt too wide) in paragraph at lines 312--312
 []|\OT1/ptm/b/n/12 when| 
  []
 
 
-Overfull \hbox (4.61504pt too wide) in paragraph at lines 315--315
+Overfull \hbox (4.61504pt too wide) in paragraph at lines 312--312
 []|\OT1/ptm/b/n/12 my| 
  []
 
 
-Overfull \hbox (5.41484pt too wide) in paragraph at lines 315--315
+Overfull \hbox (5.41484pt too wide) in paragraph at lines 312--312
 []|\OT1/ptm/b/n/12 train| 
  []
 
 
-Overfull \hbox (2.3133pt too wide) in paragraph at lines 315--315
+Overfull \hbox (2.3133pt too wide) in paragraph at lines 312--312
 []|\OT1/ptm/b/n/12 is| 
  []
 
 
-Overfull \hbox (1.58794pt too wide) in paragraph at lines 315--316
+Overfull \hbox (1.58794pt too wide) in paragraph at lines 312--313
 []|\OT1/ptm/b/n/12 late| 
  []
 
 
-Overfull \hbox (1.04343pt too wide) in paragraph at lines 313--321
+Overfull \hbox (1.04343pt too wide) in paragraph at lines 310--318
  [] 
  []
 
 
-Overfull \hbox (0.78032pt too wide) in paragraph at lines 324--324
+Overfull \hbox (0.78032pt too wide) in paragraph at lines 321--321
 []|\OT1/ptm/b/n/12 Sentiment| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 327--327
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 324--324
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 327--327
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 324--324
 []|\OT1/ptm/m/n/12 0.750| 
  []
 
 
-Overfull \hbox (1.3927pt too wide) in paragraph at lines 327--328
+Overfull \hbox (1.3927pt too wide) in paragraph at lines 324--325
 []|\OT1/ptm/m/n/12 0.125| 
  []
 
 
-Overfull \hbox (2.82756pt too wide) in paragraph at lines 322--330
+Overfull \hbox (2.82756pt too wide) in paragraph at lines 319--327
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 331--333
+Underfull \hbox (badness 10000) in paragraph at lines 328--330
 
  []
 
 
-Underfull \hbox (badness 1057) in paragraph at lines 336--337
+Underfull \hbox (badness 1057) in paragraph at lines 333--334
 \OT1/ptm/m/n/12 con-truct $\OT1/cmr/m/n/12 1 \OMS/cmsy/m/n/12  \OT1/cmr/m/n/12
  6$ \OT1/ptm/m/n/12 di-men-sional fea-ture
  []
 
 
-Underfull \hbox (badness 1038) in paragraph at lines 336--337
+Underfull \hbox (badness 1038) in paragraph at lines 333--334
 \OT1/ptm/m/n/12 to-kens in the snip-pet, and value 5
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
 
  []
 
@@ -512,135 +507,152 @@ Underfull \hbox (badness 10000) in paragraph at lines 336--337
 <Images/CNNarchNew.png, id=51, 598.48593pt x 550.30594pt>
 File: Images/CNNarchNew.png Graphic file (type png)
 <use Images/CNNarchNew.png>
-Package pdftex.def Info: Images/CNNarchNew.png  used on input line 393.
+Package pdftex.def Info: Images/CNNarchNew.png  used on input line 390.
 (pdftex.def)             Requested size: 184.44994pt x 169.59383pt.
 <Images/DCNNarchNew.png, id=52, 705.23476pt x 428.802pt>
 File: Images/DCNNarchNew.png Graphic file (type png)
 <use Images/DCNNarchNew.png>
-Package pdftex.def Info: Images/DCNNarchNew.png  used on input line 400.
+Package pdftex.def Info: Images/DCNNarchNew.png  used on input line 397.
 (pdftex.def)             Requested size: 268.3818pt x 163.18199pt.
 
-Overfull \hbox (12.18486pt too wide) in paragraph at lines 391--404
+Overfull \hbox (12.18486pt too wide) in paragraph at lines 388--401
 [] $[]$   $[]$ 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 416--419
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
 
  []
 
+<Images/RNN_diagram1.png, id=58, 856.3995pt x 356.532pt>
+File: Images/RNN_diagram1.png Graphic file (type png)
+<use Images/RNN_diagram1.png>
+Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 416.
+(pdftex.def)             Requested size: 184.44994pt x 76.78888pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
-
+Overfull \hbox (12.18486pt too wide) in paragraph at lines 409--420
+[] $[]$   $[]$ 
  []
 
-[13 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png>]
-Underfull \hbox (badness 1303) in paragraph at lines 453--454
+[13 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
+.png>]
+Underfull \hbox (badness 1303) in paragraph at lines 449--450
 \OT1/ptm/m/n/12 through our at-ten-tion layer, which re-turns a con-text
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 453--454
+Underfull \hbox (badness 1019) in paragraph at lines 449--450
 \OT1/ptm/m/n/12 vec-tor and at-ten-tion weights. We can vi-su-alise our
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 453--454
+Underfull \hbox (badness 10000) in paragraph at lines 449--450
 
  []
 
-<Images/absolute_differences.png, id=63, 462.528pt x 346.896pt>
+<Images/absolute_differences.png, id=65, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 45
-9.
-(pdftex.def)             Requested size: 175.22687pt x 131.41956pt.
+5.
+(pdftex.def)             Requested size: 129.11438pt x 96.83379pt.
 
-Overfull \hbox (5.18486pt too wide) in paragraph at lines 452--464
+Overfull \hbox (5.18486pt too wide) in paragraph at lines 448--460
 [] $[]$   $[]$ 
  []
 
-[14] [15 <./Images/absolute_differences.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 511--512
+[14 <./Images/absolute_differences.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 507--508
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 514--515
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 
  []
 
 
-Overfull \hbox (18.94879pt too wide) in paragraph at lines 523--524
+Overfull \hbox (18.94879pt too wide) in paragraph at lines 519--520
 []$\OML/cmm/m/it/12 MCC \OT1/cmr/m/n/12 = []$ 
  []
 
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 55
-6.
+2.
 (pdftex.def)             Requested size: 138.33745pt x 103.752pt.
-[16]
-Overfull \hbox (0.2755pt too wide) in paragraph at lines 612--614
+[15]
+Overfull \hbox (0.2755pt too wide) in paragraph at lines 608--610
 \OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
 ng mod-els. Lo-gis-tic re-gres-sion trained
  []
 
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 640--641
 
  []
 
-<Images/cm1.png, id=80, 558.28575pt x 381.22424pt>
+<Images/cm1.png, id=79, 431.81325pt x 299.9205pt>
 File: Images/cm1.png Graphic file (type png)
 <use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 654.
-(pdftex.def)             Requested size: 138.33745pt x 94.46236pt.
-File: Images/cm1.png Graphic file (type png)
-<use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 662.
-(pdftex.def)             Requested size: 138.33745pt x 94.46236pt.
-[18 <./Images/cm1.png>] [19] (FinalPaper.bbl [20]
-Underfull \hbox (badness 1048) in paragraph at lines 98--102
+Package pdftex.def Info: Images/cm1.png  used on input line 650.
+(pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
+<Images/cm2.png, id=80, 431.81325pt x 296.90926pt>
+File: Images/cm2.png Graphic file (type png)
+<use Images/cm2.png>
+Package pdftex.def Info: Images/cm2.png  used on input line 658.
+(pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
+[17 <./Images/cm1.png> <./Images/cm2.png>] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 702--703
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 706--710
+
+ []
+
+[19] (FinalPaper.bbl [20]
+Underfull \hbox (badness 1048) in paragraph at lines 105--109
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-[21]
+
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [22] (FinalPaper.aux) ) 
+) [21]) [22] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4699 strings out of 492452
- 67001 string characters out of 3114457
- 141903 words of memory out of 3000000
- 8949 multiletter control sequences out of 15000+200000
+ 4715 strings out of 492452
+ 67317 string characters out of 3114457
+ 141907 words of memory out of 3000000
+ 8963 multiletter control sequences out of 15000+200000
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1207b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
-x8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is 
-house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
-sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
-assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
-a.pfb>
-Output written on FinalPaper.pdf (22 pages, 516624 bytes).
+{C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Pa
+ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmbx8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
+i8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is hou
+se/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
+ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
+tmri8a.pfb>
+Output written on FinalPaper.pdf (22 pages, 556878 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
+ 144 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
