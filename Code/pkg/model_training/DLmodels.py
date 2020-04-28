@@ -7,7 +7,6 @@ import pandas as pd
 import pickle
 from pathlib import Path
 from os.path import isfile
-from tensorflow.python.keras.backend import set_session
 from tensorflow.keras.layers import Layer
 from tensorflow.keras import activations, optimizers, initializers
 from ..data_processing.augmentation import synonym_replacement

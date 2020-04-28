@@ -17,8 +17,8 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
     :return:
     """
     cmap = get_cmap('Reds')
-    template = '<span class="barcode"; style="color: black; background-color: {}">{}</span>'
-    colored_string = '<div style="max-width: 300px; overflow: auto;">'
+    template = '<span class="barcode"; style="color: black; font-size: 13px; background-color: {}">{}</span>'
+    colored_string = '<div style="max-width: 175px; overflow: auto;">'
     for t, color in zip(token_list, color_array):
         # if negative, set to white
         color_val = rgb2hex((1, 1, 1)) if color < 0 else rgb2hex(cmap(color)[:3])
@@ -27,25 +27,23 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
     colored_string += '</div>'
 
     if prediction:
-        prediction_template = '<div class ="slidecontainer", style="{}"> <input type = "range" min = "0" max = "100" value = "{}" style="{}" class ="slider" id="myRange" list="tickmarks" ></div>'
-        style = '<style>.slider::-webkit-slider-thumb {-webkit-appearance: none; border-radius: 50%; appearance: none; width: 100%;' \
-                 ' height: 5px; background: #f0f0f0; cursor: default;}</style>'
-        outer_css = '-webkit-appearance: none; width: 220px; margin-top: 10px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
-        inner_css = '-webkit-appearance: none; height: 2px; width: 5px; outline: none; margin-left: {}px;'
-        script = "<script>" \
-                 "document.addEventListener('DOMContentLoaded', (event) => {\
-                 var slider = document.getElementById('myRange');\
-                 slider.value=parseInt(document.getElementById('myRange').value);});" \
-                 "</script>"
+        prediction_template = '<div class ="slidecontainer", style="{}"> <input type = "range" min = "0" max = "100" value = "{}" style="{}" class ="slider" id="myRange"></div>'
+        style = '<style>.slider::-webkit-slider-thumb {-webkit-appearance: none; border-radius: 0%; appearance: none; width: 0.7px; background: #000000; height: 6px; cursor: default;}</style>'
+        outer_css = '-webkit-appearance: none; width: 171px; margin-left: 2px; background:#D8D8D8;	background: linear-gradient(to right, #ff4c38, #ffff66, #85ff93);'
+        inner_css = '-webkit-appearance: none; height: 2px; width: 0px; outline: none; margin-left: {}px;'
+        labels = '<div style="margin-left: 0px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: left;"><label style = "font-size: 5px;">▲ </label><br><label style = "font-size: 3px;">NON-SARCASTIC</label>' \
+        '</div><div style = "margin-left: 63px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: center;"> <label style = "font-size: 5px;">▲ </label> <br> <label style = "font-size: 3px;"> NEUTRAL </label>'\
+        '</div><div style = "margin-left: 73px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 5px;">▲ </label> <br> <label style = "font-size: 3px; text-align: center;">' \
+        'SARCASTIC&nbsp; </label></div>'
 
         colored_string += style
-        colored_string += prediction_template.format(outer_css, prediction, inner_css.format(214 * prediction)
-)
-        colored_string += '<span style="font-size: 10px"> Prediction score: ' + str(round(prediction, 2)) + '</span>'
-        colored_string += script
+        colored_string += '<span style="font-size: 6px; margin-top: 10px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + str(round(prediction, 2)) + '</span>'
+        colored_string += prediction_template.format(outer_css, prediction, inner_css.format(170 * prediction))
+        colored_string += labels
+
 
     # save in html file and open in browser
-    with open('colorise.html', 'w') as f:
+    with open('colorise.html', 'w', encoding="utf-8") as f:
         f.write(colored_string)
     print('A visualisation is now available at colorise.html')
     return colored_string
@@ -108,7 +106,7 @@ if __name__ == "__main__":
     while True:
         sentence = input('Type sentence:\n')
         cleaned_sentence = data_cleaning(sentence)
-        get_prediction(sentence, model, vector_type, model_name, dataset_number)
+        get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
 
         c = input('Continue? y / n\n')
         if c == 'n':
