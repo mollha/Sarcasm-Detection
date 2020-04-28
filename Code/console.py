@@ -87,10 +87,14 @@ if __name__ == "__main__":
     model = get_trained_model(vector_type, model_name, dataset_number)
 
     while True:
-        sentence = input('\nEnter Text: ')
-        cleaned_sentence = dc.data_cleaning(sentence)
+        while True:
+            sentence = input('\nEnter Text: ')
+            cleaned_sentence = dc.data_cleaning(sentence)
+            if cleaned_sentence:
+                break
+
         prediction_value, _ = get_prediction(cleaned_sentence, model, vector_type, model_name, dataset_number)
-        print('Prediction: ', prediction_value)
+        print('\nPrediction score: ', prediction_value)
         if prediction_value > 0.6:
             print('Class label: Sarcastic')
         elif prediction_value < 0.4:
