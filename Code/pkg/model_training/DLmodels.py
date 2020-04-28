@@ -176,7 +176,7 @@ def pad_string(tokens: list, limit: int) -> list:
 
 def get_length_limit(dataset_name: str) -> int:
     # based approximately on the average number of tokens in dataset
-    names = {'news_headlines': 150, 'amazon_reviews': 1000, 'ptacek': 150}
+    names = {'news_headlines': 150, 'amazon_reviews': 150, 'ptacek': 150}
     try:
         return names[dataset_name]
     except KeyError:
@@ -329,6 +329,7 @@ def bidirectional_lstm_with_attention(embedding_layer, shape, optimiser, vector_
                   optimizer=optimiser,
                   metrics=['accuracy'])
     return model
+
 
 def bidirectional_gru_with_attention(embedding_layer, shape, optimiser, vector_type):
     if vector_type == 'elmo':
@@ -509,15 +510,14 @@ def evaluate_model(model_name, trained_model, testing_data, testing_labels):
     print('False Negatives: ' + str(fn))
 
 
-
 def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_size=None):
     base_path = Path(__file__).parent
     dataset_name, sarcasm_labels, _, clean_data, _ = prepare_data(dataset_number, vector_type, [], set_size)
 
     # --------------- Access augmented data if using Amazon review corpus ----------------
-    if dataset_number == 0:
-        target_length = set_size if set_size is not None else 15000
-        clean_data, sarcasm_labels = synonym_replacement(dataset_name, clean_data, sarcasm_labels, target_length)
+    # if dataset_number == 0:
+    #     target_length = set_size if set_size is not None else 15000
+    #     clean_data, sarcasm_labels = synonym_replacement(dataset_name, clean_data, sarcasm_labels, target_length)
 
     print('Training ' + model_name.upper() + ' using ' + vector_type + ' vectors.')
     print('Dataset size: ' + str(len(clean_data)) + '\n')
@@ -557,7 +557,7 @@ def get_dl_results(model_name: str, dataset_number: int, vector_type: str, set_s
         model_checkpoint = ModelCheckpoint(file_name, monitor='val_loss', mode='auto', save_best_only=True)
         early_stopping = EarlyStopping(monitor='val_loss', patience=patience, verbose=1, mode='auto')
         model_history = dl_model.fit(x=np.array(training_data), y=np.array(training_labels), validation_data=(testing_data, testing_labels),
-                                    epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
+                                     epochs=epochs, batch_size=max_batch_size, callbacks=[early_stopping, model_checkpoint])
 
         dl_model = load_model_from_file(file_name, custom_layer)
         evaluate_model(model_name, dl_model, testing_data, testing_labels)
