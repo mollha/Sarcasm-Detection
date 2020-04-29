@@ -1,9 +1,9 @@
+from warnings import filterwarnings; filterwarnings('ignore')
 import pandas as pd
 import spacy
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import tensorflow as tf
-from warnings import filterwarnings; filterwarnings('ignore')
 import tensorflow_hub as hub
 import time
 tf.compat.v1.disable_eager_execution()

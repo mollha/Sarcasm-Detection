@@ -50,8 +50,8 @@ def run_dl(models: list, vectors: list, data_sets: list) -> None:
 
 if __name__ == '__main__':
     # --------------------------
-    model_list = ['bi-gru']
-    vector_list = ['glove']
+    model_list = ['cnn']
+    vector_list = ['elmo']
     feature_list = []
     dataset_list = [2]
     # --------------------------
