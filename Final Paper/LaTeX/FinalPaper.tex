@@ -534,7 +534,10 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 
 \subsection{Binary Classification}\vspace{-5pt}
-\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including the models with the highest $F_1$ scores. We contrast the performance of our machine learning classifiers with our deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
+\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including our highest-achieving models and those that produced unexpectedly good or bad results. We contrast the performance of our machine learning and deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
+
+%Hence, we curate a selection of models that either produce the best scores, or exceeded our expectations.
+
 
 \noindent \textbf{Experimental Settings --} For our machine learning experimentation, 5-fold cross validation is employed to ensure reproducability and consistency of results. However, it is infeasible to apply the same approach to our deep learning experimentation, as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function. \vspace{-4pt}
 
@@ -544,10 +547,6 @@ For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a g
 \end{enumerate}\vspace{-4pt}
 
 \noindent Model performance peaks early in the training process for all of our models, although there is some fluctuation in the optimal number of epochs for different model types, hence early stopping is incorporated to stop training once model performance begins to plateau. The number of epochs for which no improvement in validation loss is seen (\textit{patience}) is set to 10. Setting the patience too low can hamper a model that plateaus for a while before improving again. We allocate 90\% of data to the training set, and the remaining 10\% to the testing set.
-
-
-
-%Preliminary experimentation showed that the training process on the Sarcasm Amazon Review corpus was very unstable as this dataset is small. Results varied widely, and model scores were significantly lower. We augment this particular dataset using a synonym replacement strategy, whereby for each instance of the dataset, a new instance is added.
 
 \subsubsection{News Headlines Dataset}
 \begin{center}
@@ -576,6 +575,15 @@ For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a g
 	\end{tabular}
 \end{center}
 \textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-10pt}
+
+
+Notes:
+- comment on sentiment and topic features
+- best-performing ML model had highest of all three metrics
+- ElMo always performs better than the other three feature types across comparable models.
+- TF-IDF features performed better than GloVe features on our Support Vector machine, however use of Bag of Words consistently led to the lowest scores across this dataset.
+- 
+
 
 \noindent Deep learning models routinely outperform Machine learning models.
 Logistic regression trained on ElMo with sentiment and topic features was the machine learning model with the highest $F_1$ score, and a slight improvement of 0.1\%. The Random Forest Classifier was the next best model architecture on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. 
@@ -645,7 +653,29 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 The Matthews Correlation Coefficient is weaker for our Twitter model,
 
 \subsection{Attention}\vspace{-5pt}
-\noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.
+\noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.\\
+
+\begin{minipage}{0.6\textwidth}
+	\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=0.9\textwidth]{Images/lstm.png}\\
+			\hspace{-1cm}\textbf{(b)} Without Attention\\
+		\end{center}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=0.9\textwidth]{Images/attention-lstm.png}\\
+			\hspace{-1cm}\textbf{(a)} With Attention\\
+		\end{center}
+	\end{minipage}
+	\begin{center}
+		\hspace{-20pt}\textbf{Figure -:} Accuracy and \_ statistics of models during training\\
+	\end{center}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	example text
+\end{minipage}\\
+
 
 We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
 
@@ -653,19 +683,6 @@ Visualising the output of our attention layer shows that the model places more e
 
 \begin{center}
 	\textbf{Table -}: Comparison of classification results with and without Attention
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ |c||c|c|c|}
-		\hline
-		\textbf{Model} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
-		\textbf{Metrics} & \textbf{Without Attention} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
-		\hline\hline
-		Without Attention & 0.888 & 0.901 & 0.875\\
-		\hline
-		With Attention & 0.899   & 0.917 & 0.883\\
-		\hline
-	\end{tabular}
 \end{center}
 
 \begin{center}
@@ -684,20 +701,12 @@ Visualising the output of our attention layer shows that the model places more e
 	\end{tabular}
 \end{center}
 
-\noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.
+\noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.\\
 
 
-\begin{minipage}{0.5\textwidth}
-	\vspace{-10pt}
-	\begin{center}
-		\hspace{-1cm}\includegraphics[width=1.05\textwidth]{Images/outside1.png}\\
-		\hspace{-1cm}\textbf{Figure 2:} GloVe substructure\footnotemark[5]\\
-		\label{Glove Model}
-	\end{center}
-\end{minipage} \hfill
-\begin{minipage}{0.66\textwidth}
-	GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ $king - man + woman ≈ queen$. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ $cars - car ≈ apples - apple$. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
-\end{minipage}\\
+
+
+
 
 
 \section{Evaluation}
