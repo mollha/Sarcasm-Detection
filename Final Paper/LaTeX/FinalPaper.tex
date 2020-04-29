@@ -147,7 +147,7 @@ In \textit{Poria et al. (2017)} \cite{poria2016deeper}, cited as the first study
 
 CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
 
-\subsection{Attention Mechanism}\vspace{-10pt}
+\subsection{Attention}\vspace{-10pt}
 One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm.
 
 
@@ -644,7 +644,7 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 
 The Matthews Correlation Coefficient is weaker for our Twitter model,
 
-\subsection{Attention Mechanism}\vspace{-5pt}
+\subsection{Attention}\vspace{-5pt}
 \noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.
 
 We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
@@ -659,15 +659,45 @@ Visualising the output of our attention layer shows that the model places more e
 	\begin{tabular}{ |c||c|c|c|}
 		\hline
 		\textbf{Model} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
+		\textbf{Metrics} & \textbf{Without Attention} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
-		Bidirectional GRU & 0.888 & 0.901 & 0.875\\
+		Without Attention & 0.888 & 0.901 & 0.875\\
 		\hline
-		Bidirectional GRU with Attention & 0.899   & 0.917 & 0.883\\
+		With Attention & 0.899   & 0.917 & 0.883\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{|c||c|c|}
+		\hline
+		& \multicolumn{2}{c|}{\bf Bidirectional LSTM}\\
+		\hline
+		\textbf{Metrics} & \textbf{With Attention} & \textbf{Without Attention}\\
+		\hline\hline
+		Precision & 0.899 & 0.888\\
+		\hline
+		Recall & 0.917 & 0.901\\
+		\hline
+		$F_1$ Score & 0.883 & 0.875\\
 		\hline
 	\end{tabular}
 \end{center}
 
 \noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.
+
+
+\begin{minipage}{0.5\textwidth}
+	\vspace{-10pt}
+	\begin{center}
+		\hspace{-1cm}\includegraphics[width=1.05\textwidth]{Images/outside1.png}\\
+		\hspace{-1cm}\textbf{Figure 2:} GloVe substructure\footnotemark[5]\\
+		\label{Glove Model}
+	\end{center}
+\end{minipage} \hfill
+\begin{minipage}{0.66\textwidth}
+	GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ $king - man + woman ≈ queen$. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ $cars - car ≈ apples - apple$. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
+\end{minipage}\\
 
 
 \section{Evaluation}
