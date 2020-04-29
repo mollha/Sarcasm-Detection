@@ -496,7 +496,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 \subsection{Analysis of Sentiment Features}\vspace{-5pt}
-\noindent We analyse the effectiveness of sentiment, punctuation and topic modelling features on each of our training datasets by training logistic regression models using these features in isolation - N.B.\ logistic regression is used as these feature vectors are small. We use 5-fold cross-validation to compute the $F_1$ scores of these models. A classifier that predicts classes randomly can achieve an $F_1$ score of 0.5 on a balanced dataset - hence, we consider models achieving greater than 0.5 to be indicative of useful training features.\vspace{-15pt}
+\noindent We analyse the effectiveness of our novel sentiment features against that of our standard punctuation and topic modelling features by feeding them to a logistic regression model and calculating the $F_1$ score; logistic regression is used as these feature vectors are small. We use 5-fold cross-validation to compute the $F_1$ scores of these models. A classifier producing random predictions can achieve an $F_1$ score of 0.5 on a balanced dataset - hence, we consider models achieving greater than 0.5 to be indicative of useful training features.\vspace{-15pt}
 
 
 \hspace{-20pt}\begin{minipage}{0.55\textwidth}
