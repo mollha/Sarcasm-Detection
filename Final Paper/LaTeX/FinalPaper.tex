@@ -151,6 +151,20 @@ CNNs have been previously used in sarcasm detection. For example, \textit{Poria 
 One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm.
 
 
+%In Yang et al. 2016, they used two sentence-level and word-level attention
+
+
+%Additionally, we use a bidirectional model so as to account for both the left and right contexts of words. 
+
+%We use a bidirectional GRU and concatenate the output sequences from both GRUs. 
+%This paper considers that documents have a hierarchical structure
+
+%The attention mechnism has played a fundamental role in recent deep learning research, fuelling powerful language models such as BERT. 
+
+%An Attention mechanism attributes more importance to a subset of the input words.
+
+%Bahdanau et al. (2015) suggested that a context vector takes into account all of the input words, assigning relative importance to some more than others.
+
 %This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations. Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
 
 
@@ -454,46 +468,8 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \end{figure}
 \end{minipage}
 
-\noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier.\\
+\noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
 
-
-We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\\vspace{-8pt}
-
-
-Output sequences from the bidirectional GRU are passed through our attention layer, which returns a context vector and attention weights. We can visualise our attention weights by projecting them into a colourspace and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
-
-
-
-
-
-
-
-
-\paragraph{might use this in the related work section}
-In Yang et al. 2016, they used two sentence-level and word-level attention
-
-
-%Additionally, we use a bidirectional model so as to account for both the left and right contexts of words. 
-
-
-
-%We use a bidirectional GRU and concatenate the output sequences from both GRUs. 
-This paper considers that documents have a hierarchical structure
-
-The attention mechnism has played a fundamental role in recent deep learning research, fuelling powerful language models such as BERT. 
-
-LSTMs capture long-term dependcies, more so than a RNN. 
-An Attention mechanism attributes more importance to a subset of the input words.
-
-Bahdanau et al. (2015) suggested that a context vector takes into account all of the input words, assigning relative importance to some more than others.
-
-We take the dot produce of weights and inputs and add our bias terms. 
-We then apply a tanh activation and softmax gives the alignment scores.
-
-
-
-
-\newpage
 \section{Results}\vspace{-5pt}
 \subsection{Evaluation Method}\vspace{-5pt}
 \noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.\vspace{-10pt}
@@ -671,6 +647,8 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 \subsection{Attention Mechanism}\vspace{-5pt}
 \noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.
 
+We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
+
 Visualising the output of our attention layer shows that the model places more emphasis on qualitatively informative tokens.
 
 \begin{center}
@@ -690,8 +668,6 @@ Visualising the output of our attention layer shows that the model places more e
 \end{center}
 
 \noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.
-
-
 
 
 \newpage
