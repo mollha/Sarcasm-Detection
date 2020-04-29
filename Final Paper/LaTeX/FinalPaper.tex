@@ -449,18 +449,13 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=0.95\textwidth]{Images/wordLevelAttention.png}\\
-		\textbf{Figure 7:} Word-level Attention \cite{yang2016hierarchical}\\
+		\textbf{Figure 7:} Word-level attention mechanism\cite{yang2016hierarchical}\\
 	\end{center}
 \end{figure}
 \end{minipage}
 
 \noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier.\\
 
-
-
-
-
-We take the dot product of the alignment scores and the hidden states
 
 We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\\vspace{-8pt}
 
