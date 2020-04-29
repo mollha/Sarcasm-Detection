@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  27 APR 2020 20:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 APR 2020 14:15
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -373,6 +373,36 @@ File: Images/modelpipeline2.png Graphic file (type png)
 Package pdftex.def Info: Images/modelpipeline2.png  used on input line 176.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
  [6 <./Images/modelpipeline2.png>]
+Overfull \hbox (2.20702pt too wide) in paragraph at lines 205--205
+ []|\OT1/ptm/b/n/12 Usage| 
+ []
+
+
+Overfull \hbox (8.74338pt too wide) in paragraph at lines 205--205
+ []|\OT1/ptm/b/n/12 Composition\OT1/ptm/m/n/12 *| 
+ []
+
+
+Overfull \hbox (12.4549pt too wide) in paragraph at lines 207--207
+ []|\OT1/ptm/m/n/12 Training| 
+ []
+
+
+Overfull \hbox (12.4549pt too wide) in paragraph at lines 209--209
+ []|\OT1/ptm/m/n/12 Training| 
+ []
+
+
+Overfull \hbox (6.70685pt too wide) in paragraph at lines 211--211
+ []|\OT1/ptm/m/n/12 Testing| 
+ []
+
+
+Overfull \hbox (7.78392pt too wide) in paragraph at lines 203--214
+ [][] 
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 216--217
 
  []
@@ -592,23 +622,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 640--641
 
  []
 
-<Images/cm1.png, id=79, 431.81325pt x 299.9205pt>
-File: Images/cm1.png Graphic file (type png)
-<use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 650.
-(pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
-<Images/cm2.png, id=80, 431.81325pt x 296.90926pt>
+<Images/cm2.png, id=79, 431.81325pt x 296.90926pt>
 File: Images/cm2.png Graphic file (type png)
 <use Images/cm2.png>
-Package pdftex.def Info: Images/cm2.png  used on input line 658.
+Package pdftex.def Info: Images/cm2.png  used on input line 653.
 (pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
-[17 <./Images/cm1.png> <./Images/cm2.png>] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 702--703
+<Images/cm1.png, id=80, 431.81325pt x 299.9205pt>
+File: Images/cm1.png Graphic file (type png)
+<use Images/cm1.png>
+Package pdftex.def Info: Images/cm1.png  used on input line 661.
+(pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
+[17] [18 <./Images/cm2.png> <./Images/cm1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 708--709
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 706--710
+Underfull \hbox (badness 10000) in paragraph at lines 712--716
 
  []
 
@@ -650,7 +680,7 @@ al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is
 house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
 ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
 tmri8a.pfb>
-Output written on FinalPaper.pdf (22 pages, 556878 bytes).
+Output written on FinalPaper.pdf (22 pages, 557491 bytes).
 PDF statistics:
  144 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
