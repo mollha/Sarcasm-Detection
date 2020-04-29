@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 APR 2020 16:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 APR 2020 16:22
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -366,13 +366,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 148--149
 
  []
 
-[5]
-<Images/modelpipeline2.png, id=23, 909.3975pt x 222.23026pt>
+<Images/modelpipeline2.png, id=20, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
 Package pdftex.def Info: Images/modelpipeline2.png  used on input line 190.
 (pdftex.def)             Requested size: 368.9069pt x 90.15195pt.
- [6 <./Images/modelpipeline2.png>]
+[5 <./Images/modelpipeline2.png>] [6]
 Overfull \hbox (2.20702pt too wide) in paragraph at lines 219--219
  []|\OT1/ptm/b/n/12 Usage| 
  []
@@ -407,7 +406,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 230--231
 
  []
 
-[7] [8]
+[7]
 Underfull \hbox (badness 10000) in paragraph at lines 270--271
 
  []
@@ -417,7 +416,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
  []
 
-<Images/outside1.png, id=36, 659.53966pt x 513.78505pt>
+<Images/outside1.png, id=33, 659.53966pt x 513.78505pt>
 File: Images/outside1.png Graphic file (type png)
 <use Images/outside1.png>
 Package pdftex.def Info: Images/outside1.png  used on input line 277.
@@ -436,6 +435,7 @@ Overfull \hbox (1.46265pt too wide) in paragraph at lines 274--286
 []$[]$  $[]$ 
  []
 
+[8]
 <Images/elmo_diagram2.png, id=37, 546.24075pt x 417.9615pt>
 File: Images/elmo_diagram2.png Graphic file (type png)
 <use Images/elmo_diagram2.png>
@@ -451,7 +451,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 291--301
 
  []
 
-[9 <./Images/outside1.png>]
+[9 <./Images/outside1.png> <./Images/elmo_diagram2.png>]
 Overfull \hbox (3.35202pt too wide) in paragraph at lines 323--323
 []|\OT1/ptm/b/n/12 love| 
  []
@@ -532,13 +532,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 344--345
 
  []
 
-[10 <./Images/elmo_diagram2.png>] [11]
-<Images/CNNarchNew.png, id=51, 598.48593pt x 550.30594pt>
+[10]
+<Images/CNNarchNew.png, id=48, 598.48593pt x 550.30594pt>
 File: Images/CNNarchNew.png Graphic file (type png)
 <use Images/CNNarchNew.png>
 Package pdftex.def Info: Images/CNNarchNew.png  used on input line 401.
 (pdftex.def)             Requested size: 184.44994pt x 169.59383pt.
-<Images/DCNNarchNew.png, id=52, 705.23476pt x 428.802pt>
+<Images/DCNNarchNew.png, id=49, 705.23476pt x 428.802pt>
 File: Images/DCNNarchNew.png Graphic file (type png)
 <use Images/DCNNarchNew.png>
 Package pdftex.def Info: Images/DCNNarchNew.png  used on input line 408.
@@ -548,12 +548,12 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 399--412
 [] $[]$   $[]$ 
  []
 
-[12]
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 421--422
 
  []
 
-<Images/RNN_diagram1.png, id=58, 856.3995pt x 356.532pt>
+<Images/RNN_diagram1.png, id=55, 856.3995pt x 356.532pt>
 File: Images/RNN_diagram1.png Graphic file (type png)
 <use Images/RNN_diagram1.png>
 Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 427.
@@ -563,9 +563,9 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 420--431
 [] $[]$   $[]$ 
  []
 
-[13 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
+[12 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
 .png>]
-<Images/wordLevelAttention.png, id=65, 539.01375pt x 315.579pt>
+<Images/wordLevelAttention.png, id=61, 539.01375pt x 315.579pt>
 File: Images/wordLevelAttention.png Graphic file (type png)
 <use Images/wordLevelAttention.png>
 Package pdftex.def Info: Images/wordLevelAttention.png  used on input line 465.
@@ -574,11 +574,6 @@ Package pdftex.def Info: Images/wordLevelAttention.png  used on input line 465.
 
 Overfull \hbox (7.18486pt too wide) in paragraph at lines 458--470
 [] $[]$   $[]$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 471--472
-
  []
 
 
@@ -596,90 +591,90 @@ Overfull \hbox (18.94879pt too wide) in paragraph at lines 491--492
 []$\OML/cmm/m/it/12 MCC \OT1/cmr/m/n/12 = []$ 
  []
 
-[14 <./Images/wordLevelAttention.png>]
-<Images/absolute_differences.png, id=71, 462.528pt x 346.896pt>
+[13 <./Images/wordLevelAttention.png>]
+<Images/absolute_differences.png, id=68, 462.528pt x 346.896pt>
 File: Images/absolute_differences.png Graphic file (type png)
 <use Images/absolute_differences.png>
 Package pdftex.def Info: Images/absolute_differences.png  used on input line 52
 4.
 (pdftex.def)             Requested size: 138.33745pt x 103.752pt.
- [15 <./Images/absolute_differences.png>]
+ [14 <./Images/absolute_differences.png>]
 Overfull \hbox (0.2755pt too wide) in paragraph at lines 580--582
 \OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
 ng mod-els. Lo-gis-tic re-gres-sion trained
  []
 
-[16]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 612--613
 
  []
 
-<Images/cm2.png, id=81, 431.81325pt x 296.90926pt>
+<Images/cm2.png, id=78, 431.81325pt x 296.90926pt>
 File: Images/cm2.png Graphic file (type png)
 <use Images/cm2.png>
 Package pdftex.def Info: Images/cm2.png  used on input line 625.
 (pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
-<Images/cm1.png, id=82, 431.81325pt x 299.9205pt>
+<Images/cm1.png, id=79, 431.81325pt x 299.9205pt>
 File: Images/cm1.png Graphic file (type png)
 <use Images/cm1.png>
 Package pdftex.def Info: Images/cm1.png  used on input line 633.
 (pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
-[17 <./Images/cm2.png> <./Images/cm1.png>]
+[16 <./Images/cm2.png> <./Images/cm1.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 650--651
 
  []
 
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 682--683
+
+Underfull \hbox (badness 10000) in paragraph at lines 681--682
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 686--690
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 685--689
 
  []
 
-[19] (FinalPaper.bbl [20]
+(FinalPaper.bbl [18]
 Underfull \hbox (badness 1048) in paragraph at lines 105--109
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
 
-
+[19]
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [21]) [22] (FinalPaper.aux) ) 
+)) [20] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4722 strings out of 492452
- 67536 string characters out of 3114457
- 143907 words of memory out of 3000000
- 8969 multiletter control sequences out of 15000+200000
+ 4721 strings out of 492452
+ 67522 string characters out of 3114457
+ 143906 words of memory out of 3000000
+ 8968 multiletter control sequences out of 15000+200000
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1207b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Pa
-ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmbx8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
-i8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is hou
-se/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is 
-house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
-ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
-tmri8a.pfb>
-Output written on FinalPaper.pdf (22 pages, 709227 bytes).
+{C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
+x8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pf
+b><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
+sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
+assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on FinalPaper.pdf (20 pages, 707682 bytes).
 PDF statistics:
- 146 PDF objects out of 1000 (max. 8388607)
+ 140 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -92,7 +92,7 @@ This is achieved by...
 
 
 %This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.\\%
-\newpage
+
 \section{Related Work}
 \noindent In this section, we report on the architectural design of solutions used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. Oftentimes, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. In similar studies, the terms irony and sarcasm are used synonymously \cite{tsur2010icwsm}, although their definitions differ slightly (\textit{table 1}). Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm includes the potential for mockery and criticism - often present in opinion-based content such as product reviews.\vspace{-2pt}
 
@@ -468,9 +468,9 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \end{figure}
 \end{minipage}
 
-\noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.\\
+\noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.
 
-\section{Results}\vspace{-5pt}
+\section{Results}\vspace{-8pt}
 \subsection{Evaluation Method}\vspace{-5pt}
 \noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.\vspace{-10pt}
 
@@ -670,7 +670,6 @@ Visualising the output of our attention layer shows that the model places more e
 \noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.
 
 
-\newpage
 \section{Evaluation}
 \noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
 
@@ -729,21 +728,21 @@ For future work, it would be interesting to explore the use of sarcasm in a wide
 
 %The page lengths given for each section are indicative and will vary from project to project but should not exceed the upper limit.  A summary is shown in Table \ref{summary}.
 
-\begin{table}[htb]
-\centering
-\caption{SUMMARY OF PAGE LENGTHS FOR SECTIONS}
-\vspace*{6pt}
-\label{summary}
-\begin{tabular}{|ll|c|} \hline
-& \multicolumn{1}{c|}{\bf Section} & {\bf Number of Pages} \\ \hline
-I. & Introduction & 2--3 \\ \hline
-II. & Related Work & 2--3 \\ \hline
-III. & Solution & 4--7 \\ \hline
-IV. & Results & 2--3 \\ \hline
-V. & Evaluation & 1-2 \\ \hline
-VI. & Conclusions & 1 \\ \hline
-\end{tabular}
-\end{table}
+%\begin{table}[htb]
+%\centering
+%\caption{SUMMARY OF PAGE LENGTHS FOR SECTIONS}
+%\vspace*{6pt}
+%\label{summary}
+%\begin{tabular}{|ll|c|} \hline
+%& \multicolumn{1}{c|}{\bf Section} & {\bf Number of Pages} \\ \hline
+%I. & Introduction & 2--3 \\ \hline
+%II. & Related Work & 2--3 \\ \hline
+%III. & Solution & 4--7 \\ \hline
+%IV. & Results & 2--3 \\ \hline
+%V. & Evaluation & 1-2 \\ \hline
+%VI. & Conclusions & 1 \\ \hline
+%\end{tabular}
+%\end{table}
 
 
 \bibliography{FinalPaper}
