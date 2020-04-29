@@ -20,9 +20,11 @@ def box_plot_visualisation(dataset_1: pd.DataFrame, dataset_2: pd.DataFrame):
     :return:
     """
 
-    sarcastic_1, non_sarcastic_1 = split_positive_and_negative_samples(dataset_1)
-    sarcastic_2, non_sarcastic_2 = split_positive_and_negative_samples(dataset_2)
-    print(sarcastic_1)
+    sarcastic_news, non_sarcastic_news = split_positive_and_negative_samples(dataset_1)
+    sarcastic_twitter, non_sarcastic_twitter = split_positive_and_negative_samples(dataset_2)
+
+    sarcastic_1, non_sarcastic_1 = sarcastic_news['sentiment'], non_sarcastic_news['sentiment']
+    sarcastic_2, non_sarcastic_2 = sarcastic_twitter['sentiment'], non_sarcastic_twitter['sentiment']
 
     data_a = [sarcastic_1, sarcastic_2]
     data_b = [non_sarcastic_1, non_sarcastic_2]
@@ -31,14 +33,15 @@ def box_plot_visualisation(dataset_1: pd.DataFrame, dataset_2: pd.DataFrame):
 
     def set_box_color(bp, color):
         plt.setp(bp['boxes'], color=color)
-        plt.setp(bp['whiskers'], color=color)
+        plt.setp(bp['whiskers'], linestyle='--', color=color)
         plt.setp(bp['caps'], color=color)
         plt.setp(bp['medians'], color=color)
+        plt.setp(bp['means'], linestyle='--', color='orange')
 
     plt.figure()
 
-    bpl = plt.boxplot(data_a, positions=np.array(range(len(data_a))) * 2.0 - 0.4, sym='', widths=0.6)
-    bpr = plt.boxplot(data_b, positions=np.array(range(len(data_b))) * 2.0 + 0.4, sym='', widths=0.6)
+    bpl = plt.boxplot(data_a, positions=np.array(range(len(data_a))) * 2.0 - 0.5, sym='', widths=0.8, showmeans=True, showfliers=True, meanline=True)
+    bpr = plt.boxplot(data_b, positions=np.array(range(len(data_b))) * 2.0 + 0.4, sym='', widths=0.8, showmeans=True, showfliers=True, meanline=True)
     set_box_color(bpl, '#D7191C')
     set_box_color(bpr, '#2C7BB6')
 
@@ -48,10 +51,13 @@ def box_plot_visualisation(dataset_1: pd.DataFrame, dataset_2: pd.DataFrame):
     plt.legend()
 
     plt.xticks(range(0, len(ticks) * 2, 2), ticks)
-    plt.xlim(-2, len(ticks) * 2)
-    plt.ylim(0, 8)
+    plt.xlim(-1.5, len(ticks) * 2)
+    plt.ylim(-0.1, 4.1)
+    plt.yticks(np.arange(0, 5, 1.0))
+    plt.ylabel('Overall Sentiment Scores', fontsize=13)
+    plt.xlabel('Datasets', fontsize=13)
     plt.tight_layout()
-    plt.savefig('Images/boxcompare.png')
+    plt.savefig('boxcompare.png')
 
 
 def visualise_sentiment_differences(dataset1: np.ndarray, dataset2: np.ndarray):
@@ -122,7 +128,6 @@ if __name__ == "__main__":
                        encoding="ISO-8859-1")
     feature_1 = get_feature_col(data_1, "../datasets/news_headlines", 'sentiment')
     data_1['sentiment'] = feature_1.apply(lambda x: x[-1])
-
     data_2 = pd.read_csv((base_path / ("../datasets/ptacek" + "/processed_data/OriginalData.csv")).resolve(),
                        encoding="ISO-8859-1")
     feature_2 = get_feature_col(data_2, "../datasets/ptacek", 'sentiment')

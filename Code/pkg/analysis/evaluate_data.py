@@ -1,10 +1,11 @@
 import pandas as pd
 
+
 def split_positive_and_negative_samples(dataset: pd.DataFrame) -> tuple:
     """
     Given a dataset, separate the samples into positive (sarcastic) and negative (non-sarcastic) samples
     :param dataset: dataset containing a column called sarcasm_label, this column must contain integers
-    :return:
+    :return: sarcastic and non-sarcastic data split
     """
     return dataset[dataset['sarcasm_label'] == 1], dataset[dataset['sarcasm_label'] == 0]
 
