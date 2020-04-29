@@ -1,9 +1,63 @@
 import matplotlib.pyplot as plt
+from Code.pkg.analysis.evaluate_data import split_positive_and_negative_samples
+from Code.pkg.data_processing.helper import get_feature_col
 import numpy as np
+import pandas as pd
+from pathlib import Path
+
 
 def compute_differences(sample1: np.ndarray, sample2: np.ndarray) -> np.ndarray:
     output = sample1 - sample2
     return np.absolute(output)
+
+
+def box_plot_visualisation(dataset_1: pd.DataFrame, dataset_2: pd.DataFrame):
+    """
+    Visualise difference in overall sentiment of sarcastic and non-sarcastic data on one dataset
+    Produce a box plot
+    :param dataset_1: pd.DataFrame containing sarcasm labels and overall sentiment labels for each instance in dataset
+    :param dataset_2: pd.DataFrame containing sarcasm labels and overall sentiment labels for each instance in dataset
+    :return:
+    """
+
+    sarcastic_news, non_sarcastic_news = split_positive_and_negative_samples(dataset_1)
+    sarcastic_twitter, non_sarcastic_twitter = split_positive_and_negative_samples(dataset_2)
+
+    sarcastic_1, non_sarcastic_1 = sarcastic_news['sentiment'], non_sarcastic_news['sentiment']
+    sarcastic_2, non_sarcastic_2 = sarcastic_twitter['sentiment'], non_sarcastic_twitter['sentiment']
+
+    data_a = [sarcastic_1, sarcastic_2]
+    data_b = [non_sarcastic_1, non_sarcastic_2]
+
+    ticks = ['News Headlines', 'Twitter Data']
+
+    def set_box_color(bp, color):
+        plt.setp(bp['boxes'], color=color)
+        plt.setp(bp['whiskers'], linestyle='--', color=color)
+        plt.setp(bp['caps'], color=color)
+        plt.setp(bp['medians'], color=color)
+        plt.setp(bp['means'], linestyle='--', color='orange')
+
+    plt.figure()
+
+    bpl = plt.boxplot(data_a, positions=np.array(range(len(data_a))) * 2.0 - 0.5, sym='', widths=0.8, showmeans=True, showfliers=True, meanline=True)
+    bpr = plt.boxplot(data_b, positions=np.array(range(len(data_b))) * 2.0 + 0.4, sym='', widths=0.8, showmeans=True, showfliers=True, meanline=True)
+    set_box_color(bpl, '#D7191C')
+    set_box_color(bpr, '#2C7BB6')
+
+    # draw temporary red and blue lines and use them to create a legend
+    plt.plot([], c='#D7191C', label='Sarcastic')
+    plt.plot([], c='#2C7BB6', label='Non-Sarcastic')
+    plt.legend()
+
+    plt.xticks(range(0, len(ticks) * 2, 2), ticks)
+    plt.xlim(-1.5, len(ticks) * 2)
+    plt.ylim(-0.1, 4.1)
+    plt.yticks(np.arange(0, 5, 1.0))
+    plt.ylabel('Overall Sentiment Scores', fontsize=13)
+    plt.xlabel('Datasets', fontsize=13)
+    plt.tight_layout()
+    plt.savefig('boxcompare.png')
 
 
 def visualise_sentiment_differences(dataset1: np.ndarray, dataset2: np.ndarray):
@@ -68,28 +122,14 @@ def visualise_sentiment(positive: np.ndarray, negative: np.ndarray):
 
 
 if __name__ == "__main__":
-    sarc_pos = np.array(
-        [0.005091248953004676, 0.041350809727765, 0.8994157796925195, 0.04229651150485239, 0.011845650121857931,
-         1.607662140849572])
-    sarc_neg = np.array(
-        [0.0023434613237710553, 0.023207982123672997, 0.8944306116972885, 0.052378647503276816,
-         0.027639297351990763, 1.9866354409562172])
-    nhsd_pos = np.array(
-        [0.0018528285173080475, 0.03934499539017465, 0.8955364365141866, 0.05614412600544106,
-         0.007121613572856909, 1.595080925138135])
-    nhsd_neg = np.array(
-        [0.0016924451656707147, 0.030212075099074087, 0.907942537511219, 0.051825273876584095,
-         0.008327668347401977, 1.6702002002002005])
+    base_path = Path(__file__).parent
 
-    sarc_pos = sarc_pos[: -1]
-    sarc_neg = sarc_neg[: -1]
-    nhsd_pos = nhsd_pos[: -1]
-    nhsd_neg = nhsd_neg[: -1]
-
-    sarc_output = compute_differences(sarc_pos, sarc_neg)
-    nhsd_output = compute_differences(nhsd_pos, nhsd_neg)
-
-    # visualise_sentiment_differences(sarc_output, nhsd_output)
-
-    visualise_sentiment(nhsd_pos, nhsd_neg)
-    visualise_sentiment(sarc_pos, sarc_neg)
+    data_1 = pd.read_csv((base_path / ("../datasets/news_headlines" + "/processed_data/OriginalData.csv")).resolve(),
+                       encoding="ISO-8859-1")
+    feature_1 = get_feature_col(data_1, "../datasets/news_headlines", 'sentiment')
+    data_1['sentiment'] = feature_1.apply(lambda x: x[-1])
+    data_2 = pd.read_csv((base_path / ("../datasets/ptacek" + "/processed_data/OriginalData.csv")).resolve(),
+                       encoding="ISO-8859-1")
+    feature_2 = get_feature_col(data_2, "../datasets/ptacek", 'sentiment')
+    data_2['sentiment'] = feature_2.apply(lambda x: x[-1])
+    box_plot_visualisation(data_1, data_2)
