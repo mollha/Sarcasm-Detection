@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  29 APR 2020 20:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  30 APR 2020 01:41
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -595,71 +595,77 @@ Overfull \hbox (18.94879pt too wide) in paragraph at lines 491--492
 <Images/boxcompare.png, id=68, 462.528pt x 346.896pt>
 File: Images/boxcompare.png Graphic file (type png)
 <use Images/boxcompare.png>
-Package pdftex.def Info: Images/boxcompare.png  used on input line 524.
-(pdftex.def)             Requested size: 138.33745pt x 103.752pt.
- [14 <./Images/boxcompare.png>]
-Overfull \hbox (0.2755pt too wide) in paragraph at lines 588--590
+Package pdftex.def Info: Images/boxcompare.png  used on input line 525.
+(pdftex.def)             Requested size: 207.50792pt x 155.63065pt.
+
+Overfull \hbox (10.24286pt too wide) in paragraph at lines 521--536
+[]  $[]$ $[]$ 
+ []
+
+[14 <./Images/boxcompare.png>] [15]
+Overfull \hbox (0.2755pt too wide) in paragraph at lines 594--596
 \OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
 ng mod-els. Lo-gis-tic re-gres-sion trained
  []
 
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 620--621
+
+Underfull \hbox (badness 10000) in paragraph at lines 626--627
 
  []
 
 <Images/cm2.png, id=78, 431.81325pt x 296.90926pt>
 File: Images/cm2.png Graphic file (type png)
 <use Images/cm2.png>
-Package pdftex.def Info: Images/cm2.png  used on input line 633.
+Package pdftex.def Info: Images/cm2.png  used on input line 639.
 (pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
 <Images/cm1.png, id=79, 431.81325pt x 299.9205pt>
 File: Images/cm1.png Graphic file (type png)
 <use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 641.
+Package pdftex.def Info: Images/cm1.png  used on input line 647.
 (pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
-[16 <./Images/cm2.png> <./Images/cm1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 656--657
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 662--663
 
  []
 
-<Images/lstm.png, id=85, 403.9893pt x 298.4751pt>
+<Images/lstm.png, id=83, 403.9893pt x 298.4751pt>
 File: Images/lstm.png Graphic file (type png)
 <use Images/lstm.png>
-Package pdftex.def Info: Images/lstm.png  used on input line 661.
+Package pdftex.def Info: Images/lstm.png  used on input line 667.
 (pdftex.def)             Requested size: 119.5247pt x 88.30443pt.
-<Images/attention-lstm.png, id=86, 410.4936pt x 299.9205pt>
+<Images/attention-lstm.png, id=84, 410.4936pt x 299.9205pt>
 File: Images/attention-lstm.png Graphic file (type png)
 <use Images/attention-lstm.png>
-Package pdftex.def Info: Images/attention-lstm.png  used on input line 667.
+Package pdftex.def Info: Images/attention-lstm.png  used on input line 673.
 (pdftex.def)             Requested size: 119.5247pt x 87.32709pt.
 
-Overfull \hbox (19.90483pt too wide) in paragraph at lines 658--678
+Overfull \hbox (19.90483pt too wide) in paragraph at lines 664--684
 []$[]$ $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 658--678
+Underfull \hbox (badness 10000) in paragraph at lines 664--684
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 680--681
+Underfull \hbox (badness 10000) in paragraph at lines 686--687
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 704--705
+Underfull \hbox (badness 10000) in paragraph at lines 710--711
 
  []
 
-[17 <./Images/lstm.png> <./Images/attention-lstm.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 720--721
+[17 <./Images/cm2.png> <./Images/cm1.png> <./Images/lstm.png> <./Images/attenti
+on-lstm.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 726--727
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 724--728
+Underfull \hbox (badness 10000) in paragraph at lines 730--734
 
  []
 
@@ -673,7 +679,7 @@ a-teek Vij.  A deeper
 ("C:\Users\Password is house\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ucs\un
 i-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)) [20] (FinalPaper.aux) ) 
+) [20]) [21] (FinalPaper.aux) ) 
 Here is how much of TeX's memory you used:
  4734 strings out of 492452
  67755 string characters out of 3114457
@@ -682,28 +688,28 @@ Here is how much of TeX's memory you used:
  28327 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,14n,30p,1207b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Passwor
-d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
-x8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Password is 
-house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is house/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
-sers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is house
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/P
-assword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8
-a.pfb>
-Output written on FinalPaper.pdf (20 pages, 739679 bytes).
+{C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Password is house/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Pa
+ssword is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmbx8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Password is house/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Passwor
+d is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
+i8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr12.pfb><C:/Users/Password is house/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Password is hou
+se/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+<C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Password is house/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Password is 
+house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Us
+ers/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/u
+tmri8a.pfb>
+Output written on FinalPaper.pdf (21 pages, 740448 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
+ 147 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

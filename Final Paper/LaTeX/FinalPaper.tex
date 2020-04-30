@@ -496,42 +496,48 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 \subsection{Analysis of Sentiment Features}\vspace{-5pt}
-\noindent We analyse the effectiveness of our novel sentiment features against that of our standard punctuation and topic modelling features by feeding them to a logistic regression model and calculating the $F_1$ score; logistic regression is used as these feature vectors are small. We use 5-fold cross-validation to compute the $F_1$ scores of these models. A classifier producing random predictions can achieve an $F_1$ score of 0.5 on a balanced dataset - hence, we consider models achieving greater than 0.5 to be indicative of useful training features.\vspace{-15pt}
+\noindent We analyse the effectiveness of our novel sentiment features in comparison to our standard punctuation and topic modelling features by feeding them to logistic regression models and calculating the $F_1$ scores using 5-fold cross-validation; logistic regression is used as these feature vectors are small. We consider models achieving $F_1$ scores greater than 0.5 to be indicative of useful training features, as a binary classification model predicting randomly on a balanced dataset achieves an average score of 0.5. \\\vspace{-20pt}
 
 
-\hspace{-20pt}\begin{minipage}{0.55\textwidth}
-	\begin{center}
-		\textbf{Table -}: $F_1$ score of logistic regression models \\trained on hand-crafted features
-	\end{center}\vspace{-20pt}
-	
-	\begin{center}
-		\begin{tabular}{|c||c|c|} 
-			\hline
-			\textbf{Feature} & \textbf{News Headlines} & \textbf{Twitter Data}\\ [0.4ex] 
-			\hline
-			Sentiment & 0.516 & 0.593\\ 
-			\hline
-			Punctuation & 0.344 & 0.611\\
-			\hline
-			Topic & 0.525& 0.530\\
-			\hline
-		\end{tabular}
-	\end{center}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
+\begin{center}
+	\textbf{Table -}: $F_1$ score of logistic regression models trained on hand-crafted features
+\end{center}\vspace{-20pt}
+
+\begin{center}
+	\begin{tabular}{|c||c|c|c|} 
+	\hline
+	\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
+	\hline\hline
+	News Headlines& 0.516 & 0.344 & 0.525\\ 
+	\hline
+	Twitter Data & 0.593 & 0.611 & 0.530\\
+	\hline
+\end{tabular}
+\end{center}\vspace{-5pt}
+
+\noindent All three categories of features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets. Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic. This enables us to assess whether these features alone are indicative of sarcasm in different media types. Figure \_ illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) for both of our datasets. Sarcastic and non-sarcastic instances are represented separately, as differences in their distributions enable us to explain the classification scores in table \_.
+
+
+\hspace{-35pt}
+\begin{minipage}{0.5\textwidth}
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=0.75\textwidth]{Images/boxcompare.png}\\
+		\includegraphics[width=0.9\textwidth]{Images/boxcompare.png}\\
 		\textbf{Figure -:} Visualisation of overall sentiment\\
 	\end{center}
 \end{figure}
+\end{minipage}
+\begin{minipage}{0.55\textwidth}
+	
+	
+	
+	For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
 \end{minipage}\vspace{-5pt}
 
-\noindent All three categories of features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets. Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic. This enables us to assess whether these features alone are indicative of sarcasm in different media types.
 
 %\noindent Our results show that sentiment features are indicative of sarcasm when extracted from the Sarcasm Amazon Review Corpus, however when extracted from the News Headlines for Sarcasm Detection, they were ineffective. To further examine this relationship between sarcasm and sentiment, we compute the mean proportion of tokens in each sentiment class for sarcastic and non-sarcastic instances. We then compute the absolute differences of these values between the sarcastic and non-sarcastic classes - the intuition being that it is simpler for a classifier to separate samples where there is a clearer distinction between the expected features of each class. Hence, where the absolute difference in the mean proportion of tokens between sarcasm classes is higher, a classifier is better able to correctly annotate samples. A visualisation of these results is given in the figure below.
 
-For the Sarcasm Amazon Review Corpus, within most sentiment classes there is a greater difference in the proportion of tokens for non-sarcastic and sarcastic instances. This indicates that sarcastic and non-sarcastic instances are easier to distinguish, given that their sentiment compositions are more distinct. The News Headlines for Sarcasm Detection results displays the opposite, and this explains why the logistic regression classifier trained on this data achieved an $F_1$  score of only 0.515, as the features for each class are very similar.
+
 
 \subsection{Binary Classification}\vspace{-5pt}
 \noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including our highest-achieving models and those that produced unexpectedly good or bad results. We contrast the performance of our machine learning and deep learning classifiers in order to answer the research question: \textit{Do deep learning techniques perform better than machine learning approaches?}\\\vspace{-5pt}
