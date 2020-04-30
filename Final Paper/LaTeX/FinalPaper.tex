@@ -47,11 +47,11 @@ Sarcasm detection is a relatively new research topic that has recently gained in
 
 \noindent \textbf{Method --} We gather two labelled training datasets containing tweets and news headlines, and a third evaluation dataset containing product reviews.\ We apply multiple vectorisation approaches, including a state-of-the-art contextualised embedding approach (ElMo), to transform text into meaningful numerical vectors which are used to train our classifiers.\ An attention mechanism is incorporated into our superior binary classification solution to localise the presence of sarcasm.\vspace{5pt}
 
-\noindent \textbf{Results --} We show that deep learning models vastly outperform machine learning models in the sarcasm detection task. Models trained on ElMo vectors outperformed all other vector types, and while sentiment features were informative, models trained on these features were unable to rival their deep learning opposition.
+\noindent \textbf{Results --} Our bidirectional GRU model trained on the news headlines dataset achieved the highest $F_1$ score of 0.875, although it was less able to generalise to unseen data than our bidirectional LSTM model trained on the Twitter dataset. We integrated our attention mechanism into this bidirectional LSTM model, improving upon our previous $F_1$ score by \_\% and achieving an $F_1$ of 0.862.\vspace{5pt}
 
- Our bidirectional GRU model trained on the news headlines dataset achieved the highest $F_1$ score of 0.875, although it was less able to generalise to unseen data than our bidirectional LSTM model trained on ElMo vectors from the Twitter dataset. We integrated our attention mechanism into this bidirectional LSTM model, improving upon our previous $F_1$ score by \_\% and achieving an $F_1$ of 0.862.\vspace{5pt}
+%While sentiment features were informative, models trained on these features were unable to rival their deep learning opposition.
 
-\noindent \textbf{Conclusions --} In summary, we conclude that
+\noindent \textbf{Conclusions --} Deep learning models vastly outperform machine learning models in the sarcasm detection task. Furthermore, models trained on ElMo vectors were consistently superior to those trained on all other vector types.
 
 %This section should not be longer than half of a page, and having no more than one or two sentences under each heading is advised. Do not cite references in the abstract.
 \end{abstract}
@@ -194,10 +194,8 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 	\textbf{Figure 1:} Overview of the solution
 \end{center}
 
-\subsection{Implementation Tools}
-\noindent This project is majoritively written in \textbf{Python}, as it has an abundance of open-source libraries well-suited to machine learning and deep-learning tasks. Additionally, Python is very readable, making it easy for others to interpret, test and reproduce code. We use \textbf{pandas} for manipulating the datasets, as it provides functionality for applying functions globally across the dataset. We use \textbf{pickle} to store the vectorised datasets in memory. Vectorisation is a costly process, therefore writing the files to memory reduces long-term time demands during the experimentation and testing phases. We also  incorporate \textbf{SpaCy} when cleaning and tokenising the data.
-
-In terms of \textit{classification}, we implement most of the machine learning architectures using \textbf{scikit-learn} - an open-source machine learning library. For constructing deep learning models, we use \textbf{keras}, as its modular structure allows for extensive experimentation and simplifies tweaking of model architectures.
+\subsection{Implementation Tools}\vspace{-4.2pt}
+\noindent This project is majoritively written in Python, as it has an abundance of open-source libraries well-suited to machine learning and deep learning tasks. Furthermore, Python is very readable, making it easy for others to test and reproduce results. We use pandas for manipulating our datasets, as it provides functionality for applying functions to all instances at the same time, and harness the built-in functionality from SpaCy to clean and tokenise our data. In terms of \textit{classification}, we implement most of the machine learning architectures using scikit-learn - an open-source machine learning library. For constructing deep learning models, we use keras as its modular structure allows for extensive experimentation and tweaking of model architectures.
 
 \subsection{Datasets}
 \vspace{-4.2pt}\noindent We utilise three publically available datasets and provide a statistical analysis of their properties in \textit{table 2}. This includes the number of instances in the dataset, the average number of tokens per instance and a benchmark score where the dataset was used in the original paper to train one or more classifiers. This data is collected from multiple domains and online platforms, including Twitter, Amazon, and online news outlets; providing broad coverage of sarcasm usage in both formal and informal media. We use our News Headlines and Twitter datasets for training, and reserve our Amazon review corpus for cross-dataset evaluation.
