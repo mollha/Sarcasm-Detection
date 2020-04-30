@@ -27,7 +27,7 @@
 
 
 
-\title{An Analysis of Machine Learning and Deep Learning Techniques for Detecting Sarcasm in Online Text}
+\title{An Analysis of Machine Learning and Deep Learning Techniques for Detecting Sarcasm in Text}
 \author{} % leave; your name goes into \student{}
 \student{Molly Hayward}
 \supervisor{Dr Noura Al-Moubayed}
@@ -45,9 +45,9 @@ Sarcasm detection is a relatively new research topic that has recently gained in
 
 \noindent \textbf{Aims --} The ultimate aim of this project is to develop a tool that can detect sarcasm in online text from multiple domains with a \textit{high degree} of accuracy. We aim to determine whether deep neural network architectures are more effective than machine learning classifiers for this task, and to what extent manually extracted sentiment features can be used to improve machine learning classification. Finally, we aim to highlight tokens that correlate more to sarcastic labels.\vspace{5pt}
 
-\noindent \textbf{Method --} We gather labelled datasets from online sources containing Amazon reviews, Twitter data and News headlines. Multiple vectorisation approaches are used to transform text into numerical representations, including a state-of-the-art contextualised embedding approach (ElMo). These vectors are used to train various machine learning and deep learning classifiers to detect the presence of sarcasm. In addition, an attention mechanism is incorporated to localise the presence of sarcasm within a passage of text.\vspace{5pt}
+\noindent \textbf{Method --} We gather labelled datasets from online sources containing Twitter data and News headlines. Multiple vectorisation approaches are used to transform text into numerical representations, including a state-of-the-art contextualised embedding approach (ElMo). These vectors are used to train various machine learning and deep learning classifiers to detect the presence of sarcasm. In addition, an attention mechanism is incorporated to localise the presence of sarcasm within a passage of text.\vspace{5pt}
 
-\noindent \textbf{Results --} Through extensive experimentation, we show that\vspace{5pt}
+\noindent \textbf{Results --} We show that deep learning models vastly outperform machine learning models in the sarcasm detection.\vspace{5pt}
 
 \noindent \textbf{Conclusions --} In summary, we conclude that
 
@@ -55,12 +55,26 @@ Sarcasm detection is a relatively new research topic that has recently gained in
 \end{abstract}
 
 \begin{keywords}
-Machine learning, Deep learning, Sarcasm Detection, Sentiment, Classification
+Machine learning, Deep learning, Sarcasm Detection, Sentiment, Binary Classification, Attention
 \end{keywords}
 
 
 \section{Introduction}
-\noindent Sarcasm is a complex linguistic phenomenon, which when present in text indicates that the literal interpretation differs from the implied meaning. Sarcasm is prevalent in online user-generated content, and poses a significant challenge within the field of natural language processing, specifically within sentiment analysis, as it inverts the sentiment-polarity of a positive or negative utterance. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis in opinion mining.
+\noindent Sarcasm is a complex linguistic phenomenon posing a significant challenge within the field of natural language processing. To interpret sarcastic text literally would be to overlook its implied (usually opposite) meaning.
+
+It is typically used as a form of mockery or humour, 
+
+
+Sarcasm is a form of mockery or humour, whereby the literal interpretation differs from the implied meaning. 
+
+It is a complex linguistic phenomenon posing a significant challenge within the field of natural language processing, specifically within sentiment analysis.
+
+ It is prevalent in online user-generated content
+ 
+ Sarcasm is prevalent in online user-generated content, and poses a significant challenge within the field of natural language processing, 
+ 
+ 
+ specifically within sentiment analysis, as it inverts the sentiment-polarity of a positive or negative utterance. Sentiment analysis is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a certain subject. It is increasingly common for organisations to use sentiment analysis in order to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenonmenon of sentiment incongruity often lies at the heart of sarcasm, therefore advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis in opinion mining.
 
 \footnotetext[1]{www.dictionary.cambridge.org/dictionary/english/sarcasm}
 
@@ -106,7 +120,7 @@ This is achieved by...
 		\hline\hline
 		Irony & A subtle form of humour which involves saying things that you do not mean. \footnotemark[1]\\
 		\hline
-		Sarcasm & Speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult someone. \footnotemark[2]\\
+		Sarcasm & Speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult. \footnotemark[2]\\
 		\hline
 	\end{tabular}\\
 \end{center}\vspace{-10pt}
@@ -699,25 +713,26 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 	\end{center}	
 \end{minipage}\vspace{10pt}
 
-
 \noindent Incorporating our attention mechanism led to an increase in training time as the number of training epochs increased from 12 to 16 (\textit{figure \_}). Furthermore, the validation accuracy increased at a steadier rate and peaked at a slightly lower value (0.962) than in our non-attention model (0.996). However, the performance of our bidirectional LSTM with attention mechanism exceeds our foremost solution in the binary classification task, improving upon precision, recall and $F_1$ score by an average of 1.51\%.\\
 
-%, and the rate of increase of the validation accuracy decreased (\textit{figure \_}). 
-%Incorporating our attention mechanism led to slower training, as the number of training epochs increased from 12 to 16. Furthermore, the validation accuracy of our attention model increased at a steadier pace and peaked at a slightly lower value.\\
+\hspace{-5pt}\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/visualisation1.png}\\
+		\hspace{-1cm}\textbf{(a)} Without Attention\\
+	\end{center}
+\end{minipage}
+\hspace{-10pt}
+\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/visualisation2.png}\\
+		\hspace{-1cm}\textbf{(a)} Without Attention\\
+	\end{center}	
+\end{minipage}
 
 %As such, we incorporate an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional long short-term memory model in order to retain both the left and right contexts of each word.\\
 
 
 \noindent Visualising the output of our attention layer shows that the model places more emphasis on qualitatively informative tokens.
-
-
-
-\noindent Table \_ shows that by incorporating attention into our bidirectional GRU model, all three metrics (precision, recall and $F_1$ score) improved.\\
-
-
-
-
-
 
 
 \section{Evaluation}
