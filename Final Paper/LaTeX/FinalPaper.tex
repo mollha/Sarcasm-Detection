@@ -659,7 +659,44 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 The Matthews Correlation Coefficient is weaker for our Twitter model,
 
 \subsection{Attention}\vspace{-5pt}
-\noindent The superior model in the binary classification task is shown to be the Bidirectional LSTM model, trained on ElMo vectors from the Twitter dataset. We incorporate our attention mechanism after our bidirectional LSTM layer to identify the tokens that lead to positive and negative classification decisions. We present a number of attention visualisations, and examine whether incorporating attention can boost model performance as hypothesised, and for what training cost.
+\noindent The superior model in the binary classification task is shown to be the Bidirectional LSTM model, trained on ElMo vectors from the Twitter dataset. We incorporate our attention mechanism after our bidirectional LSTM layer to identify the tokens that lead to positive and negative classification decisions. We present a number of attention visualisations, and examine whether incorporating attention can boost model performance as hypothesised, and for what training cost.\\
+
+\hspace{-25pt}\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\textbf{Table -}: Comparison of bidirectional LSTM classification results\vspace{2pt}
+		\begin{tabular}{|p{1.4cm}||p{2cm}|p{2cm}|}
+			\hline
+			\hline
+			\textbf{Metrics} & \textbf{With Attention} & \textbf{Without Attention}\\
+			\hline\hline
+			Precision & 0.899 & 0.888\\
+			\hline
+			Recall & 0.917 & 0.901\\
+			\hline
+			$F_1$ Score & 0.883 & 0.875\\
+			\hline
+		\end{tabular}
+	\end{center}	
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}{0.5\textwidth}
+	\vspace{2pt}\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/lstm.png}\\
+			\hspace{-1cm}\textbf{(a)} Without Attention\\
+		\end{center}
+	\end{minipage}
+	\vspace{2pt}\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/attention-lstm.png}\\
+			\hspace{-1cm}\textbf{(b)} With Attention\\
+		\end{center}
+	\end{minipage}
+	\vspace{-5pt}\begin{center}
+		\hspace{-20pt}\textbf{Figure -:} Training and validation accuracy of models during training\\
+	\end{center}
+\end{minipage}
+
 
 
 \begin{center}
