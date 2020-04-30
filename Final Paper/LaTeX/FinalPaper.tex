@@ -300,7 +300,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
-While deep learning algorithms are able to extract useful higher-level features from dense vectors (such as ElMo and GloVe), machine learning classifiers may require additional handcrafted features to better inform their predictions. We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\\vspace{-5pt}
+We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We focus specifically on the effects of incorporating our \textit{novel sentiment features} in comparison to incorporating more conventional punctuation and topic features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\\vspace{-5pt}
 
 \noindent \textbf{1. Punctuation features --} We extract punctuation features following the procedure outlined in Tsur et al. (2010) \cite{tsur2010icwsm}. Five lexical features are combined to produce a $ 1 \times 5 $ dimensional vector for each text snippet, including the length of the snippet in tokens, as well as the number of: "!" characters, "?" characters, quotations and tokens that include at least one capitalised character. These features are normalised by dividing them by the (maximal observed value $ \cdot $ average maximal value of remaining feature groups).\\\vspace{-5pt}
 
@@ -659,31 +659,33 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 The Matthews Correlation Coefficient is weaker for our Twitter model,
 
 \subsection{Attention}\vspace{-5pt}
-\noindent The superior model in the binary classification task is shown to be the Bidirectional Gated Recurrent Unit (BiGRU) model, trained on ElMo vectors from the News Headlines dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised.\\
+\noindent The superior model in the binary classification task is shown to be the Bidirectional LSTM (BiLSTM) model, trained on ElMo vectors from the Twitter dataset. Hence, we incorporate our attention mechanism into this model to identify the tokens that lead to positive and negative classification decisions. We also examine whether incorporating attention can boost model performance as hypothesised. 
 
-\begin{minipage}{0.6\textwidth}
+We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
+
+\begin{minipage}{0.5\textwidth}
 	\begin{minipage}{0.48\textwidth}
 		\begin{center}
 			\hspace{-1cm}\includegraphics[width=0.9\textwidth]{Images/lstm.png}\\
-			\hspace{-1cm}\textbf{(b)} Without Attention\\
+			\hspace{-1cm}\textbf{(a)} Without Attention\\
 		\end{center}
 	\end{minipage}
 	\begin{minipage}{0.48\textwidth}
 		\begin{center}
 			\hspace{-1cm}\includegraphics[width=0.9\textwidth]{Images/attention-lstm.png}\\
-			\hspace{-1cm}\textbf{(a)} With Attention\\
+			\hspace{-1cm}\textbf{(b)} With Attention\\
 		\end{center}
 	\end{minipage}
 	\begin{center}
-		\hspace{-20pt}\textbf{Figure -:} Accuracy and \_ statistics of models during training\\
+		\hspace{-20pt}\textbf{Figure -:} Training and validation accuracy of models during training\\
 	\end{center}
 \end{minipage}
-\begin{minipage}{0.4\textwidth}
-	example text
+\begin{minipage}{0.45\textwidth}
+	Figure \_ shows the fluctuation in training and validation accuracy whilst training our bidirectional LSTM models. Incorporating our attention mechanism led to a slower training process as the number of training epochs increased from 12 to 16. Furthermore, the validation accuracy of our attention model increased at a steadier pace and peaked at a slightly lower value.
 \end{minipage}\\
 
 
-We use an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional gated recurrent unit in order to retain both the left and right contexts of each word.\\
+
 
 Visualising the output of our attention layer shows that the model places more emphasis on qualitatively informative tokens.
 
