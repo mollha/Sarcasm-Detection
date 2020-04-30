@@ -662,26 +662,7 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 \noindent The superior model in the binary classification task is shown to be the Bidirectional LSTM model, trained on ElMo vectors from the Twitter dataset. We incorporate our attention mechanism after our bidirectional LSTM layer to identify the tokens that lead to positive and negative classification decisions. We present a number of attention visualisations, and examine whether incorporating attention can boost model performance as hypothesised, and for what training cost.\\\vspace{-5pt}
 
 
-\hspace{-25pt}\begin{minipage}{0.5\textwidth}
-	\begin{center}
-		\textbf{Table -}: Comparison of bidirectional LSTM classification results\vspace{5pt}
-		\begin{tabular}{|p{1.6cm}||p{1.8cm}|p{2cm}|}
-			\hline
-			& \multicolumn{2}{|c|}{Bidirectional LSTM} \\
-			\hline
-			Metrics & With Attention & Without Attention\\
-			\hline\hline
-			Precision & 0.859 & 0.847\\
-			\hline
-			Recall & 0.865 & 0.851\\
-			\hline
-			$F_1$ Score & 0.862 & 0.849\\
-			\hline
-		\end{tabular}
-	\end{center}	
-\end{minipage}
-\hspace{10pt}
-\begin{minipage}{0.5\textwidth}
+\hspace{-5pt}\begin{minipage}{0.5\textwidth}
 	\vspace{2pt}\begin{minipage}{0.48\textwidth}
 		\begin{center}
 			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/lstm.png}\\
@@ -695,12 +676,34 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 		\end{center}
 	\end{minipage}
 	\vspace{-5pt}\begin{center}
-		\hspace{-20pt}\textbf{Figure -:} Training and validation accuracy of models during training\\
+		\hspace{-20pt}\textbf{Figure -:} Fluctuation of training and validation accuracy of models during training\\
 	\end{center}
-\end{minipage}\\
+\end{minipage}
+\hspace{-10pt}
+\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\textbf{Table -}: Comparison of bidirectional LSTM classification results\vspace{5pt}
+		\begin{tabular}{|p{1.6cm}||p{1.8cm}|p{2cm}|}
+			\hline
+			& \multicolumn{2}{c|}{Bidirectional LSTM} \\
+			\hline
+			Metrics & With Attention & Without Attention\\
+			\hline\hline
+			Precision & 0.859 & 0.847\\
+			\hline
+			Recall & 0.865 & 0.851\\
+			\hline
+			$F_1$ Score & 0.862 & 0.849\\
+			\hline
+		\end{tabular}
+	\end{center}	
+\end{minipage}\vspace{10pt}
 
 
-\noindent However, there was an increase in training time, and the rate of increase of the validation accuracy decreased. Figure \_ shows the fluctuation in training and validation accuracy whilst training our bidirectional LSTM models, with and without our attention mechanism.\\ 	 Incorporating our attention mechanism led to a slower training process as the number of training epochs increased from 12 to 16. Furthermore, the validation accuracy of our attention model increased at a steadier pace and peaked at a slightly lower value.\\
+\noindent Incorporating our attention mechanism led to an increase in training time as the number of training epochs increased from 12 to 16 (\textit{figure \_}). Furthermore, the validation accuracy increased at a steadier rate and peaked at a slightly lower value (0.962) than in our non-attention model (0.996). However, the performance of our bidirectional LSTM with attention mechanism exceeds our foremost solution in the binary classification task, improving upon precision, recall and $F_1$ score by an average of 1.51\%.\\
+
+%, and the rate of increase of the validation accuracy decreased (\textit{figure \_}). 
+%Incorporating our attention mechanism led to slower training, as the number of training epochs increased from 12 to 16. Furthermore, the validation accuracy of our attention model increased at a steadier pace and peaked at a slightly lower value.\\
 
 %As such, we incorporate an ElMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional long short-term memory model in order to retain both the left and right contexts of each word.\\
 
