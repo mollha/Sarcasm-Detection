@@ -488,28 +488,10 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 \subsection{Analysis of Sentiment Features}\vspace{-5pt}
-\noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as a binary classification model predicting randomly on a balanced dataset achieves an average score of 0.5. \\\vspace{-5pt}
+\noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as a binary classification model predicting randomly on a balanced dataset achieves an average score of 0.5. \\\vspace{-15pt}
 
-\hspace{-5pt}\begin{minipage}{0.5\textwidth}
-	\vspace{2pt}\begin{minipage}{0.48\textwidth}
-		\begin{center}
-			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/lstm.png}\\
-			\hspace{-1cm}\textbf{(a)} Without Attention\\
-		\end{center}
-	\end{minipage}
-	\vspace{2pt}\begin{minipage}{0.48\textwidth}
-		\begin{center}
-			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/attention-lstm.png}\\
-			\hspace{-1cm}\textbf{(b)} With Attention\\
-		\end{center}
-	\end{minipage}
-	\vspace{-5pt}\begin{center}
-		\hspace{-20pt}\textbf{Figure 10:} Fluctuation of training and validation accuracy of models during training\\
-	\end{center}
-\end{minipage}
-\hspace{-10pt}
-\begin{minipage}{0.5\textwidth}
-	\begin{center}
+\hspace{-20pt}\begin{minipage}{0.5\textwidth}
+	\vspace{-10pt}\begin{center}
 		\textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features\vspace{5pt}
 		\begin{tabular}{|p{2cm}||p{1.8cm}|p{1.6cm}|}
 			\hline
@@ -525,29 +507,20 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 			\hline
 		\end{tabular}
 	\end{center}	
-\end{minipage}\vspace{10pt}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{Images/boxcompare.png}\\
+			\textbf{Figure 8:} Visualisation of overall sentiment\\
+		\end{center}
+	\end{figure}
+\end{minipage}\vspace{-3pt}
 
 
 
 
-
-\begin{center}
-	\textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features
-\end{center}\vspace{-20pt}
-
-\begin{center}
-	\begin{tabular}{|c||c|c|c|} 
-	\hline
-	\textbf{Dataset} & \textbf{Sentiment} & \textbf{Punctuation} & \textbf{Topic} \\ [0.4ex] 
-	\hline\hline
-	News Headlines& 0.516 & 0.344 & 0.525\\ 
-	\hline
-	Twitter Data & 0.593 & 0.611 & 0.530\\
-	\hline
-\end{tabular}
-\end{center}\vspace{-5pt}
-
-\noindent All three features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets.\ Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic.\ This enables us to assess whether these features alone are indicative of sarcasm in different media types.\ Figure \_ illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) for both of our datasets.\ Sarcastic and non-sarcastic instances are represented separately, as differences in their distributions enable us to explain the classification scores in table \_.
+\noindent All three features were more informative when extracted from Twitter data (\textit{table 4}), and this may be due to the informal and irregular nature of user-generated tweets.\ Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic.\ This enables us to assess whether these features alone are indicative of sarcasm in different media types.\ Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) for both of our datasets.\ Sarcastic and non-sarcastic instances are represented separately, as differences in their distributions enable us to explain the classification scores in table 4.
 
 
 \hspace{-30pt}
