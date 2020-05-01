@@ -524,7 +524,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 %Hence, we curate a selection of models that either produce the best scores, or exceeded our expectations.
 
-\noindent \textbf{Experimental Settings --} In our machine learning experimentation, we train each classifier on BOW, TF-IDF, GloVe and ElMo vectors, employing 5-fold cross validation to ensure reproducability and consistency of results; however, it is infeasible to apply the same approach to our deep learning experimentation as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function.\\\vspace{-10pt}
+\vspace{-20pt}\noindent \textbf{Experimental Settings --} In our machine learning experimentation, we train each classifier on BOW, TF-IDF, GloVe and ElMo vectors, employing 5-fold cross validation to ensure reproducability and consistency of results; however, it is infeasible to apply the same approach to our deep learning experimentation as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function.\\\vspace{-10pt}
 
 \hspace{10pt}{\textbf{1. Early stopping --} Training is interrupted when the validation loss stops declining - this\\\vspace{-15pt}
 
@@ -556,22 +556,22 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 		\hline
 		CNN & GloVe  & 0.828 & 0.816 & 0.822\\
 		LSTM & ElMo  & 0.853   & 0.888 & 0.870\\
-		Bidirectional LSTM & GloVe  & 0.865   & 0.883 & 0.874\\
+		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
 		Deep CNN & ElMo & 0.883   & 0.879 & 0.881\\
-		Bidirectional GRU & ElMo  & \textbf{0.891}   & \textbf{0.905} & \textbf{0.898}\\
+		Bidirectional GRU & ElMo  & \textbf{0.892}   & \textbf{0.906} & \textbf{0.899}\\
 		\hline
 	\end{tabular}\\\vspace{5pt}
 	\textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-8pt}
 \end{center}
 
-\noindent Logistic regression with ElMo achieved the highest values for all three metrics of our machine learning classifiers; hence, we concatenate sentiment and topic features with our ElMo vectors and observe a further increase in $F_1$ score of 0.589\%.\ The random forest classifier was the second-best machine learning model on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. Across comparable models, ElMo consistently outperformed the other three feature types, while Bag of Words led to the lowest scores across this dataset. Our support-vector machine trained on TF-IDF features achieved a higher $F_1$ score than our model trained on GloVe. However, precision was significantly lower than recall, indicating that this model is more likely to predict false positives therefore it may have overfit to the sarcastic class. TF-IDF features were more informative than GloVe features on our support-vector machine.
+\noindent The results displayed in table 5 show that our deep learning classifiers generally outperformed our machine learning classifiers. In comparing our best-performing classifiers in both categories; we observe a 5.6\% increase from machine learning to deep learning.
+
+We achieve an $F_1$ score of 0.899 on this dataset using a bidirectional GRU, thereby exceeding the score achieved in Misra et al.\ (2019) by  \cite{misra2019sarcasm} 0.2\%. Trained on ElMo vectors, our advanced RNN models exceeded the $F_1$ score of our vanilla RNN (0.818) by an average of 7.7\%, and our deep CNN achieved an increase of 2.2\% compared to our simple CNN (0.862). Logistic regression with ElMo achieved the highest values for all three metrics of our machine learning classifiers; hence, we concatenate sentiment and topic features with our ElMo vectors and observe a further increase in $F_1$ score of 0.6\%.\ The random forest classifier was the next best machine learning model on this dataset, although its $F_1$ score was 5.9\% lower.
 
 
-\noindent Deep learning models routinely outperform Machine learning models.
+%TF-IDF features achieved a higher $F_1$ score than our model trained on GloVe. However, precision was significantly lower than recall, indicating that this model is more likely to predict false positives therefore it may have overfit to the sarcastic class. TF-IDF features were more informative than GloVe features on our support-vector machine.
 
 
-
-Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
 
 \subsubsection{Twitter Dataset}
 
