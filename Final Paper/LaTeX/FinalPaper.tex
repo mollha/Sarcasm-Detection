@@ -538,7 +538,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 \subsubsection{News Headlines Dataset}
 \begin{center}
-	\textbf{Table 5}: Classification results on the \textit{News Headlines} dataset\vspace{-5pt}
+	\textbf{Table 5}: Binary classification results on the \textit{News Headlines} dataset\vspace{-5pt}
 \end{center}
 
 \begin{center}
@@ -555,7 +555,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
 		CNN & GloVe  & 0.828 & 0.816 & 0.822\\
-		LSTM & ElMo  & 0.853   & 0.888 & 0.870\\
+		Long Short-Term Memory & ElMo  & 0.853   & 0.888 & 0.870\\
 		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
 		Deep CNN & ElMo & 0.883   & 0.879 & 0.881\\
 		Bidirectional GRU & ElMo  & \textbf{0.892}   & \textbf{0.906} & \textbf{0.899}\\
@@ -564,19 +564,14 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 	\textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-8pt}
 \end{center}
 
-\noindent The results displayed in table 5 show that our deep learning classifiers generally outperformed our machine learning classifiers. In comparing our best-performing classifiers in both categories; we observe a 5.6\% increase from machine learning to deep learning.
+\noindent Our deep learning classifiers generally outperformed our machine learning classifiers \textit{(table 5)}. In comparing our best-performing classifiers in both categories; we observe a 5.6\% increase from machine learning to deep learning. We achieve an $F_1$ score of 0.899 on this dataset using a bidirectional GRU, thereby exceeding the score achieved in Misra et al.\ (2019) by \cite{misra2019sarcasm} 0.2\%.
 
-We achieve an $F_1$ score of 0.899 on this dataset using a bidirectional GRU, thereby exceeding the score achieved in Misra et al.\ (2019) by  \cite{misra2019sarcasm} 0.2\%. Trained on ElMo vectors, our advanced RNN models exceeded the $F_1$ score of our vanilla RNN (0.818) by an average of 7.7\%, and our deep CNN achieved an increase of 2.2\% compared to our simple CNN (0.862). Logistic regression with ElMo achieved the highest values for all three metrics of our machine learning classifiers; hence, we concatenate sentiment and topic features with our ElMo vectors and observe a further increase in $F_1$ score of 0.6\%.\ The random forest classifier was the next best machine learning model on this dataset, although its $F_1$ score was 5.9\% lower.
-
-
-%TF-IDF features achieved a higher $F_1$ score than our model trained on GloVe. However, precision was significantly lower than recall, indicating that this model is more likely to predict false positives therefore it may have overfit to the sarcastic class. TF-IDF features were more informative than GloVe features on our support-vector machine.
-
-
+Trained on ElMo vectors, our advanced RNN models exceeded the $F_1$ score of our vanilla RNN (0.818) by an average of 7.7\%, and our deep CNN achieved an increase of 2.2\% compared to our simple CNN (0.862). Logistic regression with ElMo achieved the highest values for all three metrics of our machine learning classifiers; hence, we concatenate sentiment and topic features with our ElMo vectors and observe a further increase in $F_1$ score of 0.6\%.\ The random forest classifier was the next best machine learning model on this dataset, although its $F_1$ score was 5.9\% lower.
 
 \subsubsection{Twitter Dataset}
 
 \begin{center}
-	\textbf{Table 6}: Classification results on the \textit{Twitter} dataset\vspace{-5pt}
+	\textbf{Table 6}: Binary classification results on the \textit{Twitter} dataset\vspace{-5pt}
 \end{center}
 
 \begin{center}
@@ -603,7 +598,11 @@ We achieve an $F_1$ score of 0.899 on this dataset using a bidirectional GRU, th
 	\textit{*S} refers to sentiment features, \textit{T} refers to topic features and \textit{P} refers to punctuation features\\\vspace{-5pt}
 \end{center}
 
-\noindent As the best-performing machine learning model trained on GloVe vectors, the Random Forest classifier attained an $F_1$ score of 0.645 - 15.4\% lower than our logistic regression model trained exclusively on ElMo vectors. Models trained on GloVe vectors showed poor performance on this particular dataset, and this could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the input embeddings.
+\noindent The performance of our deep learning classifiers exceed that of our machine learning classifiers \textit{(table 6)}.\ In comparing our best-performing classifiers in both categories; we observe an increase of 8.7\% from machine learning to deep learning.\ Our logistic regression model trained on ElMo vectors achieved an $F_1$ score of 0.762. In concatenating sentiment, topic, and punctuation features with our ElMo vectors, we observe an increase of 3.7\% - leading to our highest $F_1$ score of our machine learning classifiers. Our bidirectional LSTM model trained on ElMo vectors attained the highest overall $F_1$ score of 0.859, as well as the greatest recall.\ While this model did not surpass the $F_1$ score of 0.947 attained in \textit{Pt\'a\v{c}ek et al.\ (2014)} \cite{ptavcek2014sarcasm}. 
+
+Our simple CNN achieved the highest value for precision; however, recall was signicantly lower than precision, indicating that this model is likely to have overfit to the non-sarcastic class. Nonetheless, it achieved an $F_1$ score only 1.2\% lower than our deep CNN model (also trained on ElMo vectors). Our vanilla RNN performed better than expected on this particular dataset; hence, the average increase in $F_1$ score between our vanilla RNN and our more advanced RNN models is 3.3\%, lower than our news headlines dataset.
+
+Models trained on GloVe vectors showed poor performance on this particular dataset.\ For example, our gaussian na\"{i}ve bayes model achieved a higher $F_1$ score when trained on basic BOW vectors than on GloVe.\ This could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the input embeddings.\ 
 
 
 \subsubsection{Cross-Dataset Evaluation}
