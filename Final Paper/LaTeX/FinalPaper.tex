@@ -82,7 +82,10 @@ Early rule-based approaches introduced the idea that the sentiment contained wit
 
 \noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.
 
-The \textbf{minimum} objectives of this project are to evaluate, compare and clean high-quality datasets, as well as to employ machine learning models and evaluate the effectiveness of these architectures on our chosen datasets. We found that a logistic regression model trained on ElMo vectors performed best for all three datasets, achieving $F_{1}$ scores of 84.6\%, 81.3\% and \_\%. 
+\noindent The \textbf{minimum} objectives of this project are to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets. To fulfil these objectives we gather datasets with desirable qualities from multiple platforms and compute summary statistics in order to understand the versatility of how sarcasm is used online.
+
+
+Of our machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790. The purpose of this objective was to establish a baseline against which to compare the performance of our deep learning classifiers.
 
 The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
 
@@ -225,7 +228,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 \vspace{-7pt}
 *\textit{pos} indicates positive instances (sarcastic) and \textit{neg} indicates negative instances (non-sarcastic)\\
 
-\noindent Each of these datasets are large enough to provide a representative view of their respective data sources, without exceeding our computational resources. Both of our training datasets are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label. As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately equal amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
+\noindent The training datasets used in this project are large enough to provide a representative view of their respective data sources, without exceeding our computational resources. Furthermore, they are approximately balanced; despite the fact that sarcasm is used infrequently in real-life. On an unbalanced dataset, a classifier can achieve high accuracy simply by annotating each data instance with the majority class label.\ As most machine learning algorithms are designed to optimise overall accuracy, it is important to provide them with approximately equal amounts of both sarcastic and non-sarcastic data, to prevent them from overfitting to either class.
 
 
 \subsection{Data Pre-Processing}
