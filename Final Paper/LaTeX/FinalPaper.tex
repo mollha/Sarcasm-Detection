@@ -68,7 +68,7 @@ Machine learning, Deep learning, Sarcasm Detection, Sentiment, Binary Classifica
 
 \subsection{Problem Background}
 \noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition
-. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author. Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
+. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author.\ Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
 
 These factors make sarcasm detection an extremely complex task for both humans and computers. Despite this, \textit{most} humans can recognise sarcastic intent \textit{most} of the time. We strive to replicate this performance, or even perhaps improve upon it, in order to move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.
 
@@ -120,18 +120,14 @@ This is achieved by...
 
 Rule-based classifiers can perform well if their rule-sets are tailored to specific datasets - however, they cannot generalise effectively to data that is structurally different, hence they are considered  primitive when compared to their modern, deep learning counterparts.
 
-\subsection{Machine-Learning Classifiers}\vspace{-10pt}
-\noindent Machine learning algorithms do not rely upon a static linguistic rule-set. Instead, they learn the underlying patterns associated with each class, allowing them to separate unseen data into pre-determined categories. There are a number of commonly used model architectures, including Na\"{i}ve Bayes classifiers, Support Vector Machines (SVMs) and Logistic Regression classifiers, although not all approaches fit neatly into these categories.
+\subsection{Machine Learning Classifiers}\vspace{-10pt}
+\noindent Machine learning algorithms do not rely upon a static linguistic rule-set and can instead learn the underlying patterns associated with each class, allowing them to accurately classify unseen data.\ Previous research predominantly focuses on the use of tree-based classifiers, support-vector machines (SVM) and logistic regression models, although not all approaches fit neatly into these categories. For instance, Tsur et al.\ (2010) \cite{tsur2010icwsm} proposed a novel semi-supervised algorithm, \textit{SASI}, for sarcasm identification; trained on a small balanced seed of 160 human-annotated product reviews from a corpus of 66000. In order to mimic the ambiguous and spectral nature of sarcasm, a discrete score between 1 (non-sarcastic) and 5 (definitely sarcastic) is assigned to each sentence; scores of 3 and higher indicate sarcasm. Syntactic and pattern-based features are extracted and fed to a classifier which utilises a strategy similar to K-Nearest Neighbours (kNN), whereby a sarcasm score is assigned to an unseen vector based upon the weighted average of the k closest vectors from the training set. They reported an $F_{1}$ score of 82.7\% on the binary classification task.
 
-An early appproach, Tsur et al. (2010) \cite{tsur2010icwsm}, proposed a novel semi-supervised algorithm, \textit{SASI}, for sarcasm identification; trained on a small balanced seed of 160 reviews (80 sarcastic and 80 non-sarcastic) from a corpus of 66000 human-annotated Amazon product reviews. In order to mimic the ambiguous and spectral nature of sarcasm, a discrete score between 1 (non-sarcastic) and 5 (definitely sarcastic) is assigned to each sentence; scores of 3 and higher indicate sarcasm. Syntactic and pattern-based features are extracted and fed to a classifier which utilises a strategy similar to K-Nearest Neighbours (kNN), whereby a sarcasm score is assigned to an unseen vector based upon the weighted average of the k closest vectors from the training set. They reported an $F_{1}$ score of 82.7\% on the binary classification task.
-
-In Riloff et al. (2013) \cite{riloff2013sarcasm}, sarcasm is described as a contrast between positive sentiment e.g. \textit{"i love"}, in reference to a negative situation, e.g. \textit{"being ignored"}. They use a bootstrapping algorithm to extract positive verb phrases and negative situation phrases from a Twitter corpus and used these to train a hybrid model consisting of an SVM and a contrast method which classifies text as sarcastic if a postive sentiment phrase precedes a negative situation. This yielded an $F_1$ score of 51\%.
+As one of the first studies to consider sentiment features, Riloff et al. (2013) \cite{riloff2013sarcasm} describes sarcasm as a contrast between positive sentiment (e.g.\ \textit{"i love"}), in reference to a negative situation (e.g.\ \textit{"being ignored"}). They use a bootstrapping algorithm to extract positive verb phrases and negative situation phrases from a Twitter corpus and used these to train a hybrid model consisting of a SVM and a contrast method which classifies text as sarcastic if a postive sentiment phrase precedes a negative situation. This yielded an $F_1$ score of 51\%. Gonz{\'a}lez-Ib{\'a}nez et al. (2011) \cite{gonzalez2011identifying} also considered unique miscellaneous features, including lexical (e.g. unigrams) and pragmatic (e.g. emoticons) features. They trained an SVM with sequential minimal optimisation and a logistic regression model, achieving 71\% accuracy using an SVM trained on unigrams. Pt{\'a}{\v{c}ek et al. (2014)} \cite{ptavcek2014sarcasm} also used a support-vector machine, performing classification on balanced and inbalanced datasets.
 
 Reyes et al. (2013) \cite{reyes2013multidimensional} used a na\"{i}ve bayes and decision trees algorithm in order to detect irony which is closely related to sarcasm. They experimented with balanced and unbalanced distributions (25\% ironic tweets and 75\% other), achieving an F-score of 0.72 on the balanced distribution, dropping to 0.53 for the inbalanced distribution. In a similar vein, Barbieri et al. (2014) \cite{barbieri2014modelling} used random forest and decision tree classifiers, also for the detection of irony. They used six types of features in order to represent tweets, and recorded results over three categories of training data - education, humor and politics.
 
-Gonz{\'a}lez-Ib{\'a}nez et al. (2011) \cite{gonzalez2011identifying} used a Support Vector Machine (SVM) with sequential minimal optimisation, as well as Logistic Regression, on lexical (e.g. unigrams) and pragmatic (e.g. emoticons) features. They achieved 71\% accuracy using an SVM trained on unigrams.
 
- \textit{Pt{\'a}{\v{c}ek et al. (2014)}} \cite{ptavcek2014sarcasm} also used SVM and Maximum Entropy classifiers. They also performed classification on balanced and inbalanced distributions.
 
 \subsection{Deep-Learning Classifiers}\vspace{-10pt}
 Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Though there are many forms of DNN, two commonly used architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). Oftentimes, deep neural networks require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains. If the training data is high-quality and plentiful, then the model can begin to make accurate predictions. 
@@ -203,7 +199,7 @@ In our solution, high quality datasets are first collected and pre-processed. Du
 \begin{enumerate}[leftmargin=0cm]
 	\item \textbf{News Headlines} - \textit{Misra et al.\ (2019)} \cite{misra2019sarcasm} collected thousands of news headlines from two sources - \textit{The Onion} \footnotemark[3]\footnotetext[3]{www.theonion.com} (renowned for posting satiricial news) and \textit{The Huffington Post} \footnotemark[4]\footnotetext[4]{www.huffpost.com}. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Misra et al.\ (2019) \cite{misra2019sarcasm} used a hybrid neural network architecture and achieved an \textit{accuracy} of 0.897.
 	
-	\item \textbf{Twitter Data} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al.\ (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. Sarcastic instances are tweets that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. We take a subset of the remaining tweets (7500 from each class) to form a smaller balanced corpus. Pt\'a\v{c}ek et al.\ (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
+	\item \textbf{Twitter Data} - One of three datasets collated in \textit{Pt\'a\v{c}ek et al.\ (2014)} \cite{ptavcek2014sarcasm}, we use a balanced dataset of 100000 English tweet ids, whereby the original tweet must be scraped using the Twitter API. Of this original corpus, 17.28\% of the original tweets remain available to access on Twitter, therefore all others are omitted from the compiled dataset. Sarcastic instances are tweets that include \textit{\#sarcasm}, and non-sarcastic instances are selected arbitrarily from the set of all other tweets. Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. Pt\'a\v{c}ek et al.\ (2014) \cite{ptavcek2014sarcasm} achieved an $F_{1}$ score of 0.947.
 	
 	\item \textbf{Amazon Reviews} - \textit{Filatova (2012)} \cite{filatova2012irony} used crowdsourcing to collect Amazon reviews, human-labelled by 5 annotators. The number of stars given to a review, as well as the title and content are provided. These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. This dataset was not used by its compilers for classification, hence there is no score available for comparison.
 \end{enumerate}
@@ -357,7 +353,7 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 	
 	\item \textbf{K-Nearest Neighbours (KNN) --} A non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the majority class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned. We found that k=5 achieved the optimal balance between the computational cost of a large number of neighbours and increased noise and bias associated with small values of k.\vspace{-3pt}
 	
-	\item \textbf{Support Vector Machine (SVM) --} Uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data. Our SVM uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\vspace{-3pt}
+	\item \textbf{Support-Vector Machine (SVM) --} Uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support-vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data. Our SVM uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\vspace{-3pt}
 
 	\item \textbf{Logistic Regression --} Models a binary dependent variable by finding a relationship between features and the likelihood that they belong to either class. It is a more advanced approach than linear regression, which aims to model data using a linear equation.\vspace{-3pt}
 
@@ -500,7 +496,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 
 \begin{center}
-	\textbf{Table -}: $F_1$ score of logistic regression models trained on hand-crafted features
+	\textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features
 \end{center}\vspace{-20pt}
 
 \begin{center}
@@ -515,19 +511,20 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \end{tabular}
 \end{center}\vspace{-5pt}
 
-\noindent All three categories of features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets. Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic. This enables us to assess whether these features alone are indicative of sarcasm in different media types. Figure \_ illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) for both of our datasets. Sarcastic and non-sarcastic instances are represented separately, as differences in their distributions enable us to explain the classification scores in table \_.
+\noindent All three features were more informative when extracted from Twitter data, and this may be due to the informal and irregular nature of user-generated tweets.\ Sarcasm in tweets is more overt than in News headlines, which are typically contextual and subtley sarcastic.\ This enables us to assess whether these features alone are indicative of sarcasm in different media types.\ Figure \_ illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) for both of our datasets.\ Sarcastic and non-sarcastic instances are represented separately, as differences in their distributions enable us to explain the classification scores in table \_.
 
 
-\hspace{-35pt}
-\begin{minipage}{0.5\textwidth}
+\hspace{-30pt}
+\begin{minipage}{0.3\textwidth}
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=0.9\textwidth]{Images/boxcompare.png}\\
-		\textbf{Figure -:} Visualisation of overall sentiment\\
+		\includegraphics[width=1\textwidth]{Images/boxcompare.png}\\
+		\textbf{Figure 8:} Visualisation of overall sentiment\\
 	\end{center}
 \end{figure}
 \end{minipage}
-\begin{minipage}{0.55\textwidth}
+\hspace{5pt}
+\begin{minipage}{0.70\textwidth}
 	
 	
 	
@@ -556,7 +553,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 \subsubsection{News Headlines Dataset}
 \begin{center}
-	\textbf{Table -}: Classification results on the \textit{News Headlines} dataset
+	\textbf{Table 5}: Classification results on the \textit{News Headlines} dataset
 \end{center}
 
 \begin{center}
@@ -565,7 +562,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
 		Random Forest Classifier & GloVe  & 0.774   & 0.735 & 0.754\\
-		Support Vector Machine & TF-IDF  & 0.688   & 0.751 & 0.718\\
+		Support-Vector Machine & TF-IDF  & 0.688   & 0.751 & 0.718\\
 		Random Forest Classifier & ElMo  & 0.801   & 0.793 & 0.797\\
 		Logistic Regression & ElMo  & 0.840   & 0.852 & 0.846\\
 		Logistic Regression & ElMo $\cdot$ S $\cdot$ T & \textbf{0.848}   & \textbf{0.854} & \textbf{0.851}\\
@@ -587,7 +584,7 @@ Notes:
 - comment on sentiment and topic features
 - best-performing ML model had highest of all three metrics
 - ElMo always performs better than the other three feature types across comparable models.
-- TF-IDF features performed better than GloVe features on our Support Vector machine, however use of Bag of Words consistently led to the lowest scores across this dataset.
+- TF-IDF features performed better than GloVe features on our support-vector machine, however use of Bag of Words consistently led to the lowest scores across this dataset.
 - 
 
 
@@ -599,7 +596,7 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 \subsubsection{Twitter Dataset}
 
 \begin{center}
-	\textbf{Table -}: Classification results on the \textit{Twitter} dataset
+	\textbf{Table 6}: Classification results on the \textit{Twitter} dataset
 \end{center}
 
 \begin{center}
@@ -609,7 +606,7 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 		\hline\hline
 		Gaussian Na\"{i}ve Bayes & Bag of Words & 0.677 & 0.685 & 0.681\\
 		Random Forest Classifier & GloVe  & 0.669   & 0.623 & 0.645\\
-		Support Vector Machine & ElMo  & 0.722 & \textbf{0.789} & 0.754\\
+		Support-Vector Machine & ElMo  & 0.722 & \textbf{0.789} & 0.754\\
 		Logistic Regression & ElMo  & 0.758 & 0.766 & 0.762\\
 		Logistic Regression & ElMo $\cdot$ S $\cdot$ T $\cdot$ P & \textbf{0.794} & 0.786 & \textbf{0.790}\\
 		\hline\hline
@@ -651,7 +648,7 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 \end{minipage}\vspace{-15pt}
 
 \begin{center}
-	\textbf{Figure -}: Confusion Matrices of models evaluated on Amazon Reviews
+	\textbf{Figure 9}: Confusion Matrices of models evaluated on Amazon Reviews
 \end{center}
 
 \noindent False positives and negatives make up 44.7\% of our results for the News Headlines model, compared with 27.5\% on the Twitter model. This is reflected in the summary statistics produced for each model, as all metrics demonstrated better performance for our Twitter Model. 
@@ -676,13 +673,13 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 		\end{center}
 	\end{minipage}
 	\vspace{-5pt}\begin{center}
-		\hspace{-20pt}\textbf{Figure -:} Fluctuation of training and validation accuracy of models during training\\
+		\hspace{-20pt}\textbf{Figure 10:} Fluctuation of training and validation accuracy of models during training\\
 	\end{center}
 \end{minipage}
 \hspace{-10pt}
 \begin{minipage}{0.5\textwidth}
 	\begin{center}
-		\textbf{Table -}: Comparison of bidirectional LSTM classification results\vspace{5pt}
+		\textbf{Table 7}: Comparison of bidirectional LSTM classification results\vspace{5pt}
 		\begin{tabular}{|p{1.6cm}||p{1.8cm}|p{2cm}|}
 			\hline
 			& \multicolumn{2}{c|}{Bidirectional LSTM} \\
@@ -699,7 +696,7 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 	\end{center}	
 \end{minipage}\vspace{10pt}
 
-\noindent Incorporating our attention mechanism led to an increase in training time as the number of training epochs increased from 12 to 16 (\textit{figure \_}). Furthermore, the validation accuracy increased at a steadier rate and peaked at a slightly lower value (0.962) than in our non-attention model (0.996). However, the performance of our bidirectional LSTM with attention mechanism exceeds our foremost solution in the binary classification task, improving upon precision, recall and $F_1$ score by an average of 1.51\%.\\
+\noindent Incorporating our attention mechanism led to an increase in training time as the number of training epochs increased from 12 to 16 (\textit{figure 10}). Furthermore, the validation accuracy increased at a steadier rate and peaked at a slightly lower value than in our non-attention model. However, the performance of our bidirectional LSTM with attention mechanism exceeds our foremost solution in the binary classification task, improving upon precision, recall and $F_1$ score by an average of 1.51\% \textit{(table 7)}.\\
 
 \hspace{-5pt}\begin{minipage}{0.5\textwidth}
 	\begin{center}
@@ -725,7 +722,7 @@ The Matthews Correlation Coefficient is weaker for our Twitter model,
 \noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
 
 \subsection{Solution Strengths}\vspace{-10pt}
-\noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiments, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+\noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
 
 We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features.
 
