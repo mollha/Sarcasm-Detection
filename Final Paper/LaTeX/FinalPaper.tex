@@ -484,11 +484,51 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 	\end{minipage}
 \end{center}
 
-\noindent Precision refers to the proportion of classified-sarcastic data that is \textit{truly sarcastic} (how many positives are true positives), and recall describes the proportion of the truly sarcastic data that is classified as such (how many true positives are labelled as positives). We also use the harmonic mean of precision and recall ($F_{1}$ score), however this metric has faced some criticism for giving equal weight to precision and recall \cite{hand2018note}, therefore we also consider these measures separately. The Matthews Correlation Co-efficient (MCC) is a balanced measure which shows high scores if the true positive and negative rates are high and if the false positive and negative rates are low.
+\noindent Precision refers to the proportion of classified-sarcastic data that is \textit{truly sarcastic} (how many positives are true positives), and recall describes the proportion of the truly sarcastic data that is classified as such (how many true positives are labelled as positives).\ We also use the harmonic mean of precision and recall ($F_{1}$ score), however this metric has faced some criticism for giving equal weight to precision and recall \cite{hand2018note}, therefore we also consider these measures separately. The Matthews Correlation Co-efficient (MCC) is a balanced measure which shows high scores if the true positive and negative rates are high and if the false positive and negative rates are low.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 \subsection{Analysis of Sentiment Features}\vspace{-5pt}
-\noindent We analyse the effectiveness of our novel sentiment features in comparison to our standard punctuation and topic modelling features by feeding them to logistic regression models and calculating the $F_1$ scores using 5-fold cross-validation; logistic regression is used as these feature vectors are small. We consider models achieving $F_1$ scores greater than 0.5 to be indicative of useful training features, as a binary classification model predicting randomly on a balanced dataset achieves an average score of 0.5. \\\vspace{-20pt}
+\noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as a binary classification model predicting randomly on a balanced dataset achieves an average score of 0.5. \\\vspace{-5pt}
+
+\hspace{-5pt}\begin{minipage}{0.5\textwidth}
+	\vspace{2pt}\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/lstm.png}\\
+			\hspace{-1cm}\textbf{(a)} Without Attention\\
+		\end{center}
+	\end{minipage}
+	\vspace{2pt}\begin{minipage}{0.48\textwidth}
+		\begin{center}
+			\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/attention-lstm.png}\\
+			\hspace{-1cm}\textbf{(b)} With Attention\\
+		\end{center}
+	\end{minipage}
+	\vspace{-5pt}\begin{center}
+		\hspace{-20pt}\textbf{Figure 10:} Fluctuation of training and validation accuracy of models during training\\
+	\end{center}
+\end{minipage}
+\hspace{-10pt}
+\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features\vspace{5pt}
+		\begin{tabular}{|p{2cm}||p{1.8cm}|p{1.6cm}|}
+			\hline
+			& \multicolumn{2}{c|}{Dataset} \\
+			\hline
+			Features & News Headlines & Twitter Data\\
+			\hline\hline
+			Sentiment & 0.516 & 0.593\\
+			\hline
+			Punctuation & 0.344 & 0.611\\
+			\hline
+			Topic & 0.525 & 0.530\\
+			\hline
+		\end{tabular}
+	\end{center}	
+\end{minipage}\vspace{10pt}
+
+
+
 
 
 \begin{center}
