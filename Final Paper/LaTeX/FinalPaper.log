@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 MAY 2020 18:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 MAY 2020 21:18
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -610,81 +610,71 @@ File: Images/boxcompare.png Graphic file (type png)
 <use Images/boxcompare.png>
 Package pdftex.def Info: Images/boxcompare.png  used on input line 514.
 (pdftex.def)             Requested size: 172.92444pt x 107.40784pt.
-[14 <./Images/boxcompare.png>]
-Overfull \hbox (0.2755pt too wide) in paragraph at lines 576--578
-\OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
-ng mod-els. Lo-gis-tic re-gres-sion trained
- []
-
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 608--609
-
- []
-
+[14 <./Images/boxcompare.png>] [15]
 <Images/cm2.png, id=78, 431.81325pt x 296.90926pt>
 File: Images/cm2.png Graphic file (type png)
 <use Images/cm2.png>
-Package pdftex.def Info: Images/cm2.png  used on input line 621.
+Package pdftex.def Info: Images/cm2.png  used on input line 615.
 (pdftex.def)             Requested size: 138.33745pt x 95.12163pt.
 <Images/cm1.png, id=79, 431.81325pt x 299.9205pt>
 File: Images/cm1.png Graphic file (type png)
 <use Images/cm1.png>
-Package pdftex.def Info: Images/cm1.png  used on input line 629.
+Package pdftex.def Info: Images/cm1.png  used on input line 623.
 (pdftex.def)             Requested size: 138.33745pt x 96.08635pt.
-[16 <./Images/cm2.png> <./Images/cm1.png>]
+ [16 <./Images/cm2.png> <./Images/cm1.png>]
 <Images/lstm.png, id=85, 403.9893pt x 298.4751pt>
 File: Images/lstm.png Graphic file (type png)
 <use Images/lstm.png>
-Package pdftex.def Info: Images/lstm.png  used on input line 650.
+Package pdftex.def Info: Images/lstm.png  used on input line 644.
 (pdftex.def)             Requested size: 110.67065pt x 81.76437pt.
 <Images/attention-lstm.png, id=86, 410.4936pt x 299.9205pt>
 File: Images/attention-lstm.png Graphic file (type png)
 <use Images/attention-lstm.png>
-Package pdftex.def Info: Images/attention-lstm.png  used on input line 656.
+Package pdftex.def Info: Images/attention-lstm.png  used on input line 650.
 (pdftex.def)             Requested size: 110.67065pt x 80.85605pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 672--672
+Underfull \hbox (badness 10000) in paragraph at lines 666--666
 []|\OT1/ptm/m/n/12 With
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 672--673
+Underfull \hbox (badness 10000) in paragraph at lines 666--667
 []|\OT1/ptm/m/n/12 Without
  []
 
 
-Overfull \hbox (7.18486pt too wide) in paragraph at lines 647--683
+Overfull \hbox (7.18486pt too wide) in paragraph at lines 641--677
 [] $[]$   $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 684--685
+Underfull \hbox (badness 10000) in paragraph at lines 678--679
 
  []
 
 <Images/visualisation1.png, id=87, 666.99188pt x 59.47218pt>
 File: Images/visualisation1.png Graphic file (type png)
 <use Images/visualisation1.png>
-Package pdftex.def Info: Images/visualisation1.png  used on input line 688.
+Package pdftex.def Info: Images/visualisation1.png  used on input line 682.
 (pdftex.def)             Requested size: 230.56593pt x 20.55785pt.
 <Images/visualisation2.png, id=88, 737.00343pt x 62.48344pt>
 File: Images/visualisation2.png Graphic file (type png)
 <use Images/visualisation2.png>
-Package pdftex.def Info: Images/visualisation2.png  used on input line 695.
+Package pdftex.def Info: Images/visualisation2.png  used on input line 689.
 (pdftex.def)             Requested size: 230.56593pt x 19.547pt.
 
-Overfull \hbox (7.18486pt too wide) in paragraph at lines 686--699
+Overfull \hbox (7.18486pt too wide) in paragraph at lines 680--693
 [] $[]$   $[]$ 
  []
 
 [17 <./Images/lstm.png> <./Images/attention-lstm.png> <./Images/visualisation1.
 png> <./Images/visualisation2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 721--722
+Underfull \hbox (badness 10000) in paragraph at lines 718--719
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 725--729
+Underfull \hbox (badness 10000) in paragraph at lines 722--726
 
  []
 
@@ -727,7 +717,7 @@ word is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.p
 fb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 773448 bytes).
+Output written on FinalPaper.pdf (21 pages, 773395 bytes).
 PDF statistics:
  153 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -538,11 +538,11 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 \subsubsection{News Headlines Dataset}
 \begin{center}
-	\textbf{Table 5}: Classification results on the \textit{News Headlines} dataset
+	\textbf{Table 5}: Classification results on the \textit{News Headlines} dataset\vspace{-5pt}
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |c||c|c|c|c|}
+	\begin{tabular}{c||c|c|c|c}
 		\hline
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
@@ -554,38 +554,33 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		CNN & GloVe  & 0.818 & 0.806 & 0.812\\
-		LSTM & ElMo  & 0.843   & 0.878 & 0.860\\
-		Bidirectional LSTM & GloVe  & 0.855   & 0.873 & 0.864\\
-		Deep CNN & ElMo & 0.873   & 0.869 & 0.871\\
-		Bidirectional GRU & ElMo  & \textbf{0.888}   & \textbf{0.901} & \textbf{0.875}\\
+		CNN & GloVe  & 0.828 & 0.816 & 0.822\\
+		LSTM & ElMo  & 0.853   & 0.888 & 0.870\\
+		Bidirectional LSTM & GloVe  & 0.865   & 0.883 & 0.874\\
+		Deep CNN & ElMo & 0.883   & 0.879 & 0.881\\
+		Bidirectional GRU & ElMo  & \textbf{0.891}   & \textbf{0.905} & \textbf{0.898}\\
 		\hline
-	\end{tabular}
+	\end{tabular}\\\vspace{5pt}
+	\textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-8pt}
 \end{center}
-\textit{*S} refers to sentiment features and \textit{T} refers to topic features\\\vspace{-10pt}
 
-
-Notes:
-- comment on sentiment and topic features
-- best-performing ML model had highest of all three metrics
-- ElMo always performs better than the other three feature types across comparable models.
-- TF-IDF features performed better than GloVe features on our support-vector machine, however use of Bag of Words consistently led to the lowest scores across this dataset.
-- 
+\noindent Logistic regression with ElMo achieved the highest values for all three metrics of our machine learning classifiers; hence, we concatenate sentiment and topic features with our ElMo vectors and observe a further increase in $F_1$ score of 0.589\%.\ The random forest classifier was the second-best machine learning model on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. Across comparable models, ElMo consistently outperformed the other three feature types, while Bag of Words led to the lowest scores across this dataset. Our support-vector machine trained on TF-IDF features achieved a higher $F_1$ score than our model trained on GloVe. However, precision was significantly lower than recall, indicating that this model is more likely to predict false positives therefore it may have overfit to the sarcastic class. TF-IDF features were more informative than GloVe features on our support-vector machine.
 
 
 \noindent Deep learning models routinely outperform Machine learning models.
-Logistic regression trained on ElMo with sentiment and topic features was the machine learning model with the highest $F_1$ score, and a slight improvement of 0.1\%. The Random Forest Classifier was the next best model architecture on this dataset, although its $F_1$ score was 5.9\% lower than the best performing model. 
+
+
 
 Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an average of \_\%, which achieved an $F_1$ score of \_. Similarly, our deep CNN achieved an 8.2\% increase in $F_1$ score compared to our simple CNN, as well as more consistent values for precision and recall.
 
 \subsubsection{Twitter Dataset}
 
 \begin{center}
-	\textbf{Table 6}: Classification results on the \textit{Twitter} dataset
+	\textbf{Table 6}: Classification results on the \textit{Twitter} dataset\vspace{-5pt}
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ |c||c|c|c|c|}
+	\begin{tabular}{c||c|c|c|c}
 		\hline
 		\textbf{Machine Learning Model}& \textbf{Feature(s)*} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline\hline
@@ -597,19 +592,18 @@ Our advanced RNN models exceeded the $F_1$ score of the vanilla RNN by an averag
 		\hline\hline
 		\textbf{Deep Learning Model}& \textbf{Feature(s)} & \textbf{Precision} & \textbf{Recall} & \textbf{$\mathbf{F_1}$ Score}\\
 		\hline
-		Vanilla RNN & ElMo  & 0.834   & 0.801 & 0.817\\
-		Bidirectional LSTM & GloVe  & 0.829 & 0.815 & 0.822\\
-		CNN & ElMo  & \textbf{0.851}   & 0.814 & 0.832\\
-		Bidirectional LSTM & ElMo  & 0.847   & \textbf{0.851} & \textbf{0.849}\\
-		Long Short-Term Memory & GloVe & 0.837   & 0.845 & 0.841\\
+		Vanilla RNN & ElMo  & 0.844   & 0.811 & 0.827\\
+		Bidirectional LSTM & GloVe  & 0.839 & 0.825 & 0.832\\
+		CNN & ElMo  & \textbf{0.861}   & 0.824 & 0.842\\
+		Bidirectional LSTM & ElMo  & 0.857   & \textbf{0.861} & \textbf{0.859}\\
+		Long Short-Term Memory & GloVe & 0.847   & 0.855 & 0.851\\
 		\hline
 	\end{tabular}
+	\\\vspace{5pt}
+	\textit{*S} refers to sentiment features, \textit{T} refers to topic features and \textit{P} refers to punctuation features\\\vspace{-5pt}
 \end{center}
-\textit{*S} refers to sentiment features, \textit{T} refers to topic features and \textit{P} refers to punctuation features\\
 
 \noindent As the best-performing machine learning model trained on GloVe vectors, the Random Forest classifier attained an $F_1$ score of 0.645 - 15.4\% lower than our logistic regression model trained exclusively on ElMo vectors. Models trained on GloVe vectors showed poor performance on this particular dataset, and this could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the input embeddings.
-
-
 
 
 \subsubsection{Cross-Dataset Evaluation}
@@ -715,6 +709,9 @@ Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcas
 
 \subsection{Solution Strengths}\vspace{-10pt}
 \noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+
+We impr
 
 We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features.
 
