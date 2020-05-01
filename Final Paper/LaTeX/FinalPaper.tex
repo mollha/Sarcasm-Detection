@@ -67,8 +67,34 @@ Machine learning, Deep learning, Sarcasm Detection, Sentiment, Binary Classifica
 \footnotetext[1]{www.dictionary.cambridge.org/dictionary/english/sarcasm}
 
 \subsection{Problem Background}
-\noindent As sarcasm is multi-faceted, this makes its detection a unique and interesting challenge. It can be both explicit and implicit; oftentimes, contextual cues are more powerful indicators of sarcasm than the words themselves. However we often lose this context, and hence the sarcastic undertones, in transcription. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent. Furthermore, even humans struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition
-. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. Truly, the existence of sarcasm can only be conclusively affirmed by the author.\ Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
+\noindent As sarcasm is multi-faceted, detecting it is a unique and interesting challenge. Overt instances of sarcasm will often utilise contrasting positive and negative sentiment phrases, such as \textit{"isn't it great to feel tired?"}, or \textit{"working again tomorrow, yay!"}. As such, these instances are simpler to detect than implicit forms of sarcasm; hence, they are the focus of early approaches to sarcasm detection. However, some forms of sarcasm require additional contextual information; and these contextual cues can be more powerful sarcastic indicators than the words themselves. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent; therefore in transcribing this interaction, we lose necessary context and we lose the sarcastic undertones.\\
+
+Furthermore, even humans struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. This suggests that individuals use sarcasm in different ways; hence, there is no set formula for producing (and therefore identifying) sarcastic text. Truly, the presence of sarcasm in text can only be conclusively affirmed by the author.\\
+
+
+
+We often lose this context, and hence the sarcastic undertones, in transcription.
+
+
+
+
+
+However, when understanding sarcasm requires contextual information 
+
+
+
+
+
+; where contextual cues are more powerful indicators than the words themselves. However  
+
+
+
+
+Across different cultures, sarcasm is used and perceived in unique ways.
+
+
+Different 
+ Additionally, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.
 
 These factors make sarcasm detection an extremely complex task for both humans and computers. Despite this, \textit{most} humans can recognise sarcastic intent \textit{most} of the time. We strive to replicate this performance, or even perhaps improve upon it, in order to move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.
 
@@ -80,12 +106,9 @@ Early rule-based approaches introduced the idea that the sentiment contained wit
 \indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
-\noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.
+\noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.\\
 
-\noindent The \textbf{minimum} objectives of this project are to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets. To fulfil these objectives we gather datasets with desirable qualities from multiple platforms and compute summary statistics in order to understand the versatility of how sarcasm is used online.
-
-
-Of our machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790. The purpose of this objective was to establish a baseline against which to compare the performance of our deep learning classifiers.
+\noindent The \textbf{minimum} objectives of this project were to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets. To fulfil these objectives we gathered two large balanced datasets containing Twitter data and news headlines; as well a small unbalanced corpus of product reviews. Gathering data from multiple online sources enabled us to take into account the versatility of sarcasm usage online. After implementing five machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790.\ The purpose of this objective was to establish a baseline against which to compare the performance of our deep learning classifiers.
 
 The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
 
