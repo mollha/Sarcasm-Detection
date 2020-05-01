@@ -54,38 +54,38 @@ Sarcasm detection is a relatively new research topic that has recently gained in
 \noindent \textbf{Conclusions --} Deep learning models vastly outperform machine learning models in the sarcasm detection task. Furthermore, models trained on ElMo vectors were consistently superior to those trained on all other vector types.
 
 %This section should not be longer than half of a page, and having no more than one or two sentences under each heading is advised. Do not cite references in the abstract.
-\end{abstract}
+\end{abstract}\vspace{-10pt}
 
 \begin{keywords}
 Machine learning, Deep learning, Sarcasm Detection, Sentiment, Binary Classification, Attention
-\end{keywords}
+\end{keywords}\vspace{-10pt}
 
 
 \section{Introduction}
 \noindent Sarcasm is a complex linguistic phenomenon, prevalent in online user-generated content. It is typically used as a form of mockery or humour when expressing an opinion; hence, to interpret sarcastic text literally would be to overlook its implied (usually opposite) meaning. Sarcasm poses a significant challenge within the field of natural language processing as it inverts the sentiment polarity of a positive or negative utterance. This particularly affects sentiment analysis, as this is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a specific subject. It is increasingly common for organisations to use sentiment analysis to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion. Hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm. The phenomenon of sentiment incongruity often lies at the heart of sarcasm; hence, advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis.\\
 
-\footnotetext[1]{www.dictionary.cambridge.org/dictionary/english/sarcasm}
-
 \subsection{Problem Background}
-\noindent As sarcasm is multi-faceted, detecting it is a unique and interesting challenge. Overt instances of sarcasm will often utilise contrasting positive and negative sentiment phrases, such as \textit{"isn't it great to feel tired?"}, or \textit{"working again tomorrow, yay!"}. As such, these instances are simpler to detect than implicit forms of sarcasm; hence, they are the focus of early approaches to sarcasm detection. However, some forms of sarcasm require additional contextual information; and these contextual cues can be more powerful sarcastic indicators than the words themselves. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, even though they sent it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent; therefore in transcribing this interaction, we lose necessary context and we lose the sarcastic undertones.\\
-
-Furthermore, even humans struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. This suggests that individuals use sarcasm in different ways; hence, there is no set formula for producing (and therefore identifying) sarcastic text. Truly, the presence of sarcasm in text can only be conclusively affirmed by the author.\\
+\noindent As sarcasm is multi-faceted, detecting it is a unique and interesting challenge.\\
 
 
 
-We often lose this context, and hence the sarcastic undertones, in transcription.
+Prior work in the field has primarily focused on overt instances of sarcasm; capturing constrasting positive and negative sentiment phrases \cite{riloff2013sarcasm}, such as \textit{"isn't it great to feel tired?"}, or \textit{"working again tomorrow, yay!"}. However, identifying implicit forms of sarcasm may require knowledge of additional context; as these contextual cues can be more powerful sarcastic indicators than the words themselves. Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all. Or perhaps a customer thanking a waiter for the delicious food, despite sending it back to the kitchen. In isolation, the speech is not enough to convey the sarcastic intent; therefore in transcribing this interaction, we lose necessary context and we lose the sarcastic undertones. In the absence of context, we look to more sophisticated deep learning techniques in order to learn the underlying patterns in implicit forms of sarcasm. The first deep learning approach to sarcasm detection was used in \textit{Poria et al. (2017)} \cite{poria2016deeper} to produce state of the art results. \\
 
 
 
 
 
-However, when understanding sarcasm requires contextual information 
+However, some forms of sarcasm require additional context; and these contextual cues can be more powerful sarcastic indicators than the words themselves. 
 
 
+ Overt instances of sarcasm will often utilise contrasting positive and negative sentiment phrases, such as \textit{"isn't it great to feel tired?"}, or \textit{"working again tomorrow, yay!"}.
 
 
+As such, these instances are simpler to detect than implicit forms of sarcasm; hence, they are the focus of early approaches to sarcasm detection. 
 
-; where contextual cues are more powerful indicators than the words themselves. However  
+Identifying sarcasm can be a human problem too, as we also struggle to consistently recognise sarcasm; due in part to the lack of an all-encompassing, universal definition. In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time. This suggests that individuals use and perceive sarcasm in different ways; hence, there is no set formula for producing (and therefore identifying) sarcastic text. \\
+
+
 
 
 
@@ -98,7 +98,7 @@ Different
 
 These factors make sarcasm detection an extremely complex task for both humans and computers. Despite this, \textit{most} humans can recognise sarcastic intent \textit{most} of the time. We strive to replicate this performance, or even perhaps improve upon it, in order to move towards a more concrete definition of what \textit{makes} a statement sarcastic. This highlights the scope for automating this process, and the need for an innovative solution.
 
-Early rule-based approaches introduced the idea that the sentiment contained within text can be indicative of sarcasm, although exploring these sentiment features using more complex machine learning and deep learning architectures is a novel approach to the problem. The first deep learning approach to sarcasm detection was used in \textit{Poria et al. (2017)} \cite{poria2016deeper} to produce state of the art results. 
+
 
 \subsection{Research Questions and Objectives}
 \noindent The \textbf{research questions} guiding this project are as follows --\\

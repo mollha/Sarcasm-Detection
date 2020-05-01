@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 MAY 2020 12:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  1 MAY 2020 13:35
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -362,12 +362,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--66
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
+Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 72--73
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
@@ -437,8 +442,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
-[8]
-<Images/outside1.png, id=37, 659.53966pt x 513.78505pt>
+<Images/outside1.png, id=34, 659.53966pt x 513.78505pt>
 File: Images/outside1.png Graphic file (type png)
 <use Images/outside1.png>
 Package pdftex.def Info: Images/outside1.png  used on input line 299.
@@ -457,6 +461,7 @@ Overfull \hbox (1.46265pt too wide) in paragraph at lines 296--308
 []$[]$  $[]$ 
  []
 
+[8]
 <Images/elmo_diagram2.png, id=38, 546.24075pt x 417.9615pt>
 File: Images/elmo_diagram2.png Graphic file (type png)
 <use Images/elmo_diagram2.png>
@@ -553,13 +558,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 366--367
 
  []
 
-[10] [11]
-<Images/CNNarchNew.png, id=54, 598.48593pt x 550.30594pt>
+[10]
+<Images/CNNarchNew.png, id=49, 598.48593pt x 550.30594pt>
 File: Images/CNNarchNew.png Graphic file (type png)
 <use Images/CNNarchNew.png>
 Package pdftex.def Info: Images/CNNarchNew.png  used on input line 423.
 (pdftex.def)             Requested size: 184.44994pt x 169.59383pt.
-<Images/DCNNarchNew.png, id=55, 705.23476pt x 428.802pt>
+<Images/DCNNarchNew.png, id=50, 705.23476pt x 428.802pt>
 File: Images/DCNNarchNew.png Graphic file (type png)
 <use Images/DCNNarchNew.png>
 Package pdftex.def Info: Images/DCNNarchNew.png  used on input line 430.
@@ -569,7 +574,7 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 421--434
 [] $[]$   $[]$ 
  []
 
-
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
@@ -607,23 +612,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 504--505
 
  []
 
-[13 <./Images/wordLevelAttention.png>]
+
 Overfull \hbox (18.94879pt too wide) in paragraph at lines 513--514
 []$\OML/cmm/m/it/12 MCC \OT1/cmr/m/n/12 = []$ 
  []
 
-<Images/boxcompare.png, id=68, 462.528pt x 346.896pt>
+[13 <./Images/wordLevelAttention.png>]
+<Images/boxcompare.png, id=69, 462.528pt x 346.896pt>
 File: Images/boxcompare.png Graphic file (type png)
 <use Images/boxcompare.png>
 Package pdftex.def Info: Images/boxcompare.png  used on input line 547.
 (pdftex.def)             Requested size: 138.34096pt x 103.7573pt.
-[14 <./Images/boxcompare.png>] [15]
+ [14 <./Images/boxcompare.png>]
 Overfull \hbox (0.2755pt too wide) in paragraph at lines 617--619
 \OT1/ptm/m/n/12 Deep learn-ing mod-els rou-tinely out-per-form Ma-chine learn-i
 ng mod-els. Lo-gis-tic re-gres-sion trained
  []
 
-
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 649--650
 
  []
@@ -734,7 +740,7 @@ word is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.p
 fb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 771251 bytes).
+Output written on FinalPaper.pdf (21 pages, 771123 bytes).
 PDF statistics:
  154 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
