@@ -79,20 +79,15 @@ Prior work in the field has primarily focused on overt instances of sarcasm; cap
 
 The \textbf{minimum} objectives of this project were to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets.\ To fulfil these objectives, we gathered two large balanced datasets containing Twitter data and news headlines; as well a small unbalanced corpus of product reviews.\ Upon implementing five machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790.\ The purpose of this objective was to establish a baseline against which to compare our deep learning classifiers.
 
-The \textbf{intermediate} objectives of this project were to experiment with and evaluate deep learning models on our chosen datasets, as well as to determine the best performing solution by evaluating the model against unseen data. We achieved these objectives by implementing shallow and deep convolutional neural networks; as well as advanced recurrent neural networks and their bidirectional counterparts. We evaluated our candidate solutions on our evaluation corpus of Amazon reviews. Our bidirectional LSTM model, trained on ElMo vectors on the Twitter corpus, was our most adaptable solution - achieving an $F_1$ score of 0.611.
+The \textbf{intermediate} objectives of this project were to experiment with and evaluate deep learning models on our chosen datasets, as well as to determine the best performing solution by evaluating the model against unseen data.\ We achieved these objectives by implementing shallow and deep convolutional neural networks; as well as advanced recurrent neural networks and their bidirectional counterparts.\ We evaluated our candidate solutions on our evaluation corpus of Amazon reviews.\ Our bidirectional LSTM model, trained on ElMo vectors on the Twitter corpus, was our most adaptable solution - achieving an $F_1$ score of 0.611.
  
-The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
-
-This is achieved by...
-
-
-
+The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to classification decisions.\ A visualisation of the attention weights associated with specific tokens would be produced in testing.\ We fulfil these objectives by integrating a custom attention layer into our superior binary classification solution, observing an improvement in the $F_1$ score of our solution.\ We visualise attention weights (returned by our attention layer) by projecting them into a colourspace and highlighting the corresponding tokens in their respective colours.
 
 %This section briefly introduces the general project background, the research question you are addressing, and the project objectives.  It should be between 2 to 3 pages in length.\\%
 
 \section{Related Work}
 \vspace{-4.2pt}
-\noindent In this section, we report on the architectural design of solutions used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. Oftentimes, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g. 1 to 5. In similar studies, the terms irony and sarcasm are used synonymously \cite{tsur2010icwsm}, although their definitions differ slightly (\textit{table 1}). Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm includes the potential for mockery and criticism - often present in opinion-based content such as product reviews.\vspace{-5pt}
+\noindent In this section, we report on the architectural design of solutions used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. Oftentimes, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g.\ 1 to 5.\ In similar studies, the terms irony and sarcasm are used synonymously \cite{tsur2010icwsm}, although their definitions differ slightly (\textit{table 1}). Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm includes the potential for mockery and criticism - often present in opinion-based content such as product reviews.\vspace{-5pt}
 
 \begin{center}
 	\textbf{Table 1}: Definitions of Irony and Sarcasm\vspace{-8pt}
@@ -123,25 +118,24 @@ As one of the first studies to consider sentiment features, Riloff et al. (2013)
 
 Reyes et al. (2013) \cite{reyes2013multidimensional} used a na\"{i}ve bayes and decision trees algorithm in order to detect irony which is closely related to sarcasm. They experimented with balanced and unbalanced distributions (25\% ironic tweets and 75\% other), achieving an F-score of 0.72 on the balanced distribution, dropping to 0.53 for the inbalanced distribution. In a similar vein, Barbieri et al. (2014) \cite{barbieri2014modelling} used random forest and decision tree classifiers, also for the detection of irony. They used six types of features in order to represent tweets, and recorded results over three categories of training data - education, humor and politics.
 
+\subsection{Deep Learning Classifiers}\vspace{-10pt}
+\noindent Deep neural networks are increasingly being used in text classification - models that leverage time-series data, such as Recurrent Neural Networks (RNN), are well-suited to this task, as the order of the input sequences bares significance to its meaning. \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy. The first deep learning approach to sarcasm detection was used in \textit{Poria et al.\ (2017)} \cite{poria2016deeper}, producing state-of-the-art results.
+
+They modelled personality, emotion and sentiment
+
+They created three CNN pre-trained on personality, emotion and sentiment features, combining these to form a deep CNN.
+
+The
+
+They combine  a deep convolutional neural network to 
 
 
-\subsection{Deep-Learning Classifiers}\vspace{-10pt}
-Deep neural networks (DNNs) are increasingly being used in text classification tasks \cite{zhang2015character, poria2016deeper}. Though there are many forms of DNN, two commonly used architectures are Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs). Oftentimes, deep neural networks require a lot more training data than machine learning algorithms, but have been shown to produce state-of-the-art results in several domains. If the training data is high-quality and plentiful, then the model can begin to make accurate predictions. 
+Convolutional neural networks, that are typically associated with image-related tasks, have more recently been employed in text classification. \textit{Zhang et al. (2015)} \cite{zhang2015character} explored the use of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as a corpus of Amazon product reviews.  A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. 
 
-%https://arxiv.org/pdf/1703.03091.pdf
-The first deep learning approach to sarcasm detection was used in \textit{Poria et al.\ (2017)} \cite{poria2016deeper}, producing state-of-the-art results
+Deep neural networks often require a lot more training data than machine learning algorithms, however, they have been shown to produce state-of-the-art results in several domains.
 
 
- A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. Gated Recurrent Units (GRUs) are another type of RNN used to overcome the vanishing gradient problem.  \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy.
-
-Convolutional Neural Networks allow us to extract higher-level features, and they are based on the mathematical operation of convolution. \textit{Zhang et al. (2015)}  \cite{zhang2015character} explored the used of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as an Amazon product review corpus.
-
-In \textit{Poria et al. (2017)} \cite{poria2016deeper}, cited as the first study to use deep learning for sarcasm detection.
-
-
-CNNs have been previously used in sarcasm detection. For example, \textit{Poria et al. (2017)} \cite{poria2016deeper} describes a convolutional neural network (CNN) for sarcasm detection. \\
-
-\subsection{Attention}\vspace{-10pt}
+\subsection{Incorporation of Attention}\vspace{-10pt}
 One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm.
 
 
@@ -526,7 +520,7 @@ While sentiment features were not the most or least effective feature type on ei
 
 %Hence, we curate a selection of models that either produce the best scores, or exceeded our expectations.
 
-\vspace{-20pt}\noindent \textbf{Experimental Settings --} In our machine learning experimentation, we train each classifier on BOW, TF-IDF, GloVe and ElMo vectors, employing 5-fold cross validation to ensure reproducability and consistency of results; however, it is infeasible to apply the same approach to our deep learning experimentation as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function.\\\vspace{-10pt}
+\noindent \textbf{Experimental Settings --} In our machine learning experimentation, we train each classifier on BOW, TF-IDF, GloVe and ElMo vectors, employing 5-fold cross validation to ensure reproducability and consistency of results; however, it is infeasible to apply the same approach to our deep learning experimentation as training is substantially slower.\ We train each deep learning model on GloVe and ElMo vectors only, as it is computationally intractable to train neural networks on high-dimensional sparse features.\ The upper-bound on the number of training epochs is 300, although this is seldom reached due to the use of the \textit{Early Stopping} callback function.\\\vspace{-10pt}
 
 \hspace{10pt}{\textbf{1. Early stopping --} Training is interrupted when the validation loss stops declining - this\\\vspace{-15pt}
 
@@ -662,13 +656,13 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 			\hline
 			& \multicolumn{2}{c|}{Bidirectional LSTM} \\
 			\hline
-			Metrics & With Attention & Without Attention\\
+			Metrics & Without Attention &  With Attention\\
 			\hline\hline
-			Precision & 0.859 & 0.847\\
+			Precision & 0.847 & 0.859\\
 			\hline
-			Recall & 0.865 & 0.851\\
+			Recall & 0.851 & 0.865\\
 			\hline
-			$F_1$ Score & 0.862 & 0.849\\
+			$F_1$ Score  & 0.849 & 0.862\\
 			\hline
 		\end{tabular}
 	\end{center}	
@@ -697,7 +691,30 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 
 
 \section{Evaluation}
-\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses and evaluating to what extent it satisfies the research questions and deliverables.
+\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses in the context of our research questions: \textit{Can handcrafted sentiment features improve sarcasm predictions?} \textit{Do deep learning techniques perform better than machine learning approaches?} \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-10pt}
+
+\subsection{Solution Strengths}\vspace{-10pt}
+\noindent We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features on our news headlines dataset. We also exceed the state-of-the-art by 0.2\% using a bidirectional GRU model on the news headlines corpus \cite{misra2019sarcasm}.
+
+We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+On an evaluation dataset of Amazon reviews, our solution achieved an $F_1$ score of 0.611 - despite being applied to an unseen dataset from a different form of social media. This demonstrates its ability to generalise to unseen data, suggesting that it successfully learned how to identify sarcasm, irrespective of the domain in which it is used. Additionally, our solution uses padding to allow variable-length input sequences of up to 150 tokens.\ Incorporating this flexibility allows for inputs up to 7.6 times larger than the average tweet in our Twitter dataset \textit{(table 2)}, hence we can continue to apply it to other forms of media where a larger input limit may be necessary.
+
+We employed a novel approach to sarcasm detection by incorporating an attention layer into our bidirectional LSTM and extending our binary classification solution.\ Incorporating an attention mechanism allows us visualise the tokens correlating more to sarcastic labels. Furthermore, intergrating this intermediate layer improved our binary classification solution, leading to an increase in precision, recall and $F_1$ score by 1.4\%, 1.6\% and 1.5\%, respectively.\\
+
+% use word exemplary
+
+
+\subsection{Solution Limitations}\vspace{-10pt}
+It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
+
+Our models achieved significantly lower scores when trained on Twitter data as opposed to news headlines. This may have been due to 
+
+It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. 
+
+Rectifying this limitation would 
+
+As these features are normalised, this would involve constructing a trainable embedding layer.
 
 
 News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context.
@@ -706,17 +723,6 @@ These reviews are typically longer than the average tweet, which is capped at 28
 
 Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic.
 
-\subsection{Solution Strengths}\vspace{-10pt}
-\noindent We found that sentiment features are objectively useful predictors of sarcasm in Twitter data and News Headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
-
-
-We impr
-
-We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features.
-
-We integrate an Attention layer into a bidirectional GRU and incorporate a mechanism for visualising the attention weights in order to highlight the tokens correlating more to sarcastic and non-sarcastic labels.\\
-
-% use word exemplary
 
 \noindent The \textbf{research questions} guiding this project are as follows --\\
 \indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
@@ -724,14 +730,11 @@ We integrate an Attention layer into a bidirectional GRU and incorporate a mecha
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
 
 
-
-
-
-\subsection{Solution Limitations}\vspace{-10pt}
-It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
 Can handcrafted sentiment features improve sarcasm predictions?
 
-Our deep learning architectures do not explicitly consider sentiment as a predictor of sarcasm.
+Our deep learning architectures do not explicitly consider sentiment features in training. It may have been benef
+
+Furthermore, it is difficult to assess th 
 
 However, there is evidence to suggest that sentiment features 
 are no more informative than conventional lexical features - two key findings were noted. Firstly,  
@@ -741,11 +744,12 @@ are no more informative than conventional lexical features - two key findings we
 \textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
 
 
-\subsection{Lessons learnt}\vspace{-10pt}
-We learned that 
-
 
 \subsection{Project organisation and approach}\vspace{-10pt}
+
+We followed an agile development model by iteratively improving our models. We began by machine learning classifiers, which are by their nature, likely to perform at a lower level than our deep learning classifiers, allowing us to monitor the performance of our deep learning classifiers to ensure they were constructed successfully.
+
+The intuition behind incorporating data from numerous forms of media was to allow us to form a more universal solution.
 
 
 
