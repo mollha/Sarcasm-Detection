@@ -706,62 +706,19 @@ We employed a novel approach to sarcasm detection by incorporating an attention 
 
 
 \subsection{Solution Limitations}\vspace{-10pt}
-It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
+In general, our model achieved significantly lower scores when trained on Twitter data as opposed to news headlines. We did not exceed the state-of-the-art on this particular datastet. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Additionally, due to the collection method used to collect tweets, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. The author's spelling and use of punctuation is also preserved, therefore there are a lot of spelling mistakes, and some tweets that are not written in English. This indicates that in order to achieve higher performance, alternative data cleaning methods could be applied to preserve necessary information used to inform predictions. Rectifying this limitation would have enabled our model to make enhanced predictions. It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
 
-Our models achieved significantly lower scores when trained on Twitter data as opposed to news headlines. This may have been due to 
-
-It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. 
-
-Rectifying this limitation would 
-
-As these features are normalised, this would involve constructing a trainable embedding layer.
-
-
-News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context.
-
-These reviews are typically longer than the average tweet, which is capped at 280 characters. The author's punctuation and spelling is preserved, therefore this data is very messy. This is the smallest of the three datasets. 
-
-Hence, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic.
-
-
-\noindent The \textbf{research questions} guiding this project are as follows --\\
-\indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
-\indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
-\indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\
-
-
-Can handcrafted sentiment features improve sarcasm predictions?
-
-Our deep learning architectures do not explicitly consider sentiment features in training. It may have been benef
-
-Furthermore, it is difficult to assess th 
-
-However, there is evidence to suggest that sentiment features 
-are no more informative than conventional lexical features - two key findings were noted. Firstly,  
-
-; however, sentiment features extracted from News Headlines showed poor performance in comparison. 
-
-\textit{some} forms of media. This may be due to the fact that sarcasm must be more overt in product reviews in order to mock the product, rather than the subtle, more contextualised instances in News Headlines.
-
+While there is evidence to suggest that sentiment features are useful, our results indicate that they are no more informative than conventional lexical features - two key findings were noted. Firstly, punctuation features extracted from our Twitter dataset (which was used to train our foremost model) were more informative than sentiment features \textit{(table 4)}. Secondly, extraction of sentiment features was a reasonably slow process in comparison to our topic and punctuation features; hence, we would require our sentiment features to be significantly more informative than our other hand-crafted features in order for this to be worthwhile.
 
 
 \subsection{Project organisation and approach}\vspace{-10pt}
 
-We followed an agile development model by iteratively improving our models. We began by machine learning classifiers, which are by their nature, likely to perform at a lower level than our deep learning classifiers, allowing us to monitor the performance of our deep learning classifiers to ensure they were constructed successfully.
-
-The intuition behind incorporating data from numerous forms of media was to allow us to form a more universal solution.
-
-
-
+\noindent We began by evaluating machine learning classifiers, which are by their nature, likely to perform at a lower level than our deep learning classifiers. This enabled us to develop an intial solution whilst also giving us a baseline against which to compare the performance of our deep learning models. We followed an agile development model by iteratively expanding our collection of machine learning and deep learning models. This allowed us to gauge which types of models. For example, we discovered that tree-based classifiers rarely attained good scores, therefore we were able to look for alternatives early in the process. Similarly, our RNN models typically outperformed our convolutional architectures, potentially as they utilise time-series data more effectively than CNN models. Hence, we focused on improving our RNN models, going on to incorporate their bidirectional variants, as they had already showed potential.
 
 %This section should between 1 to 2 pages in length.
 
-\section{Conclusions}
-In terms of satisfying the objectives, this project was an overall success. With an interactive console, it may be useful to individuals who struggle to detect sarcasm in their daily-life, or for the industrial applications of enhanced opinion mining.
-
-The main contributions of this project are as follows: sentiment features are combined with state-of-the-art vectorisation approaches. 
-
-For future work, it would be interesting to explore the use of sarcasm in a wider variety of media types, and to extend support to additional non-English languages. Exploring the use of transfer learning with Transformers (BERT) may also produce interesting results.
+\section{Conclusions}\vspace{-4.2pt}
+\noindent In terms of satisfying the objectives, this project was an overall success. We develop a sarcasm detection solution using a bidirectional LSTM with attention, trained on deep state-of-the-art contextualised embeddings. This model achieves an $F_1$ score of 0.862 on the Twitter dataset \cite{ptavcek2014sarcasm}. In order to achieve this, we constrasted the performance of numerous machine learning and deep learning classifiers; demonstrating that deep learning models are more effective at detecting sarcasm in news headlines and tweets. We also demonstrated that our solution can successfully generalise to other forms of media, despite being trained on tweets. Additionally, we incorporated our solution into a user-friendly tool with an interactive console, which may be useful to individuals who struggle to detect sarcasm in their daily-life, or for the industrial applications of enhanced opinion mining. In future, we may experiment with the use of this tool as a pre-processing stage for sentiment analysis, enabling us to filter out sarcastic instances that may skew sentiment predicitions. Our results show that sentiment features can be useful when extracted from ill-structured, user-generated data. Hence, as suitable direction for future work may be to explicitly incorporate sentiment features into our deep learning architectures to explore their potential in more sophisticated deep neural networks. Furthermore, it would be interesting to explore the use of sarcasm in a wider variety of media types, and to extend support to additional non-English languages. 
 
 
 %This section summarises the main points of this paper.  Do not replicate the abstract as the conclusion.  A conclusion might elaborate on the importance of the work or suggest applications and extensions.  This section should be no more than 1 page in length.
