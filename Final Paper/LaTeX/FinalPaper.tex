@@ -602,14 +602,14 @@ Trained on ElMo vectors, our advanced RNN models exceeded the $F_1$ score of our
 
 Our simple CNN achieved the highest value for precision; however, recall was signicantly lower than precision, indicating that this model is likely to have overfit to the non-sarcastic class. Nonetheless, it achieved an $F_1$ score only 1.2\% lower than our deep CNN model (also trained on ElMo vectors). Our vanilla RNN performed better than expected on this particular dataset; hence, the average increase in $F_1$ score between our vanilla RNN and our more advanced RNN models is 3.3\%, lower than our news headlines dataset.
 
-Models trained on GloVe vectors showed poor performance on this particular dataset.\ For example, our gaussian na\"{i}ve bayes model achieved a higher $F_1$ score when trained on basic BOW vectors than on GloVe.\ This could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose the meaning of these tokens in the input embeddings.\ 
+Models trained on GloVe vectors showed poor performance on this particular dataset.\ For example, our gaussian na\"{i}ve bayes model achieved a higher $F_1$ score when trained on basic BOW vectors than on GloVe.\ This could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose their meaning in our embeddings.\\\vspace{-15pt}
 
 
 \subsubsection{Cross-Dataset Evaluation}
-Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_1$ scores on the Twitter and News Headlines dataset, respectively. It is crucial to the success of our solution that these models are able to generalise to other forms of media, hence we assess our candidate solutions on an evaluation dataset of 1254 Amazon reviews. This gives us an indication of which model is more likely to generalise to unseen data in multiple forms of media (i.e. which model is most adaptable, therefore the most suitable to be used in our tool).
+Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_1$ scores on the Twitter and News Headlines dataset, respectively. It is crucial to the success of our solution that these models are able to generalise to other forms of media, hence we assess our candidate solutions on an evaluation dataset of 1254 Amazon reviews. This gives us an indication of which model is more likely to generalise to unseen data across various media types, as this is the most suitable model to employ in our tool.
 
 \begin{minipage}{0.4\textwidth}
-	\begin{figure}[H]
+	\vspace{-20pt}\begin{figure}[H]
 		\begin{center}
 			\includegraphics[width=0.75\textwidth]{Images/cm2.png}\\
 			(a) Trained on News Headlines\\
@@ -617,24 +617,22 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 	\end{figure}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
-	\begin{figure}[H]
+	\vspace{-20pt}\begin{figure}[H]
 		\begin{center}
 			\includegraphics[width=0.75\textwidth]{Images/cm1.png}\\
 			(b) Trained on Twitter Data\\
 		\end{center}
 	\end{figure}
-\end{minipage}\vspace{-15pt}
+\end{minipage}\vspace{-17pt}
 
 \begin{center}
-	\textbf{Figure 9}: Confusion Matrices of models evaluated on Amazon Reviews
+	\textbf{Figure 9}: Confusion Matrices of models evaluated on Amazon Reviews\vspace{-8pt}
 \end{center}
 
-\noindent False positives and negatives make up 44.7\% of our results for the News Headlines model, compared with 27.5\% on the Twitter model. This is reflected in the summary statistics produced for each model, as all metrics demonstrated better performance for our Twitter Model. 
-
-The Matthews Correlation Coefficient is weaker for our Twitter model,
+\noindent False positives and negatives make up 44.7\% of our results for the News Headlines model, compared with 27.5\% on the Twitter model. This is reflected in the summary statistics produced for each model, as all metrics demonstrated better performance for our Twitter model. Additionally, the Matthews Correlation Coefficient is very weak for our news headlines model (0.071), indicating that these predictions are only marginally better than random (where MCC = 0).
 
 \subsection{Attention}\vspace{-5pt}
-\noindent The superior model in the binary classification task is shown to be the Bidirectional LSTM model, trained on ElMo vectors from the Twitter dataset. We incorporate our attention mechanism after our bidirectional LSTM layer to identify the tokens that lead to positive and negative classification decisions. We present a number of attention visualisations, and examine whether incorporating attention can boost model performance as hypothesised, and for what training cost.\\\vspace{-5pt}
+\noindent The superior model in the binary classification task is shown to be the bidirectional LSTM model, trained on ElMo vectors from the Twitter dataset. We incorporate our attention mechanism after our bidirectional LSTM layer to identify the tokens that lead to positive and negative classification decisions. We present a number of attention visualisations, and examine whether incorporating attention can boost model performance as hypothesised, and for what training cost.\\\vspace{-5pt}
 
 
 \hspace{-5pt}\begin{minipage}{0.5\textwidth}
