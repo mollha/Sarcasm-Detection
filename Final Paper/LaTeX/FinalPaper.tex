@@ -69,18 +69,18 @@ Machine learning, Deep learning, Sarcasm Detection, Sentiment, Classification, A
 Prior work in the field has primarily focused on overt instances of sarcasm; capturing constrasting positive and negative sentiment phrases \cite{riloff2013sarcasm}, such as \textit{"isn't it great to feel tired?"}, or \textit{"working again tomorrow, yay!"}.\ However, identifying implicit forms of sarcasm may require knowledge of additional context; as these contextual cues can be more powerful sarcastic indicators than the words themselves.\ Consider the scenario where a person is congratulated on their hard work, despite the obviousness of them having not worked hard at all.\ Or perhaps a customer thanking a waiter for the delicious food, despite sending it back to the kitchen.\ In isolation, speech may not enough to convey the sarcastic intent; therefore in transcribing this interaction, we lose necessary context and we lose the sarcastic undertones.\ In the absence of context, we look to more sophisticated deep learning techniques in order to learn the underlying patterns in implicit forms of sarcasm.
 
 \subsection{Research Questions and Objectives}
-\vspace{-5.2pt}
+\vspace{-6.2pt}
 \noindent The \textbf{research questions} guiding this project are as follows --\\
 \indent \textit{- Can handcrafted sentiment features improve sarcasm predictions?}\\ 
 \indent \textit{- Do deep learning techniques perform better than machine learning approaches?}\\ 
 \indent \textit{- Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-6pt}
 
-\noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty.\\\vspace{-7pt}
+\noindent The following objectives are designed to address these specific research questions, and are divided into three categories depending on their priority level and difficulty. 
 
-\noindent The \textbf{minimum} objectives of this project were to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets.\ To fulfil these objectives, we gathered two large balanced datasets containing Twitter data and news headlines; as well a small unbalanced corpus of product reviews.\ Upon implementing five machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790.\ The purpose of this objective was to establish a baseline against which to compare our deep learning classifiers.
+The \textbf{minimum} objectives of this project were to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets.\ To fulfil these objectives, we gathered two large balanced datasets containing Twitter data and news headlines; as well a small unbalanced corpus of product reviews.\ Upon implementing five machine learning classifiers, we found that our logistic regression model performed best for both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790.\ The purpose of this objective was to establish a baseline against which to compare our deep learning classifiers.
 
-The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on the chosen datasets, and to determine which is the best performing solution. Additionally, we evaluate the model against unseen data. This is achieved by ...
-
+The \textbf{intermediate} objectives of this project were to experiment with and evaluate deep learning models on our chosen datasets, as well as to determine the best performing solution by evaluating the model against unseen data. We achieved these objectives by implementing shallow and deep convolutional neural networks; as well as advanced recurrent neural networks and their bidirectional counterparts. We evaluated our candidate solutions on our evaluation corpus of Amazon reviews. Our bidirectional LSTM model, trained on ElMo vectors on the Twitter corpus, was our most adaptable solution - achieving an $F_1$ score of 0.611.
+ 
 The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to sarcastic labels, in order to produce a visualisation of attention words. We implement a custom attention layer using keras, and apply our trained model to a number of sentences to illustrate its effectiveness.
 
 This is achieved by...
