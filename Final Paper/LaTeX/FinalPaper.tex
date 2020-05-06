@@ -431,36 +431,23 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \vspace{-4.2pt}
 \noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions that are more relevant to our query.\ This is known as \textit{human visual attention} and has been well studied by psychologists; however, incorporating a similar form of attention in recurrent neural networks is a revolutionary new concept.\ The intuition behind this is such that not all components of text are equally relevant for classifying it as sarcastic or non-sarcastic; hence, this provides insight into which tokens contribute more or less in classification decisions.\ Additionally, incorporating an attention mechnism can lead to better classification performance.\ Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-5pt}
 
-\noindent We employ the word-level attention layer outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words irrespective of their context. This is an intermediate layer placed after the bi-directional RNN layer in our solution, as our attention mechanism utilises the forward and backward outputs of this layer. For a given word, $w_{it}$, the forward and backward hidden states of the bi-directional RNN are concatenated to obtain a sequence, $h_{it}$. This annotation harnesses the contextual information of the tokens that come before and after $w_{it}$; crucial for informing classification decisions and producing meaningful attention visualisations, as words can have different meanings depending on the context in which they are found. Figure 7 shows the word-level attention mechanism used in this project. Three trainable weights, $W_w$, $b_w$ and $u_w$, are intialised from a random normal distribution.\vspace{-10pt}
+\noindent We employ the word-level attention layer outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words irrespective of their context. This is an intermediate layer placed after the bi-directional RNN layer in our solution, as our attention mechanism utilises the forward and backward outputs of this layer. For a given word, $w_{it}$, the forward and backward hidden states of the bi-directional RNN are concatenated to obtain a sequence, $h_{it}$. This annotation harnesses the contextual information of the tokens that come before and after $w_{it}$; crucial for informing classification decisions and producing meaningful attention visualisations, as words can have different meanings depending on the context in which they are found. Figure 7 shows the word-level attention mechanism used in this project. Three trainable weights, $W_w$, $b_w$ and $u_w$, are intialised from a random normal distribution.\\\vspace{-10pt}
 
-\hspace{-17pt}\begin{minipage}{0.65\textwidth}
-	 Each word annotation, $h_{it}$ is fed through a fully-connected layer with tanh activation to produce $u_{it}$ - this is the hidden representation of $h_{it}$ (1). We apply the softmax function to the similarity between a word-level context vector ($u_w$), learned during training, and $u_{it}$ (2). This produces an attention weight, $\alpha_{it}$, which represents the relative importance of the token $w_{it}$ in the sentence, s. Finally, the sentence-level context vector, $s_i$, is computed as the sum of $h_{it} \cdot a_{it}$ over all timesteps, t (3).
-\end{minipage}
-\hspace{2pt}
-\begin{minipage}{0.35\textwidth}
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=0.95\textwidth]{Images/wordLevelAttention.png}\\
-		\textbf{Figure 7:} Word-level attention mechanism\cite{yang2016hierarchical}\\
-	\end{center}
-\end{figure}
-\end{minipage}\vspace{-5pt}
+\begin{center}
+	\hspace{25pt}\begin{minipage}{0.35\textwidth}
+		\textit{Equation 1}\hfill\\\vspace{16pt}
+		$u_{it} = tanh(W_wh_{it} + b_w)$
+	\end{minipage}
+	\begin{minipage}{0.29\textwidth}
+		\textit{Equation 2}\hfill\\ $\alpha_{it} = \cfrac{exp(u_{it}^{T}u_w)}{\sum_{t}exp(u_{it}^{T}u_w)}$
+	\end{minipage}
+	\hspace{5pt}
+	\begin{minipage}{0.27\textwidth}
+		\textit{Equation 3}\hfill\\\vspace{16pt}$s_i = \sum_{t}\alpha_{it}h_{it}$
+	\end{minipage}
+\end{center}
 
-\begin{minipage}{0.32\textwidth}
-	\textit{Equation 1}\hfill\\\vspace{16pt}
-	$u_{it} = tanh(W_wh_{it} + b_w)$
-\end{minipage}
-\begin{minipage}{0.32\textwidth}
-	\textit{Equation 2}\hfill\\ $\alpha_{it} = \cfrac{exp(u_{it}^{T}u_w)}{\sum_{t}exp(u_{it}^{T}u_w)}$
-\end{minipage}
-\hspace{-10pt}
-\begin{minipage}{0.31\textwidth}
-	\textit{Equation 3}\hfill\\\vspace{16pt}$s_i = \sum_{t}\alpha_{it}h_{it}$
-\end{minipage}
-
-
-
-\noindent Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.
+\noindent Each word annotation, $h_{it}$ is fed through a fully-connected layer with tanh activation to produce $u_{it}$ - this is the hidden representation of $h_{it}$ (\textit{Equation 1}). We apply the softmax function to the similarity between a word-level context vector ($u_w$), learned during training, and $u_{it}$ (\textit{Equation 2}). This produces an attention weight, $\alpha_{it}$, which represents the relative importance of the token $w_{it}$ in the sentence, s. Finally, the sentence-level context vector, $s_i$, is computed as the sum of $h_{it} \cdot a_{it}$ over all timesteps, t (\textit{Equation 3}). Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.
 
 \section{Results}\vspace{-8pt}
 \subsection{Evaluation Method}\vspace{-5pt}
