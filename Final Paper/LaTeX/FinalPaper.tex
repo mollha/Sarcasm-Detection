@@ -61,7 +61,9 @@ Sarcasm Detection, Natural Language Processing, Binary Classification, Sentiment
 \end{keywords}\vspace{-15pt}
 
 \section{Introduction}\vspace{-4.2pt}
-\noindent Sarcasm is a complex linguistic phenomenon, prevalent in online user-generated content.\ It is typically used as a form of mockery or humour when expressing an opinion; hence, to interpret sarcastic text literally would be to overlook its implied (usually opposite) meaning.\ Sarcasm poses a significant challenge within the field of natural language processing, particularly within sentiment analysis.\ This is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a specific subject.\ When sarcasm is present in text, it can invert the sentiment polarity of a positive or negative utterance, as positive sounding phrases can have an implicit negative meaning.\ It is increasingly common for organisations to use sentiment analysis to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion.\ Advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis; hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm.
+\noindent Sarcasm is defined as speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult\footnotemark[1]. It is a complex linguistic phenomenon that is prevalent in online user-generated content, and is typically used as a form of mockery or humour when expressing an opinion; hence, to interpret sarcastic text literally would be to overlook its implied (usually opposite) meaning.\ Sarcasm poses a significant challenge within the field of natural language processing, particularly within sentiment analysis.\ This is the task of deducing the sentiment polarity of text - typically whether the author is in favour of, or against, a specific subject.\ When sarcasm is present in text, it can invert the sentiment polarity of a positive or negative utterance, as positive sounding phrases can have an implicit negative meaning.\ It is increasingly common for organisations to use sentiment analysis to gauge public opinion on their products and services; however, classic sentiment analysers cannot deduce the implicit meaning of sarcastic text and will wrongly classify the author's opinion.\ Advancements in automatic sarcasm detection research have the potential to vastly improve the task of sentiment analysis; hence, any tool that strives to accurately determine the meaning of user-generated text must be capable of detecting sarcasm.
+
+\footnotetext[1]{https://www.collinsdictionary.com/dictionary/english/sarcasm}
 
 \subsection{Problem Background}\vspace{-4.2pt}
 \noindent Identifying sarcasm in text is a unique and interesting challenge. Although sarcasm is a wholly human construct, even humans struggle to consistently recognise it; due in part to the lack of an all-encompassing, universal definition.\ In a 2011 study, Gonz{\'a}lez-Ib{\'a}nez et al. \cite{gonzalez2011identifying} found low agreement rates between human annotators when classifying statements as either sarcastic or non-sarcastic, and in their second study, three annotators unanimously agreed on a label less than 72\% of the time.\ Furthermore, developmental differences such as autism, as well as cultural and societal nuances cause variations in the way different people define and perceive sarcasm.\ Consequently, there is no set formula for producing (and therefore identifying) sarcastic text.
@@ -99,14 +101,13 @@ The \textbf{advanced} objectives of this project are to implement an attention-b
 		\hline
 		\textbf{Term} & \textbf{Definition}\\
 		\hline\hline
-		Irony & A subtle form of humour which involves saying things that you do not mean. \footnotemark[1]\\
+		Sarcasm & Speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult.\footnotemark[1]\\
 		\hline
-		Sarcasm & Speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult. \footnotemark[2]\\
+		Irony & A subtle form of humour which involves saying things that you do not mean.\footnotemark[2]\\
 		\hline
 	\end{tabular}\\
 \end{center}\vspace{-10pt}
-\footnotetext[1]{https://www.collinsdictionary.com/dictionary/english/irony}
-\footnotetext[2]{https://www.collinsdictionary.com/dictionary/english/sarcasm}
+\footnotetext[2]{https://www.collinsdictionary.com/dictionary/english/irony}
 
 \subsection{Rule-based Classifiers}\vspace{-10pt}
 \noindent A number of na\"{i}ve approaches have been used in previous research, where text is classified based on a set of linguistic rules. Bharti et al. (2015) \cite{bharti2015parsing} proposed two rule-based approaches - one approach (IWS) classifies tweets that begin with injerjections, such as \textit{"wow"} and \textit{"yay"}, as sarcastic, and the other uses a parsing based lexical generation algorithm (PBLGA) to recognise sentiment-bearing situation phrases juxtaposed with contrasting sentiment phrases. When tested on 1500 tweets containing \#sarcasm, the IWS and PBLGA approaches yielded $F_1$ scores of 0.90 and 0.84, respectively. An earlier example of a rule-based approach is displayed in Maynard and Greenwood (2014) \cite{maynard2014cares}. They proposed that the sentiment contained in hashtags can indicate the presence of sarcasm in tweets, such as \#notreally in the example \textit{"I love doing the washing-up \#notreally"}. They used a rule-based approach where tweets are labelled as sarcastic if their sentiment contradicts the sentiment of the hashtag, reporting an $F_{1}$ score of 0.91. 
@@ -236,7 +237,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 	\end{tabular}\\
 \end{center}
 
-\noindent Figure \_ shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary (containing 27 billion tokens) as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
+\noindent Table 3 shows the proportion of GloVe-representable tokens before and after processing, where the same processing techniques are applied to each dataset. GloVe is a word-embedding technique, detailed in the feature extraction section, where tokens are encoded as pre-computed numerical vectors. We use the number of tokens represented in the GloVe dictionary (containing 27 billion tokens) as a measure of quality, as uncommon or ill-formed tokens are ommitted from this dictionary. The quality of the Amazon and Twitter data vastly improved after processing, however the quality of the news headlines corpus remained consistent as the original data is written formally and in lowercase.
 
 %This section presents the solutions to the problems in detail.  The design and implementation details should all be placed in this section.  You may create a number of subsections, each focussing on one issue.  
 
@@ -247,7 +248,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 \noindent Extracting meaningful data from large corpora is vital for enabling classifiers to make high-quality predictions. As such, it follows that in the context of natural language processing, feature extraction techniques should encode the underlying semantics of text into the numeric vectors they produce. We produce our dominant features using established vectorisation techniques such as GloVe \cite{pennington2014glove} and ElMo \cite{peters2018deep}. However, we also experiment with a number of custom features in combination with our main features, generated using the procedures outlined in \textit{section D.2}. \vspace{-4.2pt}
 
 \subsubsection{Main Features}
-\noindent \textbf{Traditional Approaches --} As our least advanced feature extraction techniques, \textit{Bag of Words (BOW)} and \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} are used as a baseline against which to compare more advanced approaches. In BOW, text is encoded as a single vector containing a count of the number of occurrences of each word. TF-IDF extends the BOW model by providing each word with a score that reflects its importance based upon its frequency within the document. These approaches create sparse inefficient representations, where each vector is the size of the vocabulary. Additionally, vectors produced in this way do not preserve the context within which words are found, although sarcasm is a highly contextual phenomenon.\\
+\noindent \textbf{Traditional Approaches --} As our most standard techniques, \textit{Bag of Words (BOW)} and \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} are used as a baseline against which to compare more advanced approaches. In BOW, text is encoded as a single vector containing a count of the number of occurrences of each word. TF-IDF extends the BOW model by providing each word with a score that reflects its importance based upon its frequency within the document. These approaches create sparse inefficient representations, where each vector is the size of the vocabulary. Additionally, vectors produced in this way do not preserve the context within which words are found, although sarcasm is a highly contextual phenomenon.\\
 
 \noindent \textbf{Word Embedding --} Introduced in Mikolov et al.\ (2013a) \cite{mikolov2013efficient}, \textit{Word2Vec} describes a group of related models that were the first to produce high-quality vector representations of words, known as word embeddings. Word2Vec consists of a shallow (two-layer) neural network that takes a large corpus and produces lower-dimensional vectors than the sparse representations generated by BOW and TF-IDF; however, intrinsic statistical properties of the training corpus, which were key to earlier techniques, are neglected, therefore global patterns may be overlooked. To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together.\\
 
@@ -262,7 +263,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 \begin{minipage}{0.66\textwidth}
 	 GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ $king - man + woman ≈ queen$. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ $cars - car ≈ apples - apple$. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
 \end{minipage}\\
-\footnotetext[5]{https://nlp.stanford.edu/projects/glove/}
+\footnotetext[5]{Figure obtained from https://nlp.stanford.edu/projects/glove/}
 
 %To mitigate this, we use the \textit{GloVe} \cite{pennington2014glove} approach, which generates word embeddings by constructing an explicit word co-occurrence matrix for the entire corpus. Word embeddings appear in a high-dimensional vector space, whereby words that share a similar context are clustered together. GloVe is able to preserve the semantic relationships between words, even constructing analogies by composing vectors e.g.\ king - man + woman ≈ queen. Likewise, it captures syntactic regularities such as the singular to plural relationship e.g.\ cars - car ≈ apples - apple. GloVe is used in this project to produce word embeddings for each corpus, however it does not accommodate polysemy, which describes the co-existence of alternative meanings for the same word, and cannot generalise to words that were not specifically included in the training set.\\
 
@@ -337,39 +338,20 @@ We experiment with five candidate machine learning classifiers, evaluating each 
 	
 	\item \textbf{K-Nearest Neighbours (KNN) --} A non-parametric model which uses lazy learning at the time of prediction. An unseen sample is assigned the majority class label amongst its k nearest neighbours, where k is a hyperparameter to be finetuned. We found that k=5 achieved the optimal balance between the computational cost of a large number of neighbours and increased noise and bias associated with small values of k.\vspace{-3pt}
 	
-	\item \textbf{Support-Vector Machine (SVM) --} Uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support-vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data. Our SVM uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\vspace{-3pt}
+	\item \textbf{Support-Vector Machine (SVM) --} An SVM \cite{cortes1995support} uses a kernel function to draw a hyperplane which divides a feature space into two subspaces. Features at the shortest euclidean distance (\textit{margin}) to the hyperplane are known as support-vectors, and their distance from the hyperplane is maximised to create a decisive boundary between the sarcastic and non-sarcastic data. Our SVM uses a linear kernel as this model performed better than the SVM with radial basis function (RBF) kernel.\vspace{-3pt}
 
 	\item \textbf{Logistic Regression --} Models a binary dependent variable by finding a relationship between features and the likelihood that they belong to either class. It is a more advanced approach than linear regression, which aims to model data using a linear equation.\vspace{-3pt}
 
 	\item \textbf{Random Forest Classifier --}
-	An ensemble learning method which fits a number of decision trees on subsamples of the training set. The decision trees produce class predictions which are condensed into a single prediction by means of voting. As they are largely independent of one another, this low correlation allows them to produce collective predictions that outperform their individual predictions.
+	 Random forest classifers \cite{breiman2001random} are an ensemble learning method which fit a number of decision trees on subsamples of the training set. The decision trees produce class predictions which are condensed into a single prediction by means of voting. As they are largely independent of one another, this low correlation allows them to produce collective predictions that outperform their individual predictions.
 \end{enumerate}
 
 
 \subsubsection{Deep Learning Models}
 Deep learning classifiers do not require the  hand-crafted features used in supervised classifiers, and are instead capable of learning higher-level features from dense vectors such as ElMo and GloVe. We focus on two categories of neural networks - Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN). While it is beyond the scope of this paper to describe in detail the concepts involved in CNNs and RNNs, we provide a brief explanation below. As we are performing binary classification, we use the Binary Cross-Entropy loss function.\\\vspace{-5pt}
 
-\noindent \textbf{Convolutional Neural Networks (CNN)}\cite{lecun1998gradient} were popularised for their applications in computer vision and were designed to be used with image data \cite{krizhevsky2012imagenet}; however, they can be adapted for text-based classification tasks by replicating the two-dimensional structure of images (\textit{figure 4}).\vspace{-5pt}
+\noindent \textbf{Convolutional Neural Networks (CNN)}\cite{lecun1998gradient} were popularised for their applications in computer vision and were designed to be used with image data \cite{krizhevsky2012imagenet}; however, they can be adapted for text-based classification tasks by replicating the two-dimensional structure of images. To create input features for the CNN, each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence.
 %CNNs include a variable number of convolutional layers with non-linear activations - they typically have fewer layers than other neural networks, where each layer applies dfferent filters and combines their result. 
-
-\hspace{-20pt}\begin{minipage}{0.35\textwidth}
-	\vspace{-5pt}\begin{figure}[H]
-		\begin{center}
-			$
-			\begin{bmatrix}
-			w_{1,1} & w_{1,2} & ... & w_{1,N}\\
-			\vdots & \vdots & \vdots & \vdots \\
-			w_{M, 1} & w_{M, 2} & ... & w_{M, N} \\
-			\end{bmatrix}
-			$\vspace{5pt}
-			\textbf{Figure 4}: $m \times n$ feature vector\\
-		\end{center}
-	\end{figure}
-\end{minipage} \hfill
-\begin{minipage}{0.62\textwidth}
-	\vspace{-8pt}
-	To create input features for the CNN, each token in a sentence is represented independently by a fixed-size n-dimensional vector; as such, the sentence is represented by an $m \times n$ vector of feature weights, where m is the number of tokens in the sentence.
-\end{minipage}\vspace{-5pt}
 
 %Convolutional layers compute the dot product of a kernel vector of k weights with k rows in the feature vector (representing k-tokens in the input sentence), producing a new sequence of features.
 \noindent The characterising feature of a CNN is the convolutional layer, where filters are applied to feature vectors using the mathematical operation of convolution, and a max pooling operation is applied over each resulting feature map. Tokens in a sentence occur on a time axis, as the order that the tokens appear in gives rise to their meaning; hence, the filter slides downwards over the rows of the vector (\textit{maximum pooling over time}) to produce a single output value. This is especially useful for classification tasks, where the desired output is a fixed-sized vector representing a class. Due to the high speed of the convolution operation, many convolutional layers can be used in a single network without excessivly slowing the training process.
@@ -457,19 +439,19 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 \hspace{-30pt}\begin{center}
 	\begin{minipage}{0.47\textwidth}
-		$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$\\
+		\textit{Equation 3}\hfill\\$Precision =\frac{TP}{TP\text{ } + \text{ }FP}$\\
 	\end{minipage}
 	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
-		$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
+		\textit{Equation 4}\hfill\\$Recall =\frac{TP}{TP\text{ } + \text{ }FN}$\\
 	\end{minipage}\\
 \end{center}
 \vspace{-20pt}
 \begin{center}
 	\begin{minipage}{0.47\textwidth}
-		$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
+		\textit{Equation 5}\hfill\\$F_1\text{ } Score =\frac{2 \text{ }\times\text{ } precision\text{ } \times \text{ }recall}{precision\text{ } + \text{ }recall}$
 	\end{minipage}
 	\hspace{-30pt}\begin{minipage}{0.47\textwidth}
-		$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
+		\textit{Equation 6}\hfill\\$MCC =\frac{TP \text{ } \times \text{ } TN \text{ } - \text{ } FP\text{ } \times \text{ } FN}{\sqrt{(TP \text{ } + \text{ } FP)(TP \text{ } + \text{ } FN)(TN \text{ } + \text{ } FP)(TN \text{ } + \text{ } FN)}}$
 	\end{minipage}
 \end{center}
 
