@@ -1,5 +1,10 @@
 # Machine Learning and Deep Learning Approaches to Sarcasm Detection
 
+This project addresses the problem of sarcasm detection - often quoted as a subtask of sentiment analysis. There are two main scripts used to begin using this code:
+- **train.py** : trains and evaluates new models on chosen dataset, saving these models to [/pkg/trained_models/](/pkg/trained_models/)
+- **console.py** : makes predictions using existing trained models, where user input can be provided via a console. A visualisation of attention weights is produced in /colorise.html
+
+
 
 
 ### List of dependencies:
