@@ -63,5 +63,5 @@ To use this code, clone this repository then navigate to the root directory.
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /raw_Data/...
    
    
-![Example Visualisation 1](../../tree/master/Examples/ilikehavingnightmares.png)
-![Example Visualisation 2](../../tree/master/Examples/ilovebeingignorednot.png)
+![Example Visualisation 1](https://raw.githubusercontent.com/mollha/Sarcasm-Detection/master/Examples/ilikehavingnightmares.png?token=AFMW4IJMUVFFU5R3TNGL7VK6XXNIO)
+![Example Visualisation 2](https://raw.githubusercontent.com/mollha/Sarcasm-Detection/master/Examples/ilovebeingignorednot.png?token=AFMW4IJADMQ5QFQ3FRS5LBS6XXNKE)
