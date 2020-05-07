@@ -124,6 +124,8 @@ As one of the first studies to consider sentiment features, Riloff et al. (2013)
 \subsection{Deep Learning Classifiers}\vspace{-10pt}
 \noindent Deep neural networks are increasingly being used in text classification - models that leverage time-series data, such as Recurrent Neural Networks (RNN), are well-suited to this task, as the order of the input sequences bares significance to its meaning. \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy. 
 
+
+
 Convolutional neural networks, that are typically associated with image-related tasks, have more recently been employed in text classification. \textit{Zhang et al. (2015)} \cite{zhang2015character} explored the use of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as a corpus of Amazon product reviews.  A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. The first deep learning approach to sarcasm detection was used in \textit{Poria et al.\ (2017)} \cite{poria2016deeper}, producing state-of-the-art results. They created three CNN pre-trained on personality, emotion and sentiment features, combining these to form a deep CNN. Deep neural networks often require a lot more training data than machine learning algorithms, however, they have been shown to produce state-of-the-art results in several domains.
 
 
@@ -459,12 +461,13 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
 \subsection{Analysis of Sentiment Features}\vspace{-5pt}
-\noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ This allows us to explore whether these features alone are indicative of sarcasm in different media types.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as this is the average score of a binary classification model predicting randomly on a balanced corpus. \\\vspace{-15pt}
+\noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ This allows us to explore whether these features alone are indicative of sarcasm in different media types.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as this is the average score of a binary classification model predicting randomly on a balanced corpus.\\\vspace{-5pt}
 
-\hspace{-20pt}\begin{minipage}{0.5\textwidth}
-	\vspace{-10pt}\begin{center}
-		\textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features\vspace{5pt}
-		\begin{tabular}{|p{2cm}||p{1.8cm}|p{1.6cm}|}
+
+\hspace{-20pt}\begin{minipage}{0.50\textwidth}
+	\begin{center}
+		\noindent \textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features\vspace{5pt}
+		\begin{tabular}{|p{2cm}||p{2.8cm}|p{2.2cm}|}
 			\hline
 			& \multicolumn{2}{c|}{Dataset} \\
 			\hline
@@ -478,19 +481,14 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 			\hline
 		\end{tabular}
 	\end{center}	
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[width=0.75\textwidth]{Images/boxcompare.png}\\
-			\textbf{Figure 8:} Visualisation of overall sentiment\\
-		\end{center}
-	\end{figure}
-\end{minipage}\vspace{-3pt}
+\end{minipage}\hspace{15pt}
+\begin{minipage}{0.46\textwidth}
+\noindent All three feature types were most informative when extracted from Twitter data \textit{(table 4)}. Punctuation features were the most effective feature extracted from Twitter data, while those extracted from News Headlines actually hindered classification, as they were used to train the only model achieving an $F_1$ score lower than 0.5.
+\end{minipage}\vspace{8pt}
 
-\noindent All three feature types were more informative when extracted from Twitter data \textit{(table 4)}; this may be due to the use of more overt sarcasm in tweets than in news headlines, which are typically contextual and subtley sarcastic. Punctuation features were the most effective feature extracted from Twitter data, while those extracted from News Headlines actually hindered classification, as they were used to train the only model achieving an $F_1$ score lower than 0.5. Our topic features were the most informative feature taken from our dataset of news headlines, outperforming both sentiment and punctuation features.\ This may be due to certain subjects being associated more with sarcastic or non-sarcastic news.
+\noindent Our topic features were the most informative feature taken from our dataset of news headlines, outperforming both sentiment and punctuation features.\ This may be due to certain subjects being associated more with sarcastic or non-sarcastic news.
 
-While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
+
 
 \subsection{Binary Classification}\vspace{-5pt}
 \noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including our highest-achieving models and those that produced unexpectedly good or bad results. We contrast the performance of our machine learning and deep learning classifiers, to assess whether deep learning techniques outperform machine learning approaches.\\\vspace{-4pt}
@@ -681,6 +679,23 @@ We employed a novel approach to sarcasm detection by incorporating an attention 
 In general, our model achieved significantly lower scores when trained on Twitter data as opposed to news headlines. We did not exceed the state-of-the-art on this particular datastet. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Additionally, due to the collection method used to collect tweets, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. The author's spelling and use of punctuation is also preserved, therefore there are a lot of spelling mistakes, and some tweets that are not written in English. This indicates that in order to achieve higher performance, alternative data cleaning methods could be applied to preserve necessary information used to inform predictions. Rectifying this limitation would have enabled our model to make enhanced predictions. It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
 
 While there is evidence to suggest that sentiment features are useful, our results indicate that they are no more informative than conventional lexical features - two key findings were noted. Firstly, punctuation features extracted from our Twitter dataset (which was used to train our foremost model) were more informative than sentiment features \textit{(table 4)}. Secondly, extraction of sentiment features was a reasonably slow process in comparison to our topic and punctuation features; hence, we would require our sentiment features to be significantly more informative than our other hand-crafted features in order for this to be worthwhile.
+
+
+
+\begin{minipage}{0.5\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.75\textwidth]{Images/boxcompare.png}\\
+			\textbf{Figure 8:} Visualisation of overall sentiment\\
+		\end{center}
+	\end{figure}
+\end{minipage}\vspace{-3pt}
+\begin{minipage}{0.5\textwidth}
+While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
+\end{minipage}\vspace{-3pt}
+
+\noindent All three feature types were most informative when extracted from Twitter data \textit{(table 4)}; this may be due to the use of more overt sarcasm in tweets than in news headlines, which are typically contextual. 
+
 
 
 \subsection{Project organisation and approach}\vspace{-10pt}
