@@ -9,6 +9,7 @@ Code1/Dataset/SARC/*
 *.html
 Code/Datasets/*
 !Datasets/Sarcasm_Amazon_Review_Corpus/processing_scripts/*
+
 GLOVEDATA
 Code/stanford-corenlp-full-2018-10-05
 Code/TrainedModels/*
@@ -17,4 +18,6 @@ Code/BestModels/*
 Code/pkg/datasets/*
 Code/pkg/language_models/*
 Code/pkg/trained_models/*
+!Code/pkg/trained_models/attention-bi-lstm_with_elmo_on_2.h5
+!Code/pkg/datasets/amazon_reviews/processing_scripts/*
 
