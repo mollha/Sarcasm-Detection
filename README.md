@@ -9,7 +9,7 @@ This project addresses the problem of sarcasm detection - often quoted as a subt
     - It is possible to interact with other models, however they will need to be trained first using train.py
     
 To use this code, clone this repository then navigate to the root directory.
-- Move to [Code/pkg/trained_models/](../../tree/master/Code/), then:
+- Move to [Code/](../../tree/master/Code/), then:
     - On Windows, execute the command "python console.py" or "python train.py"
     - On Linux, execute the command "python3 console.py" or "python3 train.py"
 
