@@ -460,7 +460,7 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \noindent Precision refers to the proportion of classified-sarcastic data that is \textit{truly sarcastic} (how many positives are true positives), and recall describes the proportion of the truly sarcastic data that is classified as such (how many true positives are labelled as positives).\ We also use the harmonic mean of precision and recall ($F_{1}$ score), however this metric has faced some criticism for giving equal weight to precision and recall \cite{hand2018note}, therefore we also consider these measures separately. The Matthews Correlation Co-efficient (MCC) is a balanced measure which shows high scores if the true positive and negative rates are high and if the false positive and negative rates are low.
 
 %this section presents the results of the solutions.  It should include information on experimental settings.  The results should demonstrate the claimed benefits/disadvantages of the proposed solutions.
-\subsection{Analysis of Sentiment Features}\vspace{-5pt}
+\subsection{Results of Sentiment Features}\vspace{-5pt}
 \noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ This allows us to explore whether these features alone are indicative of sarcasm in different media types.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as this is the average score of a binary classification model predicting randomly on a balanced corpus.\\\vspace{-5pt}
 
 
@@ -485,8 +485,6 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 		\end{tabular}
 	\end{center}	
 \end{minipage}
-
-
 
 \noindent Our topic features were the most informative feature taken from our dataset of news headlines, outperforming both sentiment and punctuation features.\ This may be due to certain subjects being associated more with sarcastic or non-sarcastic news.
 
@@ -652,10 +650,32 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 \section{Evaluation}
 \noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses in the context of our research questions: \textit{Can handcrafted sentiment features improve sarcasm predictions?} \textit{Do deep learning techniques perform better than machine learning approaches?} \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-10pt}
 
+
+\subsection{Evaluation of Sentiment Features}\vspace{-10pt}
+\hspace{-18pt}\begin{minipage}{0.45\textwidth}
+	Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
+\end{minipage}\vspace{-3pt}
+\begin{minipage}{0.5\textwidth}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=1\textwidth]{Images/boxcompare.png}\\
+			\textbf{Figure 8:} Visualisation of overall sentiment\\
+		\end{center}
+	\end{figure}
+\end{minipage}
+
+While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ 
+
+We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+
+
 \subsection{Solution Strengths}\vspace{-10pt}
 \noindent We demonstrated the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features on our news headlines dataset. We also exceed the state-of-the-art by 0.2\% using a bidirectional GRU model on the news headlines corpus \cite{misra2019sarcasm}.
 
-We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
+
+
+
 
 On an evaluation dataset of Amazon reviews, our solution achieved an $F_1$ score of 0.611 - despite being applied to an unseen dataset from a different form of social media. This demonstrates its ability to generalise to unseen data, suggesting that it successfully learned how to identify sarcasm, irrespective of the domain in which it is used. Additionally, our solution uses padding to allow variable-length input sequences of up to 150 tokens.\ Incorporating this flexibility allows for inputs up to 7.6 times larger than the average tweet in our Twitter dataset \textit{(table 2)}, hence we can continue to apply it to other forms of media where a larger input limit may be necessary.
 
@@ -684,17 +704,6 @@ While there is evidence to suggest that sentiment features are useful, our resul
 
 
 
-\begin{minipage}{0.5\textwidth}
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[width=0.75\textwidth]{Images/boxcompare.png}\\
-			\textbf{Figure 8:} Visualisation of overall sentiment\\
-		\end{center}
-	\end{figure}
-\end{minipage}\vspace{-3pt}
-\begin{minipage}{0.5\textwidth}
-While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
-\end{minipage}\vspace{-3pt}
 
 
 
