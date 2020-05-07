@@ -464,7 +464,10 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 \noindent To contrast the effectiveness of our novel sentiment features with our standard punctuation and topic features, we feed them to a logistic regression model and calculate the $F_1$ score using 5-fold cross-validation; logistic regression is used as these feature vectors are small.\ This allows us to explore whether these features alone are indicative of sarcasm in different media types.\ Models achieving $F_1$ scores greater than 0.5 are considered to have been trained on useful features, as this is the average score of a binary classification model predicting randomly on a balanced corpus.\\\vspace{-5pt}
 
 
-\hspace{-20pt}\begin{minipage}{0.50\textwidth}
+\hspace{-18pt}\begin{minipage}{0.46\textwidth}
+	\noindent All three feature types were most informative when extracted from Twitter data \textit{(table 4)}. Punctuation features were the most effective feature extracted from Twitter data, while those extracted from News Headlines actually hindered classification, as they were used to train the only model achieving an $F_1$ score lower than 0.5.
+\end{minipage}\vspace{8pt}\hspace{10pt}
+\begin{minipage}{0.50\textwidth}
 	\begin{center}
 		\noindent \textbf{Table 4}: $F_1$ score of logistic regression models trained on hand-crafted features\vspace{5pt}
 		\begin{tabular}{|p{2cm}||p{2.8cm}|p{2.2cm}|}
@@ -481,10 +484,9 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 			\hline
 		\end{tabular}
 	\end{center}	
-\end{minipage}\hspace{15pt}
-\begin{minipage}{0.46\textwidth}
-\noindent All three feature types were most informative when extracted from Twitter data \textit{(table 4)}. Punctuation features were the most effective feature extracted from Twitter data, while those extracted from News Headlines actually hindered classification, as they were used to train the only model achieving an $F_1$ score lower than 0.5.
-\end{minipage}\vspace{8pt}
+\end{minipage}
+
+
 
 \noindent Our topic features were the most informative feature taken from our dataset of news headlines, outperforming both sentiment and punctuation features.\ This may be due to certain subjects being associated more with sarcastic or non-sarcastic news.
 
@@ -694,7 +696,6 @@ While there is evidence to suggest that sentiment features are useful, our resul
 While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
 \end{minipage}\vspace{-3pt}
 
-\noindent All three feature types were most informative when extracted from Twitter data \textit{(table 4)}; this may be due to the use of more overt sarcasm in tweets than in news headlines, which are typically contextual. 
 
 
 
