@@ -2,10 +2,19 @@
 
 
 ### List of dependencies:
--
 
-
-
+- [en-core-web-md](https://spacy.io/models/en) == 2.2.5
+- [Keras](https://keras.io/) == 2.3.1
+- [matplotlib](https://matplotlib.org/) == 3.1.3
+- [numpy](https://numpy.org/) == 1.18.0
+- [pandas](https://pandas.pydata.org/) == 0.25.3
+- [pycorenlp](https://pypi.org/project/pycorenlp/) == 0.3.0
+- [scikit-learn](https://scikit-learn.org/stable/) == 0.22
+- [spacy](https://spacy.io/) == 2.2.3
+- [tensorflow](https://www.tensorflow.org/) == 2.1.0
+- [tensorflow-hub](https://www.tensorflow.org/hub) == 0.7.0
+- [tweepy](https://www.tweepy.org/) == 3.8.0
+- [twitter](https://pypi.org/project/python-twitter/) == 1.18.0
 
 ### Data configuration and Setup
 
