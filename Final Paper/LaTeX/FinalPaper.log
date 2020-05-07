@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  7 MAY 2020 23:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  7 MAY 2020 23:21
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -438,9 +438,14 @@ File: Images/elmo_diagram2.png Graphic file (type png)
 Package pdftex.def Info: Images/elmo_diagram2.png  used on input line 278.
 (pdftex.def)             Requested size: 210.27829pt x 160.89334pt.
 
+Underfull \hbox (badness 1292) in paragraph at lines 284--285
+\OT1/ptm/m/it/12 mem-ory) \OT1/ptm/m/n/12 model, con-cate-nat-ing the left-to-r
+ight and
+ []
+
+
 Underfull \hbox (badness 1762) in paragraph at lines 284--285
-[]\OT1/ptm/m/n/12 ELMo utilises a bi-directional LSTM \OT1/ptm/m/it/12 (long sh
-ort-
+\OT1/ptm/m/n/12 there-fore ro-bust rep-re-sen-ta-tions can be con-structed
  []
 
 
@@ -541,6 +546,11 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 368--381
  []
 
 
+Underfull \hbox (badness 2608) in paragraph at lines 390--391
+\OT1/ptm/m/n/12 the net-work. RNNs take an in-put
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 390--391
 
  []
@@ -549,12 +559,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 390--391
 File: Images/RNN_diagram1.png Graphic file (type png)
 <use Images/RNN_diagram1.png>
 Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 396.
-(pdftex.def)             Requested size: 184.44994pt x 76.78888pt.
-
-Overfull \hbox (12.18486pt too wide) in paragraph at lines 389--400
-[] $[]$   $[]$ 
- []
-
+(pdftex.def)             Requested size: 253.62393pt x 105.58403pt.
 [11 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
 .png>] [12]
 Underfull \hbox (badness 10000) in paragraph at lines 449--451
@@ -678,7 +683,7 @@ is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C
 :/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/tim
 es/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 625425 bytes).
+Output written on FinalPaper.pdf (21 pages, 625386 bytes).
 PDF statistics:
  151 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

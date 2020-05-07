@@ -281,7 +281,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 	\end{center}
 \end{minipage} \hfill
 \begin{minipage}{0.58\textwidth}
-	  ELMo utilises a bi-directional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.
+	  ELMo utilises a Bidirectional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
@@ -386,12 +386,12 @@ We implement two convolutional neural networks and present their architectures i
 
 \noindent \textbf{Recurrent Neural Networks (RNN)} use feedback loops to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. RNNs maintain an additional hidden state, \textit{h}, containing its own set of biases and weights.\vspace{5pt}
 
-\hspace{-20pt}\begin{minipage}{0.6\textwidth}	
+\hspace{-20pt}\begin{minipage}{0.4\textwidth}	
 	 We can unroll this loop (\textit{figure 6}) to reveal how outputs from previous time steps continue to propagate through the network.\ RNNs take an input sequence, denoted by \textit{x}, and return an output sequence, denoted by \textit{y}, which is a function of x and the hidden state.\ This hidden state is updated as inputs are fed through the network.\\
 \end{minipage}
-\hspace{10pt}
-\begin{minipage}{0.4\textwidth}
-	\vspace{-40pt}
+\hspace{15pt}
+\begin{minipage}{0.55\textwidth}
+	\vspace{-20pt}
 	\begin{figure}[H]
 		\includegraphics[width=1\textwidth]{Images/RNN_diagram1.png}\\
 		\centering\textbf{Figure 6}: Illustration of RNN Cell
@@ -420,9 +420,9 @@ Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \ci
 
 \subsection{Attention}
 \vspace{-4.2pt}
-\noindent When humans read text to answer a query or to inform a decision, we automatically focus more on specific regions that are more relevant to our query.\ This is known as \textit{human visual attention} and has been well studied by psychologists; however, incorporating a similar form of attention in recurrent neural networks is a revolutionary new concept.\ The intuition behind this is such that not all components of text are equally relevant for classifying it as sarcastic or non-sarcastic; hence, this provides insight into which tokens contribute more or less in classification decisions.\ Additionally, incorporating an attention mechnism can lead to better classification performance.\ Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-5pt}
+\noindent When humans read text, we automatically focus on regions that are most relevant, and this is known as \textit{human visual attention}. We can incorporate a similar form of attention into recurrent neural networks for sarcasm detection, where the intuition is that not all components of text are equally relevant for classifying it as sarcastic or non-sarcastic. This provides insight into which tokens contribute more or less in classification decisions, and can even lead to better classification performance, as described in Yang et al.\ (2016) \cite{yang2016hierarchical}. Extending our binary classification solution in this way enables us to answer the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}
 
-\noindent We employ the word-level attention layer outlined in Yang et al.\ (2016) \cite{yang2016hierarchical} which uses context to identify relevant tokens, rather than filtering for key words irrespective of their context. This is an intermediate layer placed after the bi-directional RNN layer in our solution, as our attention mechanism utilises the forward and backward outputs of this layer. For a given word, $w_{it}$, the forward and backward hidden states of the bi-directional RNN are concatenated to obtain a sequence, $h_{it}$. This annotation harnesses the contextual information of the tokens that come before and after $w_{it}$; crucial for informing classification decisions and producing meaningful attention visualisations, as words can have different meanings depending on the context in which they are found. Figure 7 shows the word-level attention mechanism used in this project. Three trainable weights, $W_w$, $b_w$ and $u_w$, are intialised from a random normal distribution.\\\vspace{-10pt}
+We employ the word-level attention mechanism outlined in \cite{yang2016hierarchical} which uses context to identify relevant tokens. This is incorporated as an intermediate layer, placed after the Bidirectional RNN layer in our solution, as our attention mechanism utilises the forward and backward outputs of this layer. For a given word, $w_{it}$, the forward and backward hidden states of the Bidirectional RNN are concatenated to obtain a sequence, $h_{it}$. This annotation harnesses the contextual information of the tokens that come before and after $w_{it}$; crucial for informing classification decisions and producing meaningful attention visualisations, as words can have different meanings depending on the context in which they are found. Figure 7 shows the word-level attention mechanism used in this project. Three trainable weights, $W_w$, $b_w$ and $u_w$, are intialised from a random normal distribution, and are used in the following equations introduced in \cite{yang2016hierarchical}.\\\vspace{-16pt}
 
 \begin{center}
 	\hspace{25pt}\begin{minipage}{0.35\textwidth}
