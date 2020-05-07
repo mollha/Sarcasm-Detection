@@ -1,3 +1,4 @@
+print('Starting Console...')
 import sys
 import os; os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # disable tensorflow warnings
 import pathlib; base_path = pathlib.Path(__file__).parent.parent.resolve(); sys.path.insert(1, str(base_path))
@@ -8,6 +9,7 @@ import pkg.data_processing.cleaning as dc
 from matplotlib.colors import rgb2hex
 from matplotlib.cm import get_cmap
 import keras.backend as K
+
 
 
 def visualise(token_list: list, color_array: np.array, prediction=None):
@@ -38,9 +40,7 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
         '</div><div style = "margin-left: 66px; height:10px; float: left; font-weight: bold; font-family: Arial, Helvetica, sans-serif; text-align: right;"><label style = "font-size: 4px;">▲ </label> <br> <label style = "font-size: 2.5px; text-align: center;">' \
         'SARCASTIC&nbsp; </label></div>'
 
-        prediction_score = str(round(prediction, 2))
-        if len(prediction_score) == 3:
-            prediction_score += '0'
+        prediction_score = str(round(prediction, 4))
 
         colored_string += style
         colored_string += '<p style="font-size: 6px; margin-left: 2px; margin-top: 10px; margin-bottom: 2px; font-family: \'Times New Roman\', Times, serif;"> Prediction score: ' + prediction_score + '</p>'
