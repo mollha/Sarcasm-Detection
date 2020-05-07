@@ -19,5 +19,5 @@ Code/pkg/datasets/*
 Code/pkg/language_models/*
 Code/pkg/trained_models/*
 !Code/pkg/trained_models/attention-bi-lstm_with_elmo_on_2.h5
-!Code/datasets/*/processing_scripts
+!Code/pkg/datasets/*/processing_scripts
 
