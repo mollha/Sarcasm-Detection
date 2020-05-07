@@ -1,0 +1,5 @@
+- Amazon reviews - Filatova et al. (2012):
+    - Data is downloaded in .rar format
+    - https://github.com/ef2020/SarcasmAmazonReviewsCorpus/
+    - Only Ironic.rar and Regular.rar is used in this project
+    - Convert Ironic.rar and Regular.rar (files from download) into regular folders, then move them to this folder
