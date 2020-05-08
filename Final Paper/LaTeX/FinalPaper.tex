@@ -362,15 +362,15 @@ We implement two convolutional neural networks and present their architectures i
 
 \noindent \textbf{Recurrent Neural Networks (RNN)} use feedback loops to process sequential data, creating a form of \textit{memory} that allows information to persist in the network. RNNs maintain an additional hidden state, \textit{h}, containing its own set of biases and weights.\vspace{5pt}
 
-\hspace{-20pt}\begin{minipage}{0.4\textwidth}	
+\hspace{-18pt}\begin{minipage}{0.42\textwidth}	
 	 We can unroll this loop (\textit{figure 6}) to reveal how outputs from previous time steps continue to propagate through the network.\ RNNs take an input sequence, denoted by \textit{x}, and return an output sequence, denoted by \textit{y}, which is a function of x and the hidden state.\ This hidden state is updated as inputs are fed through the network.\\
 \end{minipage}
-\hspace{15pt}
+\hspace{10pt}
 \begin{minipage}{0.55\textwidth}
 	\vspace{-20pt}
 	\begin{figure}[H]
 		\includegraphics[width=1\textwidth]{Images/RNN_diagram1.png}\\
-		\centering\textbf{Figure 6}: Illustration of RNN Cell
+		\centering\textbf{Figure 6}: Illustration of an RNN Cell
 	\end{figure}
 \end{minipage}\\\vspace{-10pt}
 

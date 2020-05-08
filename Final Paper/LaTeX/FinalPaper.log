@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  8 MAY 2020 08:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  8 MAY 2020 08:50
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -547,8 +547,15 @@ Overfull \hbox (12.18486pt too wide) in paragraph at lines 344--357
  []
 
 
-Underfull \hbox (badness 2608) in paragraph at lines 366--367
-\OT1/ptm/m/n/12 the net-work. RNNs take an in-put
+Underfull \hbox (badness 1776) in paragraph at lines 366--367
+\OT1/ptm/m/n/12 de-noted by \OT1/ptm/m/it/12 x\OT1/ptm/m/n/12 , and re-turn an 
+out-put
+ []
+
+
+Underfull \hbox (badness 1325) in paragraph at lines 366--367
+\OT1/ptm/m/n/12 se-quence, de-noted by \OT1/ptm/m/it/12 y\OT1/ptm/m/n/12 , whic
+h is a
  []
 
 
@@ -561,6 +568,11 @@ File: Images/RNN_diagram1.png Graphic file (type png)
 <use Images/RNN_diagram1.png>
 Package pdftex.def Info: Images/RNN_diagram1.png  used on input line 372.
 (pdftex.def)             Requested size: 253.62393pt x 105.58403pt.
+
+Overfull \hbox (0.35147pt too wide) in paragraph at lines 365--376
+[] $[]$   $[]$ 
+ []
+
 [11 <./Images/CNNarchNew.png> <./Images/DCNNarchNew.png> <./Images/RNN_diagram1
 .png>] [12]
 Underfull \hbox (badness 10000) in paragraph at lines 424--426
@@ -649,7 +661,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 686--687
 
 [18 <./Images/visualisation1.png> <./Images/visualisation2.png>]
 (FinalPaper.bbl [19]
-Underfull \hbox (badness 1048) in paragraph at lines 132--136
+Underfull \hbox (badness 1048) in paragraph at lines 129--133
 []\OT1/ptm/m/n/12 Soujanya Po-ria, Erik Cam-bria, De-va-manyu Haz-arika, and Pr
 a-teek Vij.  A deeper
  []
@@ -687,7 +699,7 @@ is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C
 :/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/tim
 es/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 625875 bytes).
+Output written on FinalPaper.pdf (21 pages, 625619 bytes).
 PDF statistics:
  151 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
