@@ -1,9 +1,17 @@
 # Machine Learning and Deep Learning Approaches to Sarcasm Detection
 
-This project addresses the problem of sarcasm detection - often quoted as a subtask of sentiment analysis. There are two main scripts used to begin using this code:
-- **train.py** : trains and evaluates new models on chosen dataset, saving these models to [Code/pkg/trained_models/](../../tree/master/Code/pkg/trained_models/)
-- **console.py** : makes predictions using existing trained models, where user input can be provided via a console. A visualisation of attention weights is produced in /colorise.html
+This project addresses the problem of sarcasm detection - often quoted as a subtask of sentiment analysis. There are two main scripts used to begin using this code - train.py requires a fair amount of setup, however console.py can be run very quickly, so long as the correct dependencies are installed (listed below)
 
+- **train.py** : trains and evaluates new models on chosen dataset, saving these models to [Code/pkg/trained_models/](../../tree/master/Code/pkg/trained_models/)
+    - To run train.py, follow the Data configuration and Setup instructions before proceeding
+- **console.py** : makes predictions using existing trained models, where user input can be provided via a console. A visualisation of attention weights is produced in /colorise.html
+    - Our best-performing model, the Bidirectional Long Short-Term Memory model trained on ElMo vectors with Attention is provided to get started
+    - It is possible to interact with other models, however they will need to be trained first using train.py
+    
+To use this code, clone this repository then navigate to the root directory.
+- Move to [Code/](../../tree/master/Code/), then:
+    - On Windows, execute the command "python console.py" or "python train.py"
+    - On Linux, execute the command "python3 console.py" or "python3 train.py"
 
 
 
@@ -53,5 +61,19 @@ This project addresses the problem of sarcasm detection - often quoted as a subt
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /OriginalData.csv\
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /processing_scripts/...\
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /raw_Data/...
+  
+  
+  
+**Language models can be downloaded from the following sources:**
+
+- ELMO: 
+    - Download the [ELMo tensorflow-hub module](https://tfhub.dev/google/elmo/2)  
+    - Move the elmo contents into a directory named elmo e.g. Code/pkg/language_models/elmo/
+    
+- GloVe 
+    - Download the [GloVe database](https://nlp.stanford.edu/projects/glove/)   
+    - Select the glove.twitter.27B.50d.txt file and place it in a subdirectory called glove, e.g. Code/pkg/language_models/glove/
    
    
+![Example Visualisation 1](https://raw.githubusercontent.com/mollha/Sarcasm-Detection/master/Examples/ilikehavingnightmares.png?token=AFMW4IJMUVFFU5R3TNGL7VK6XXNIO)
+![Example Visualisation 2](https://raw.githubusercontent.com/mollha/Sarcasm-Detection/master/Examples/ilovebeingignorednot.png?token=AFMW4IJADMQ5QFQ3FRS5LBS6XXNKE)

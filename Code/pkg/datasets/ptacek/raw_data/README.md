@@ -1,0 +1,4 @@
+- Twitter data - Ptáček et al. (2014):
+    - Collected from: http://liks.fav.zcu.cz/sarcasm/
+    - Uses the EN balanced corpus containing 100,000 tweet IDs that must be scraped from the Twitter API - Twitter scraper can be found in Code/pkg/datasets/ptacek/processing_scrips/TwitterCrawler
+    - Once downloaded, move normal.txt and sarcastic.txt (files from download) into this directory

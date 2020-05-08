@@ -3,21 +3,24 @@ venv
 *.pyc
 *.aux
 *.bbl
-Code1/Dataset/SARC/*
 *.csv
 *.json
-*.html
-Code/Datasets/*
-!Datasets/Sarcasm_Amazon_Review_Corpus/processing_scripts/*
+
 
 GLOVEDATA
 Code/stanford-corenlp-full-2018-10-05
 Code/TrainedModels/*
-Code/BestModels/*
 
-Code/pkg/datasets/*
+Code/pkg/datasets/**/processed_data/*.csv
+Code/pkg/datasets/**/processed_data/**/*.pckl
+
+
+Code/pkg/datasets/**/raw_data/*
+
 Code/pkg/language_models/*
 Code/pkg/trained_models/*
 !Code/pkg/trained_models/attention-bi-lstm_with_elmo_on_2.h5
 !Code/pkg/datasets/amazon_reviews/processing_scripts/*
-
+!Code/pkg/datasets/**/raw_data/*.md
+!Code/pkg/language_models/*.md
+!Code/pkg/language_models/**/*.md
