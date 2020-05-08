@@ -625,26 +625,23 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 %As such, we incorporate an ELMo embedding layer to produce contextualised word embeddings from raw text, as they encode the context in which a word is found (polysemy) and can generalise to out-of-vocabulary tokens. We feed these word embeddings through a bidirectional long short-term memory model in order to retain both the left and right contexts of each word.\\
 
 \section{Evaluation}
-\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses in the context of our research questions: \textit{Can handcrafted sentiment features improve sarcasm predictions?} \textit{Do deep learning techniques perform better than machine learning approaches?} \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}\\\vspace{-10pt}
+\noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses in the context of our research questions: \textit{Can advances in machine learning and deep learning address the challenges in sarcasm detection?} \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?} \textit{Can handcrafted sentiment features improve sarcasm predictions?}\\\vspace{-10pt}
 
 
 \subsection{Evaluation of Sentiment Features}\vspace{-10pt}
-\hspace{-18pt}\begin{minipage}{0.45\textwidth}
-	Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\ The distribution of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset, however we see more variation in our Twitter dataset, indicating that these instances are easier to classify as their sentiment compositions are more distinct.
-\end{minipage}\vspace{-3pt}
-\begin{minipage}{0.5\textwidth}
-	\begin{figure}[H]
+\noindent We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness.\ We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\\
+
+\vspace{-13pt}\hspace{-18pt}\begin{minipage}{0.5\textwidth}
+	The distributions of sarcastic and non-sarcastic overall sentiment scores are very similar in our news headlines dataset - they have the same range, upper quartile and lower quartile, as well as very similar means.\ In our Twitter dataset, there is a generally more variation between the sentiment distributions of sarcastic and non-sarcastic data. This indicates that these instances are easier to classify as their sentiment compositions are more distinct, leading to higher $F_1$ scores in our experiments.
+\end{minipage}\hspace{10pt}
+\begin{minipage}{0.48\textwidth}
+	\vspace{-10pt}\begin{figure}[H]
 		\begin{center}
-			\includegraphics[width=1\textwidth]{Images/boxcompare.png}\\
+			\includegraphics[width=0.95\textwidth]{Images/boxcompare.png}\\
 			\textbf{Figure 8:} Visualisation of overall sentiment\\
 		\end{center}
 	\end{figure}
 \end{minipage}
-
-While sentiment features were not the most or least effective feature type on either dataset, they were consistent in that they exceeded our 0.5 baseline on both datasets.\ 
-
-We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness. Hence, we conclude that sentiment features are sufficiently informative so as to guide a model to make non-trivial predictions.
-
 
 
 \subsection{Solution Strengths}\vspace{-10pt}
