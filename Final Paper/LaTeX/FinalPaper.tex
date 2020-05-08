@@ -84,7 +84,7 @@ Prior work in the field has primarily focused on overt instances of sarcasm; cap
 
 The \textbf{minimum} objectives of this project are to evaluate and clean high-quality datasets, and to employ machine learning models in order to evaluate their performance on our chosen datasets.\ To fulfil these objectives, we gather two large balanced datasets containing Twitter data and news headlines; as well a small unbalanced corpus of product reviews.\ Upon implementing five machine learning classifiers, we conclude that logistic regression is our superior machine learning model on both datasets, achieving  $F_{1}$ scores of 0.851 and 0.790.\ The purpose of this objective is to establish a baseline against which to compare our deep learning classifiers.
 
-The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on our chosen datasets, as well as to determine the best performing solution by evaluating the model against unseen data.\ We achieve these objectives by implementing shallow and deep Convolutional Neural Networks; as well as advanced Recurrent Neural Networks and their bidirectional counterparts.\ We evaluate our candidate solutions on an evaluation corpus of Amazon reviews, where we discover that our bidirectional Long Short-Term Memory (LSTM) model, trained on ELMo vectors from the Twitter corpus, is our most adaptable solution - achieving an $F_1$ score of 0.611.
+The \textbf{intermediate} objectives of this project are to experiment with and evaluate deep learning models on our chosen datasets, as well as to determine the best performing solution by evaluating the model against unseen data.\ We achieve these objectives by implementing shallow and deep Convolutional Neural Networks; as well as advanced Recurrent Neural Networks and their bidirectional counterparts.\ We evaluate our candidate solutions on an evaluation corpus of Amazon reviews, where we discover that our bidirectional Long Short-Term Memory (LSTM) model, trained on \textit{Embeddings For Language Models} (ELMo) vectors from the Twitter corpus, is our most adaptable solution - achieving an $F_1$ score of 0.611.
  
 The \textbf{advanced} objectives of this project are to implement an attention-based neural network in order to identify words that correlate more to classification decisions.\ A visualisation of the attention weights associated with specific tokens would be produced in testing.\ We fulfil these objectives by integrating a custom attention layer into our superior binary classification solution, observing an improvement in the $F_1$ score of our solution.\ We visualise attention weights (returned by our attention layer) by projecting them into a colourspace and highlighting the corresponding tokens in their respective colours.
 
@@ -125,35 +125,12 @@ As one of the first studies to consider sentiment features, Riloff et al. (2013)
 
 
 \subsection{Deep Learning Classifiers}\vspace{-10pt}
-\noindent Deep neural networks are increasingly being used in text classification - models that leverage time-series data, such as Recurrent Neural Networks (RNN), are well-suited to this task, as the order of the input sequences bares significance to its meaning. \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a bidirectional gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy. 
+\noindent Deep neural networks are increasingly being applied in text classification; although very few have been trialled in sarcasm detection specifically, providing additional motiviation to address this challenge.\ Models that leverage time-series data, such as Recurrent Neural Networks (RNN), are well-suited to this task, as the order of the input sequences bares significance to its meaning. \textit{Zhang et al. (2016)} \cite{zhang2016tweet} used a Bidirectional Gated RNN to capture local information in tweets, as well as a pooling neural network to extract context from historic tweets, achieving 78.55\% accuracy. Felbo et al.\ (2017)\cite{felbo2017using} harnessed the idea that emoticons can represent complex emotions, including sentiment and sarcasm. They used millions of emoticons in tweets to learn representations of emotional contexts, and their Bidirectional LSTM model was used to predict emoticons from the context of tweets.
 
+Convolutional Neural Networks (CNN), that are typically associated with image-related tasks, have more recently been employed in text classification. \textit{Zhang et al. (2015)} \cite{zhang2015character} explored the use of character-level convolutional neural networks for sentiminent classification (a closely related task), developing a deep CNN with consisting of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts, such as a corpus of Amazon product reviews. A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. The first deep learning approach to sarcasm detection was used in \textit{Poria et al.\ (2016)} \cite{poria2016deeper}, achieving state-of-the-art results on several benchmark datasets, including 97.71\% on a corpus of Tweets. They used a CNN-SVM model, where they extracted features from the fully-connected layer of the deep CNN and used an SVM to classify these features. Their deep CNN utilised three smaller CNNs, pre-trained on personality, emotion and sentiment features. In general, deep neural networks often require a lot more training data than machine learning algorithms, however, they have been shown to produce state-of-the-art results in several domains \cite{lecun2015deep}.
 
-
-Convolutional neural networks, that are typically associated with image-related tasks, have more recently been employed in text classification. \textit{Zhang et al. (2015)} \cite{zhang2015character} explored the use of character-level convolutional neural networks for text classification. This network consists of 6 convolutional layers and 3 fully-connected layers. They found that it showed better peformance on raw texts such as a corpus of Amazon product reviews.  A similar technique was applied in \textit{Ghosh et al. 2018)} \cite{ghosh2018sarcasm} where they concluded that emoticons such as ':)' and interjections e.g. "ah", "hmm" correspond with highly weighted sentences. The first deep learning approach to sarcasm detection was used in \textit{Poria et al.\ (2017)} \cite{poria2016deeper}, producing state-of-the-art results. They created three CNN pre-trained on personality, emotion and sentiment features, combining these to form a deep CNN. Deep neural networks often require a lot more training data than machine learning algorithms, however, they have been shown to produce state-of-the-art results in several domains.
-
-
-\subsection{Incorporation of Attention}\vspace{-10pt}
-
-One particularly interesting technique is the \textit{Hierarchical Attention Network (HAN)} defined in Yang et al. (2016) \cite{yang2016hierarchical} - an attention-based LSTM. The intuition is that certain words and sentences in a document contribute more to its overall meaning, and this is highly context dependent. They included one attention mechanism at word-level and another at sentence-level, and this allowed them to determine which words and phrases correlate more to certain labels. Using a similar approach in the domain of sarcasm may allow me to highlight the attention-words that are strongly influence the level of sarcasm.
-
-
-%In Yang et al. 2016, they used two sentence-level and word-level attention
-
-
-%Additionally, we use a bidirectional model so as to account for both the left and right contexts of words. 
-
-%We use a bidirectional GRU and concatenate the output sequences from both GRUs. 
-%This paper considers that documents have a hierarchical structure
-
-%The attention mechnism has played a fundamental role in recent deep learning research, fuelling powerful language models such as BERT. 
-
-%An Attention mechanism attributes more importance to a subset of the input words.
-
-%Bahdanau et al. (2015) suggested that a context vector takes into account all of the input words, assigning relative importance to some more than others.
 
 %This section presents a survey of existing work on the problems that this project addresses.  it should be between 2 to 4 pages in length.  The rest of this section shows the formats of subsections as well as some general formatting information for tables, figures, references and equations. Note that the whole report, including the references, should not be longer than 20 pages in length.  The system will not accept any report longer than 20 pages.  It should be noted that not all the details of the work carried out in the project can be represented in 20 pages.  It is therefore vital that the Project Log book be kept up to date as this will be used as supplementary material when the project paper is marked.  There should be between 10 and 20 referenced papers---references to Web based pages should be less than 10\%.
-
-
 
 %The font used for the main text should be Times New Roman (Times) and the font size should be 12.  The first line of all paragraphs should be indented by 0.25in, except for the first paragraph of each section, subsection, subsubsection etc. (the paragraph immediately after the header) where no indentation is needed.
 
@@ -173,7 +150,7 @@ One particularly interesting technique is the \textit{Hierarchical Attention Net
 In our solution, high quality datasets are first collected and pre-processed. During feature extraction, the textual training data is transformed into numerical vectors and these features are used to train a classification model. The trained classifier is then carefully evaluated in order to account for potential overfitting. The following figure outlines the model pipeline, and each of these stages are further addressed in the remaining sections.
 
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{Images/modelpipeline2.png}
+	\includegraphics[width=0.9\textwidth]{Images/modelpipeline2.png}
 	\label{Model Pipeline}\\
 	\textbf{Figure 1:} Overview of the solution
 \end{center}
@@ -249,7 +226,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 
 \subsection{Feature Extraction}
 \vspace{-4.2pt}
-\noindent Extracting meaningful data from large corpora is vital for enabling classifiers to make high-quality predictions. As such, it follows that in the context of natural language processing, feature extraction techniques should encode the underlying semantics of text into the numeric vectors they produce. We produce our main features using established vectorisation techniques such as GloVe \cite{pennington2014glove} and ELMo \cite{peters2018deep}. However, we also experiment with a number of non-conventional features in combination with our main features, generated using the procedures outlined in \textit{section D.2}. \vspace{-4.2pt}
+\noindent Extracting meaningful data from large corpora is vital for enabling classifiers to make high-quality predictions. As such, it follows that in the context of natural language processing, feature extraction techniques should encode the underlying semantics of text into the numeric vectors they produce. We produce our main features using established vectorisation techniques such as GloVe \cite{pennington2014glove} and ELMo \cite{peters2018deep}. However, we also experiment with a number of miscellaneous features in combination with our main features, generated using the procedures outlined in \textit{section D.2}. Miscellaneous features are used to enrich main features, and are not used independently to train candidate solutions.\vspace{-4.2pt}
 
 \subsubsection{Main Features}
 \noindent \textbf{Traditional Approaches --} As our most standard techniques, \textit{Bag of Words (BOW)} and \textit{Term Frequency-Inverse document frequency (TF-IDF)} \cite{robertson1976relevance} are used as a baseline against which to compare more advanced approaches. In BOW, text is encoded as a single vector containing a count of the number of occurrences of each word. TF-IDF extends the BOW model by providing each word with a score that reflects its importance based upon its frequency within the document. These approaches create sparse inefficient representations, where each vector is the size of the vocabulary. Additionally, vectors produced in this way do not preserve the context within which words are found, although sarcasm is a highly contextual phenomenon.\\
@@ -281,7 +258,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 	\end{center}
 \end{minipage} \hfill
 \begin{minipage}{0.58\textwidth}
-	  ELMo utilises a Bidirectional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations. They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens. However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically. Hence, it can disambiguate the sense of a word given the context in which it was found. These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.
+	  ELMo utilises a Bidirectional LSTM \textit{(long short-term memory)} model, concatenating the left-to-right and right-to-left LSTM in order to produce deep contextualised word representations.\ They are character based, therefore robust representations can be constructed for out-of-vocabulary tokens.\ However, rather than 'looking-up' pre-computed embeddings, ELMo generates them dynamically.\ Hence, it can disambiguate the sense of a word given the context in which it was found.\ These state-of-the-art contextualised embeddings are used in this project as the most advanced method of feature extraction.
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
@@ -398,7 +375,7 @@ We implement two convolutional neural networks and present their architectures i
 	\end{figure}
 \end{minipage}\\\vspace{-10pt}
 
-\noindent RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
+\noindent RNNs are limited to looking back only a few steps as they are susceptible to the \textit{vanishing gradient problem} \cite{pascanu2013difficulty}, more so when we continue to add complexity (in the form of additional layers) to our network. RNNs use backpropagation to calculate the gradient of the loss function with respect to individual network weights, and these weights are updated in a manner that is proportional to the gradient. However, when the vanishing gradient problem occurs, the gradient with respect to the earliest layers becomes negligible; therefore the updates made to weights in these layers become insignificant. This can make the learning process slow and unstable, causing the network to have only a short-term memory.
 
 Variations of the vanilla RNN such as \textit{Long Short-Term Memory (LSTM)} \cite{hochreiter1997long} and \textit{Gated Recurrent Units (GRU)}\cite{cho2014learning} use internal mechanisms, known as gates, which allow them to overcome the issue of short-term memory by controlling how much information is forgotten or allowed to pass through to the output. We implement an LSTM and GRU (as well as their bidirectional variants), comparing their performance against that of a standard RNN. Bidirectional models concatenate the output sequences of two recurrent layers, where one is trained on reversed input sequences and the other is trained on the original input sequences. This allows context to be captured from both directions, and can lead to improved predictions.
 
@@ -440,9 +417,8 @@ We employ the word-level attention mechanism outlined in \cite{yang2016hierarchi
 
 \noindent Each word annotation, $h_{it}$ is fed through a fully-connected layer with tanh activation to produce $u_{it}$ - this is the hidden representation of $h_{it}$ (\textit{Equation 1}). We apply the softmax function to the similarity between a word-level context vector ($u_w$), learned during training, and $u_{it}$ (\textit{Equation 2}). This produces an attention weight, $\alpha_{it}$, which represents the relative importance of the token $w_{it}$ in the sentence, s. Finally, the sentence-level context vector, $s_i$, is computed as the sum of $h_{it} \cdot a_{it}$ over all timesteps, t (\textit{Equation 3}). Our attention layer returns the attention weight, $a_{it}$ for each token, as well as the sentence-level content vector, $s_i$, which is propagated through the remainder of our classifier. We visualise our attention weights by projecting them into a colour-space and displaying the tokens highlighted in their respective colours, where darker colours indicate a higher-level of attention.
 
-\section{Results}\vspace{-8pt}
-\subsection{Evaluation Method}\vspace{-5pt}
-\noindent This section discusses our approach to evaluating the performance of the trained models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to produce an evaluation of the trained models.\vspace{-10pt}
+\section{Results}
+\noindent We collect results using four metrics which allow us to measure the performance of the models. Each trained model makes predictions on labelled unseen data, and these predictions are compared to the corresponding ground truth labels. From this, we extract the number of true positives (TP), true negatives (TN), false positives (FP) and false negatives (FN). We use four metrics that leverage this data differently to summarise the performance of the trained models.\vspace{-10pt}
 
 \hspace{-30pt}\begin{center}
 	\begin{minipage}{0.47\textwidth}
@@ -497,7 +473,7 @@ We employ the word-level attention mechanism outlined in \cite{yang2016hierarchi
 
 
 \subsection{Binary Classification}\vspace{-5pt}
-\noindent To compare the performance of our machine learning and deep learning classifiers, each model is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including our highest-achieving models and those that produced unexpectedly good or bad results. We contrast the performance of our machine learning and deep learning classifiers, to assess whether deep learning techniques outperform machine learning approaches.\\\vspace{-4pt}
+\noindent Each classifier outlined in \textit{section E} of the solution is trained independently on numerous features extracted from our datasets. For each dataset, we report on only a subset of our most informative results, including our highest-achieving models and those that produced unexpectedly good or bad results. We contrast the performance of our machine learning and deep learning classifiers, to assess whether deep learning techniques outperform machine learning approaches.\\\vspace{-4pt}
 
 %Hence, we curate a selection of models that either produce the best scores, or exceeded our expectations.
 
@@ -575,11 +551,7 @@ Trained on ELMo vectors, our advanced RNN models exceeded the $F_1$ score of our
 	\textit{*S} refers to sentiment features, \textit{T} refers to topic features and \textit{P} refers to punctuation features\\\vspace{-5pt}
 \end{center}
 
-\noindent The performance of our deep learning classifiers exceed that of our machine learning classifiers \textit{(table 6)}.\ In comparing our best-performing classifiers in both categories; we observe an increase of 8.7\% from machine learning to deep learning.\ Our logistic regression model trained on ELMo vectors achieved an $F_1$ score of 0.762. In concatenating sentiment, topic, and punctuation features with our ELMo vectors, we observe an increase of 3.7\% - leading to our highest $F_1$ score of our machine learning classifiers. Our bidirectional LSTM model trained on ELMo vectors attained the highest overall $F_1$ score of 0.859, as well as the greatest recall.\ While this model did not surpass the $F_1$ score of 0.947 attained in \textit{Pt\'a\v{c}ek et al.\ (2014)} \cite{ptavcek2014sarcasm}. 
-
-Our simple CNN achieved the highest value for precision; however, recall was signicantly lower than precision, indicating that this model is likely to have overfit to the non-sarcastic class. Nonetheless, it achieved an $F_1$ score only 1.2\% lower than our deep CNN model (also trained on ELMo vectors). Our vanilla RNN performed better than expected on this particular dataset; hence, the average increase in $F_1$ score between our vanilla RNN and our more advanced RNN models is 3.3\%, lower than our news headlines dataset.
-
-Models trained on GloVe vectors showed poor performance on this particular dataset.\ For example, our gaussian na\"{i}ve bayes model achieved a higher $F_1$ score when trained on basic BOW vectors than on GloVe.\ This could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose their meaning in our embeddings.\\\vspace{-15pt}
+\noindent The performance of our deep learning classifiers exceed that of our machine learning classifiers \textit{(table 6)}.\ In comparing our best-performing classifiers in both categories; we observe an increase of 8.7\% from machine learning to deep learning.\ Our logistic regression model trained on ELMo vectors achieved an $F_1$ score of 0.762. In concatenating sentiment, topic, and punctuation features with our ELMo vectors, we observe an increase of 3.7\% - leading to our highest $F_1$ score of our machine learning classifiers. Our bidirectional LSTM model trained on ELMo vectors attained the highest overall $F_1$ score of 0.859, as well as the greatest recall.\
 
 
 \subsubsection{Cross-Dataset Evaluation}
@@ -709,21 +681,20 @@ In general, our model achieved significantly lower scores when trained on Twitte
 While there is evidence to suggest that sentiment features are useful, our results indicate that they are no more informative than conventional lexical features - two key findings were noted. Firstly, punctuation features extracted from our Twitter dataset (which was used to train our foremost model) were more informative than sentiment features \textit{(table 4)}. Secondly, extraction of sentiment features was a reasonably slow process in comparison to our topic and punctuation features; hence, we would require our sentiment features to be significantly more informative than our other hand-crafted features in order for this to be worthwhile.
 
 
-
-
-
-
-
-\subsection{Project organisation and approach}\vspace{-10pt}
-
-\noindent We began by evaluating machine learning classifiers, which are by their nature, likely to perform at a lower level than our deep learning classifiers. This enabled us to develop an intial solution whilst also giving us a baseline against which to compare the performance of our deep learning models. We followed an agile development model by iteratively expanding our collection of machine learning and deep learning models. This allowed us to gauge which types of models. For example, we discovered that tree-based classifiers rarely attained good scores, therefore we were able to look for alternatives early in the process. Similarly, our RNN models typically outperformed our convolutional architectures, potentially as they utilise time-series data more effectively than CNN models. Hence, we focused on improving our RNN models, going on to incorporate their bidirectional variants, as they had already showed potential.
-
 %This section should between 1 to 2 pages in length.
 
 \section{Conclusions}\vspace{-4.2pt}
 \noindent In terms of satisfying the objectives, this project was an overall success. We develop a sarcasm detection solution using a bidirectional LSTM with attention, trained on deep state-of-the-art contextualised embeddings. This model achieves an $F_1$ score of 0.862 on the Twitter dataset \cite{ptavcek2014sarcasm}. In order to achieve this, we constrasted the performance of numerous machine learning and deep learning classifiers; demonstrating that deep learning models are more effective at detecting sarcasm in news headlines and tweets. We also demonstrated that our solution can successfully generalise to other forms of media, despite being trained on tweets. Additionally, we incorporated our solution into a user-friendly tool with an interactive console, which may be useful to individuals who struggle to detect sarcasm in their daily-life, or for the industrial applications of enhanced opinion mining. In future, we may experiment with the use of this tool as a pre-processing stage for sentiment analysis, enabling us to filter out sarcastic instances that may skew sentiment predicitions. Our results show that sentiment features can be useful when extracted from ill-structured, user-generated data. Hence, as suitable direction for future work may be to explicitly incorporate sentiment features into our deep learning architectures to explore their potential in more sophisticated deep neural networks. Furthermore, it would be interesting to explore the use of sarcasm in a wider variety of media types, and to extend support to additional non-English languages. \\
 
 In terms of future work, ...
+
+
+Twitter Dataset
+
+While this model did not surpass the $F_1$ score of 0.947 attained in \textit{Pt\'a\v{c}ek et al.\ (2014)} \cite{ptavcek2014sarcasm}. 
+Our simple CNN achieved the highest value for precision; however, recall was signicantly lower than precision, indicating that this model is likely to have overfit to the non-sarcastic class. Nonetheless, it achieved an $F_1$ score only 1.2\% lower than our deep CNN model (also trained on ELMo vectors). Our vanilla RNN performed better than expected on this particular dataset; hence, the average increase in $F_1$ score between our vanilla RNN and our more advanced RNN models is 3.3\%, lower than our news headlines dataset.
+
+Models trained on GloVe vectors showed poor performance on this particular dataset.\ For example, our gaussian na\"{i}ve bayes model achieved a higher $F_1$ score when trained on basic BOW vectors than on GloVe.\ This could be due to the fact that this dataset has the lowest percentage of tokens present in the GloVe dictionary; hence, we lose their meaning in our embeddings.\\\vspace{-15pt}
 
 %This section summarises the main points of this paper.  Do not replicate the abstract as the conclusion.  A conclusion might elaborate on the importance of the work or suggest applications and extensions.  This section should be no more than 1 page in length.
 
