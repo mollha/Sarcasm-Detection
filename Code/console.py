@@ -22,7 +22,7 @@ def visualise(token_list: list, color_array: np.array, prediction=None):
     """
     cmap = get_cmap('Reds')
     template = '<span class="barcode"; style="color: black; font-size: 13px; background-color: {}">{}</span>'
-    colored_string = '<div style="max-width: 175px; overflow: auto;">'
+    colored_string = '<div">'   # style="max-width: 175px; overflow: auto;
     for t, color in zip(token_list, color_array):
         # if negative, set to white
         color_val = rgb2hex((1, 1, 1)) if color < 0 else rgb2hex(cmap(color)[:3])

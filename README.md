@@ -71,7 +71,7 @@ To use this code, clone this repository then navigate to the root directory.
     - Move the elmo contents into a directory named elmo e.g. Code/pkg/language_models/elmo/
     
 - GloVe 
-    - [GloVe database](https://nlp.stanford.edu/projects/glove/)   
+    - Download the [GloVe database](https://nlp.stanford.edu/projects/glove/)   
     - Select the glove.twitter.27B.50d.txt file and place it in a subdirectory called glove, e.g. Code/pkg/language_models/glove/
    
    
