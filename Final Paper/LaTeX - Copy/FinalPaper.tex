@@ -91,7 +91,23 @@ The \textbf{advanced} objectives of this project are to implement an attention-b
 
 \section{Related Work}
 \vspace{-4.2pt}
-\noindent In this section, we report on the architectural design of solutions used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. Oftentimes, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g.\ 1 to 5.\vspace{-5pt}
+\noindent In this section, we report on the architectural design of solutions used specifically in sarcasm detection research, as well as techniques that have seen success in other natural language processing (NLP) classification tasks. Oftentimes, sarcasm detection is treated as a binary classification problem, in which text is grouped into two categories - sarcastic and non-sarcastic. It is otherwise treated as a multi-class problem where the extent to which a statement is sarcastic is ranked on a discrete scale, e.g.\ 1 to 5.\ In similar studies, the terms irony and sarcasm are used synonymously \cite{tsur2010icwsm}, although their definitions differ slightly (\textit{table 1}). Both definitions capture the humourous intent in both sarcasm and irony, however sarcasm includes the potential for mockery and criticism - often present in opinion-based content such as product reviews.\vspace{-5pt}
+
+\begin{center}
+	\textbf{Table 1}: Definitions of Irony and Sarcasm\vspace{-8pt}
+\end{center}
+\begin{center}
+	\begin{tabular}{p{1.5cm}p{13.2cm}}
+		\hline
+		\textbf{Term} & \textbf{Definition}\\
+		\hline\hline
+		Sarcasm & Speech or writing which actually means the opposite of what it seems to say, usually intended to mock or insult.\footnotemark[1]\\
+		\hline
+		Irony & A subtle form of humour which involves saying things that you do not mean.\footnotemark[2]\\
+		\hline
+	\end{tabular}\\
+\end{center}\vspace{-10pt}
+\footnotetext[2]{https://www.collinsdictionary.com/dictionary/english/irony}
 
 \subsection{Rule-based Classifiers}\vspace{-10pt}
 \noindent A number of na\"{i}ve approaches have been used in previous research, where text is classified based on a set of linguistic rules. Bharti et al. (2015) \cite{bharti2015parsing} proposed two rule-based approaches - one approach (IWS) classifies tweets that begin with injerjections, such as \textit{"wow"} and \textit{"yay"}, as sarcastic, and the other uses a parsing based lexical generation algorithm (PBLGA) to recognise sentiment-bearing situation phrases juxtaposed with contrasting sentiment phrases. When tested on 1500 tweets containing \#sarcasm, the IWS and PBLGA approaches yielded $F_1$ scores of 0.90 and 0.84, respectively. An earlier example of a rule-based approach is displayed in Maynard and Greenwood (2014) \cite{maynard2014cares}. They proposed that the sentiment contained in hashtags can indicate the presence of sarcasm in tweets, such as \#notreally in the example \textit{"I love doing the washing-up \#notreally"}. They used a rule-based approach where tweets are labelled as sarcastic if their sentiment contradicts the sentiment of the hashtag, reporting an $F_{1}$ score of 0.91. 
@@ -245,7 +261,7 @@ Punctuation is removed and text is transformed to lowercase in order to reduce s
 \end{minipage}\\
 
 \subsubsection{Miscellaneous Features}
-We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We focus specifically on the effects of incorporating our \textit{novel sentiment features} in comparison to incorporating more conventional punctuation and topic features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classification scores with existing vectors.\\\vspace{-5pt}
+We consider miscellaneous features as well as those produced by the aforementioned techniques - including lexical (punctuation) features, topic features and sentiment features. We focus specifically on the effects of incorporating our \textit{novel sentiment features} in comparison to incorporating more conventional punctuation and topic features. We produce low-dimensional feature vectors for each of our datasets, concatenating those that are shown to improve classifcation scores with existing vectors.\\\vspace{-5pt}
 
 \noindent \textbf{1. Punctuation features --} We extract punctuation features following the procedure outlined in Tsur et al. (2010) \cite{tsur2010icwsm}. Five lexical features are combined to produce a $ 1 \times 5 $ dimensional vector for each text snippet, including the length of the snippet in tokens, as well as the number of: "!" characters, "?" characters, quotations and tokens that include at least one capitalised character. These features are normalised by dividing them by the (maximal observed value $ \cdot $ average maximal value of remaining feature groups).\\\vspace{-5pt}
 
@@ -612,12 +628,15 @@ Given that the Bidirectional LSTM and Bidirectional GRU achieved the highest $F_
 \noindent In the following section, we analyse the effectiveness of the solution, discussing its strengths and weaknesses in the context of our research questions. 
 
 
-\subsection{Solution Strengths and Limitations}\vspace{-10pt}
+\subsection{Solution Strengths}\vspace{-10pt}
 \noindent In answer to the research question: \textit{Can advances in machine learning and deep learning address the challenges in sarcasm detection?} We demonstrate the powerful capabilities of deep-learning architectures, as well as the potential for some machine learning models to compete with less sophisticated deep neural architectures when trained for a fraction of the time. For example, we achieved an $F_1$ score of 0.851 using a logistic regression model, trained with state-of-the-art contextualised word embeddings and hand-crafted sentiment and topic features on our news headlines dataset. We also exceed the state-of-the-art by 0.2\% using a bidirectional GRU model on the news headlines corpus \cite{misra2019sarcasm}.
  
  On an evaluation dataset of Amazon reviews, our solution achieved an $F_1$ score of 0.611 - despite being applied to an unseen dataset from a different form of social media. This demonstrates its ability to generalise to unseen data, suggesting that it successfully learned how to identify sarcasm, irrespective of the domain in which it is used. Additionally, our solution uses padding to allow variable-length input sequences of up to 150 tokens.\ Incorporating this flexibility allows for inputs up to 7.6 times larger than the average tweet in our Twitter dataset \textit{(table 2)}, hence we can continue to apply it to other forms of media where a larger input limit may be necessary.
-
-In general, our model achieved significantly lower scores when trained on Twitter data as opposed to news headlines. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Additionally, due to the collection method used to collect tweets, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. The author's spelling and use of punctuation is also preserved, therefore there are a lot of spelling mistakes, and some tweets that are not written in English. This indicates that in order to achieve higher performance, alternative data cleaning methods could be applied to preserve necessary information used to inform predictions. Rectifying this limitation would have enabled our model to make enhanced predictions. It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
+ 
+ We employed a novel approach to sarcasm detection by incorporating an attention layer into our bidirectional LSTM and extending our binary classification solution.\ Incorporating an attention mechanism allows us visualise the tokens correlating more to sarcastic labels. Furthermore, intergrating this intermediate layer improved our binary classification solution, leading to an increase in precision, recall and $F_1$ score by 1.4\%, 1.6\% and 1.5\%, respectively.
+ 
+ \subsection{Solution Limitations}\vspace{-10pt}
+ \noindent In general, our model achieved significantly lower scores when trained on Twitter data as opposed to news headlines. News headlines are written formally, hence there is little noise in this dataset due to the absence of erroneous spelling. These headlines are self-contained, unlike tweets which may be in response to another tweet thereby excluding necessary context. Additionally, due to the collection method used to collect tweets, some of the sarcastic instances may not be sarcastic, and some non-sarcastic instances may be sarcastic. The author's spelling and use of punctuation is also preserved, therefore there are a lot of spelling mistakes, and some tweets that are not written in English. This indicates that in order to achieve higher performance, alternative data cleaning methods could be applied to preserve necessary information used to inform predictions. Rectifying this limitation would have enabled our model to make enhanced predictions. It may have been beneficial to employ a dedicated Twitter tokeniser in order to harness nuanced features present in tweets, such as hashtags or emoticons. It was only feasible to evaluate a small range of online media types, however surveying a broader range of media types could give us a wider perspective of sarcasm in online media.
 
  \subsection{Analysis of Sentiment Features}\vspace{-10pt}
 \noindent We found that sentiment features are objectively useful predictors of sarcasm in twitter data and news headlines, as logistic regression models trained on these features achieved $F_1$ scores of 0.593 and 0.516, respectively. As both models achieved $F_1$ scores exceeding 0.5, this indicates that their performance bettered that of a trivial classifier which predicts class labels with apparent randomness.\ We found that sentiment features were most informative when extracted from Twitter data as opposed to News Headlines, and we hypothesise that this is due to the use of more overtly sarcastic expressions that utilise strong sentiment, such as "\textit{i love working weekends! \#not}". Figure 8 illustrates the distributions of the overall sentiment labels (value 5 in our sentiment feature vectors) in each dataset.\\
@@ -634,30 +653,25 @@ In general, our model achieved significantly lower scores when trained on Twitte
 	\end{figure}
 \end{minipage}
 
-\noindent In order to answer to the research question: \textit{Can handcrafted sentiment features improve sarcasm predictions?} We conclude that sentiment features improve the precision, recall and $F_1$ scores of our machine learning classifiers, however even with these handcrafted features, our deep learning classifiers still exceed the performance of machine learning classifiers.  While there is evidence to suggest that sentiment features are useful, our results indicate that they are no more informative than conventional lexical features - two key findings were noted. Firstly, punctuation features extracted from our Twitter dataset (which was used to train our foremost model) were more informative than sentiment features \textit{(table 4)}.\ Secondly, extraction of sentiment features was a reasonably slow process in comparison to our topic and punctuation features; hence, we would require our sentiment features to be significantly more informative than our other hand-crafted features in order for this to be worthwhile.
+\noindent In answer to our research question: \textit{Can handcrafted sentiment features improve sarcasm predictions?} We conclude that sentiment features improve the precision, recall and $F_1$ scores of our machine learning classifiers, however even with these handcrafted features, our deep learning classifiers still exceed the performance of machine learning classifiers.  While there is evidence to suggest that sentiment features are useful, our results indicate that they are no more informative than conventional lexical features - two key findings were noted. Firstly, punctuation features extracted from our Twitter dataset (which was used to train our foremost model) were more informative than sentiment features \textit{(table 4)}. Secondly, extraction of sentiment features was a reasonably slow process in comparison to our topic and punctuation features; hence, we would require our sentiment features to be significantly more informative than our other hand-crafted features in order for this to be worthwhile.
 
 \subsection{Visualisation of tokens}\vspace{-10pt}
-\noindent In order to answer to the research question: \textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}  We employed a novel approach to sarcasm detection by incorporating an attention layer into our bidirectional LSTM. Integrating this intermediate layer improved our binary classification solution, leading to an increase in $F_1$ score by 1.5\%. Visualising the attention weights in our attention layer shows that our solution places more emphasis on qualitatively informative tokens. For instance, figure - shows a visualisaton of attention weights and classification scores of phrases containing strong sentiments, and figure - shows a visualisation of contextual sarcasm, typically overlooked in earlier approaches to sarcasm detection.\\\vspace{-8pt}
 
+\textit{Can a custom model identify which linguistic cues correlate more to sarcastic labels?}
 
 \hspace{-5pt}\begin{minipage}{0.5\textwidth}
 	\begin{center}
-		\hspace{-1cm}\includegraphics[width=0.84\textwidth]{Images/overt examples2.png}\\
-	\end{center}\vspace{-8pt}
-	\textbf{Figure -:} Use of strong sentiment phrases
+		\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/visualisation1.png}\\
+	\end{center}
 \end{minipage}
-\hspace{-20pt}
+\hspace{-10pt}
 \begin{minipage}{0.5\textwidth}
-Figure - shows that our solution has not overfit to always predicting phrases beginning with \textit{"i love"} or \textit{"i like"} as sarcastic (score greater than 0.5), as shown in the non-sarcastic example \textit{"i love cute dogs"}. 
-\end{minipage}\\
+	\begin{center}
+		\hspace{-1cm}\includegraphics[width=1\textwidth]{Images/visualisation2.png}\\
+	\end{center}	
+\end{minipage}\vspace{10pt}
+\noindent Visualising the output of our attention layer shows that the model places more emphasis on qualitatively informative tokens.
 
-\noindent Our solution shows exemplary performance when identifying contextualised sarcasm, grasping the inherent difference in \textit{"building a sand castle"} and \textit{"getting sand in your shoes"} as the best aspects of visiting the beach.\\\vspace{-16pt}
-
-
-\begin{center}
-	\hspace{-1cm}\includegraphics[width=0.9\textwidth]{Images/contextual_example.png}\\
-	\centering\textbf{Figure -:} Visualisation of contextualised sarcasm with classification scores
-\end{center}
 %This section should between 1 to 2 pages in length.
 
 \section{Conclusions}\vspace{-4.2pt}
