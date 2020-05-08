@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  8 MAY 2020 11:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.10)  8 MAY 2020 11:27
 entering extended mode
 **./FinalPaper.tex
 (FinalPaper.tex
@@ -356,13 +356,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
  [1
 
 {C:/Users/Password is house/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
- [2] [3]
-Overfull \hbox (1.04005pt too wide) in paragraph at lines 113--114
-[]\OT1/ptm/m/n/12 Convolutional Neu-ral Net-works (CNN), that are typ-i-cally a
-s-so-ci-ated with image-related tasks,
- []
-
-[4]
+ [2] [3] [4]
 <Images/modelpipeline2.png, id=21, 909.3975pt x 222.23026pt>
 File: Images/modelpipeline2.png Graphic file (type png)
 <use Images/modelpipeline2.png>
@@ -704,7 +698,7 @@ is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C
 :/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/tim
 es/utmr8a.pfb><C:/Users/Password is house/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on FinalPaper.pdf (21 pages, 725982 bytes).
+Output written on FinalPaper.pdf (21 pages, 725677 bytes).
 PDF statistics:
  152 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
