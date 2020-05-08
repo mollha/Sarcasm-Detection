@@ -68,10 +68,11 @@ To use this code, clone this repository then navigate to the root directory.
 
 - ELMO: 
     - Download the [ELMo tensorflow-hub module](https://tfhub.dev/google/elmo/2)  
-    - Move the 
+    - Move the elmo contents into a directory named elmo e.g. Code/pkg/language_models/elmo/
     
 - GloVe 
     - [GloVe database](https://nlp.stanford.edu/projects/glove/)   
+    - Select the glove.twitter.27B.50d.txt file and place it in a subdirectory called glove, e.g. Code/pkg/language_models/glove/
    
    
 ![Example Visualisation 1](https://raw.githubusercontent.com/mollha/Sarcasm-Detection/master/Examples/ilikehavingnightmares.png?token=AFMW4IJMUVFFU5R3TNGL7VK6XXNIO)
